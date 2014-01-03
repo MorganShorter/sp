@@ -8,6 +8,10 @@ sp/local_settings.py
 ./sp/settings.py
 ./sp/local_settings.py
 
+# django admin symlink
+static/admin
+./static/admin
+
 # Webserver
 apache2
 nginx.conf
