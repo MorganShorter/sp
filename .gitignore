@@ -1,0 +1,63 @@
+*.db
+
+# Python
+settings.py
+local_settings.py
+sp/settings.py
+sp/local_settings.py
+./sp/settings.py
+./sp/local_settings.py
+
+# Webserver
+apache2
+nginx.conf
+deploy/
+./deploy/
+bin/
+lib/
+logs/
+media/
+./media/
+robots.txt
+static/robots.txt
+./static/robots.txt
+.DS_Store
+.idea
+*.py[cod]
+
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+downloads
+eggs
+parts
+src/*.egg-info
+*~
+
