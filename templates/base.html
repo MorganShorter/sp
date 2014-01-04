@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.css"> 
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-1.10.3.custom.css"> 
 <!--  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"> !--> 
-<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/globalize.js"></script>
-<script type="text/javascript" src="js/globalize.culture.en-AU.js"></script>
-<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
-<script type="text/javascript" language="javascript" src="js/jquery.dropdownPlain.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/stylesheet.css">
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/globalize.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/globalize.culture.en-AU.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery.dropdownPlain.js"></script>
 <script>
 $(function() {
  $('#customer_delivery_address_same').live("click", function() {
@@ -392,7 +392,7 @@ $(function() {
 		version: <span id="version">1.0.1</span>, debug msg: <span id="debug_msg">none</span>
 		</div>
 		<div id="header_right">
-		 Logged in as: <span id="login_name" class="bold">root</span>&nbsp;<img id="icon_user_prefs" src="img/icons/16_user_preferences.png" />
+		 Logged in as: <span id="login_name" class="bold">root</span>&nbsp;<img id="icon_user_prefs" src="{{ STATIC_URL }}img/icons/16_user_preferences.png" />
 		 </div>
 	</div>
 	<div id="window">
@@ -400,35 +400,35 @@ $(function() {
 		</div>
 		<div id="top_menu">
 			<ul class="dropdown">
-				<li><img id="icon_menu_customers" src="img/icons/16_customers.png" /><u>C</u>ustomers&nbsp;
+				<li><img id="icon_menu_customers" src="{{ STATIC_URL }}img/icons/16_customers.png" /><u>C</u>ustomers&nbsp;
 					<ul class="sub_menu">
-						<li><a href="#" class="nounderline"><img id="icon_menu_customer_new" src="img/icons/16_new_customer.png" />&nbsp;New</a></li>
-						<li><a href="#" class="nounderline"><img id="icon_menu_customer_edit" src="img/icons/16_edit_customer.png" />&nbsp;Edit</a></li>
-						<li><a href="#" class="nounderline"><img id="icon_menu_customer_find" src="img/icons/16_find_customer.png" />&nbsp;Find</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_customer_new" src="{{ STATIC_URL }}img/icons/16_new_customer.png" />&nbsp;New</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_customer_edit" src="{{ STATIC_URL }}img/icons/16_edit_customer.png" />&nbsp;Edit</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_customer_find" src="{{ STATIC_URL }}img/icons/16_find_customer.png" />&nbsp;Find</a></li>
 					</ul>
 				</li>
-				<li><img id="icon_menu_orders" src="img/icons/16_orders.png" /><u>O</u>rders&nbsp;
+				<li><img id="icon_menu_orders" src="{{ STATIC_URL }}img/icons/16_orders.png" /><u>O</u>rders&nbsp;
 					<ul class="sub_menu">
-						<li><a href="#" class="nounderline"><img id="icon_menu_order_new" src="img/icons/16_new_order.png" />&nbsp;New</a></li>
-						<li><a href="#" class="nounderline"><img id="icon_menu_order_edit" src="img/icons/16_edit_order.png" />&nbsp;Edit</a></li>
-						<li><a href="#" class="nounderline"><img id="icon_menu_order_find" src="img/icons/16_find_order.png" />&nbsp;Find</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_order_new" src="{{ STATIC_URL }}img/icons/16_new_order.png" />&nbsp;New</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_order_edit" src="{{ STATIC_URL }}img/icons/16_edit_order.png" />&nbsp;Edit</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_order_find" src="{{ STATIC_URL }}img/icons/16_find_order.png" />&nbsp;Find</a></li>
 					</ul></li>
-				<li><img id="icon_menu_reports" src="img/icons/16_products.png" /><u>P</u>roducts&nbsp;</li>
-				<li><img id="icon_menu_reports" src="img/icons/16_reports.png" /><u>R</u>eports&nbsp;</li>
+				<li><img id="icon_menu_reports" src="{{ STATIC_URL }}img/icons/16_products.png" /><u>P</u>roducts&nbsp;</li>
+				<li><img id="icon_menu_reports" src="{{ STATIC_URL }}img/icons/16_reports.png" /><u>R</u>eports&nbsp;</li>
 			</ul>
 		</div>
 		<div id="logo">
-		<img id="icon_logo" src="img/logo.png" /><span style="font-family: impact;">SmartPractice</span>
+		<img id="icon_logo" src="{{ STATIC_URL }}img/logo.png" /><span style="font-family: impact;">SmartPractice</span>
 		</div>
 		<div id="content">
 		<table id="main_options">
 			<tr>
-				<td><a id="button_orders_open_dialog" title="click for orders section" href="#" class="button"><img src="img/icons/64_orders.png" /><br />orders</a></td>
-				<td><a id="button_customers_open_dialog" title="click for customers section" href="#" class="button"><img src="img/icons/64_customers.png" /><br />customers</a></td>
+				<td><a id="button_orders_open_dialog" title="click for orders section" href="#" class="button"><img src="{{ STATIC_URL }}img/icons/64_orders.png" /><br />orders</a></td>
+				<td><a id="button_customers_open_dialog" title="click for customers section" href="#" class="button"><img src="{{ STATIC_URL }}img/icons/64_customers.png" /><br />customers</a></td>
 			</tr>
 			<tr>
-				<td><a title="click for the reports section" href="#" class="button"><img src="img/icons/64_reports.png" /><br />reports</a></td>
-				<td><a id="button_products_open_dialog" title="click for products section" href="#" class="button"><img src="img/icons/64_products.png" /><br />products</a></td>
+				<td><a title="click for the reports section" href="#" class="button"><img src="{{ STATIC_URL }}img/icons/64_reports.png" /><br />reports</a></td>
+				<td><a id="button_products_open_dialog" title="click for products section" href="#" class="button"><img src="{{ STATIC_URL }}img/icons/64_products.png" /><br />products</a></td>
 			</tr>
 		</table>
 		</div>
@@ -445,7 +445,7 @@ $(function() {
 	</div>
 	<div id="order_logo">
 	<div id="order_icon_logo">
-	<img src="img/icons/16_orders.png" /><span style="font-family: impact;">Orders</span>
+	<img src="{{ STATIC_URL }}img/icons/16_orders.png" /><span style="font-family: impact;">Orders</span>
 	</div>
 	</div> !-->
 	<div id="order_footer">
@@ -454,7 +454,7 @@ $(function() {
 	<!--- End container --->
 	</div>
 	<div id="avator">
-	<img id="avator_img" src="img/100_avator.png" />
+	<img id="avator_img" src="{{ STATIC_URL }}img/100_avator.png" />
 	</div>
 
 
@@ -466,18 +466,18 @@ $(function() {
 			<tr>
 				<td id="order_main_options_customer_id_td_label" class="form_cell" ><label for="order_customer_id" class="form_label">customer ID:</label></td>
 				<td id="order_main_options_customer_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-				<td id="order_main_options_customer_id_td_search" class="form_cell"><a id="order_customer_id_search" title="find a customer or company" href="#" class="button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>
+				<td id="order_main_options_customer_id_td_search" class="form_cell"><a id="order_customer_id_search" title="find a customer or company" href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 				<td id="order_main_options_customer_details" colspan="3" rowspan="3"><div id="order_main_options_customer_details_content">Customer Details<div id="order_main_options_customer_details_content_addressblock">Customer_Address</div><br />Customer_Name<br />Customer_Contact1_Name Customer_Contact1_Phone<br />Customer_Contact2_Name Customer_Contact2_Phone</div></td>
 			</tr>
 			<tr>
 				<td id="order_main_options_order_id_td_label" class="form_cell"><label for="order_order_id"  class="form_label">order ID:</label></td>
 				<td id="order_main_options_order_id_td_input" class="form_cell"><input type="text" name="order_order_id" id="order_order_id" title="the order id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-				<td id="order_main_options_order_id_td_search" class="form_cell"><a id="order_order_id_search" title="find an order" href="#" class="button form_button"><img id="icon_order_order_id_search" src="img/icons/16_find_order.png" /></a></td>
+				<td id="order_main_options_order_id_td_search" class="form_cell"><a id="order_order_id_search" title="find an order" href="#" class="button form_button"><img id="icon_order_order_id_search" src="{{ STATIC_URL }}img/icons/16_find_order.png" /></a></td>
 			</tr>
 			<tr>
 				<td id="order_main_options_invoice_id_td_label" class="form_cell"><label for="search" class="form_label">invoice ID:</label></td>
 				<td id="order_main_options_invoice_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_invoice_id" title="the invoice id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-				<td id="order_main_options_invoice_id_td_search" class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="img/icons/16_find_invoice.png" /></a></td>
+				<td id="order_main_options_invoice_id_td_search" class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/16_find_invoice.png" /></a></td>
 			</tr>
 			</table>
 		<div id="order_accordion">
@@ -527,26 +527,26 @@ $(function() {
 					<td id="order_product_item_product_code_td_{ID}" class="form_list_item">MT5 </td>
 					<td id="order_product_item_cur_stock_td_{ID}" class="form_list_item">251</td>
 					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">2</td>
-					<td id="order_product_item_quantity_td_{ID}" class="form_list_item"><img src="img/icons/16_no.png" /></td>
-					<td id="order_product_item_unit_price_td_{ID}"class="form_list_item">$22.00</td>
+					<td id="order_product_item_quantity_td_{ID}" class="form_list_item"><img src="{{ STATIC_URL }}img/icons/16_no.png" /></td>
+					<td id="order_product_item_unit_price_td_{ID}" class="form_list_item">$22.00</td>
 					<td id="order_product_item_discount_percentage_td_{ID}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" /></td>
 					<td id="order_product_item_discount_percentage_td_{ID}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" value="true" checked /></td>
 					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">$00.00</td>
-					<td id="order_product_item_delete_td_{ID}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="img/icons/16_delete.png" /></a></td>
+					<td id="order_product_item_delete_td_{ID}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
 				</tr>
 				<tr class="form_list_row">
 					<td id="order_product_item_product_code_td_{ID2}" class="form_list_item">PC-02534</td>
 					<td id="order_product_item_cur_stock_td_{ID2}" class="form_list_item"><span title="there is currently 50 in stock">50</span></td>
 					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item">500</td>
-					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item"><img title="this line item appears to be backordered, there is a difference of 450 between quantity in stock and the order amount" src="img/icons/16_yes.png" /></td>
-					<td id="order_product_item_unit_price_td_{ID2}"class="form_list_item">$0.46</td>
+					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item"><img title="this line item appears to be backordered, there is a difference of 450 between quantity in stock and the order amount" src="{{ STATIC_URL }}img/icons/16_yes.png" /></td>
+					<td id="order_product_item_unit_price_td_{ID2}" class="form_list_item">$0.46</td>
 					<td id="order_product_item_discount_percentage_td_{ID2}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID2" title="discount percentage or amount, if any" class="text ui-widget-content ui-corner-all form_input" /></td>
 					<td id="order_product_item_discount_percentage_td_{ID2}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID2}" value="true" checked /></td>
 					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">$00.00</td>
-					<td id="order_product_item_delete_td_{ID2}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID2}" src="img/icons/16_delete.png" /></a></td>
+					<td id="order_product_item_delete_td_{ID2}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
 				</tr>
 				<tr class="form_list_row">
-					<td colspan="9" class="form_list_item"><a id="order_control_action_add" title="add new item to order" href="#"><img id="icon_order_control_action_add" src="img/icons/16_add.png" />add item</a> </td>
+					<td colspan="9" class="form_list_item"><a id="order_control_action_add" title="add new item to order" href="#"><img id="icon_order_control_action_add" src="{{ STATIC_URL }}img/icons/16_add.png" />add item</a> </td>
 				</tr>
 				</table>
 				</p></div>
@@ -592,8 +592,8 @@ $(function() {
 			
 			<table id="order_control_action">
 			<tr>
-			<td id="order_control_action_save" class="form_cell"><a id="order_control_action_save" title="save order" href="#" class="button form_button"><img id="icon_order_control_action_save" src="img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-			<td id="order_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="save order" href="#" class="button form_button"><img id="icon_order_control_action_cancel" src="img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+			<td id="order_control_action_save" class="form_cell"><a id="order_control_action_save" title="save order" href="#" class="button form_button"><img id="icon_order_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+			<td id="order_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="save order" href="#" class="button form_button"><img id="icon_order_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
 			</tr>
 			</table>
 		</fieldset>
@@ -610,12 +610,12 @@ $(function() {
 		<tr>
 			<td id="customer_main_options_customer_id_td_label" class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
 			<td id="customer_main_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
-			<td id="customer_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a customer by ID" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>			
+			<td id="customer_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a customer by ID" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">name:</label></td>
 			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-			<td id="customer_main_options_customer_name_td_search" class="form_cell"><a id="customer_name_search" title="find a customer or company" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>
+			<td id="customer_main_options_customer_name_td_search" class="form_cell"><a id="customer_name_search" title="find a customer or company" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
 			<td id="customer_main_options_customer_type_td_input" class="form_cell">
@@ -632,30 +632,30 @@ $(function() {
 		<tr>
 			<td id="customer_main_options_customer_address1_td_label" class="form_cell"><label for="customer_address1"  class="form_label">address 1:</label></td>
 			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-			<td id="customer_main_options_customer_address1_td_search" class="form_cell"><a id="customer_address1_search" title="search for address line 1" href="#" class="sml_button  button form_button"><img id="icon_customer_address1_search" src="img/icons/16_find.png" /></a></td>
+			<td id="customer_main_options_customer_address1_td_search" class="form_cell"><a id="customer_address1_search" title="search for address line 1" href="#" class="sml_button  button form_button"><img id="icon_customer_address1_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_telephone_td_label" class="form_cell"><label for="customer_phone"  class="form_label">phone:</label></td>
 			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" /></td>
-			<td id="customer_main_options_customer_telephone_td_search" class="form_cell"><a id="customer_telephone_search" title="search by telephone" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="img/icons/16_find.png" /></a></td>			
+			<td id="customer_main_options_customer_telephone_td_search" class="form_cell"><a id="customer_telephone_search" title="search by telephone" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address2_td_label" class="form_cell"><label for="customer_address2" class="form_label">address 2:</label></td>
 			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-			<td id="customer_main_options_customer_address2_td_search" class="form_cell"><a id="customer_address2_search" title="search for address line 2" href="#" class="sml_button  button form_button"><img id="icon_customer_address2_search" src="img/icons/16_find.png" /></a></td>
+			<td id="customer_main_options_customer_address2_td_search" class="form_cell"><a id="customer_address2_search" title="search for address line 2" href="#" class="sml_button  button form_button"><img id="icon_customer_address2_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_fax_td_label" class="form_cell"><label for="customer_fax"  class="form_label">fax:</label></td>
 			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" /></td>
-			<td id="customer_main_options_customer_fax_td_search" class="form_cell"><a id="customer_fax_search" title="search by fax number" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="img/icons/16_find.png" /></a></td>
+			<td id="customer_main_options_customer_fax_td_search" class="form_cell"><a id="customer_fax_search" title="search by fax number" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_suburb_td_label" class="form_cell"><label for="customer_suburb" class="form_label">suburb:</label></td>
 			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-			<td id="customer_main_options_customer_suburb_td_search" class="form_cell"><a id="customer_suburb_search" title="search by suburb" href="#" class="sml_button  button form_button"><img id="icon_customer_suburb_search" src="img/icons/16_find.png" /></a></td>
+			<td id="customer_main_options_customer_suburb_td_search" class="form_cell"><a id="customer_suburb_search" title="search by suburb" href="#" class="sml_button  button form_button"><img id="icon_customer_suburb_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_email_td_label" class="form_cell"><label for="customer_email"  class="form_label">email:</label></td>
 			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" /></td>
-			<td id="customer_main_options_customer_email_td_search" class="form_cell"><a id="customer_email_search" title="search by email" href="#" class="sml_button  button form_button"><img id="icon_customer_email_search" src="img/icons/16_find.png" /></a></td>
+			<td id="customer_main_options_customer_email_td_search" class="form_cell"><a id="customer_email_search" title="search by email" href="#" class="sml_button  button form_button"><img id="icon_customer_email_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_state_td_label" class="form_cell"><label for="customer_state" class="form_label">state</label></td>
@@ -667,7 +667,7 @@ $(function() {
 			<td colspan="2">&nbsp;</td>	
 			<td id="customer_main_options_customer_postcode_td_label" class="form_cell"><label for="customer_postcode" class="form_label">postcode:</label></td>
 			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-			<td id="customer_main_options_customer_postcode_td_search" class="form_cell"><a id="customer_postcode_search" title="search for postcode" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="img/icons/16_find.png" /></a></td>
+			<td id="customer_main_options_customer_postcode_td_search" class="form_cell"><a id="customer_postcode_search" title="search for postcode" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		</table>
 		
@@ -683,7 +683,7 @@ $(function() {
 			<tr>
 				<td id="customer_main_options_delivery_attn_td_label" class="form_cell"><label for="customer_delivery_attn" class="form_label">attn:</label></td>
 				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
-				<td id="customer_main_options_delivery_attn_td_search" class="form_cell"><a id="customer_name_search" title="find a possible customer company contact"  href="#" class="button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>
+				<td id="customer_main_options_delivery_attn_td_search" class="form_cell"><a id="customer_name_search" title="find a possible customer company contact"  href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address1_td_label" class="form_cell"><label for="customer_delivery_address1"  class="form_label">address 1:</label></td>
@@ -729,11 +729,11 @@ $(function() {
 					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">John</td>
 					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">Smith</td>
 					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">0406 843 934</td>
-					<td id="customer_contact_email_td_{ID}"class="form_list_item">name@email.com</td>
-					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="img/icons/16_delete.png" /></a>
+					<td id="customer_contact_email_td_{ID}" class="form_list_item">name@email.com</td>
+					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
 				</tr>
 				<tr class="form_list_row">
-					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new item to order" href="#"><img id="icon_customer_control_action_add_contact" src="img/icons/16_add.png" />add contact</a> </td>
+					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new item to order" href="#"><img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add contact</a> </td>
 				</tr>
 			</table>
 			</p></div>
@@ -742,9 +742,9 @@ $(function() {
 		</div>
 		<table id="customer_control_action">
 		<tr>
-		<td id="customer_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-		<td id="customer_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
-		<td id="customer_control_action_saveorder" class="form_cell"><a id="order_control_action_saveorder" title="save customer and place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
+		<td id="customer_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td id="customer_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+		<td id="customer_control_action_saveorder" class="form_cell"><a id="order_control_action_saveorder" title="save customer and place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
 		</tr>
 		</table>
 		
@@ -761,7 +761,7 @@ $(function() {
 		<tr>
 			<td id="product_main_options_product_code_td_label" class="form_cell"><label for="customer_id" class="form_label">product code:</label></td>
 			<td id="product_main_options_product_description_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
-			<td id="product_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>			
+			<td id="product_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="product_main_options_product_auto_name_td_input" class="form_cell"><input type="checkbox" id="product_auto_name" name="product_auto_name" value="true" checked /></td>
@@ -788,7 +788,7 @@ $(function() {
 		<tr>
 			<td id="product_main_options_product_current_stock_td_label" class="form_cell"><label for="product_current_stock" class="form_label">current stock:</label></td>
 			<td id="product_main_options_product_current_stock_td_input" class="form_cell"><input type="text" name="product_current_stock" id="product_current_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
-			<td><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="product_current_stock" src="img/icons/16_magic.png" /></a></td>
+			<td><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="product_current_stock" src="{{ STATIC_URL }}img/icons/16_magic.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="product_main_options_product_minimum_stock_td_label" class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>
@@ -840,20 +840,20 @@ $(function() {
 					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">0.25</td>
 					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">50</td>
 					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">-</td>
-					<td id="customer_contact_email_td_{ID}"class="form_list_item">yes</td>
-					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="img/icons/16_delete.png" /></a>
+					<td id="customer_contact_email_td_{ID}" class="form_list_item">yes</td>
+					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
 				</tr>
 				<tr class="form_list_row">
-					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new price level" href="#"><img id="icon_customer_control_action_add_contact" src="img/icons/16_add.png" />add price level</a> </td>
+					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new price level" href="#"><img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a> </td>
 				</tr>
 			</table>
 	
 	
 		<table id="product_control_action">
 		<tr>
-		<td id="product_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_product_control_action_save" src="img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-		<td id="product_control_action_new" class="form_cell"><a id="order_control_action_new" title="new" href="#" class="button form_button"><img id="icon_product_control_action_new" src="img/icons/32_new.png" /><br />new</a>&nbsp;</td>
-		<td id="product_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_product_control_action_cancel" src="img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+		<td id="product_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_product_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td id="product_control_action_new" class="form_cell"><a id="order_control_action_new" title="new" href="#" class="button form_button"><img id="icon_product_control_action_new" src="{{ STATIC_URL }}img/icons/32_new.png" /><br />new</a>&nbsp;</td>
+		<td id="product_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_product_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
 		</tr>
 		</table>
 	</fieldset>
