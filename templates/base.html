@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.css"> 
+<!--  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"> !--> 
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/globalize.js"></script>
+<script type="text/javascript" src="js/globalize.culture.en-AU.js"></script>
+<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/jquery.dropdownPlain.js"></script>
+<script>
+$(function() {
+ $('#customer_delivery_address_same').live("click", function() {
+    if ($('#customer_delivery_address_same').prop("checked")) {
+        $('#toggle_customer_main_options_delivery').hide('blind');
+    }
+    else {
+        $('#toggle_customer_main_options_delivery').show('slide');
+    }
+ });
+});
+</script>
+<script>
+	$(function() {
+		$( "#window" ).draggable({ revert: "invalid" });
+		$( "#order_window" ).draggable({ revert: "invalid" });
+		
+		$( "#container" ).droppable({
+			drop: function( event, ui ) {
+				$( this )
+					.find( "#debug_msg" )
+						.html( "window in position" );
+			}
+		});
+	});
+</script>
+<script>
+	$(function() {
+		$( document ).tooltip({
+			position: {
+				my: "right bottom+6",
+				at: "center bottom",
+				of: "#avator",
+				using: function( position, feedback ) {
+					$( this ).css( position );
+					$( "<div>" )
+						.addClass( "arrow" )
+						.addClass( feedback.vertical )
+						.addClass( feedback.horizontal )
+						.appendTo( this );
+				}
+			}
+		});
+	});
+	</script>
+<script>
+$(function() {
+	$( "#order_content" ).dialog({
+			title: "Orders",
+			autoOpen: false,
+			width: 800
+			});
+	$( "#button_orders_open_dialog" )
+			.click(function() {
+				$( "#order_content" ).dialog( "open" );
+			});
+	});
+</script>
+<script>
+$(function() {
+	$( "#customer_content" ).dialog({
+			title: "Customers",
+			autoOpen: false,
+			width: 414
+			});
+	$( "#button_customers_open_dialog" )
+			.click(function() {
+				$( "#customer_content" ).dialog( "open" );
+			});
+	});
+</script>
+<script>
+$(function() {
+	$( "#product_content" ).dialog({
+			title: "Products",
+			autoOpen: false,
+			width: 414
+			});
+	$( "#button_products_open_dialog" )
+			.click(function() {
+				$( "#product_content" ).dialog( "open" );
+			});
+	});
+</script>
+<script>
+  $(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#order_order_company22" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+  <script>
+  $(function() {
+    var availableTags = [
+      "Australian Institute Optom (AIO)",
+      "AIOLT",
+      "AMI",
+      "BackTalk (BT)",
+      "Chiro Assc. Aus (CAA)",
+      "Disney (JH)",
+      "Koren 1",
+      "Koren 2",
+      "LT",
+      "MedART",
+      "SP"
+    ];
+    $( "#product_supplier" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+    <script>
+  $(function() {
+    $( "#order_order_date" ).datepicker();
+  });
+  </script>
+      <script>
+    $(function() {
+    $( "#order_wanted_by" ).datepicker();
+  });
+  </script>
+<script>
+  jQuery(function($){
+   $("#product").mask("99/99/9999",{completed:function(){alert("You typed the following: "+this.val());}});
+});
+</script>
+ <script>
+  $(function() {
+    $( "#order_shipping_cost" ).spinner({
+      min: 0,
+      max: 2500,
+      step: .15,
+      start: 1000,
+      numberFormat: "C",
+      culture: "en-AU"
+    });
+  });
+  </script>
+   <script>
+  $(function() {
+    $( "#product_cost_price" ).spinner({
+      min: 0,
+      max: 2500,
+      step: .25,
+      start: 1000,
+      numberFormat: "C",
+      culture: "en-AU"
+    });
+  });
+  </script>
+     <script>
+  $(function() {
+    $( "#product_current_stock" ).spinner({
+      min: 0,
+      max: 250000,
+      step: 1,
+      start: 1000,
+      culture: "en-AU"
+    });
+  });
+  </script>
+       <script>
+  $(function() {
+    $( "#product_minimum_stock" ).spinner({
+      min: 0,
+      max: 250000,
+      step: 25,
+      start: 1000,
+      culture: "en-AU"
+    });
+  });
+  </script>
+   <script>
+  $(function() {
+  $.widget( "ui.pcntspinner", $.ui.spinner, {
+    _format: function(value) { return value + '%'; },
+
+    _parse: function(value) { return parseFloat(value); }
+   }); 
+   $("#order_product_item_percentage_ID").pcntspinner({   
+	min: 0,
+	max: 100,
+	step: 5,
+	start: 0,
+	culture: "en-AU"
+    });
+   $("#order_product_item_percentage_ID2").pcntspinner({   
+	min: 0,
+	max: 100,
+	step: 5,
+	start: 0,
+	culture: "en-AU"
+    });     
+ });
+  </script>
+  <script>
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          .attr( "title", "Show All Items" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " didn't match any item" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.data( "ui-autocomplete" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+ 
+  $(function() {
+    $( "#order_order_company" ).combobox();
+  });
+  </script>
+  <script>
+  $(function() {
+    $( "#order_accordion" ).accordion({
+      collapsible: true
+    });
+  });
+  </script>
+    <script>
+  $(function() {
+    $( "#customer_accordion" ).accordion({
+      collapsible: true
+    });
+  });
+  </script>
+</head>
+<body>
+	<div id="container">
+	<div id="header">
+		<div id="header_left">
+		SmartPractice
+		</div>
+		<div id="header_center">
+		version: <span id="version">1.0.1</span>, debug msg: <span id="debug_msg">none</span>
+		</div>
+		<div id="header_right">
+		 Logged in as: <span id="login_name" class="bold">root</span>&nbsp;<img id="icon_user_prefs" src="img/icons/16_user_preferences.png" />
+		 </div>
+	</div>
+	<div id="window">
+		<div id="top">
+		</div>
+		<div id="top_menu">
+			<ul class="dropdown">
+				<li><img id="icon_menu_customers" src="img/icons/16_customers.png" /><u>C</u>ustomers&nbsp;
+					<ul class="sub_menu">
+						<li><a href="#" class="nounderline"><img id="icon_menu_customer_new" src="img/icons/16_new_customer.png" />&nbsp;New</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_customer_edit" src="img/icons/16_edit_customer.png" />&nbsp;Edit</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_customer_find" src="img/icons/16_find_customer.png" />&nbsp;Find</a></li>
+					</ul>
+				</li>
+				<li><img id="icon_menu_orders" src="img/icons/16_orders.png" /><u>O</u>rders&nbsp;
+					<ul class="sub_menu">
+						<li><a href="#" class="nounderline"><img id="icon_menu_order_new" src="img/icons/16_new_order.png" />&nbsp;New</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_order_edit" src="img/icons/16_edit_order.png" />&nbsp;Edit</a></li>
+						<li><a href="#" class="nounderline"><img id="icon_menu_order_find" src="img/icons/16_find_order.png" />&nbsp;Find</a></li>
+					</ul></li>
+				<li><img id="icon_menu_reports" src="img/icons/16_products.png" /><u>P</u>roducts&nbsp;</li>
+				<li><img id="icon_menu_reports" src="img/icons/16_reports.png" /><u>R</u>eports&nbsp;</li>
+			</ul>
+		</div>
+		<div id="logo">
+		<img id="icon_logo" src="img/logo.png" /><span style="font-family: impact;">SmartPractice</span>
+		</div>
+		<div id="content">
+		<table id="main_options">
+			<tr>
+				<td><a id="button_orders_open_dialog" title="click for orders section" href="#" class="button"><img src="img/icons/64_orders.png" /><br />orders</a></td>
+				<td><a id="button_customers_open_dialog" title="click for customers section" href="#" class="button"><img src="img/icons/64_customers.png" /><br />customers</a></td>
+			</tr>
+			<tr>
+				<td><a title="click for the reports section" href="#" class="button"><img src="img/icons/64_reports.png" /><br />reports</a></td>
+				<td><a id="button_products_open_dialog" title="click for products section" href="#" class="button"><img src="img/icons/64_products.png" /><br />products</a></td>
+			</tr>
+		</table>
+		</div>
+		<div id="footer">
+			<div id="database_name">
+			postgres@db.fqdn
+			</div>
+		</div>	
+	</div>
+<!--	<div id="order_window">
+	<div id="order_top">
+	</div>
+	<div id="order_top_menu">
+	</div>
+	<div id="order_logo">
+	<div id="order_icon_logo">
+	<img src="img/icons/16_orders.png" /><span style="font-family: impact;">Orders</span>
+	</div>
+	</div> !-->
+	<div id="order_footer">
+	</div>
+	</div>
+	<!--- End container --->
+	</div>
+	<div id="avator">
+	<img id="avator_img" src="img/100_avator.png" />
+	</div>
+
+
+	<div id="order_content">
+	<form id="frm_order">
+	<fieldset>
+
+			<table id="order_main_options">
+			<tr>
+				<td id="order_main_options_customer_id_td_label" class="form_cell" ><label for="order_customer_id" class="form_label">customer ID:</label></td>
+				<td id="order_main_options_customer_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="order_main_options_customer_id_td_search" class="form_cell"><a id="order_customer_id_search" title="find a customer or company" href="#" class="button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>
+				<td id="order_main_options_customer_details" colspan="3" rowspan="3"><div id="order_main_options_customer_details_content">Customer Details<div id="order_main_options_customer_details_content_addressblock">Customer_Address</div><br />Customer_Name<br />Customer_Contact1_Name Customer_Contact1_Phone<br />Customer_Contact2_Name Customer_Contact2_Phone</div></td>
+			</tr>
+			<tr>
+				<td id="order_main_options_order_id_td_label" class="form_cell"><label for="order_order_id"  class="form_label">order ID:</label></td>
+				<td id="order_main_options_order_id_td_input" class="form_cell"><input type="text" name="order_order_id" id="order_order_id" title="the order id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="order_main_options_order_id_td_search" class="form_cell"><a id="order_order_id_search" title="find an order" href="#" class="button form_button"><img id="icon_order_order_id_search" src="img/icons/16_find_order.png" /></a></td>
+			</tr>
+			<tr>
+				<td id="order_main_options_invoice_id_td_label" class="form_cell"><label for="search" class="form_label">invoice ID:</label></td>
+				<td id="order_main_options_invoice_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_invoice_id" title="the invoice id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="order_main_options_invoice_id_td_search" class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="img/icons/16_find_invoice.png" /></a></td>
+			</tr>
+			</table>
+		<div id="order_accordion">
+			<h3>Order</h3>
+			<div><p>			
+			<table id="order_detail_options">
+			<tr>
+				<td id="order_detail_options_order_date_td_label" class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
+				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" /></td>
+				<td>&nbsp;</td>
+				<td id="order_detail_options_order_company_td_label" class="form_cell"><label for="order_order_company" class="form_label">invoicing company<label></td>
+				<td id="order_detail_options_order_company_td_input" class="form_cell">
+				<div class="ui-widget">
+				<select id="order_order_company" name="order_order_company" title="which company is responsible for this order?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="smartpractice">SmartPractice</option>
+				  <option value="smartmethods">SmartMethods</option>
+				</select></td>
+				<td>&nbsp;</td>
+				</div>
+			</tr>
+			<tr>
+				<td id="order_detail_options_wanted_by_td_label" class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
+				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" /></td>
+				<td>&nbsp;</td>
+				<td id="order_detail_options_shipping_cost_td_label" class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
+				<td id="order_detail_options_shipping_cost_td_input" class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /> </td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</p>
+			</div>
+			<h3>Product Items</h3>
+			<div><p>
+				<table id="order_product_items" class="form_list"> 
+				<tr class="form_list_row">			
+					<th id="order_product_items_product_code_th" class="form_list_header">Item Code</th>
+					<th id="order_product_items_cur_stock_th" class="form_list_header">In Stock</th>
+					<th id="order_product_items_quantity_th" class="form_list_header">Quantity Out</th>
+					<th id="order_product_items_back_order_th" class="form_list_header">BO</th>				
+					<th id="order_product_items_unit_price_th" class="form_list_header">$ EA</th>
+					<th id="order_product_items_discount_percentage_th" class="form_list_header">Discount</th>
+					<th id="order_product_items_TAX_th" class="form_list_header">TAX</th>
+					<th id="order_product_items_total_th" class="form_list_header">Item Total</th>
+					<th id="order_product_items_delete_th" class="form_list_header">&nbsp;</th>
+				</tr>
+				<tr class="form_list_row">
+					<td id="order_product_item_product_code_td_{ID}" class="form_list_item">MT5 </td>
+					<td id="order_product_item_cur_stock_td_{ID}" class="form_list_item">251</td>
+					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">2</td>
+					<td id="order_product_item_quantity_td_{ID}" class="form_list_item"><img src="img/icons/16_no.png" /></td>
+					<td id="order_product_item_unit_price_td_{ID}"class="form_list_item">$22.00</td>
+					<td id="order_product_item_discount_percentage_td_{ID}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" /></td>
+					<td id="order_product_item_discount_percentage_td_{ID}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" value="true" checked /></td>
+					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">$00.00</td>
+					<td id="order_product_item_delete_td_{ID}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="img/icons/16_delete.png" /></a></td>
+				</tr>
+				<tr class="form_list_row">
+					<td id="order_product_item_product_code_td_{ID2}" class="form_list_item">PC-02534</td>
+					<td id="order_product_item_cur_stock_td_{ID2}" class="form_list_item"><span title="there is currently 50 in stock">50</span></td>
+					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item">500</td>
+					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item"><img title="this line item appears to be backordered, there is a difference of 450 between quantity in stock and the order amount" src="img/icons/16_yes.png" /></td>
+					<td id="order_product_item_unit_price_td_{ID2}"class="form_list_item">$0.46</td>
+					<td id="order_product_item_discount_percentage_td_{ID2}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID2" title="discount percentage or amount, if any" class="text ui-widget-content ui-corner-all form_input" /></td>
+					<td id="order_product_item_discount_percentage_td_{ID2}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID2}" value="true" checked /></td>
+					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">$00.00</td>
+					<td id="order_product_item_delete_td_{ID2}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID2}" src="img/icons/16_delete.png" /></a></td>
+				</tr>
+				<tr class="form_list_row">
+					<td colspan="9" class="form_list_item"><a id="order_control_action_add" title="add new item to order" href="#"><img id="icon_order_control_action_add" src="img/icons/16_add.png" />add item</a> </td>
+				</tr>
+				</table>
+				</p></div>
+			<h3>Summary</h3>
+				<div>
+				<table id="order_product_summary" class="form_list">
+				<tr class="form_list_row">			
+					<th id="order_product_summary_" class="form_list_header">Sub Profit</th>
+					<th id="order_product_summary_" class="form_list_header">Sub Cost</th>
+					<th id="order_product_summary_" class="form_list_header">Sub Price</th>	
+					<th id="order_product_summary_" class="form_list_header">Disc</th>
+					<th id="order_product_summary_" class="form_list_header">Gross Profit</th>
+					<th id="order_product_summary_" class="form_list_header">Gross Cost</th>
+					<th id="order_product_summary_" class="form_list_header">Gross Price</th>				
+					<th id="order_product_summary_" class="form_list_header">Tax</th>
+					<th id="order_product_summary_" class="form_list_header">Net Profit</th>
+					<th id="order_product_summary_" class="form_list_header">Net Cost</th>
+					<th id="order_product_summary_" class="form_list_header">Net Price</th>
+					<th id="order_product_summary_" class="form_list_header">Ship</th>
+					<th id="order_product_summary_" class="form_list_header">Total Cost</th>
+					<th id="order_product_summary_" class="form_list_header">Total Price</th>
+				</tr>
+				<tr class="form_list_row">
+					<td id="order_product_summary_">$10.25</td>	
+					<td id="order_product_summary_">$10.50</td>
+					<td id="order_product_summary_">$20.75</td>
+					<td id="order_product_summary_">$5.00</td>
+					<td id="order_product_summary_">$5.25</td>
+					<td id="order_product_summary_">$10.50</td>
+					<td id="order_product_summary_">$15.75</td>				
+					<td id="order_product_summary_">$1.575</td>
+					<td id="order_product_summary_">$4.575</td>
+					<td id="order_product_summary_">$12.75</td>
+					<td id="order_product_summary_">$17.325</td>
+					<td id="order_product_summary_">$7.50</td>
+					<td id="order_product_summary_">$20.25</td>
+					<td id="order_product_summary_">$24.825</td>								
+				</tr>
+				</table>
+				</div>
+			<!--- End order_accordion --->
+			</div>
+			
+			<table id="order_control_action">
+			<tr>
+			<td id="order_control_action_save" class="form_cell"><a id="order_control_action_save" title="save order" href="#" class="button form_button"><img id="icon_order_control_action_save" src="img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+			<td id="order_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="save order" href="#" class="button form_button"><img id="icon_order_control_action_cancel" src="img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+			</tr>
+			</table>
+		</fieldset>
+	</form>
+	<!-- End order_content  -->
+	</div>
+
+
+
+	<div id="customer_content">
+	<form id="frm_customer">
+	<fieldset>
+		<table id="customer_main_options">
+		<tr>
+			<td id="customer_main_options_customer_id_td_label" class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
+			<td id="customer_main_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
+			<td id="customer_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a customer by ID" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>			
+		</tr>
+		<tr>
+			<td id="customer_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">name:</label></td>
+			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_name_td_search" class="form_cell"><a id="customer_name_search" title="find a customer or company" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>
+			<td>&nbsp;</td>
+			<td id="customer_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
+			<td id="customer_main_options_customer_type_td_input" class="form_cell">
+				<select id="customer_type" name="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="vet">VET</option>
+				  <option value="chiro">Chiro</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td id="customer_main_options_customer_registration_td_label" class="form_cell"><label for="customer_registration" class="form_label">ABN/ACN:</label></td>
+			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+			<td id="customer_main_options_customer_address1_td_label" class="form_cell"><label for="customer_address1"  class="form_label">address 1:</label></td>
+			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_address1_td_search" class="form_cell"><a id="customer_address1_search" title="search for address line 1" href="#" class="sml_button  button form_button"><img id="icon_customer_address1_search" src="img/icons/16_find.png" /></a></td>
+			<td>&nbsp;</td>
+			<td id="customer_main_options_customer_telephone_td_label" class="form_cell"><label for="customer_phone"  class="form_label">phone:</label></td>
+			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td id="customer_main_options_customer_telephone_td_search" class="form_cell"><a id="customer_telephone_search" title="search by telephone" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="img/icons/16_find.png" /></a></td>			
+		</tr>
+		<tr>
+			<td id="customer_main_options_customer_address2_td_label" class="form_cell"><label for="customer_address2" class="form_label">address 2:</label></td>
+			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_address2_td_search" class="form_cell"><a id="customer_address2_search" title="search for address line 2" href="#" class="sml_button  button form_button"><img id="icon_customer_address2_search" src="img/icons/16_find.png" /></a></td>
+			
+			<td>&nbsp;</td>
+			<td id="customer_main_options_customer_fax_td_label" class="form_cell"><label for="customer_fax"  class="form_label">fax:</label></td>
+			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td id="customer_main_options_customer_fax_td_search" class="form_cell"><a id="customer_fax_search" title="search by fax number" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="img/icons/16_find.png" /></a></td>
+		</tr>
+		<tr>
+			<td id="customer_main_options_customer_suburb_td_label" class="form_cell"><label for="customer_suburb" class="form_label">suburb:</label></td>
+			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_suburb_td_search" class="form_cell"><a id="customer_suburb_search" title="search by suburb" href="#" class="sml_button  button form_button"><img id="icon_customer_suburb_search" src="img/icons/16_find.png" /></a></td>
+			<td>&nbsp;</td>
+			<td id="customer_main_options_customer_email_td_label" class="form_cell"><label for="customer_email"  class="form_label">email:</label></td>
+			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td id="customer_main_options_customer_email_td_search" class="form_cell"><a id="customer_email_search" title="search by email" href="#" class="sml_button  button form_button"><img id="icon_customer_email_search" src="img/icons/16_find.png" /></a></td>
+		</tr>
+		<tr>
+			<td id="customer_main_options_customer_state_td_label" class="form_cell"><label for="customer_state" class="form_label">state</label></td>
+			<td id="customer_main_options_customer_state_td_input" class="form_cell">
+				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="vic">Victoria</option>
+				  <option value="nsw">New South Wales</option>
+				</select></td>		
+			<td colspan="2">&nbsp;</td>	
+			<td id="customer_main_options_customer_postcode_td_label" class="form_cell"><label for="customer_postcode" class="form_label">postcode:</label></td>
+			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_postcode_td_search" class="form_cell"><a id="customer_postcode_search" title="search for postcode" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="img/icons/16_find.png" /></a></td>
+		</tr>
+		</table>
+		
+		<table>
+		<tr>
+			<td id="customer_main_options_customer_delivery_address_same_td_input" class="form_cell"><input type="checkbox" id="customer_delivery_address_same" name="customer_delivery_address_same" value="true" checked /></td>
+			<td id="customer_main_options_customer_delivery_address_same_td_label" class="form_cell" colspan="5">the delivery address is the same as above (<a href="#" title="click this if you want details from above copied below into the delivery fields">fill above details into delivery fields below</a>)</td>
+			
+		</tr>
+		</table>
+		<div id="toggle_customer_main_options_delivery" style="display: none;">		
+			<table id="customer_main_options_delivery">
+			<tr>
+				<td id="customer_main_options_delivery_attn_td_label" class="form_cell"><label for="customer_delivery_attn" class="form_label">attn:</label></td>
+				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="customer_main_options_delivery_attn_td_search" class="form_cell"><a id="customer_name_search" title="find a possible customer company contact"  href="#" class="button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>
+			</tr>
+			<tr>
+				<td id="customer_main_options_delivery_address1_td_label" class="form_cell"><label for="customer_delivery_address1"  class="form_label">address 1:</label></td>
+				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td class="form_cell">&nbsp;</td>
+			</tr>
+			<tr>
+				<td id="customer_main_options_delivery_address2_td_label" class="form_cell"><label for="customer_delivery_address2" class="form_label">address 2:</label></td>
+				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td class="form_cell">&nbsp;</td>
+			</tr>
+			<tr>
+				<td id="customer_main_options_delivery_suburb_td_label" class="form_cell"><label for="customer_delivery_suburb" class="form_label">suburb:</label></td>
+				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td class="form_cell">&nbsp;</td>
+			</tr>
+			<tr>
+				<td id="customer_main_options_delivery_state_td_label" class="form_cell"><label for="customer_delivery_state" class="form_label">state</label></td>
+				<td id="customer_main_options_delivery_state_td_input" class="form_cell">
+					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input">
+					  <option value="vic">Victoria</option>
+					  <option value="nsw">New South Wales</option>
+					</select></td>		
+				<td>&nbsp;</td>	
+				<td id="customer_main_options_delivery_postcode_td_label" class="form_cell"><label for="customer_delivery_postcode" class="form_label">postcode:</label></td>
+				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td class="form_cell">&nbsp;</td>
+			</tr>
+			</table>
+		</div>
+		<div id="customer_accordion">
+			<h3>Contacts</h3>
+			<div><p>		
+			<table id="customer_contact_items" class="form_list"> 
+				<tr class="form_list_row">			
+					<th id="customer_contact_items_first_name_th" class="form_list_header">First Name</th>
+					<th id="customer_contact_items_surname_th" class="form_list_header">Surname</th>
+					<th id="customer_contact_items_phone_th" class="form_list_header">Phone</th>
+					<th id="customer_contact_items_email_th" class="form_list_header">Email</th>
+					<th class="form_list_header">&nbsp;</th>
+				</tr>
+				<tr class="form_list_row">
+					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">John</td>
+					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">Smith</td>
+					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">0406 843 934</td>
+					<td id="customer_contact_email_td_{ID}"class="form_list_item">name@email.com</td>
+					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="img/icons/16_delete.png" /></a>
+				</tr>
+				<tr class="form_list_row">
+					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new item to order" href="#"><img id="icon_customer_control_action_add_contact" src="img/icons/16_add.png" />add contact</a> </td>
+				</tr>
+			</table>
+			</p></div>
+			<h3>Notes</h3>
+			<div><p>&nbsp;</p></div>
+		</div>
+		<table id="customer_control_action">
+		<tr>
+		<td id="customer_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td id="customer_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+		<td id="customer_control_action_saveorder" class="form_cell"><a id="order_control_action_saveorder" title="save customer and place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
+		</tr>
+		</table>
+		
+	</fieldset>
+	</form>
+	</div>
+	<!-- End customer_content -->
+	
+	
+	<div id="product_content">
+	<form id="frm_product">
+	<fieldset>
+		<table id="product_main_options">
+		<tr>
+			<td id="product_main_options_product_code_td_label" class="form_cell"><label for="customer_id" class="form_label">product code:</label></td>
+			<td id="product_main_options_product_description_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
+			<td id="product_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="img/icons/16_find_customer.png" /></a></td>			
+		</tr>
+		<tr>
+			<td id="product_main_options_product_auto_name_td_input" class="form_cell"><input type="checkbox" id="product_auto_name" name="product_auto_name" value="true" checked /></td>
+			<td id="product_main_options_product_auto_name_td_label" class="form_cell" colspan="5">auto-generate product name</td>
+		</tr>
+		<tr>
+			<td id="product_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">size:</label></td>
+			<td id="product_main_options_customer_name_td_input" class="form_cell"><select id="customer_type" name="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="large">Large</option>
+				  <option value="space">Inter-dimensional Space Sheet</option>
+				</select></td>
+			<td colspan="2">&nbsp;</td>
+			<td id="product_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
+			<td id="product_main_options_customer_type_td_input" class="form_cell">
+				<select id="customer_type" name="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="hard">Hard</option>
+				  <option value="water">Water</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_cost_price_td_label" class="form_cell"><label for="product_cost_price" class="form_label">cost price:</label></td>
+			<td id="product_main_options_product_cost_price_td_input" class="form_cell"><input type="text" name="product_cost_price" id="product_cost_price" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_current_stock_td_label" class="form_cell"><label for="product_current_stock" class="form_label">current stock:</label></td>
+			<td id="product_main_options_product_current_stock_td_input" class="form_cell"><input type="text" name="product_current_stock" id="product_current_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="product_current_stock" src="img/icons/16_magic.png" /></a></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_minimum_stock_td_label" class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>
+			<td id="product_main_options_product_minimum_stock_td_input" class="form_cell"><input type="text" name="product_minimum_stock" id="product_minimum_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_supplier_td_label" class="form_cell"><label for="product_supplier" class="form_label">supplier:</label></td>
+			<td id="product_main_options_product_description_td_input" class="form_cell"><input type="text" name="product_supplier" id="product_supplier" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" /></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_royalty_img_td_label" class="form_cell"><label for="product_royalty_img" class="form_label">royalty image:</label></td>
+			<td id="product_main_options_product_royalty_img_input" class="form_cell">
+				<select id="product_royalty_img" name="product_royalty_img" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="">--- none ---</option>
+				  <option value="loon">Looney</option>
+				  <option value="nuts">Peanuts</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_auto_royalty_amount_td_input" class="form_cell"><input type="checkbox" id="product_auto_royalty_amount" name="product_auto_royalty_amount" value="true" checked /></td>
+			<td id="product_main_options_product_auto_royalty_amount_td_label" class="form_cell" colspan="5">auto-select royalty using royalty image</td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_use_price_template_td_input" class="form_cell"><input type="checkbox" id="product_use_price_template" name="product_use_price_template" value="true" checked /></td>
+			<td id="product_main_options_product_use_price_template_label" class="form_cell" colspan="5">use pricing template</td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_price_level_template_label" class="form_cell"><label for="product_price_level_template" class="form_label">price template:</label></td>
+			<td id="product_main_options_product_price_level_template_input" class="form_cell">
+				<select id="product_price_level_template" name="product_price_level_template" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="">--- none ---</option>
+				  <option value="loon">AR</option>
+				  <option value="nuts">FB</option>
+				  <option value="nuts">LC-LI</option>
+				  <option value="nuts">LI</option>
+				</select></td>
+		</tr>		
+		</table>
+		
+			<table id="customer_contact_items" class="form_list"> 
+				<tr class="form_list_row">			
+					<th id="customer_contact_items_first_name_th" class="form_list_header">Price</th>
+					<th id="customer_contact_items_surname_th" class="form_list_header">Min Qty</th>
+					<th id="customer_contact_items_phone_th" class="form_list_header">Max Qty</th>
+					<th id="customer_contact_items_email_th" class="form_list_header">Block</th>
+					<th class="form_list_header">&nbsp;</th>
+				</tr>
+				<tr class="form_list_row">
+					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">0.25</td>
+					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">50</td>
+					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">-</td>
+					<td id="customer_contact_email_td_{ID}"class="form_list_item">yes</td>
+					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="img/icons/16_delete.png" /></a>
+				</tr>
+				<tr class="form_list_row">
+					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new price level" href="#"><img id="icon_customer_control_action_add_contact" src="img/icons/16_add.png" />add price level</a> </td>
+				</tr>
+			</table>
+	
+	
+		<table id="product_control_action">
+		<tr>
+		<td id="product_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_product_control_action_save" src="img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td id="product_control_action_new" class="form_cell"><a id="order_control_action_new" title="new" href="#" class="button form_button"><img id="icon_product_control_action_new" src="img/icons/32_new.png" /><br />new</a>&nbsp;</td>
+		<td id="product_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_product_control_action_cancel" src="img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+		</tr>
+		</table>
+	</fieldset>
+	</form>
+	</div>
+	<!-- End product_content -->
+	
+	
+</body>
+</html>
