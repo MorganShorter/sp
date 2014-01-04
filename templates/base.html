@@ -1,24 +1,32 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+{% load i18n %}
+{% block doctype %}<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html"
+      xml:lang="en" lang="en">
+{% endblock doctype %}
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-{% load compress %}
-{% compress css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-1.10.3.custom.css"> 
-{% endcompress %}
-<!--  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"> !--> 
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/stylesheet.css">
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/globalize.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/globalize.culture.en-AU.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.min.js"></script>
+<!--  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css"> !-->
+{% block stylesheet %}
+<!-- <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/stylesheet.css"> !-->
+{% include "stylesheet.html" %}
+{% endblock stylesheet %}
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/globalize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/globalize.culture.en-AU.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery.mousewheel.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.min.js"></script>
 <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/jquery.dropdownPlain.js"></script>
-{% compress js %}
-<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/app.js"></script>
-{% endcompress %}
+{% block javascript %}
+<!-- <script type="text/javascript" language="javascript" src="{{ STATIC_URL }}js/app.js"></script> !-->
+{% include "javascript.html" %}
+{% endblock javascript %}
 </head>
 <body>
 	<div id="container">
@@ -247,12 +255,12 @@
 		<table id="customer_main_options">
 		<tr>
 			<td id="customer_main_options_customer_id_td_label" class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
-			<td id="customer_main_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" value="{{ customer.id }}" /></td>
+			<td id="customer_main_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
 			<td id="customer_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a customer by ID" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">name:</label></td>
-			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.name }}"/></td>
+			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 			<td id="customer_main_options_customer_name_td_search" class="form_cell"><a id="customer_name_search" title="find a customer or company" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
@@ -264,35 +272,35 @@
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_registration_td_label" class="form_cell"><label for="customer_registration" class="form_label">ABN/ACN:</label></td>
-			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.registration }}"/></td>
+			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 			<td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address1_td_label" class="form_cell"><label for="customer_address1"  class="form_label">address 1:</label></td>
-			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.address_line_1 }}"/></td>
+			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 			<td id="customer_main_options_customer_address1_td_search" class="form_cell"><a id="customer_address1_search" title="search for address line 1" href="#" class="sml_button  button form_button"><img id="icon_customer_address1_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_telephone_td_label" class="form_cell"><label for="customer_phone"  class="form_label">phone:</label></td>
-			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" value="{{ customer.telephone }}"/></td>
+			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" /></td>
 			<td id="customer_main_options_customer_telephone_td_search" class="form_cell"><a id="customer_telephone_search" title="search by telephone" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address2_td_label" class="form_cell"><label for="customer_address2" class="form_label">address 2:</label></td>
-			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.address_line_2 }}"/></td>
+			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 			<td id="customer_main_options_customer_address2_td_search" class="form_cell"><a id="customer_address2_search" title="search for address line 2" href="#" class="sml_button  button form_button"><img id="icon_customer_address2_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_fax_td_label" class="form_cell"><label for="customer_fax"  class="form_label">fax:</label></td>
-			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" value="{{ customer.fax }}"/></td>
+			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" /></td>
 			<td id="customer_main_options_customer_fax_td_search" class="form_cell"><a id="customer_fax_search" title="search by fax number" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_suburb_td_label" class="form_cell"><label for="customer_suburb" class="form_label">suburb:</label></td>
-			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.suburb }}"/></td>
+			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 			<td id="customer_main_options_customer_suburb_td_search" class="form_cell"><a id="customer_suburb_search" title="search by suburb" href="#" class="sml_button  button form_button"><img id="icon_customer_suburb_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_email_td_label" class="form_cell"><label for="customer_email"  class="form_label">email:</label></td>
-			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" value="{{ customer.email }}"/></td>
+			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" /></td>
 			<td id="customer_main_options_customer_email_td_search" class="form_cell"><a id="customer_email_search" title="search by email" href="#" class="sml_button  button form_button"><img id="icon_customer_email_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
@@ -304,7 +312,7 @@
 				</select></td>		
 			<td colspan="2">&nbsp;</td>	
 			<td id="customer_main_options_customer_postcode_td_label" class="form_cell"><label for="customer_postcode" class="form_label">postcode:</label></td>
-			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.postcode }}"/></td>
+			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 			<td id="customer_main_options_customer_postcode_td_search" class="form_cell"><a id="customer_postcode_search" title="search for postcode" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		</table>
@@ -320,22 +328,22 @@
 			<table id="customer_main_options_delivery">
 			<tr>
 				<td id="customer_main_options_delivery_attn_td_label" class="form_cell"><label for="customer_delivery_attn" class="form_label">attn:</label></td>
-				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_attn }}"/></td>
+				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 				<td id="customer_main_options_delivery_attn_td_search" class="form_cell"><a id="customer_name_search" title="find a possible customer company contact"  href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address1_td_label" class="form_cell"><label for="customer_delivery_address1"  class="form_label">address 1:</label></td>
-				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_address_line_1 }}"/></td>
+				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address2_td_label" class="form_cell"><label for="customer_delivery_address2" class="form_label">address 2:</label></td>
-				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_address_line_2 }}"/></td>
+				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_suburb_td_label" class="form_cell"><label for="customer_delivery_suburb" class="form_label">suburb:</label></td>
-				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_suburb }}"/></td>
+				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
@@ -347,7 +355,7 @@
 					</select></td>		
 				<td>&nbsp;</td>	
 				<td id="customer_main_options_delivery_postcode_td_label" class="form_cell"><label for="customer_delivery_postcode" class="form_label">postcode:</label></td>
-				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_postcode }}"/></td>
+				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			</table>
@@ -356,7 +364,6 @@
 			<h3>Contacts</h3>
 			<div><p>		
 			<table id="customer_contact_items" class="form_list"> 
-                        {% for contact in customer_contacts %}
 				<tr class="form_list_row">			
 					<th id="customer_contact_items_first_name_th" class="form_list_header">First Name</th>
 					<th id="customer_contact_items_surname_th" class="form_list_header">Surname</th>
@@ -365,13 +372,12 @@
 					<th class="form_list_header">&nbsp;</th>
 				</tr>
 				<tr class="form_list_row">
-					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">{{ contact.first_name }}</td>
-					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">{{ contact.surname }}</td>
-					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">{{ contact.phone }}</td>
-					<td id="customer_contact_email_td_{ID}" class="form_list_item">{{ contact.email }}</td>
-					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{{contact.id}}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{{contact.id}}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
+					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">John</td>
+					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">Smith</td>
+					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">0406 843 934</td>
+					<td id="customer_contact_email_td_{ID}" class="form_list_item">name@email.com</td>
+					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
 				</tr>
-			{% endfor %}
 				<tr class="form_list_row">
 					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new item to order" href="#"><img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add contact</a> </td>
 				</tr>
