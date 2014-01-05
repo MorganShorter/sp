@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load mathfilters %}
 {% block doctype %}<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -185,10 +186,10 @@
 					<td id="order_product_item_cur_stock_td_{{ order_product.id }}" class="form_list_item">{{ order_product.product.current_stock }}</td>
 					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">{{ order_product.quantity }}</td>
 					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">{% if order_product.back_order %}<img src="{{ STATIC_URL }}img/icons/16_yes.png" /> {% else %}<img src="{{ STATIC_URL }}img/icons/16_no.png" />{% endif %}</td>
-					<td id="order_product_item_unit_price_td_{{ order_product.id }}" class="form_list_item">{{ order_product.unit_price }}</td>
+					<td id="order_product_item_unit_price_td_{{ order_product.id }}" class="form_list_item">${{ order_product.unit_price }}</td>
 					<td id="order_product_item_discount_percentage_td_{{ order_product.id }}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" value="{{ order_product.discount_percentage }}"/></td>
 					<td id="order_product_item_discount_percentage_td_{{ order_product.id }}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" {% if order_product.unit_tax %}value=true" checked{% else %}value="false"{% endif %} /></td>
-					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">order_product.quantity * order_product.unit_price</td>
+					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">${{ order_product.quantity|mul:order_product.unit_price }}</td>
 					<td id="order_product_item_delete_td_{{ order_product.id }}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
 				</tr>
 			{% endfor %}
@@ -217,20 +218,20 @@
 					<th id="order_product_summary_" class="form_list_header">Total Price</th>
 				</tr>
 				<tr class="form_list_row">
-					<td id="order_product_summary_">HC $10.25</td>
-					<td id="order_product_summary_">{{ order.sub_total }}</td>
-					<td id="order_product_summary_">HC $20.75</td>
-					<td id="order_product_summary_">{{ order.discount }}</td>
-					<td id="order_product_summary_">HC $5.25</td>
-					<td id="order_product_summary_">HC $10.50</td>
-					<td id="order_product_summary_">HC $15.75</td>
-					<td id="order_product_summary_">{{ order.tax }}</td>
-					<td id="order_product_summary_">HC $4.575</td>
-					<td id="order_product_summary_">HC $12.75</td>
-					<td id="order_product_summary_">HC $17.325</td>
-					<td id="order_product_summary_">{{ order.shipping_cost }}</td>
-					<td id="order_product_summary_">{{ order.total_cost }}</td>
-					<td id="order_product_summary_">HC $24.825</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost }}</td>
+					<td id="order_product_summary_">${{ order.sp_cost }}</td>
+					<td id="order_product_summary_">${{ order.sub_total }}</td>
+					<td id="order_product_summary_">${{ order.discount }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|add:order.discount }}</td>
+					<td id="order_product_summary_">${{ order.sp_cost|add:order.discount }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.discount }}</td>
+					<td id="order_product_summary_">${{ order.tax }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|add:order.discount|add:order.tax }}</td>
+					<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax }}</td>
+					<td id="order_product_summary_">${{ order.shipping_cost }}</td>
+					<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</td>
 				</tr>
 				</table>
 				</div>
