@@ -141,21 +141,22 @@
 			<table id="order_detail_options">
 			<tr>
 				<td id="order_detail_options_order_date_td_label" class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
-				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value="{{ order.order_date }}"/></td>
+				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value="{{ order.order_date|date:"d/m/Y" }}"/></td>
 				<td>&nbsp;</td>
 				<td id="order_detail_options_order_company_td_label" class="form_cell"><label for="order_order_company" class="form_label">invoicing company<label></td>
 				<td id="order_detail_options_order_company_td_input" class="form_cell">
 				<div class="ui-widget">
 				<select id="order_order_company" name="order_order_company" title="which company is responsible for this order?" class="text ui-widget-content ui-corner-all form_input">
-				  <option value="smartpractice">SmartPractice</option>
-				  <option value="smartmethods">SmartMethods</option>
+				  <option value="" {% if not order_invoice %}selected{% endif %}></option>
+				  <option value="1" {% if order_invoice and order_invoice.company_id == 1 %}selected{% endif %}>SmartPractice</option>
+				  <option value="2" {% if order_invoice and order_invoice.company_id == 2 %}selected{% endif %}>SmartMethods</option>
 				</select></td>
 				<td>&nbsp;</td>
 				</div>
 			</tr>
 			<tr>
 				<td id="order_detail_options_wanted_by_td_label" class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
-				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" value="{{ order.wanted_by }}"/></td>
+				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" value="{{ order.wanted_by|date:"d/m/Y" }}"/></td>
 				<td>&nbsp;</td>
 				<td id="order_detail_options_shipping_cost_td_label" class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
 				<td id="order_detail_options_shipping_cost_td_input" class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" value="{{ order.shipping_cost }}"/> </td>
