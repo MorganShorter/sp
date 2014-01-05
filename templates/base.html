@@ -111,18 +111,27 @@
 			<table id="order_main_options">
 			<tr>
 				<td id="order_main_options_customer_id_td_label" class="form_cell" ><label for="order_customer_id" class="form_label">customer ID:</label></td>
-				<td id="order_main_options_customer_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="order_main_options_customer_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ order.customer.id }}"/></td>
 				<td id="order_main_options_customer_id_td_search" class="form_cell"><a id="order_customer_id_search" title="find a customer or company" href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
-				<td id="order_main_options_customer_details" colspan="3" rowspan="3"><div id="order_main_options_customer_details_content">Customer Details<div id="order_main_options_customer_details_content_addressblock">Customer_Address</div><br />Customer_Name<br />Customer_Contact1_Name Customer_Contact1_Phone<br />Customer_Contact2_Name Customer_Contact2_Phone</div></td>
+				<td id="order_main_options_customer_details" colspan="3" rowspan="3"><div id="order_main_options_customer_details_content">Customer Details<div id="order_main_options_customer_details_content_addressblock">{{ order.shipping_attn }}<br />
+           {{ order.shipping_address_line_1 }}<br />
+           {{ order.shipping_address_line_2 }}<br />
+           {{ order.shipping_suburb }}, {{ order.shipping_postcode }}, {{ order.shipping_state }}<br />
+           {{ order.shipping_country }}</div><br />
+           {{ order.customer.name }}
+	{% for contact in order.customer.contacts.all %}
+		<br />{{ contact.first_name }} {{ contact.surname }} {{ contact.phone }}
+	{% endfor %}
+	</div></td>
 			</tr>
 			<tr>
 				<td id="order_main_options_order_id_td_label" class="form_cell"><label for="order_order_id"  class="form_label">order ID:</label></td>
-				<td id="order_main_options_order_id_td_input" class="form_cell"><input type="text" name="order_order_id" id="order_order_id" title="the order id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="order_main_options_order_id_td_input" class="form_cell"><input type="text" name="order_order_id" id="order_order_id" title="the order id" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ order.id }}"/></td>
 				<td id="order_main_options_order_id_td_search" class="form_cell"><a id="order_order_id_search" title="find an order" href="#" class="button form_button"><img id="icon_order_order_id_search" src="{{ STATIC_URL }}img/icons/16_find_order.png" /></a></td>
 			</tr>
 			<tr>
 				<td id="order_main_options_invoice_id_td_label" class="form_cell"><label for="search" class="form_label">invoice ID:</label></td>
-				<td id="order_main_options_invoice_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_invoice_id" title="the invoice id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="order_main_options_invoice_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_invoice_id" title="the invoice id" class="text ui-widget-content ui-corner-all form_input" readonly value="{% if order_invoice %}{{ order_invoice.id }}{% endif %}"/></td>
 				<td id="order_main_options_invoice_id_td_search" class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/16_find_invoice.png" /></a></td>
 			</tr>
 			</table>
@@ -132,7 +141,7 @@
 			<table id="order_detail_options">
 			<tr>
 				<td id="order_detail_options_order_date_td_label" class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
-				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" /></td>
+				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value="{{ order.order_date }}"/></td>
 				<td>&nbsp;</td>
 				<td id="order_detail_options_order_company_td_label" class="form_cell"><label for="order_order_company" class="form_label">invoicing company<label></td>
 				<td id="order_detail_options_order_company_td_input" class="form_cell">
@@ -146,10 +155,10 @@
 			</tr>
 			<tr>
 				<td id="order_detail_options_wanted_by_td_label" class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
-				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" /></td>
+				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" value="{{ order.wanted_by }}"/></td>
 				<td>&nbsp;</td>
 				<td id="order_detail_options_shipping_cost_td_label" class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
-				<td id="order_detail_options_shipping_cost_td_input" class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /> </td>
+				<td id="order_detail_options_shipping_cost_td_input" class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" value="{{ order.shipping_cost }}"/> </td>
 				<td>&nbsp;</td>
 			</tr>
 			</table>
@@ -162,35 +171,26 @@
 					<th id="order_product_items_product_code_th" class="form_list_header">Item Code</th>
 					<th id="order_product_items_cur_stock_th" class="form_list_header">In Stock</th>
 					<th id="order_product_items_quantity_th" class="form_list_header">Quantity Out</th>
-					<th id="order_product_items_back_order_th" class="form_list_header">BO</th>				
+					<th id="order_product_items_back_order_th" class="form_list_header">BO</th>
 					<th id="order_product_items_unit_price_th" class="form_list_header">$ EA</th>
 					<th id="order_product_items_discount_percentage_th" class="form_list_header">Discount</th>
 					<th id="order_product_items_TAX_th" class="form_list_header">TAX</th>
 					<th id="order_product_items_total_th" class="form_list_header">Item Total</th>
 					<th id="order_product_items_delete_th" class="form_list_header">&nbsp;</th>
 				</tr>
+			{% for order_product in order.orderproduct_set.all %}
 				<tr class="form_list_row">
-					<td id="order_product_item_product_code_td_{ID}" class="form_list_item">MT5 </td>
-					<td id="order_product_item_cur_stock_td_{ID}" class="form_list_item">251</td>
-					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">2</td>
-					<td id="order_product_item_quantity_td_{ID}" class="form_list_item"><img src="{{ STATIC_URL }}img/icons/16_no.png" /></td>
-					<td id="order_product_item_unit_price_td_{ID}" class="form_list_item">$22.00</td>
-					<td id="order_product_item_discount_percentage_td_{ID}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" /></td>
-					<td id="order_product_item_discount_percentage_td_{ID}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" value="true" checked /></td>
-					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">$00.00</td>
-					<td id="order_product_item_delete_td_{ID}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
+					<td id="order_product_item_product_code_td_{{ order_product.id }}" class="form_list_item">{{ order_product.product.code }}</td>
+					<td id="order_product_item_cur_stock_td_{{ order_product.id }}" class="form_list_item">{{ order_product.product.current_stock }}</td>
+					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">{{ order_product.quantity }}</td>
+					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">{% if order_product.back_order %}<img src="{{ STATIC_URL }}img/icons/16_yes.png" /> {% else %}<img src="{{ STATIC_URL }}img/icons/16_no.png" />{% endif %}</td>
+					<td id="order_product_item_unit_price_td_{{ order_product.id }}" class="form_list_item">{{ order_product.unit_price }}</td>
+					<td id="order_product_item_discount_percentage_td_{{ order_product.id }}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" value="{{ order_product.discount_percentage }}"/></td>
+					<td id="order_product_item_discount_percentage_td_{{ order_product.id }}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" {% if order_product.unit_tax %}value=true" checked{% else %}value="false"{% endif %} /></td>
+					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">order_product.quantity * order_product.unit_price</td>
+					<td id="order_product_item_delete_td_{{ order_product.id }}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
 				</tr>
-				<tr class="form_list_row">
-					<td id="order_product_item_product_code_td_{ID2}" class="form_list_item">PC-02534</td>
-					<td id="order_product_item_cur_stock_td_{ID2}" class="form_list_item"><span title="there is currently 50 in stock">50</span></td>
-					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item">500</td>
-					<td id="order_product_item_quantity_td_{ID2}" class="form_list_item"><img title="this line item appears to be backordered, there is a difference of 450 between quantity in stock and the order amount" src="{{ STATIC_URL }}img/icons/16_yes.png" /></td>
-					<td id="order_product_item_unit_price_td_{ID2}" class="form_list_item">$0.46</td>
-					<td id="order_product_item_discount_percentage_td_{ID2}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID2" title="discount percentage or amount, if any" class="text ui-widget-content ui-corner-all form_input" /></td>
-					<td id="order_product_item_discount_percentage_td_{ID2}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID2}" value="true" checked /></td>
-					<td id="order_product_item_quantity_td_{ID}" class="form_list_item">$00.00</td>
-					<td id="order_product_item_delete_td_{ID2}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
-				</tr>
+			{% endfor %}
 				<tr class="form_list_row">
 					<td colspan="9" class="form_list_item"><a id="order_control_action_add" title="add new item to order" href="#"><img id="icon_order_control_action_add" src="{{ STATIC_URL }}img/icons/16_add.png" />add item</a> </td>
 				</tr>
@@ -206,7 +206,7 @@
 					<th id="order_product_summary_" class="form_list_header">Disc</th>
 					<th id="order_product_summary_" class="form_list_header">Gross Profit</th>
 					<th id="order_product_summary_" class="form_list_header">Gross Cost</th>
-					<th id="order_product_summary_" class="form_list_header">Gross Price</th>				
+					<th id="order_product_summary_" class="form_list_header">Gross Price</th>
 					<th id="order_product_summary_" class="form_list_header">Tax</th>
 					<th id="order_product_summary_" class="form_list_header">Net Profit</th>
 					<th id="order_product_summary_" class="form_list_header">Net Cost</th>
@@ -216,20 +216,20 @@
 					<th id="order_product_summary_" class="form_list_header">Total Price</th>
 				</tr>
 				<tr class="form_list_row">
-					<td id="order_product_summary_">$10.25</td>	
-					<td id="order_product_summary_">$10.50</td>
-					<td id="order_product_summary_">$20.75</td>
-					<td id="order_product_summary_">$5.00</td>
-					<td id="order_product_summary_">$5.25</td>
-					<td id="order_product_summary_">$10.50</td>
-					<td id="order_product_summary_">$15.75</td>				
-					<td id="order_product_summary_">$1.575</td>
-					<td id="order_product_summary_">$4.575</td>
-					<td id="order_product_summary_">$12.75</td>
-					<td id="order_product_summary_">$17.325</td>
-					<td id="order_product_summary_">$7.50</td>
-					<td id="order_product_summary_">$20.25</td>
-					<td id="order_product_summary_">$24.825</td>								
+					<td id="order_product_summary_">HC $10.25</td>
+					<td id="order_product_summary_">{{ order.sub_total }}</td>
+					<td id="order_product_summary_">HC $20.75</td>
+					<td id="order_product_summary_">{{ order.discount }}</td>
+					<td id="order_product_summary_">HC $5.25</td>
+					<td id="order_product_summary_">HC $10.50</td>
+					<td id="order_product_summary_">HC $15.75</td>
+					<td id="order_product_summary_">{{ order.tax }}</td>
+					<td id="order_product_summary_">HC $4.575</td>
+					<td id="order_product_summary_">HC $12.75</td>
+					<td id="order_product_summary_">HC $17.325</td>
+					<td id="order_product_summary_">{{ order.shipping_cost }}</td>
+					<td id="order_product_summary_">{{ order.total_cost }}</td>
+					<td id="order_product_summary_">HC $24.825</td>
 				</tr>
 				</table>
 				</div>
@@ -255,12 +255,12 @@
 		<table id="customer_main_options">
 		<tr>
 			<td id="customer_main_options_customer_id_td_label" class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
-			<td id="customer_main_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
+			<td id="customer_main_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" value="{{ customer.id }}" /></td>
 			<td id="customer_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a customer by ID" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">name:</label></td>
-			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.name }}" /></td>
 			<td id="customer_main_options_customer_name_td_search" class="form_cell"><a id="customer_name_search" title="find a customer or company" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
@@ -272,47 +272,54 @@
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_registration_td_label" class="form_cell"><label for="customer_registration" class="form_label">ABN/ACN:</label></td>
-			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.registration }}"/></td>
 			<td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address1_td_label" class="form_cell"><label for="customer_address1"  class="form_label">address 1:</label></td>
-			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.address_line_1 }}" /></td>
 			<td id="customer_main_options_customer_address1_td_search" class="form_cell"><a id="customer_address1_search" title="search for address line 1" href="#" class="sml_button  button form_button"><img id="icon_customer_address1_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_telephone_td_label" class="form_cell"><label for="customer_phone"  class="form_label">phone:</label></td>
-			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" value="{{ customer.telephone }}" /></td>
 			<td id="customer_main_options_customer_telephone_td_search" class="form_cell"><a id="customer_telephone_search" title="search by telephone" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address2_td_label" class="form_cell"><label for="customer_address2" class="form_label">address 2:</label></td>
-			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.address_line_2 }}" /></td>
 			<td id="customer_main_options_customer_address2_td_search" class="form_cell"><a id="customer_address2_search" title="search for address line 2" href="#" class="sml_button  button form_button"><img id="icon_customer_address2_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_fax_td_label" class="form_cell"><label for="customer_fax"  class="form_label">fax:</label></td>
-			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" value="{{ customer.fax }}" /></td>
 			<td id="customer_main_options_customer_fax_td_search" class="form_cell"><a id="customer_fax_search" title="search by fax number" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_suburb_td_label" class="form_cell"><label for="customer_suburb" class="form_label">suburb:</label></td>
-			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.suburb }}" /></td>
 			<td id="customer_main_options_customer_suburb_td_search" class="form_cell"><a id="customer_suburb_search" title="search by suburb" href="#" class="sml_button  button form_button"><img id="icon_customer_suburb_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_email_td_label" class="form_cell"><label for="customer_email"  class="form_label">email:</label></td>
-			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" value="{{ customer.email }}" /></td>
 			<td id="customer_main_options_customer_email_td_search" class="form_cell"><a id="customer_email_search" title="search by email" href="#" class="sml_button  button form_button"><img id="icon_customer_email_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_state_td_label" class="form_cell"><label for="customer_state" class="form_label">state</label></td>
 			<td id="customer_main_options_customer_state_td_input" class="form_cell">
 				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input">
-				  <option value="vic">Victoria</option>
-				  <option value="nsw">New South Wales</option>
+				  <option value="ACT" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Australian Capital Territory</option>
+				  <option value="NSW" {% ifequal customer.state "ACT"%}selected{% endifequal %}>New South Wales</option>
+				  <option value="NT" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Northern Territory</option>
+				  <option value="OS" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Overseas/Other</option>
+				  <option value="QLD" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Queensland</option>
+				  <option value="SA" {% ifequal customer.state "ACT"%}selected{% endifequal %}>South Australia</option>
+				  <option value="TAS" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Tasmania</option>
+				  <option value="VIC" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Victoria</option>
+				  <option value="WA" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Western Australia</option>
 				</select></td>		
 			<td colspan="2">&nbsp;</td>	
 			<td id="customer_main_options_customer_postcode_td_label" class="form_cell"><label for="customer_postcode" class="form_label">postcode:</label></td>
-			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.postcode }}"/></td>
 			<td id="customer_main_options_customer_postcode_td_search" class="form_cell"><a id="customer_postcode_search" title="search for postcode" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		</table>
@@ -328,34 +335,41 @@
 			<table id="customer_main_options_delivery">
 			<tr>
 				<td id="customer_main_options_delivery_attn_td_label" class="form_cell"><label for="customer_delivery_attn" class="form_label">attn:</label></td>
-				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_attn }}"/></td>
 				<td id="customer_main_options_delivery_attn_td_search" class="form_cell"><a id="customer_name_search" title="find a possible customer company contact"  href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address1_td_label" class="form_cell"><label for="customer_delivery_address1"  class="form_label">address 1:</label></td>
-				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_address_line_1 }}" /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address2_td_label" class="form_cell"><label for="customer_delivery_address2" class="form_label">address 2:</label></td>
-				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_address_line_2 }}" /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_suburb_td_label" class="form_cell"><label for="customer_delivery_suburb" class="form_label">suburb:</label></td>
-				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_suburb }}"/></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_state_td_label" class="form_cell"><label for="customer_delivery_state" class="form_label">state</label></td>
 				<td id="customer_main_options_delivery_state_td_input" class="form_cell">
 					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input">
-					  <option value="vic">Victoria</option>
-					  <option value="nsw">New South Wales</option>
+					  <option value="ACT" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Australian Capital Territory</option>
+					  <option value="NSW" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>New South Wales</option>
+					  <option value="NT" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Northern Territory</option>
+					  <option value="OS" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Overseas/Other</option>
+					  <option value="QLD" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Queensland</option>
+					  <option value="SA" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>South Australia</option>
+					  <option value="TAS" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Tasmania</option>
+					  <option value="VIC" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Victoria</option>
+					  <option value="WA" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Western Australia</option>
 					</select></td>		
 				<td>&nbsp;</td>	
 				<td id="customer_main_options_delivery_postcode_td_label" class="form_cell"><label for="customer_delivery_postcode" class="form_label">postcode:</label></td>
-				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly /></td>
+				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="{{ customer.delivery_postcode }}" /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			</table>
@@ -371,13 +385,15 @@
 					<th id="customer_contact_items_email_th" class="form_list_header">Email</th>
 					<th class="form_list_header">&nbsp;</th>
 				</tr>
-				<tr class="form_list_row">
-					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">John</td>
-					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">Smith</td>
-					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">0406 843 934</td>
-					<td id="customer_contact_email_td_{ID}" class="form_list_item">name@email.com</td>
-					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
-				</tr>
+				{% for contact in customer.contacts.all %}
+					<tr class="form_list_row">
+						<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">{{ contact.first_name }}</td>
+						<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">{{ contact.surname }}</td>
+						<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">{{ contact.phone }}</td>
+						<td id="customer_contact_email_td_{ID}" class="form_list_item">{{ contact.email }}</td>
+						<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
+					</tr>
+				{% endfor %}
 				<tr class="form_list_row">
 					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new item to order" href="#"><img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add contact</a> </td>
 				</tr>

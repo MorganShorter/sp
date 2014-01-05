@@ -4,7 +4,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('frontend.views',
     #url(r'^customer/(?P<id>\d+)/$', 'customer_detail'),
-    url(r'^customer/(?P<customer_id>\d+)/#?$', 'customer_detail'),
+    url(r'^customer/(?P<customer_id>\d+)/?#?$', 'customer_detail'),
+    url(r'^order/(?P<order_id>\d+)/?#?$', 'order_detail'),
 )
 
 urlpatterns += patterns('',
