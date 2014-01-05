@@ -189,7 +189,7 @@
 					<td id="order_product_item_unit_price_td_{{ order_product.id }}" class="form_list_item">${{ order_product.unit_price }}</td>
 					<td id="order_product_item_discount_percentage_td_{{ order_product.id }}" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" value="{{ order_product.discount_percentage }}"/></td>
 					<td id="order_product_item_discount_percentage_td_{{ order_product.id }}" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" {% if order_product.unit_tax %}value=true" checked{% else %}value="false"{% endif %} /></td>
-					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">${{ order_product.quantity|mul:order_product.unit_price }}</td>
+					<td id="order_product_item_quantity_td_{{ order_product.id }}" class="form_list_item">${{ order_product.quantity|mul:order_product.unit_price|sub:order_product.discount_price }}</td>
 					<td id="order_product_item_delete_td_{{ order_product.id }}" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
 				</tr>
 			{% endfor %}
