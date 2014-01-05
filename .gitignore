@@ -12,6 +12,9 @@ sp/local_settings.py
 # django admin symlink
 static/admin
 ./static/admin
+# compressed assets
+static/compressed
+./static/compressed
 
 # Webserver
 apache2
