@@ -1,6 +1,30 @@
 {% load compress %}
 {% compress js %}
 <script type="text/javascript" language="javascript">
+$(document).ready(function() {
+	$.ajax({
+		url: '/lookup/states',
+		type: 'GET',
+		dataType: 'json',
+		headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+		success: function(json) {
+			console.log('success for /lookup/states; json:');
+			console.log(json);
+			$.each(json, function(k, v) {
+				$('#customer_state').append(new Option(v, k));
+				$('#customer_delivery_state').append(new Option(v, k));
+			});
+		},
+		error: function(xhr, status) {
+			console.log('ajax request for /lookup/states FAILED! status:');
+			console.log(status);
+		},
+		complete: function(xhr, status) {
+			console.log('ajax request for /lookup/states is complete');
+		}
+	});
+});
+
 $(function () {
     $('#customer_delivery_address_same').live("click", function () {
         if ($('#customer_delivery_address_same').prop("checked")) {

@@ -222,11 +222,11 @@
 					<td id="order_product_summary_">${{ order.sp_cost }}</td>
 					<td id="order_product_summary_">${{ order.sub_total }}</td>
 					<td id="order_product_summary_">${{ order.discount }}</td>
-					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|add:order.discount }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</td>
 					<td id="order_product_summary_">${{ order.sp_cost|add:order.discount }}</td>
 					<td id="order_product_summary_">${{ order.sub_total|sub:order.discount }}</td>
 					<td id="order_product_summary_">${{ order.tax }}</td>
-					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|add:order.discount|add:order.tax }}</td>
+					<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</td>
 					<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax }}</td>
 					<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax }}</td>
 					<td id="order_product_summary_">${{ order.shipping_cost }}</td>
@@ -309,15 +309,6 @@
 			<td id="customer_main_options_customer_state_td_label" class="form_cell"><label for="customer_state" class="form_label">state</label></td>
 			<td id="customer_main_options_customer_state_td_input" class="form_cell">
 				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input">
-				  <option value="ACT" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Australian Capital Territory</option>
-				  <option value="NSW" {% ifequal customer.state "ACT"%}selected{% endifequal %}>New South Wales</option>
-				  <option value="NT" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Northern Territory</option>
-				  <option value="OS" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Overseas/Other</option>
-				  <option value="QLD" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Queensland</option>
-				  <option value="SA" {% ifequal customer.state "ACT"%}selected{% endifequal %}>South Australia</option>
-				  <option value="TAS" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Tasmania</option>
-				  <option value="VIC" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Victoria</option>
-				  <option value="WA" {% ifequal customer.state "ACT"%}selected{% endifequal %}>Western Australia</option>
 				</select></td>		
 			<td colspan="2">&nbsp;</td>	
 			<td id="customer_main_options_customer_postcode_td_label" class="form_cell"><label for="customer_postcode" class="form_label">postcode:</label></td>
@@ -359,15 +350,6 @@
 				<td id="customer_main_options_delivery_state_td_label" class="form_cell"><label for="customer_delivery_state" class="form_label">state</label></td>
 				<td id="customer_main_options_delivery_state_td_input" class="form_cell">
 					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input">
-					  <option value="ACT" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Australian Capital Territory</option>
-					  <option value="NSW" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>New South Wales</option>
-					  <option value="NT" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Northern Territory</option>
-					  <option value="OS" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Overseas/Other</option>
-					  <option value="QLD" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Queensland</option>
-					  <option value="SA" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>South Australia</option>
-					  <option value="TAS" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Tasmania</option>
-					  <option value="VIC" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Victoria</option>
-					  <option value="WA" {% ifequal customer.delivery_state "ACT"%}selected{% endifequal %}>Western Australia</option>
 					</select></td>		
 				<td>&nbsp;</td>	
 				<td id="customer_main_options_delivery_postcode_td_label" class="form_cell"><label for="customer_delivery_postcode" class="form_label">postcode:</label></td>
