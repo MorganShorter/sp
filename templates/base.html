@@ -98,7 +98,7 @@
 	<div id="order_footer">
 	</div>
 	</div>
-	<!--- End container --->
+	<!--- End container -->
 	</div>
 	<div id="avator">
 	<img id="avator_img" src="{{ STATIC_URL }}img/100_avator.png" />
@@ -108,11 +108,14 @@
 	<div id="order_content">
 	<form id="frm_order">
 	<fieldset>
+			<input type="hidden" name="order_from_borders_fakeid" data-field="from_borders_fakeid" data-type="integer" value="" />
+			<input type="hidden" name="order_slug" data-field="slug" value="" />
+			<input type="hidden" name="order_from_src_order_id" data-field="from_src_order_id" data-type="integer" value="" />
 
 			<table id="order_main_options">
 			<tr>
 				<td id="order_main_options_customer_id_td_label" class="form_cell" ><label for="order_customer_id" class="form_label">customer ID:</label></td>
-				<td id="order_main_options_customer_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+				<td id="order_main_options_customer_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="customer" data-type="integer" /></td>
 				<td id="order_main_options_customer_id_td_search" class="form_cell"><a id="order_customer_id_search" title="find a customer or company" href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 				<td id="order_main_options_customer_details" colspan="3" rowspan="3"><div id="order_main_options_customer_details_content">Customer Details<div id="order_main_options_customer_details_content_addressblock">ADDRESS BLOCK HERE
            </div><br />
@@ -122,7 +125,7 @@
 			</tr>
 			<tr>
 				<td id="order_main_options_order_id_td_label" class="form_cell"><label for="order_order_id"  class="form_label">order ID:</label></td>
-				<td id="order_main_options_order_id_td_input" class="form_cell"><input type="text" name="order_order_id" id="order_order_id" title="the order id" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+				<td id="order_main_options_order_id_td_input" class="form_cell"><input type="text" name="order_order_id" id="order_order_id" title="the order id" class="text ui-widget-content ui-corner-all form_input" value=""/></td>
 				<td id="order_main_options_order_id_td_search" class="form_cell"><a id="order_order_id_search" title="find an order" href="#" class="button form_button"><img id="icon_order_order_id_search" src="{{ STATIC_URL }}img/icons/16_find_order.png" /></a></td>
 			</tr>
 			<tr>
@@ -137,25 +140,25 @@
 			<table id="order_detail_options">
 			<tr>
 				<td id="order_detail_options_order_date_td_label" class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
-				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value=""/></td>
+				<td id="order_detail_options_order_date_td_input" class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value="" data-field="order_date" /></td>
 				<td>&nbsp;</td>
 				<td id="order_detail_options_order_company_td_label" class="form_cell"><label for="order_order_company" class="form_label">invoicing company<label></td>
 				<td id="order_detail_options_order_company_td_input" class="form_cell">
 				<div class="ui-widget">
 				<select id="order_order_company" name="order_order_company" title="which company is responsible for this order?" class="text ui-widget-content ui-corner-all form_input">
-				  <option value="" {% if not order_invoice %}selected{% endif %}></option>
-				  <option value="1" {% if order_invoice and order_invoice.company_id == 1 %}selected{% endif %}>SmartPractice</option>
-				  <option value="2" {% if order_invoice and order_invoice.company_id == 2 %}selected{% endif %}>SmartMethods</option>
+				  <option value=""></option>
+				  <option value="1">SmartPractice</option>
+				  <option value="2">SmartMethods</option>
 				</select></td>
 				<td>&nbsp;</td>
 				</div>
 			</tr>
 			<tr>
 				<td id="order_detail_options_wanted_by_td_label" class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
-				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" value=""/></td>
+				<td id="order_detail_options_wanted_by_td_input" class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" value="" data-field="wanted_by" /></td>
 				<td>&nbsp;</td>
 				<td id="order_detail_options_shipping_cost_td_label" class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
-				<td id="order_detail_options_shipping_cost_td_input" class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" value=""/> </td>
+				<td id="order_detail_options_shipping_cost_td_input" class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" value="" data-field="shipping_cost" /> </td>
 				<td>&nbsp;</td>
 			</tr>
 			</table>
@@ -175,7 +178,6 @@
 					<th id="order_product_items_total_th" class="form_list_header">Item Total</th>
 					<th id="order_product_items_delete_th" class="form_list_header">&nbsp;</th>
 				</tr>
-			{% for order_product in order.orderproduct_set.all %}
 				<tr class="form_list_row">
 					<td id="order_product_item_product_code_td_" class="form_list_item"></td>
 					<td id="order_product_item_cur_stock_td_" class="form_list_item"></td>
@@ -187,7 +189,6 @@
 					<td id="order_product_item_quantity_td_" class="form_list_item">order_product.quantity|mul:order_product.unit_price|sub:order_product.discount_price</td>
 					<td id="order_product_item_delete_td_" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
 				</tr>
-			{% endfor %}
 				<tr class="form_list_row">
 					<td colspan="9" class="form_list_item"><a id="order_control_action_add" title="add new item to order" href="#"><img id="icon_order_control_action_add" src="{{ STATIC_URL }}img/icons/16_add.png" />add item</a> </td>
 				</tr>
@@ -249,6 +250,12 @@
 	<div id="customer_content">
 	<form id="frm_customer">
 	<fieldset>
+		<!-- non modifiable customer fields -->
+		<input type="hidden" name="customer_country" id="customer_country" value="" data-field="country" />
+		<input type="hidden" name="customer_delivery_country" id="customer_delivery_country" value="" data-field="delivery_country" />
+		<input type="hidden" name="customer_from_src_company_id" id="customer_from_src_company_id" value="" data-field="from_src_company_id" data-type="integer" />
+		<input type="hidden" name="customer_from_src_membadd_id" id="customer_from_src_membadd_id" value="" data-field="from_src_membadd_id" data-type="integer" />
+		<input type="hidden" name="customer_slug" id="customer_slug" value="" data-field="slug" />
 		<table id="customer_main_options">
 		<tr>
 			<td id="customer_main_options_customer_id_td_label" class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
@@ -257,12 +264,12 @@
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">name:</label></td>
-			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+			<td id="customer_main_options_customer_name_td_input" class="form_cell"><input type="text" name="customer_name" id="customer_name" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="name"/></td>
 			<td id="customer_main_options_customer_name_td_search" class="form_cell"><a id="customer_name_search" title="find a customer or company" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
 			<td id="customer_main_options_customer_type_td_input" class="form_cell">
-				<input type="text" name="customer_type" id="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input" readonly value="" />
+				<input type="text" name="customer_type" id="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="customer_type" />
 <!--				<select id="customer_type" name="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
 				  <option value="vet">VET</option>
 				  <option value="chiro">Chiro</option>
@@ -270,45 +277,45 @@
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_registration_td_label" class="form_cell"><label for="customer_registration" class="form_label">ABN/ACN:</label></td>
-			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+			<td id="customer_main_options_customer_registration_td_input" class="form_cell"><input type="text" name="customer_registration" id="customer_registration" title="the company ABN (australian business number) or ACN (australian company number) or relevant registration" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="registration"/></td>
 			<td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address1_td_label" class="form_cell"><label for="customer_address1"  class="form_label">address 1:</label></td>
-			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+			<td id="customer_main_options_customer_address1_td_input" class="form_cell"><input type="text" name="customer_address1" id="customer_address1" title="the first line of customer address, address line 1" class="text ui-widget-content ui-corner-all form_input" value="" data-field="address_line_1" /></td>
 			<td id="customer_main_options_customer_address1_td_search" class="form_cell"><a id="customer_address1_search" title="search for address line 1" href="#" class="sml_button  button form_button"><img id="icon_customer_address1_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_telephone_td_label" class="form_cell"><label for="customer_phone"  class="form_label">phone:</label></td>
-			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" value="" /></td>
+			<td id="customer_main_options_customer_telephone_td_input" class="form_cell"><input type="text" name="customer_phone" id="customer_phone" title="customers primary phone number" class="text ui-widget-content ui-corner-all form_input" value="" data-field="telephone" /></td>
 			<td id="customer_main_options_customer_telephone_td_search" class="form_cell"><a id="customer_telephone_search" title="search by telephone" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>			
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_address2_td_label" class="form_cell"><label for="customer_address2" class="form_label">address 2:</label></td>
-			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+			<td id="customer_main_options_customer_address2_td_input" class="form_cell"><input type="text" name="customer_address2" id="customer_address2" title="the second line of customer address, address line 2" class="text ui-widget-content ui-corner-all form_input" value="" data-field="address_line_2" /></td>
 			<td id="customer_main_options_customer_address2_td_search" class="form_cell"><a id="customer_address2_search" title="search for address line 2" href="#" class="sml_button  button form_button"><img id="icon_customer_address2_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_fax_td_label" class="form_cell"><label for="customer_fax"  class="form_label">fax:</label></td>
-			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" value="" /></td>
+			<td id="customer_main_options_customer_fax_td_input" class="form_cell"><input type="text" name="customer_fax" id="customer_fax" title="customer fax number" class="text ui-widget-content ui-corner-all form_input" value="" data-field="fax" /></td>
 			<td id="customer_main_options_customer_fax_td_search" class="form_cell"><a id="customer_fax_search" title="search by fax number" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_suburb_td_label" class="form_cell"><label for="customer_suburb" class="form_label">suburb:</label></td>
-			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+			<td id="customer_main_options_customer_suburb_td_input" class="form_cell"><input type="text" name="customer_suburb" id="customer_suburb" title="customers suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="suburb" /></td>
 			<td id="customer_main_options_customer_suburb_td_search" class="form_cell"><a id="customer_suburb_search" title="search by suburb" href="#" class="sml_button  button form_button"><img id="icon_customer_suburb_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 			<td>&nbsp;</td>
 			<td id="customer_main_options_customer_email_td_label" class="form_cell"><label for="customer_email"  class="form_label">email:</label></td>
-			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" value="" /></td>
+			<td id="customer_main_options_customer_email_td_input" class="form_cell"><input type="text" name="customer_email" id="customer_email" title="customers email" class="text ui-widget-content ui-corner-all form_input" value="" data-field="email" /></td>
 			<td id="customer_main_options_customer_email_td_search" class="form_cell"><a id="customer_email_search" title="search by email" href="#" class="sml_button  button form_button"><img id="icon_customer_email_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		<tr>
 			<td id="customer_main_options_customer_state_td_label" class="form_cell"><label for="customer_state" class="form_label">state</label></td>
 			<td id="customer_main_options_customer_state_td_input" class="form_cell">
-				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input">
+				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input" data-field="state">
 				</select></td>		
 			<td colspan="2">&nbsp;</td>	
 			<td id="customer_main_options_customer_postcode_td_label" class="form_cell"><label for="customer_postcode" class="form_label">postcode:</label></td>
-			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+			<td id="customer_main_options_customer_postcode_td_input" class="form_cell"><input type="text" name="customer_postcode" id="customer_postcode" title="the customers postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="postcode" /></td>
 			<td id="customer_main_options_customer_postcode_td_search" class="form_cell"><a id="customer_postcode_search" title="search for postcode" href="#" class="sml_button button form_button"><img id="icon_customer_postcode_search" src="{{ STATIC_URL }}img/icons/16_find.png" /></a></td>
 		</tr>
 		</table>
@@ -324,32 +331,32 @@
 			<table id="customer_main_options_delivery">
 			<tr>
 				<td id="customer_main_options_delivery_attn_td_label" class="form_cell"><label for="customer_delivery_attn" class="form_label">attn:</label></td>
-				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+				<td id="customer_main_options_delivery_attn_td_input" class="form_cell"><input type="text" name="customer_delivery_attn" id="customer_delivery_attn" title="person whom this delivery should be attentioned to" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="delivery_attn"/></td>
 				<td id="customer_main_options_delivery_attn_td_search" class="form_cell"><a id="customer_name_search" title="find a possible customer company contact"  href="#" class="button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address1_td_label" class="form_cell"><label for="customer_delivery_address1"  class="form_label">address 1:</label></td>
-				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+				<td id="customer_main_options_delivery_address1_td_input" class="form_cell"><input type="text" name="customer_delivery_address1" id="customer_delivery_address1" title="the first line of delivery address, delivery address line 1" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="delivery_address_line_1" /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_address2_td_label" class="form_cell"><label for="customer_delivery_address2" class="form_label">address 2:</label></td>
-				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+				<td id="customer_main_options_delivery_address2_td_input" class="form_cell"><input type="text" name="customer_delivery_address2" id="customer_delivery_address2" title="the second line of delivery address, delivery address line 2" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="delivery_address_line_2" /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_suburb_td_label" class="form_cell"><label for="customer_delivery_suburb" class="form_label">suburb:</label></td>
-				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+				<td id="customer_main_options_delivery_suburb_td_input" class="form_cell"><input type="text" name="customer_delivery_suburb" id="customer_delivery_suburb" title="delivery suburb" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="delivery_suburb"/></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			<tr>
 				<td id="customer_main_options_delivery_state_td_label" class="form_cell"><label for="customer_delivery_state" class="form_label">state</label></td>
 				<td id="customer_main_options_delivery_state_td_input" class="form_cell">
-					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input">
+					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input" data-field="delivery_state">
 					</select></td>		
 				<td>&nbsp;</td>	
 				<td id="customer_main_options_delivery_postcode_td_label" class="form_cell"><label for="customer_delivery_postcode" class="form_label">postcode:</label></td>
-				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+				<td id="customer_main_options_delivery_postcode_td_input" class="form_cell"><input type="text" name="customer_delivery_postcode" id="customer_delivery_postcode" title="the delivery postcode" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-field="delivery_postcode" /></td>
 				<td class="form_cell">&nbsp;</td>
 			</tr>
 			</table>
@@ -382,9 +389,9 @@
 		</div>
 		<table id="customer_control_action">
 		<tr>
-		<td id="customer_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-		<td id="customer_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
-		<td id="customer_control_action_saveorder" class="form_cell"><a id="order_control_action_saveorder" title="save customer and place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
+		<td id="customer_control_action_save_td" class="form_cell"><a id="customer_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td id="customer_control_action_cancel" class="form_cell"><a id="customer_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+		<td id="customer_control_action_saveorder" class="form_cell"><a id="customer_control_action_saveorder" title="save customer and place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
 		</tr>
 		</table>
 		

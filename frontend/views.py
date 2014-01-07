@@ -3,16 +3,9 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, render_to_response
 from frontend.models import Customer, Order, Invoice
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-def customer_detail(request, customer_id="1"):
-    try:
-        customer = Customer.objects.get(pk=customer_id)
-    except Customer.DoesNotExist:
-        raise Http404
-
-    return render(request, 'base.html', {'customer': customer})
-    #return render_to_response('base.html', {'customer': customer})
 
 def ajax_lookup_customer(request):
     data = json.dumps(None)
@@ -24,6 +17,20 @@ def ajax_lookup_customer(request):
             pass
 
     return HttpResponse(data, mimetype='application/json')
+
+@csrf_exempt
+def ajax_save_customer(request):
+    data = {'msg': 'No customer was sent!'}
+    if request.POST.has_key('customer'):
+        for obj in serializers.deserialize('json', request.POST['customer']):
+            print '--'
+            print 'type(obj):', type(obj)
+            print 'obj:', obj
+            print 'obj.object:', obj.object
+            obj.save()
+            data = {'msg': 'Customer saved!'}
+
+    return HttpResponse(json.dumps(data), 'application/json')
 
 def jsonify_models(data_dict):
     json_string = None
@@ -78,6 +85,17 @@ def ajax_lookup_states(request):
         states = { 'NOTAJAX': 'Not an AJAX Request' }
 
     return HttpResponse(json.dumps(states), mimetype='application/json')
+
+
+# Old Style lookup functions
+def customer_detail(request, customer_id="1"):
+    try:
+        customer = Customer.objects.get(pk=customer_id)
+    except Customer.DoesNotExist:
+        raise Http404
+
+    return render(request, 'base.html', {'customer': customer})
+    #return render_to_response('base.html', {'customer': customer})
 
 def order_detail(request, order_id="1"):
     try:

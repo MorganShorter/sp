@@ -3,6 +3,17 @@
 <script type="text/javascript" language="javascript">
 // Populate State Drop Downs
 $(document).ready(function() {
+	// console fix
+	if (typeof console == undefined) {
+		window.console = {
+			log: function(s) {
+				return;
+			}
+		};
+
+		console.warn = console.debug = console.log;
+	}
+
 	$.ajax({
 		url: '/lookup/states',
 		type: 'GET',
@@ -21,9 +32,68 @@ $(document).ready(function() {
 	});
 });
 
-// Search/Find Customer by ID
+
+$.fn.extend({
+	getDataFields: function() {
+		var model_data = {};
+		this.find('[data-field]').each(function() {
+			var type = $(this).attr('data-type');
+			var value = $.trim($(this).val());
+			if (type == undefined) {
+				model_data[$(this).attr('data-field')] = value
+			} else if (type == 'integer') {
+				model_data[$(this).attr('data-field')] = parseInt(value.replace(/[^\d.]/g, ''));
+			}
+		});
+		return model_data;
+	},
+
+	// pass in the 'fields' from a serialized model.
+	storeDataFields: function(data) {
+		this.find('[data-field]').each(function() { $(this).val(data[$(this).attr('data-field')]); });
+	}
+});
+
+/*
+ * CUSTOMER WINDOW FUNCTIONS
+ *
+ */
 $(function () {
-	$('#customer_id_search').live("click", function () {
+	// Save/Update Customer Details
+	$('#customer_control_action_save').live('click', function() {
+		//var customer_json = JSON.stringify([ {'pk': $.trim($('#customer_id').val()), 'model': 'frontend.customer', 'fields': $('#frm_customer').getDataFields()} ]);
+		var customer_json = [ {'pk': $.trim($('#customer_id').val()), 'model': 'frontend.customer', 'fields': $('#frm_customer').getDataFields()} ];
+		console.log('customer json to POST:');
+		console.log(customer_json);
+		customer_json = JSON.stringify(customer_json);
+		console.log('stringified customer json:');
+		console.log(customer_json);
+		$.ajax({
+			url: '/save/customer',
+			type: 'POST',
+			dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+			data: { 'customer': customer_json },
+			success: function(json) {
+				console.log('/save/customer success!');
+				console.log(json);
+				alert(json.msg);
+			},
+			error: function(xhr, status) {
+				console.log('Error requesting /save/customer! status:');
+				console.log(status);
+			},
+			complete: function(xhr, status) {
+				console.log('Complete request for /save/customer');
+			}
+		});
+	});
+
+	// Search/Find Order by ID
+
+
+	// Search/Find Customer by ID
+	$('#customer_id_search').live('click', function () {
 		if(!$.trim($('#customer_id').val())) {
 			alert('You must enter a Customer ID!');
 		} else {
@@ -31,33 +101,16 @@ $(function () {
 				url: '/lookup/customer',
 				type: 'GET',
 				dataType: 'json',
+				cache: false,
 				headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
 				data: { 'customer_id': $.trim($('#customer_id').val()) },
 				success: function(json) {
 					console.log('Success requesting /lookup/customer!');
 					if (json != null)
 					{
-						console.log(json);
-						// Load Customer and CustomerContacts
-						$('#customer_id').val(json.customer.pk);
-						$('#customer_name').val(json.customer.fields.name);
-						$('#customer_type').val(json.customer.fields.customer_type);
-						$('#customer_registration').val(json.customer.fields.registration);
-						$('#customer_address1').val(json.customer.fields.address_line_1);
-						$('#customer_address2').val(json.customer.fields.address_line_2);
-						$('#customer_phone').val(json.customer.fields.telephone);
-						$('#customer_fax').val(json.customer.fields.fax);
-						$('#customer_suburb').val(json.customer.fields.suburb);
-						$('#customer_email').val(json.customer.fields.email);
-						$('#customer_state option[value="'+json.customer.fields.state+'"]').prop('selected', true);
-						$('#customer_postcode').val(json.customer.fields.postcode);
-
-						$('#customer_delivery_attn').val(json.customer.fields.delivery_attn);
-						$('#customer_delivery_address1').val(json.customer.fields.delivery_address_line_1);
-						$('#customer_delivery_address2').val(json.customer.fields.delivery_address_line_2);
-						$('#customer_delivery_suburb').val(json.customer.fields.delivery_suburb);
-						$('#customer_delivery_postcode').val(json.customer.fields.delivery_postcode);
-						$('#customer_delivery_state option[value="'+json.customer.fields.delivery_state+'"]').prop('selected', true);
+						console.log('lookup customer; json.customer:');
+						console.log(json.customer);
+						$('#frm_customer').storeDataFields(json.customer.fields);
 						// CustomerContacts
 						$('#customer_contact_items').find('tr:gt(0):not(:last)').remove();
 						for (var i = 0; i < json.contacts.length; i++) {
