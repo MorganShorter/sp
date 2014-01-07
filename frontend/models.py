@@ -62,7 +62,6 @@ class ImportNote(models.Model):
     def __unicode__(self):
         return self.type + ' Import Note for ' + self.model + '.id = ' + str(self.model_id)
 
-
 class Customer(models.Model):
     """ Customer; makes an order from SmartPractice
     """
@@ -445,6 +444,7 @@ class Invoice(models.Model):
     """
     order = models.ForeignKey(Order, related_name='invoices')
     company = models.ForeignKey(Company, related_name='+')
+    number = models.PositiveIntegerField()
     timestamp = models.DateTimeField(default=datetime.now)
     slug = models.SlugField(unique=True, max_length=150)
 
@@ -456,7 +456,7 @@ class Invoice(models.Model):
 
     def __unicode__(self):
         return self.slug
-
+   
 ##### END SMART PRACTICE #####
 
 #  
