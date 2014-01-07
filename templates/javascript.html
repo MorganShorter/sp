@@ -1,6 +1,7 @@
 {% load compress %}
 {% compress js %}
 <script type="text/javascript" language="javascript">
+// Populate State Drop Downs
 $(document).ready(function() {
 	$.ajax({
 		url: '/lookup/states',
@@ -8,19 +9,107 @@ $(document).ready(function() {
 		dataType: 'json',
 		headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
 		success: function(json) {
-			console.log('success for /lookup/states; json:');
-			console.log(json);
 			$.each(json, function(k, v) {
 				$('#customer_state').append(new Option(v, k));
 				$('#customer_delivery_state').append(new Option(v, k));
 			});
 		},
 		error: function(xhr, status) {
-			console.log('ajax request for /lookup/states FAILED! status:');
-			console.log(status);
 		},
 		complete: function(xhr, status) {
-			console.log('ajax request for /lookup/states is complete');
+		}
+	});
+});
+
+// Search/Find Customer by ID
+$(function () {
+	$('#customer_id_search').live("click", function () {
+		if(!$.trim($('#customer_id').val())) {
+			alert('You must enter a Customer ID!');
+		} else {
+			$.ajax({
+				url: '/lookup/customer',
+				type: 'GET',
+				dataType: 'json',
+				headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+				data: { 'customer_id': $.trim($('#customer_id').val()) },
+				success: function(json) {
+					console.log('Success requesting /lookup/customer!');
+					if (json != null)
+					{
+						console.log(json);
+						// Load Customer and CustomerContacts
+						$('#customer_id').val(json.customer.pk);
+						$('#customer_name').val(json.customer.fields.name);
+						$('#customer_type').val(json.customer.fields.customer_type);
+						$('#customer_registration').val(json.customer.fields.registration);
+						$('#customer_address1').val(json.customer.fields.address_line_1);
+						$('#customer_address2').val(json.customer.fields.address_line_2);
+						$('#customer_phone').val(json.customer.fields.telephone);
+						$('#customer_fax').val(json.customer.fields.fax);
+						$('#customer_suburb').val(json.customer.fields.suburb);
+						$('#customer_email').val(json.customer.fields.email);
+						$('#customer_state option[value="'+json.customer.fields.state+'"]').prop('selected', true);
+						$('#customer_postcode').val(json.customer.fields.postcode);
+
+						$('#customer_delivery_attn').val(json.customer.fields.delivery_attn);
+						$('#customer_delivery_address1').val(json.customer.fields.delivery_address_line_1);
+						$('#customer_delivery_address2').val(json.customer.fields.delivery_address_line_2);
+						$('#customer_delivery_suburb').val(json.customer.fields.delivery_suburb);
+						$('#customer_delivery_postcode').val(json.customer.fields.delivery_postcode);
+						$('#customer_delivery_state option[value="'+json.customer.fields.delivery_state+'"]').prop('selected', true);
+						// CustomerContacts
+						$('#customer_contact_items').find('tr:gt(0):not(:last)').remove();
+						for (var i = 0; i < json.contacts.length; i++) {
+							$('#customer_contact_items tr:last').before($('<tr>')
+								.prop('class', 'form_list_row')
+								.append($('<td>')
+									.prop('class', 'form_list_item')
+									.prop('id', 'customer_contact_item_first_name_td_' + json.contacts[i].pk)
+									.text(json.contacts[i].fields.first_name)
+								)
+								.append($('<td>')
+									.prop('class', 'form_list_item')
+									.prop('id', 'customer_contact_item_surname_td_' + json.contacts[i].pk)
+									.text(json.contacts[i].fields.surname)
+								)
+								.append($('<td>')
+									.prop('class', 'form_list_item')
+									.prop('id', 'customer_contact_item_phone_td_' + json.contacts[i].pk)
+									.text(json.contacts[i].fields.phone)
+								)
+								.append($('<td>')
+									.prop('class', 'form_list_item')
+									.prop('id', 'customer_contact_item_email_td_' + json.contacts[i].pk)
+									.text(json.contacts[i].fields.email)
+								)
+								.append($('<td>')
+									.prop('class', 'form_list_item')
+									.prop('id', 'customer_contact_item_delete_td_' + json.contacts[i].pk)
+									.append($('<a>')
+										.prop('id', 'customer_contact_item_delete_' + json.contacts[i].pk)
+										.prop('title', 'delete this contact item from customer')
+										.prop('href', '#')
+										.append($('<img>')
+											.prop('id', 'icon_customer_contact_item_delete_' + json.contacts[i].pk)
+											.prop('src', '{{ STATIC_URL }}img/icons/16_delete.png')
+										)
+									)
+								)
+							);
+						}
+					} else { // json is null
+						alert('No customer found with id ' + $('#customer_id').val());
+					}
+				},
+				error: function(xhr, status) {
+					console.log('Error requesting /lookup/customer! status:');
+					console.log(status);
+				},
+				complete: function(xhr, status) {
+					console.log('Complete request for /lookup/customer');
+				}
+			});
 		}
 	});
 });
