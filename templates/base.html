@@ -106,12 +106,8 @@
 
 
 	<div id="order_content">
-	<form id="frm_order">
+	<form id="frm_order" data-model="order">
 	<fieldset>
-			<input type="hidden" name="order_from_borders_fakeid" data-field="from_borders_fakeid" data-type="integer" value="" />
-			<input type="hidden" name="order_slug" data-field="slug" value="" />
-			<input type="hidden" name="order_from_src_order_id" data-field="from_src_order_id" data-type="integer" value="" />
-
 			<table id="order_main_options">
 			<tr>
 				<td id="order_main_options_customer_id_td_label" class="form_cell" ><label for="order_customer_id" class="form_label">customer ID:</label></td>
@@ -129,8 +125,8 @@
 				<td id="order_main_options_order_id_td_search" class="form_cell"><a id="order_order_id_search" title="find an order" href="#" class="button form_button"><img id="icon_order_order_id_search" src="{{ STATIC_URL }}img/icons/16_find_order.png" /></a></td>
 			</tr>
 			<tr>
-				<td id="order_main_options_invoice_id_td_label" class="form_cell"><label for="search" class="form_label">invoice ID:</label></td>
-				<td id="order_main_options_invoice_id_td_input" class="form_cell"><input type="text" name="order_customer_id" id="order_invoice_id" title="the invoice id" class="text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
+				<td id="order_main_options_invoice_id_td_label" class="form_cell"><label for="search" class="form_label">invoice Number:</label></td>
+				<td id="order_main_options_invoice_id_td_input" class="form_cell"><input type="text" name="order_invoice_number" id="order_invoice_number" title="the invoice number" class="text ui-widget-content ui-corner-all form_input" readonly value="" data-model="invoice" data-field="number" data-type="integer"/></td>
 				<td id="order_main_options_invoice_id_td_search" class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/16_find_invoice.png" /></a></td>
 			</tr>
 			</table>
@@ -145,8 +141,7 @@
 				<td id="order_detail_options_order_company_td_label" class="form_cell"><label for="order_order_company" class="form_label">invoicing company<label></td>
 				<td id="order_detail_options_order_company_td_input" class="form_cell">
 				<div class="ui-widget">
-				<select id="order_order_company" name="order_order_company" title="which company is responsible for this order?" class="text ui-widget-content ui-corner-all form_input">
-				  <option value=""></option>
+				<select id="order_order_company" name="order_order_company" title="which company is responsible for this order?" class="text ui-widget-content ui-corner-all form_input" data-model="company" data-field="name">
 				  <option value="1">SmartPractice</option>
 				  <option value="2">SmartMethods</option>
 				</select></td>
@@ -179,17 +174,6 @@
 					<th id="order_product_items_delete_th" class="form_list_header">&nbsp;</th>
 				</tr>
 				<tr class="form_list_row">
-					<td id="order_product_item_product_code_td_" class="form_list_item"></td>
-					<td id="order_product_item_cur_stock_td_" class="form_list_item"></td>
-					<td id="order_product_item_quantity_td_" class="form_list_item"></td>
-					<td id="order_product_item_quantity_td_" class="form_list_item">YES=<img src="{{ STATIC_URL }}img/icons/16_yes.png" />NO=<img src="{{ STATIC_URL }}img/icons/16_no.png" /></td>
-					<td id="order_product_item_unit_price_td_" class="form_list_item"></td>
-					<td id="order_product_item_discount_percentage_td_" class="form_list_item"><input type="text" name="order_product_item_percentage_ID" style="width: 40px;" id="order_product_item_percentage_ID" title="discount percentage, if any" class="text ui-widget-content ui-corner-all form_input" value=""/></td>
-					<td id="order_product_item_discount_percentage_td_" class="form_list_item"><input type="checkbox" name="order_product_item_GST_{ID}" {% if order_product.unit_tax %}value=true" checked{% else %}value="false"{% endif %} /></td>
-					<td id="order_product_item_quantity_td_" class="form_list_item">order_product.quantity|mul:order_product.unit_price|sub:order_product.discount_price</td>
-					<td id="order_product_item_delete_td_" class="form_list_item"><a id="order_customer_id_search" title="delete this product item from order" href="#"><img id="icon_order_product_item_delete_{ID}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a></td>
-				</tr>
-				<tr class="form_list_row">
 					<td colspan="9" class="form_list_item"><a id="order_control_action_add" title="add new item to order" href="#"><img id="icon_order_control_action_add" src="{{ STATIC_URL }}img/icons/16_add.png" />add item</a> </td>
 				</tr>
 				</table>
@@ -214,24 +198,24 @@
 					<th id="order_product_summary_" class="form_list_header">Total Price</th>
 				</tr>
 				<tr class="form_list_row">
-					<td id="order_product_summary_">order.sub_total|sub:order.sp_cost</td>
-					<td id="order_product_summary_">order.sp_cost</td>
-					<td id="order_product_summary_">order.sub_total</td>
-					<td id="order_product_summary_">order.discount</td>
-					<td id="order_product_summary_">order.sub_total|sub:order.sp_cost|sub:order.discount</td>
-					<td id="order_product_summary_">order.sp_cost|add:order.discount</td>
-					<td id="order_product_summary_">order.sub_total|sub:order.discount</td>
-					<td id="order_product_summary_">order.tax</td>
-					<td id="order_product_summary_">order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax</td>
-					<td id="order_product_summary_">order.sp_cost|add:order.discount|add:order.tax</td>
-					<td id="order_product_summary_">order.sub_total|sub:order.discount|add:order.tax</td>
-					<td id="order_product_summary_">order.shipping_cost</td>
-					<td id="order_product_summary_">order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost</td>
-					<td id="order_product_summary_">order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost</td>
+					<td id="order_product_summary_"><!--order.sub_total|sub:order.sp_cost--></td>
+					<td id="order_product_summary_"><!--order.sp_cost--></td>
+					<td id="order_product_summary_"><!--order.sub_total--></td>
+					<td id="order_product_summary_"><!--order.discount--></td>
+					<td id="order_product_summary_"><!--order.sub_total|sub:order.sp_cost|sub:order.discount--></td>
+					<td id="order_product_summary_"><!--order.sp_cost|add:order.discount--></td>
+					<td id="order_product_summary_"><!--order.sub_total|sub:order.discount--></td>
+					<td id="order_product_summary_"><!--order.tax--></td>
+					<td id="order_product_summary_"><!--order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax--></td>
+					<td id="order_product_summary_"><!--order.sp_cost|add:order.discount|add:order.tax--></td>
+					<td id="order_product_summary_"><!--order.sub_total|sub:order.discount|add:order.tax--></td>
+					<td id="order_product_summary_"><!--order.shipping_cost--></td>
+					<td id="order_product_summary_"><!--order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost--></td>
+					<td id="order_product_summary_"><!--order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost--></td>
 				</tr>
 				</table>
 				</div>
-			<!--- End order_accordion --->
+			<!--- End order_accordion -->
 			</div>
 			
 			<table id="order_control_action">
@@ -248,14 +232,8 @@
 
 
 	<div id="customer_content">
-	<form id="frm_customer">
+	<form id="frm_customer" data-model="customer">
 	<fieldset>
-		<!-- non modifiable customer fields -->
-		<input type="hidden" name="customer_country" id="customer_country" value="" data-field="country" />
-		<input type="hidden" name="customer_delivery_country" id="customer_delivery_country" value="" data-field="delivery_country" />
-		<input type="hidden" name="customer_from_src_company_id" id="customer_from_src_company_id" value="" data-field="from_src_company_id" data-type="integer" />
-		<input type="hidden" name="customer_from_src_membadd_id" id="customer_from_src_membadd_id" value="" data-field="from_src_membadd_id" data-type="integer" />
-		<input type="hidden" name="customer_slug" id="customer_slug" value="" data-field="slug" />
 		<table id="customer_main_options">
 		<tr>
 			<td id="customer_main_options_customer_id_td_label" class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
@@ -371,13 +349,6 @@
 					<th id="customer_contact_items_phone_th" class="form_list_header">Phone</th>
 					<th id="customer_contact_items_email_th" class="form_list_header">Email</th>
 					<th class="form_list_header">&nbsp;</th>
-				</tr>
-<!--				<tr class="form_list_row">
-					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item"></td>
-					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item"></td>
-					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item"></td>
-					<td id="customer_contact_email_td_{ID}" class="form_list_item"></td>
-					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a> -->
 				</tr>
 				<tr class="form_list_row">
 					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new contact item for customer" href="#"><img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add contact</a> </td>

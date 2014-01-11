@@ -60,10 +60,11 @@ def ajax_lookup_order(request):
             order = Order.objects.get(pk=order_id)
             try:
                 invoice = Invoice.objects.get(order_id=order_id)
+                
             except Invoice.DoesNotExist:
                 invoice = None
 
-            data = jsonify_models({'order': order, 'customer': order.customer, 'contacts': order.customer.contacts.all(), 'order_products': order.orderproduct_set.all(), 'products': order.products.all(), 'invoice': invoice})
+            data = jsonify_models({'order': order, 'customer': order.customer, 'contacts': order.customer.contacts.all(), 'order_products': order.orderproduct_set.all(), 'products': order.products.all(), 'invoice': invoice, 'company': invoice.company})
         except Order.DoesNotExist:
             pass
 
