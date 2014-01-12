@@ -157,14 +157,12 @@ $.fn.extend({
 		$.each(contacts_json, function(index, contact) {
 			var contact_row = $('<tr>').prop('class', options.tr_class);
 			
-			$.each(['first_name', 'surname', 'phone', 'email'], function(field) {
-				console.debug(contact);
+			$.each(['first_name', 'surname', 'phone', 'email'], function(index, field) {
 				contact_row.append($('<td>')
 					.prop('class', options.td_class)
 					.prop('id', options.id_prefix + field + '_' + contact.pk)
-					.text(contact.fields.field)
+					.text(contact.fields[field])
 				);
-					
 			});
 
 			contact_row.append($('<td>')
@@ -180,10 +178,8 @@ $.fn.extend({
 					)
 				)
 			);
-				
 
 			$(contacts_table).find('tr:last').before(contact_row);
-					
 		});
 	},
 
