@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
@@ -17,6 +18,6 @@ urlpatterns += patterns('',
     # url(r'^$', 'sp.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
-     url(r'^testonite/','django.views.generic.simple.direct_to_template', {'template': 'taconite/testonite.xml', 'mimetype': 'text/xml'}),   
-    url('','django.views.generic.simple.direct_to_template', {'template': 'base.html', 'mimetype': 'text/html'}),
+    url(r'^testonite/?', TemplateView.as_view(template_name='taconite/testonite.xml', content_type='text/xml')),
+    url('', TemplateView.as_view(template_name='base.html'))
 )
