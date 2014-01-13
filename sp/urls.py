@@ -17,5 +17,6 @@ urlpatterns += patterns('',
     # url(r'^$', 'sp.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
+     url(r'^testonite/','django.views.generic.simple.direct_to_template', {'template': 'taconite/testonite.xml', 'mimetype': 'text/xml'}),   
     url('','django.views.generic.simple.direct_to_template', {'template': 'base.html', 'mimetype': 'text/html'}),
 )
