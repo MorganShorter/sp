@@ -1,0 +1,5 @@
+<taconite> 
+    <append select="#debug_msg"> 
+        <div>This div is TACONITED! {{ STATIC_URL }}</div> 
+    </append> 
+</taconite>
