@@ -167,6 +167,7 @@ $(function () {
 			dataType: 'json',
 			cache: false,
 			contentType: 'application/json; charset=UTF-8',
+			headers: { 'X-CSRFToken': $.cookie('csrftoken') },
 			data: JSON.stringify(customer_json),
 			success: function(json) {
 				console.log('/save/customer success!');

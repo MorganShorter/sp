@@ -5,6 +5,7 @@ from django.shortcuts import render, render_to_response
 from frontend.models import Customer, Order, Invoice
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.core.context_processors import csrf
 from django.template import loader, Context
 
 def customer_get(request, pk):
@@ -22,10 +23,11 @@ def customer_get(request, pk):
 
     taco_controlplate = loader.get_template('taconite/customer.xml')
     c_royal = Context({'errors': errors, 'customer': customer})
+    c_royal.update(csrf(request))
 
     return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
 
-@csrf_exempt
+#@csrf_exempt
 def customer_save(request, pk):
     print request.body
     print request.body.__class__.__name__
