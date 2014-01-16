@@ -28,7 +28,7 @@ $(document).ready(function() {
 		complete: function(xhr, status) { }
 	});
 
-	$.get('testonite/');
+	$.taconite.debug = true;
 });
 
 
@@ -146,174 +146,6 @@ $.fn.extend({
 
 			}
 		});
-	},
-
-	appendCustomerContacts: function(contacts_json, options) {
-		contacts_json = contacts_json || [];
-		options = options || {};
-		options = $.extend({'tr_class': 'form_list_row', 'td_class': 'form_list_item', 'id_prefix': 'customer_contact_item_'}, options);
-		
-		var contacts_table = this;
-		$(this).find('tr:gt(0):not(:last)').remove();
-
-		$.each(contacts_json, function(index, contact) {
-			var contact_row = $('<tr>').prop('class', options.tr_class);
-			
-			$.each(['first_name', 'surname', 'phone', 'email'], function(index, field) {
-				contact_row.append($('<td>')
-					.prop('class', options.td_class)
-					.prop('id', options.id_prefix + field + '_' + contact.pk)
-					.text(contact.fields[field])
-				);
-			});
-
-			contact_row.append($('<td>')
-				.prop('class', options.td_class)
-				.prop('id', options.id_prefix + 'delete_td_' + contact.pk)
-				.append($('<a>')
-					.prop('id', options.id_prefix + 'item_delete_' + contact.pk)
-					.prop('title', 'delete this contact item from customer')
-					.prop('href', '#')
-					.append($('<img>')
-						.prop('id', 'icon_' + options.id_prefix + 'delete_' + contact.pk)
-						.prop('src', '{{ STATIC_URL }}img/icons/16_delete.png')
-					)
-				)
-			);
-
-			$(contacts_table).find('tr:last').before(contact_row);
-		});
-	},
-
-/*	
-	KEEPING FOR NOW.. called like below...
-		$(this).find(options.shipping_addressblock_div)
-			.appendAddressBlock({
-				'attention': json.order.fields.shipping_attention,
-				'line_1': json.order.fields.shipping_address_line_1,
-				'line_2': json.order.fields.shipping_address_line_2,
-				'suburb': json.order.fields.shipping_suburb,
-				'state': json.order.fields.shipping_state,
-				'postcode': json.order.fields.shipping_postcode,
-				'country': json.order.fields.shipping_country
-			});
-appendAddressBlock: function(address) {
-		address = address || {};
-console.debug('appendAddressBlock() address:');
-console.debug(address);
-		var address_text = ''
-		if (address.attention) { address_text += address.attention + '<br />'; }
-		if (address.line_1) { address_text += address.line_1 + '<br />'; }
-		if (address.line_2) { address_text += address.line_2 + '<br />'; }
-		address_text += $.map([address.suburb, address.postcode, address.state], function(v) { return v !== '' ? v : null; }).join(', ') + '<br />';
-		if (address.country) { address_text += address.country; }
-
-		$(this).text(address_text);
-
-		console.log('appendAddressBlock:');
-		console.log(address_text);
-	},*/
-
-/*	appendCustomerDetailBlock: function(json) {
-		json = json || {};
-		json = $.extend({'customer': {}, 'contacts': []}, json);
-console.debug('appendCustomerDetailBlock() json:');
-console.debug(json);
-		var customer_text = '<br />';
-		if (json.customer.fields.name) { customer_text += json.customer.fields.name; }
-		for (var i = 0; i < json.contacts.length; i++) {
-			customer_text += '<br />' + $.map([json.contacts[i].fields.first_name, json.contacts[i].fields.surname, json.contacts[i].fields.phone], function(v) { return v !== '' ? v : null }).join(' ');
-		}
-
-		$(this).text(customer_text);
-
-		console.log('appendCustomerDetailBlock:');
-		console.log(customer_text);
-	},*/
-
-	appendOrderCustomerDetailsBlock: function(json) {
-		json = json || {}
-		json = $.extend({'order': {'fields': {}}, 'customer': {'fields': {}}, 'contacts': []}, json);
-
-		var customer_details = '<br />';
-		if (json.customer.fields.name) { customer_details += json.customer.fields.name; }
-		$.each(json.contacts, function(index, contact) {
-			console.debug(contact);
-			customer_details += '<br />' + $.map([contact.fields.first_name, contact.fields.surname, contact.fields.phone], function (v) { return v !== '' ? v : null; }).join(' ');
-		});
-
-		// I should be a function
-		var address_details = '';
-		if (json.order.fields.shipping_attention) { address_details += json.order.fields.shipping_attention + '<br />'; }
-		if (json.order.fields.shipping_address_line_1) { address_details += json.order.fields.shipping_address_line_1 + '<br />'; }
-		if (json.order.fields.shipping_address_line_2) { address_details += json.order.fields.shipping_address_line_2 + '<br />'; }
-		address_details += $.map([json.order.fields.shipping_suburb, json.order.fields.shipping_postcode, json.order.fields.shipping_state], function(v) { return v !== '' ? v : null; }).join(', ');
-		if (json.order.fields.shipping_country) { address_details += json.order.fields.shipping_country; }
-
-		var address_block = $('<div>').prop('id', 'order_main_options_customer_details_content_addressblock').text(address_details);
-
-		$(this).append($('<div>').prop('id', 'order_main_options_customer_details_content').text('Customer Details' + address_block.html() + customer_details));
-	},
-
-	appendOrderElements: function(json, options) {
-		options = options || {};
-		options = $.extend({/*'customer_details_div': '#order_main_options_customer_details_content',
-				    'shipping_addressblock_div': '#order_main_options_customer_details_content_addressblock',*/
-				    'order_main_options_customer_details_td': 'td#order_main_options_customer_details',
-				    'order_products_table': '#order_product_items',
-				    'order_products_table_tr_class': 'form_list_row',
-				    'order_products_table_td_class': 'form_list_item',
-				    'order_products_summary_table': '#order_product_summary',
-				    'order_products_summary_table_tr_class': 'form_list_row'
-				   }, options);
-
-		var order_form = this;
-
-		$(order_form).find(options.order_main_options_customer_details_td).empty().appendOrderCustomerDetailsBlock({'order': json.order, 'customer': json.customer, 'contacts': json.contacts});
-
-		$(order_form).find(options.order_products_table).find('tr:gt(0):not(:last)').remove();
-
-		$.each(json.order_products, function(index, order_product) {
-			var product = $.map(json.products, function(p) { return p.pk == order_product.fields.product ? p : null; })[0];
-			var back_order_img_src = '{{ STATIC_URL }}img/icons/16_' + (order_product.fields.back_order ? 'yes.png' : 'no.png');
-			var tax_checked = order_product.fields.unit_tax != '0.00' ?  true : false;
-			var total_price = parseFloat(parseFloat(order_product.fields.unit_tax) * parseFloat(order_product.fields.quantity));
-
-			$(order_form).find(options.order_products_table + ' tr:last').before($('<tr>')
-				.prop('class', options.order_products_table_tr_class)
-					.append($('<td>').prop('class', options.order_products_table_td_class).text(product.fields.code))
-					.append($('<td>').prop('class', options.order_products_table_td_class).text(product.fields.current_stock))
-					.append($('<td>').prop('class', options.order_products_table_td_class).text(order_product.fields.quantity))
-					.append($('<td>').prop('class', options.order_products_table_td_class)
-						.append($('<img>').prop('src', back_order_img_src)))
-					.append($('<td>').prop('class', options.order_products_table_td_class).text(order_product.fields.unit_price))
-					.append($('<td>').prop('class', options.order_products_table_td_class)
-						.append($('<input>').prop('type', 'text')
-							.prop('name', 'order_product_item_percentage_' + order_product.pk)
-							.prop('id', 'order_product_item_percentage_' + order_product.pk)
-							.prop('class', 'text ui-widget-content ui-corner-all form_input')
-							.attr('style', 'width: 40px;')
-							.attr('title', 'discount percentage, if any')
-							.val(order_product.fields.discount_percentage)))
-					.append($('<td>').prop('class', options.order_products_table_td_class)
-						.append($('<input>').prop('type', 'checkbox')
-							.prop('name', 'order_product_item_gst_' + order_product.pk)
-							.prop('id', 'order_product_item_gst_' + order_product.pk)
-							.val(true)
-							.attr('checked', tax_checked)))
-					.append($('<td>').prop('class', options.order_products_table_td_class).text(total_price))
-					.append($('<td>').prop('class', options.order_products_table_td_class)
-						.append($('<a>').prop('id', 'order_product_item_delete_' + order_product.pk)
-								.attr('title', 'delete this product item from order')
-								.attr('href', '#')
-							.append($('<img>').prop('id', 'icon_order_product_item_delete_' + order_product.pk)
-								.attr('src', '{{ STATIC_URL }}img/icons/16_delete.png'))))
-			);
-		});
-	},
-
-	appendOrderSummary: function(json, options) {
-		$.noop();
 	}
 });
 
@@ -324,17 +156,22 @@ console.debug(json);
 $(function () {
 	// Save/Update Customer Details
 	$('#customer_control_action_save').live('click', function() {
-		var model_data = $('#frm_customer').getDataFields();
-		var customer_json = JSON.stringify([ {'pk': $.trim($('#customer_id').val()), 'model': 'frontend.customer', 'fields': model_data['customer'] } ]);
+		var customer_id = $.trim($('#customer_id').val());
+                if (customer_id == "" || customer_id == undefined || customer_id == null)
+			customer_id = null;
+		var model_fields = $('#frm_customer').getDataFields();
+		var customer_json = [{'pk': customer_id, 'model': 'frontend.customer', 'fields': model_fields['customer']}];
 		$.ajax({
-			url: '/save/customer',
+			url: '/customer/save/'+customer_id,
 			type: 'POST',
 			dataType: 'json',
+			cache: false,
 			contentType: 'application/json; charset=UTF-8',
-			data: { 'customer': customer_json },
+			data: JSON.stringify(customer_json),
 			success: function(json) {
 				console.log('/save/customer success!');
-				alert(json.msg);
+				console.debug(json);
+				alert(json);
 			},
 			error: function(xhr, status) {
 				console.log('Error requesting /save/customer! status:');
@@ -378,34 +215,12 @@ $(function () {
 
 	// Search/Find Customer by ID
 	$('#customer_id_search').live('click', function () {
-		if(!$.trim($('#customer_id').val())) {
+		var id = $.trim($('#customer_id').val());
+
+		if (!id) {
 			alert('You must enter a Customer ID!');
 		} else {
-			$.ajax({
-				url: '/lookup/customer',
-				type: 'GET',
-				dataType: 'json',
-				cache: false,
-				headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-				data: { 'customer_id': $.trim($('#customer_id').val()) },
-				success: function(json) {
-					console.log('Success requesting /lookup/customer!');
-					if (json != null)
-					{
-						$('#frm_customer').fillFormModelData(json, {'non_editable_models':['contacts']});
-						$('#customer_contact_items').appendCustomerContacts(json.contacts);
-					} else { // json is null
-						alert('No customer found with id ' + $('#customer_id').val());
-					}
-				},
-				error: function(xhr, status) {
-					console.log('Error requesting /lookup/customer! status:');
-					console.log(status);
-				},
-				complete: function(xhr, status) {
-					console.log('Complete request for /lookup/customer');
-				}
-			});
+			$.get('/customer/' + id);
 		}
 	});
 });

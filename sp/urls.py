@@ -1,16 +1,18 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 from django.contrib import admin
+from django.views.generic.base import TemplateView
+
 admin.autodiscover()
 
 urlpatterns = patterns('frontend.views',
-    #url(r'^customer/(?P<id>\d+)/$', 'customer_detail'),
-    url(r'^customer/(?P<customer_id>\d+)/?#?$', 'customer_detail'),
-    url(r'^order/(?P<order_id>\d+)/?#?$', 'order_detail'),
-    url(r'^lookup/states', 'ajax_lookup_states'),
-    url(r'^lookup/customer', 'ajax_lookup_customer'),
-    url(r'^save/customer', 'ajax_save_customer'),
-    url(r'^lookup/order', 'ajax_lookup_order'),
+    url(ur'^testonite/?', TemplateView.as_view(template_name='taconite/testonite.xml', content_type='text/xml')),
+
+    url(ur'^lookup/states/?', 'ajax_lookup_states'),
+
+    url(ur'^customer/save/?(?P<pk>\d*)', 'customer_save'),
+    url(ur'^customer/delete/?(?P<pk>\d*)', 'customer_delete'),
+    url(ur'^customer/?(?P<pk>\d*)', 'customer_get'),
 )
 
 urlpatterns += patterns('',
@@ -18,6 +20,5 @@ urlpatterns += patterns('',
     # url(r'^$', 'sp.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^testonite/?', TemplateView.as_view(template_name='taconite/testonite.xml', content_type='text/xml')),
     url('', TemplateView.as_view(template_name='base.html'))
 )

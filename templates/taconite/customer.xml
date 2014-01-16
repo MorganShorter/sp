@@ -1,0 +1,46 @@
+<taconite>
+	<val select="input#customer_id" value="{{ customer.id }}" />
+	<val select="input#customer_name" value="{{ customer.name }}" />
+	<val select="input#customer_type" value="{{ customer.customer_type }}" />
+	<val select="input#customer_registration" value="{{ customer.registration }}" />
+	<val select="input#customer_phone" value="{{ customer.telephone }}" />
+	<val select="input#customer_fax" value="{{ customer.fax }}" />
+	<val select="input#customer_email" value="{{ customer.email }}" />
+
+	<val select="input#customer_address1" value="{{ customer.address_line_1 }}" />
+	<val select="input#customer_address2" value="{{ customer.address_line_2 }}" />
+	<val select="input#customer_suburb" value="{{ customer.suburb }}" />
+	<val select="select#customer_state" value="{{ customer.state }}" />
+	<val select="input#customer_postcode" value="{{ customer.postcode }}" />
+
+	<val select="input#customer_delivery_attn" value="{{ customer.delivery_attn }}" />
+	<val select="input#customer_delivery_address1" value="{{ customer.delivery_address_line_1 }}" />
+	<val select="input#customer_delivery_address2" value="{{ customer.delivery_address_line_2 }}" />
+	<val select="input#customer_delivery_suburb" value="{{ customer.delivery_suburb }}" />
+	<val select="select#customer_delivery_state" value="{{ customer.delivery_state }}" />
+	<val select="input#customer_delivery_postcode" value="{{ customer.delivery_postcode }}" />
+
+	<val select="input#customer_country" value="{{ customer.country }}" />
+	<val select="input#customer_delivery_country" value="{{ customer.delivery_country }}" />
+	<val select="input#customer_from_src_membadd" value="{{ customer.from_src_membadd_id }}" />
+	<val select="input#customer_from_src_company" value="{{ customer.from_src_company_id }}" />
+	<val select="input#customer_slug" value="{{ customer.slug }}" />
+
+	<remove select="table#customer_contact_items tr:gt(0):not(:last)" />
+
+	<after select="table#customer_contact_items tr:first">
+		{% for contact in customer.contacts.all %}
+			<tr class="form_list_row">
+				<td class="form_list_item" id="customer_contact_item_first_name_{{ contact.id }}">{{ contact.first_name }}</td>
+				<td class="form_list_item" id="customer_contact_item_surname_{{ contact.id }}">{{ contact.surname }}</td>
+				<td class="form_list_item" id="customer_contact_item_phone_{{ contact.id }}">{{ contact.phone }}</td>
+				<td class="form_list_item" id="customer_contact_item_email_{{ contact.id }}">{{ contact.email }}</td>
+				<td class="form_list_item" id="customer_contact_item_delete_td">
+					<a id="customer_contact_item_delete_{{ contact.id }}" title="delete this contact item from customer" href="#">
+						<img id="icon_customer_contact_item_delete_{{ contact.id }}" src="{{ STATIC_URL }}img/icons/16_delete.png" />
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</after>
+</taconite>

@@ -1,27 +1,80 @@
 import json
+#import yaml
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, render_to_response
 from frontend.models import Customer, Order, Invoice
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.template import loader, Context
 
-# Create your views here.
+def customer_get(request, pk):
+    pk, params = __preprocess_request(request, pk)
+    errors = []
+    customer = {}
 
-def ajax_lookup_customer(request):
-    data = json.dumps(None)
-    if request.GET.has_key('customer_id'):
+    if pk:
         try:
-            customer = Customer.objects.get(pk=request.GET['customer_id'])
-            data = jsonify_models({'customer': customer, 'contacts': customer.contacts.all()})
+            customer = Customer.objects.get(pk=pk)
         except Customer.DoesNotExist:
-            pass
+            errors.append('No customer found with id %s' % (pk))
+    else:
+        errors.append('No primary key given')
 
-    return HttpResponse(data, mimetype='application/json')
+    taco_controlplate = loader.get_template('taconite/customer.xml')
+    c_royal = Context({'errors': errors, 'customer': customer})
+
+    return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
 
 @csrf_exempt
-def ajax_save_customer(request):
+def customer_save(request, pk):
+    print request.body
+    print request.body.__class__.__name__
+    for customer in serializers.deserialize('json', request.body):
+        print customer
+        print customer.object
+        if customer.object.__class__ == Customer:
+            if not customer.object.id:
+                new_customer = True
+                customer.object.slug = None;
+            else:
+                new_customer = False
+
+            customer.save()
+
+            if new_customer:
+                msg = 'Customer created (ID:%d)' % (customer.object.id)
+            else:
+                msg = 'Customer saved'
+        else:
+            msg = 'Did not receive expected object Customer. You sent me a %s' % (customer.object.__class__.__name__)
+
+    return HttpResponse(json.dumps(msg), content_type='application/json')
+
+def customer_delete(request, pk):
+    pk, params = __preprocess_request(request, pk)
+
+    return HttpResponse('<p>Not Implemented</p>', content_type='text/html')
+
+def __preprocess_request(request, pk):
+    if request.method == 'POST':
+        params = request.POST
+    elif request.method == 'GET':
+        params = request.GET
+    else:
+        params = {}
+
+    if not pk and params.has_key('id'):
+        pk = params['id']
+
+    return pk, params
+
+
+@csrf_exempt
+def ajax_save_customer(request, pk):
     data = {'msg': 'No customer was sent!'}
+    print request
     if request.POST.has_key('customer'):
+        print 'POST has customer'
         for obj in serializers.deserialize('json', request.POST['customer']):
             print '--'
             print 'type(obj):', type(obj)
@@ -30,9 +83,9 @@ def ajax_save_customer(request):
             obj.save()
             data = {'msg': 'Customer saved!'}
 
-    return HttpResponse(json.dumps(data), 'application/json')
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
-def jsonify_models(data_dict):
+def serialize_models(data_dict):
     json_string = None
     for model_key, model_data in data_dict.iteritems():
         if model_data.__class__.__name__ != 'QuerySet':
@@ -68,7 +121,7 @@ def ajax_lookup_order(request):
         except Order.DoesNotExist:
             pass
 
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 def ajax_lookup_states(request):
     if request.is_ajax():
@@ -85,7 +138,9 @@ def ajax_lookup_states(request):
     else:
         states = { 'NOTAJAX': 'Not an AJAX Request' }
 
-    return HttpResponse(json.dumps(states), mimetype='application/json')
+    return HttpResponse(json.dumps(states), content_type='application/json')
+
+
 
 
 # Old Style lookup functions
