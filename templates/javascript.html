@@ -3,6 +3,10 @@
 <script type="text/javascript" language="javascript">
 // Populate State Drop Downs
 $(document).ready(function() {
+	$.ajaxSetup({
+		cache: false
+	});
+
 	// console fix
 	if (typeof console == undefined) {
 		window.console = {
@@ -146,6 +150,10 @@ $.fn.extend({
 
 			}
 		});
+	},
+
+	clear: function() {
+		$(this).val('');
 	}
 });
 

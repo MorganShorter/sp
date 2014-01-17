@@ -1,0 +1,7 @@
+{% for selector, value in fields.items %}
+	{% if value == "" %}
+		<clear select="{{ selector }}" />
+	{% else %}
+		<eval><![CDATA[$("{{ selector }}").val("{{ value }}");]]></eval>
+	{% endif %}
+{% endfor %}

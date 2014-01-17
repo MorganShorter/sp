@@ -1,0 +1,4 @@
+{% for selector, value in fields.items %}
+	<clear select="{{ selector }}" />
+{% endfor %}
+<eval><![CDATA[alert("{{ error }}");]]></eval>

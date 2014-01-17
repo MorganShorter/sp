@@ -3,6 +3,7 @@ import json
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, render_to_response
 from frontend.models import Customer, Order, Invoice
+import frontend.formfields
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.core.context_processors import csrf
@@ -10,24 +11,25 @@ from django.template import loader, Context
 
 def customer_get(request, pk):
     pk, params = __preprocess_request(request, pk)
-    errors = []
-    customer = {}
+    error = None
+    customer = Customer()
 
     if pk:
         try:
             customer = Customer.objects.get(pk=pk)
         except Customer.DoesNotExist:
-            errors.append('No customer found with id %s' % (pk))
+            error = 'No customer found with id %s' % (pk)
     else:
-        errors.append('No primary key given')
+        error = 'No primary key given'
+
+    fields = frontend.formfields.CustomerForm(customer)
 
     taco_controlplate = loader.get_template('taconite/customer.xml')
-    c_royal = Context({'errors': errors, 'customer': customer})
+    c_royal = Context({'error': error, 'customer': customer, 'fields': fields})
     c_royal.update(csrf(request))
 
     return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
 
-#@csrf_exempt
 def customer_save(request, pk):
     print request.body
     print request.body.__class__.__name__
@@ -70,22 +72,6 @@ def __preprocess_request(request, pk):
 
     return pk, params
 
-
-@csrf_exempt
-def ajax_save_customer(request, pk):
-    data = {'msg': 'No customer was sent!'}
-    print request
-    if request.POST.has_key('customer'):
-        print 'POST has customer'
-        for obj in serializers.deserialize('json', request.POST['customer']):
-            print '--'
-            print 'type(obj):', type(obj)
-            print 'obj:', obj
-            print 'obj.object:', obj.object
-            obj.save()
-            data = {'msg': 'Customer saved!'}
-
-    return HttpResponse(json.dumps(data), content_type='application/json')
 
 def serialize_models(data_dict):
     json_string = None
