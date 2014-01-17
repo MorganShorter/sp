@@ -13,6 +13,8 @@ urlpatterns = patterns('frontend.views',
     url(ur'^customer/save/?(?P<pk>\d*)', 'customer_save'),
     url(ur'^customer/delete/?(?P<pk>\d*)', 'customer_delete'),
     url(ur'^customer/?(?P<pk>\d*)', 'customer_get'),
+
+    url(ur'^order/?(?P<pk>\d*)', 'order_get'),
 )
 
 urlpatterns += patterns('',

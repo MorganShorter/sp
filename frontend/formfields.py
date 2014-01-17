@@ -22,4 +22,6 @@ def CustomerForm(customer):
              'input#customer_from_src_membadd': customer.from_src_membadd_id,
              'input#customer_from_src_company': customer.from_src_company_id,
              'input#customer_slug': customer.slug }
- 
+
+def OrderForm(order, invoice):
+    return { }

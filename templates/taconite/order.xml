@@ -1,0 +1,37 @@
+<taconite>
+	{% if error %}
+		{% include "taconite/error.xml" with fields=fields error=error %}
+	{% else %}
+		{% include "taconite/fields.xml" with fields=fields %}
+
+		<remove select="table#order_product_items tr:gt(0):not(:last)" />
+
+		{% for order_product in order.orderproduct_set.all %}
+			{% with product=order_product.product %}
+			<before select="table#order_product_items tr:last">
+				<tr class="form_list_row">
+					<td class="form_list_item">{{ product.code }}</td>
+					<td class="form_list_item">{{ product.current_stock }}</td>
+					<td class="form_list_item">{{ order_product.quantity }}</td>
+					<td class="form_list_item">
+						<img src="{{ STATIC_URL }}img/icons/16_{% if order_product.back_order %}yes{% else %}no{% endif %}.png" />
+					</td>
+					<td class="form_list_item">{{ order_product.unit_price }}</td>
+					<td class="form_list_item">
+						<input type="text" id="order_product_percentage_{{ order_product.id }}" name="order_product_percentage_{{ order_product.id }}" class="text ui-widget-content ui-corner-all form_input" style="width: 40px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
+					</td>
+					<td class="form_list_item">
+						<input type="checkbox" id="order_product_item_gst_{{ order_product.id }}" name="order_product_item_gst_{{ order_product.id }}" value="true" checked="{% if order_product.unit_tax != 0.00 %}true{% else %}false{% endif %}" />
+					</td>
+					<td class="form_list_item">{{ order_product.unit_price }} * {{ order_product.quantity }}</td>
+					<td class="form_list_item">
+						<a id="order_product_item_delete_{{ order_product.id }}" title="delete this product item from order" href="#">
+							<img id="icon_order_product_item_delete_{{ order_product.id }}" src="{{ STATIC_URL }}img/icons/16_delete.png" />
+						</a>
+					</td>
+				</tr>
+			</before>
+			{% endwith %}
+		{% endfor %}
+	{% endif %}
+</taconite>

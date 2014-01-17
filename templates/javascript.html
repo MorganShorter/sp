@@ -198,25 +198,7 @@ $(function () {
 		if (!order_id) {
 			alert('You must enter a Order ID!');
 		} else {
-			$.ajax({url: '/lookup/order',
-				type: 'GET',
-				dataType: 'json',
-				cache: false,
-				headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-				data: { 'order_id': order_id },
-				success: function(json) {
-					if (json != null) {
-						$('#frm_order').fillFormModelData(json, {'non_editable_models': ['invoice', 'customer', 'order_products', 'contacts', 'company', 'products'] });
-						$('#frm_order').appendOrderElements(json);
-					} else {
-						alert('No order found with id ' + order_id);
-					}
-				},
-				error: function(xhr, status) {
-					console.log('error requesting /lookup/order by id');
-					console.log(status);
-				}
-			});
+			$.get('/order/' + order_id);
 		}
 				
 	});

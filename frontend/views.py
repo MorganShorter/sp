@@ -7,28 +7,25 @@ import frontend.formfields
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.core.context_processors import csrf
-from django.template import loader, Context
+from django.template import loader, RequestContext
+
+def order_get(request, pk):
+    pk, params, order, error = __preprocess_get_request(request, pk, Order)
+    invoice = Invoice()
+
+    if not error:
+        try:
+            invoice = Invoice.objects.filter(order_id=order.id).first()
+        except Invoice.DoesNotExist:
+            pass
+
+    fields = frontend.formfields.OrderForm(order, invoice);
+    return __taco_render(request, 'taconite/order.xml', {'error':error, 'fields': fields, 'order': order})
 
 def customer_get(request, pk):
-    pk, params = __preprocess_request(request, pk)
-    error = None
-    customer = Customer()
-
-    if pk:
-        try:
-            customer = Customer.objects.get(pk=pk)
-        except Customer.DoesNotExist:
-            error = 'No customer found with id %s' % (pk)
-    else:
-        error = 'No primary key given'
-
+    pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
     fields = frontend.formfields.CustomerForm(customer)
-
-    taco_controlplate = loader.get_template('taconite/customer.xml')
-    c_royal = Context({'error': error, 'customer': customer, 'fields': fields})
-    c_royal.update(csrf(request))
-
-    return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
+    return __taco_render(request, 'taconite/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
 
 def customer_save(request, pk):
     print request.body
@@ -59,7 +56,10 @@ def customer_delete(request, pk):
 
     return HttpResponse('<p>Not Implemented</p>', content_type='text/html')
 
-def __preprocess_request(request, pk):
+def __preprocess_get_request(request, pk, model):
+    error = None
+    obj = None
+
     if request.method == 'POST':
         params = request.POST
     elif request.method == 'GET':
@@ -70,9 +70,42 @@ def __preprocess_request(request, pk):
     if not pk and params.has_key('id'):
         pk = params['id']
 
-    return pk, params
+    if pk:
+        try:
+            obj = model.objects.get(pk=pk)
+        except model.DoesNotExist:
+            error = 'No %s found with id %s' % (model.__class__.__name__, pk)
+    else:
+        error = 'No primary key given to find %s' % (model.__class__.__name__)
+    
+
+    return pk, params, obj, error
+
+def __taco_render(request, template, context):
+    taco_controlplate = loader.get_template(template)
+    c_royal = RequestContext(request, context)
+    return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
 
 
+def ajax_lookup_states(request):
+    if request.is_ajax():
+        states = { 'ACT': 'Australian Capital Territory',
+                   'NSW': 'New South Wales',
+                   'NT': 'Northern Territory',
+                   'QLD': 'Queensland',
+                   'SA': 'South Australia',
+                   'TAS': 'Tasmania',
+                   'VIC': 'Victoria',
+                   'WA': 'Western Australia',
+                   'AJAX': 'I\'ve been loaded via ajax',
+                   'OS': 'Overseas/Other' }
+    else:
+        states = { 'NOTAJAX': 'Not an AJAX Request' }
+
+    return HttpResponse(json.dumps(states), content_type='application/json')
+
+# Old Style lookup functions
+"""
 def serialize_models(data_dict):
     json_string = None
     for model_key, model_data in data_dict.iteritems():
@@ -110,28 +143,6 @@ def ajax_lookup_order(request):
             pass
 
     return HttpResponse(data, content_type='application/json')
-
-def ajax_lookup_states(request):
-    if request.is_ajax():
-        states = { 'ACT': 'Australian Capital Territory',
-                   'NSW': 'New South Wales',
-                   'NT': 'Northern Territory',
-                   'QLD': 'Queensland',
-                   'SA': 'South Australia',
-                   'TAS': 'Tasmania',
-                   'VIC': 'Victoria',
-                   'WA': 'Western Australia',
-                   'AJAX': 'I\'ve been loaded via ajax',
-                   'OS': 'Overseas/Other' }
-    else:
-        states = { 'NOTAJAX': 'Not an AJAX Request' }
-
-    return HttpResponse(json.dumps(states), content_type='application/json')
-
-
-
-
-# Old Style lookup functions
 def customer_detail(request, customer_id="1"):
     try:
         customer = Customer.objects.get(pk=customer_id)
@@ -155,3 +166,4 @@ def order_detail(request, order_id="1"):
 
     return render(request, 'base.html', {'order': order, 'order_invoice': invoice})
     #return render_to_response('base.html', {'order': order, 'order_invoice': invoice})
+"""
