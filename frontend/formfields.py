@@ -24,4 +24,10 @@ def CustomerForm(customer):
              'input#customer_slug': customer.slug }
 
 def OrderForm(order, invoice):
-    return { }
+    return { 'input#order_order_id': order.id,
+             'input#order_customer_id': order.customer.id,
+             'input#order_invoice_number': invoice.number,
+             'input#order_order_date': order.order_date,
+             'input#order_order_company': invoice.company.name,
+             'input#order_wanted_by': order.wanted_by,
+             'input#order_shipping_cost': order.shipping_cost }

@@ -1,10 +1,28 @@
+{% load mathfilters %}
 <taconite>
+	<remove select="table#order_product_items tr:gt(0):not(:last)" />
+	<remove select="table#order_product_summary tr:gt(0)" />
+
 	{% if error %}
 		{% include "taconite/error.xml" with fields=fields error=error %}
 	{% else %}
 		{% include "taconite/fields.xml" with fields=fields %}
 
-		<remove select="table#order_product_items tr:gt(0):not(:last)" />
+		<html select="div#order_main_options_customer_details_content">
+			Customer Details
+			<div id="order_main_options_customer_details_content_addressblock">
+				{{ order.shipping_attn }}<br />
+				{{ order.shipping_address_line_1 }}<br />
+				{{ order.shipping_address_line_2 }}<br />
+				{{ order.shipping_suburb }}, {{ order.shipping_postcode }}, {{ order.shipping_state }}<br />
+				{{ order.shipping_country }}
+			</div>
+			<br />
+			{{ order.customer.name }}
+			{% for contact in order.customer.contacts.all %}
+				<br /> {{ contact.first_name }} {{ contact.surname }} {{ contact.phone }}
+			{% endfor %}
+		</html>
 
 		{% for order_product in order.orderproduct_set.all %}
 			{% with product=order_product.product %}
@@ -16,14 +34,14 @@
 					<td class="form_list_item">
 						<img src="{{ STATIC_URL }}img/icons/16_{% if order_product.back_order %}yes{% else %}no{% endif %}.png" />
 					</td>
-					<td class="form_list_item">{{ order_product.unit_price }}</td>
+					<td class="form_list_item">${{ order_product.unit_price }}</td>
 					<td class="form_list_item">
 						<input type="text" id="order_product_percentage_{{ order_product.id }}" name="order_product_percentage_{{ order_product.id }}" class="text ui-widget-content ui-corner-all form_input" style="width: 40px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
 					</td>
 					<td class="form_list_item">
 						<input type="checkbox" id="order_product_item_gst_{{ order_product.id }}" name="order_product_item_gst_{{ order_product.id }}" value="true" checked="{% if order_product.unit_tax != 0.00 %}true{% else %}false{% endif %}" />
 					</td>
-					<td class="form_list_item">{{ order_product.unit_price }} * {{ order_product.quantity }}</td>
+					<td class="form_list_item">${{ order_product.quantity|mul:order_product.unit_price|sub:order_product.discount_price }}</td>
 					<td class="form_list_item">
 						<a id="order_product_item_delete_{{ order_product.id }}" title="delete this product item from order" href="#">
 							<img id="icon_order_product_item_delete_{{ order_product.id }}" src="{{ STATIC_URL }}img/icons/16_delete.png" />
@@ -33,5 +51,24 @@
 			</before>
 			{% endwith %}
 		{% endfor %}
+
+		<after select="table#order_product_summary tr:last">
+			<tr class="form_list_row">
+				<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost }}</td>
+				<td id="order_product_summary_">${{ order.sp_cost }}</td>
+				<td id="order_product_summary_">${{ order.sub_total }}</td>
+				<td id="order_product_summary_">${{ order.discount }}</td>
+				<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</td>
+				<td id="order_product_summary_">${{ order.sp_cost|add:order.discount }}</td>
+				<td id="order_product_summary_">${{ order.sub_total|sub:order.discount }}</td>
+				<td id="order_product_summary_">${{ order.tax }}</td>
+				<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</td>
+				<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax }}</td>
+				<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax }}</td>
+				<td id="order_product_summary_">${{ order.shipping_cost }}</td>
+				<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</td>
+				<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</td>
+			</tr>
+		</after>
 	{% endif %}
 </taconite>
