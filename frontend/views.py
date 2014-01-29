@@ -19,7 +19,7 @@ def order_get(request, pk):
         except Invoice.DoesNotExist:
             pass
 
-    fields = frontend.formfields.OrderForm(order, invoice);
+    fields = frontend.formfields.OrderForm(order, invoice)
     return __taco_render(request, 'taconite/order.xml', {'error':error, 'fields': fields, 'order': order})
 
 def customer_get(request, pk):

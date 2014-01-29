@@ -1,7 +1,10 @@
-{% for selector, value in fields.items %}
+{% load filterproxy %}
+{% for selector, value_filter in fields.items %}
+	{% filterproxy value_filter.0 value_filter.1 as value %}
+
 	{% if value == "" %}
 		<clear select="{{ selector }}" />
 	{% else %}
-		<eval><![CDATA[$("{{ selector }}").val("{{ value }}");]]></eval>
+		<eval>$("{{ selector }}").val("{{ value }}");</eval>
 	{% endif %}
 {% endfor %}
