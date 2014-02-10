@@ -2,11 +2,8 @@
 uwsgi.sh
 
 # Python
-settings.py
 local_settings.py
-sp/settings.py
 sp/local_settings.py
-./sp/settings.py
 ./sp/local_settings.py
 
 # django admin symlink
@@ -26,9 +23,6 @@ lib/
 logs/
 media/
 ./media/
-robots.txt
-static/robots.txt
-./static/robots.txt
 .DS_Store
 .idea
 *.py[cod]
