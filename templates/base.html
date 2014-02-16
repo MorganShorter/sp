@@ -392,7 +392,54 @@
 	</form>
 	</div>
 	<!-- End customer_content -->
-	
+
+
+	<div id="customer_find">
+	<form id="frm_find_customer">
+	<fieldset>
+		<table id="customer_find_options">
+		<tr>
+			<td id="customer_find_options_customer_id_td_label" class="form_cell"><label for="find_customer_id" class="form_label">customer ID:</label></td>
+			<td id="customer_find_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="find_customer_id" title="search for this type of customer id" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+			<td>&nbsp;</td>
+			<td rowspan="5">
+			<table id="customer_contact_items" class="form_list"> 
+				<tbody><tr class="form_list_row">			
+					<th class="form_list_header">Name</th>
+					<th class="form_list_header">Phone</th>
+					<th class="form_list_header">Email</th>
+				</tr>
+				<tr class="form_list_row">
+					<td class="form_list_item">John</td>
+					<td class="form_list_item">0406 843 934</td>
+					<td class="form_list_item">name@email.com</td>
+				</tr>
+				<tr class="form_list_row">
+					<td colspan="3">RESULTS SHOW HERE PER-LINE</td>
+				</tr>
+			</tbody></table>
+			</td>
+		</tr>
+		<tr>
+			<td id="customer_find_options_customer_name_td_label" class="form_cell"><label for="find_customer_name" class="form_label">customer name:</label></td>
+			<td id="customer_find_options_customer_name_td_input" class="form_cell"><input type="text" name="find_customer_name" id="find_customer_name" title="search for this type of customer name" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+		</tr>
+		<tr>
+			<td id="customer_find_options_customer_phone_td_label" class="form_cell"><label for="find_customer_phone" class="form_label">customer phone:</label></td>
+			<td id="customer_find_options_customer_phone_td_input" class="form_cell"><input type="text" name="find_customer_phone" id="find_customer_phone" title="search for this type of customer phone number" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+		</tr>
+		<tr>
+			<td id="customer_find_options_customer_email_td_label" class="form_cell"><label for="find_customer_email" class="form_label">customer email:</label></td>
+			<td id="customer_find_options_customer_email_td_input" class="form_cell"><input type="text" name="find_customer_email" id="find_customer_email" title="search for this type of customer email" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+		</tr>
+		<tr>
+			<td id="customer_find_options_customer_email_td_label" class="form_cell"><a id="find_customer_search" title="find customers" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="img/icons/32_find_invoice.png"></a></td>
+		</tr>		
+		</table>
+	</fieldset>
+	</form>
+	</div>
+	<!-- End customer_find -->
 	
 	<div id="product_content">
 	<form id="frm_product">

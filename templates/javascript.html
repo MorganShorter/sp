@@ -290,6 +290,20 @@ $(function () {
 });
 
 
+$(function() {
+    $( "#customer_find" ).dialog({
+	title: "Find Customers",
+	modal: true,
+	draggable: false,
+	autoOpen: false,
+	width: 'auto'
+    });
+    $( "#button_customers_find_dialog" )
+        .click(function() {
+            $( "#customer_find" ).dialog( "open" );
+    });
+});
+
 $(function () {
     $("#product_content").dialog({
         title: "Products",
