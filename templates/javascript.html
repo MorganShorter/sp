@@ -1,609 +1,545 @@
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" language="javascript">
-// Populate State Drop Downs
-$(document).ready(function() {
-	$.ajaxSetup({
-		cache: false
-	});
-
-	// console fix
-	if (typeof console == undefined) {
-		window.console = {
-			log: function(s) {
-				return;
-			}
-		};
-
-		console.warn = console.debug = console.log;
-	}
-
-	$.ajax({url: '/lookup/states',
-		type: 'GET',
-		dataType: 'json',
-		headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-		success: function(json) {
-			$.each(json, function(k, v) {
-				$('#customer_state').append(new Option(v, k));
-				$('#customer_delivery_state').append(new Option(v, k));
-			});
-		},
-		error: function(xhr, status) { },
-		complete: function(xhr, status) { }
-	});
-
-	$.taconite.debug = true;
-});
-
-
-$.fn.extend({
-	getDataFields: function() {
-		var model_data = {};
-		var form_model = $(this).attr('data-model');
-		this.find('[data-field]').each(function() {
-			var field_model = $(this).attr('data-model');
-			var model = field_model ? field_model : form_model;
-			var type = $(this).attr('data-type');
-			var value = $.trim($(this).val());
-			
-			if (model_data[model] == undefined)
-				model_data[model] = {};
-		
-			switch (type) {
-				case 'integer':	
-					value = parseInt(value.replace(/[^\d.]/g, ''));
-					if (isNaN(value)) { value = null; }
-					break;
-
-				case 'boolean':
-					if (value.test(/true/i)) { value = true; } else { value = false; }
-					break;
-			}
-
-			model_data[model][$(this).attr('data-field')] = value;
-		});
-		return model_data;
-	},
-
-	// appends a hidden input element to the target (form).  Used by fillFormModelData() when it cannot place a Models data in an element, and that field is not non-editable.
-	appendHiddenInput: function(field_data) {
-		var data_type = undefined;
-		switch (typeof field_data.value) {
-			case 'number':
-				data_type = 'integer';
-				break;
-
-			case 'object':
-				if (field_data.value == null)
-				{
-					data_type = 'integer';
-				}
-				break;
-
-			case 'boolean':
-				data_type = 'boolean';
-				break;
-		}
-
-
-		$(this).append($('<input>')
-			.prop('name', field_data.model + '_' + field_data.field)
-			.prop('id', field_data.model + '_' + field_data.field + '_' + field_data.pk)
-			.prop('type', 'hidden')
-			.attr('data-model', field_data.model)
-			.attr('data-field', field_data.field)
-			.attr('data-type', data_type)
-			.prop('value', field_data.value)
-		);
-	},
-
-	//    add to options ability to not create hidden fields for data-fields which are not found on the form.
-	//   When using the Customer form, the CustomerContacts are also sent; but the CustomerContacts do not go into input fields.  (We could add tags to the td's etc)
-	fillFormModelData: function(json, options) { //{'non_editable_models': [], 'non_editable_model_fields': []}) {
-                options = options || {};
-		options = $.extend({'non_editable_models': [], 'non_editable_model_fields': { } }, options);
-		
-		var form_model = $(this).attr('data-model');
-		var form = this;
-		
-		$(this).find('[data-field]').each(function() {
-			var field_model = $(this).attr('data-model');
-			var model = field_model ? field_model : form_model;
-			var field = $(this).attr('data-field');
-
-			$(this).val(json[model]['fields'][field]);
-			delete json[model]['fields'][field];
-/* This currently makes no sense, its for a multiple model objects, e.g. 2 CustomerContacts for a Customer, but such requests would not need to fill form inputs for
- * each of these models (currently) - it is displayed text
-			if ($.isArray(json[model])) {
-				var index = parseInt($(this).attr('id').replace(model + '_' + field + '_', ''))
-				console.log('model index is probably not right!! - ' + index);
-				$(this).val(json[model][index]['fields'][field]);
-				delete json[model][index]['fields'][field];
-			} else { // no index } */
-		});
-
-		// Each data item is DELETED from the json once an element was found to store the data in.
-		// Any remaining fields in a models 'fields' has not been filled to an element.
-		// We go through these fields, check they shouldn't be ignored (non_editable_models, non_editable_model_fields)
-		// 	and create a hidden input element to store its value
-		$.each(json, function(model, model_data) {
-			if ($.inArray(model, options.non_editable_models) != -1) {
-				console.debug('model; ' + model + ' is in ignore unpopulated fields for models list NOOPING');
-				$.noop();
-			} else {
-				if (!$.isArray(model_data)) {
-					model_data = [model_data];
-				}
-
-				$.each(model_data, function(index, data_fields) {
-					$.each(data_fields.fields, function(field, value) {
-						if (options.non_editable_model_fields.model && $.inArray(field, options.non_editable_model_fields.model)) {
-							console.debug('[IGNORE FIELD] model:' + model + '['+index+'].' + field + ' is a non-editable model field; ignoring unpopulated fied');
-							$.noop();
-						} else {
-							console.debug('[CREATE HIDDEN] model:' + model + '['+index+'].' + field + ' was unpopulated, creating hidden input');
-							$(form).appendHiddenInput({'model': model, 'pk': data_fields.pk, 'field': field, 'value': value});
-						}
-					});
-				});
-
-			}
-		});
-	},
-
-	clear: function() {
-		$(this).val('');
-	}
-});
-
-/*
- * CUSTOMER WINDOW FUNCTIONS
- *
- */
-$(function () {
-	// Save/Update Customer Details
-	$('#customer_control_action_save').live('click', function() {
-		var customer_id = $.trim($('#customer_id').val());
-                if (customer_id == "" || customer_id == undefined || customer_id == null)
-			customer_id = null;
-		var model_fields = $('#frm_customer').getDataFields();
-		var customer_json = [{'pk': customer_id, 'model': 'frontend.customer', 'fields': model_fields['customer']}];
-		$.ajax({
-			url: '/customer/save/'+customer_id,
-			type: 'POST',
-			dataType: 'json',
-			cache: false,
-			contentType: 'application/json; charset=UTF-8',
-			headers: { 'X-CSRFToken': $.cookie('csrftoken') },
-			data: JSON.stringify(customer_json),
-			success: function(json) {
-				console.log('/save/customer success!');
-				console.debug(json);
-				alert(json);
-			},
-			error: function(xhr, status) {
-				console.log('Error requesting /save/customer! status:');
-				console.log(status);
-			},
-			complete: function(xhr, status) {
-				console.log('Complete request for /save/customer');
-			}
-		});
-	});
-
-	// Search/Find Order by ID
-	$('#order_order_id_search').live('click', function() {
-		var order_id = $.trim($('#order_order_id').val());
-		if (!order_id) {
-			alert('You must enter a Order ID!');
-		} else {
-			$.get('/order/' + order_id);
-		}
-				
-	});
-
-
-	// Search/Find Customer by ID
-	$('#customer_id_search').live('click', function () {
-		var id = $.trim($('#customer_id').val());
-
-		if (!id) {
-			alert('You must enter a Customer ID!');
-		} else {
-			$.get('/customer/' + id);
-		}
-	});
-});
-
-$(function () {
-    $('#customer_delivery_address_same').live("click", function () {
-        if ($('#customer_delivery_address_same').prop("checked")) {
-            $('#toggle_customer_main_options_delivery').hide('blind');
-        } else {
-            $('#toggle_customer_main_options_delivery').show('slide');
-        }
-    });
-});
-
-
-$(function () {
-    $("#window").draggable({
-        revert: "invalid"
-    });
-    $("#order_window").draggable({
-        revert: "invalid"
-    });
-
-    $("#container").droppable({
-        drop: function (event, ui) {
-            $(this)
-                .find("#debug_msg")
-                .html("window in position");
-        }
-    });
-});
-
-
-$(function () {
-    $(document).tooltip({
-        position: {
-            my: "right bottom+6",
-            at: "center bottom",
-            of: "#avator",
-            using: function (position, feedback) {
-                $(this).css(position);
-                $("<div>")
-                    .addClass("arrow")
-                    .addClass(feedback.vertical)
-                    .addClass(feedback.horizontal)
-                    .appendTo(this);
-            }
-        }
-    });
-});
-
-
-$(function () {
-    $("#order_content").dialog({
-        title: "Orders",
-        autoOpen: false,
-        width: 800
-    });
-    $("#button_orders_open_dialog")
-        .click(function () {
-            $("#order_content").dialog("open");
+    <script type="text/javascript">
+    $(function () {
+        $.ajaxSetup({
+            cache: false
         });
-});
 
-
-$(function () {
-    $("#customer_content").dialog({
-        title: "Customers",
-        autoOpen: false,
-        width: 414
-    });
-    $("#button_customers_open_dialog")
-        .click(function () {
-            $("#customer_content").dialog("open");
-        });
-});
-
-
-$(function() {
-    $( "#customer_find" ).dialog({
-	title: "Find Customers",
-	modal: true,
-	draggable: false,
-	autoOpen: false,
-	width: 'auto'
-    });
-    $( "#button_customers_find_dialog" )
-        .click(function() {
-            $( "#customer_find" ).dialog( "open" );
-    });
-});
-
-$(function () {
-    $("#product_content").dialog({
-        title: "Products",
-        autoOpen: false,
-        width: 414
-    });
-    $("#button_products_open_dialog")
-        .click(function () {
-            $("#product_content").dialog("open");
-        });
-});
-
-
-$(function () {
-    var availableTags = [
-        "ActionScript",
-        "AppleScript",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme"
-    ];
-    $("#order_order_company22").autocomplete({
-        source: availableTags
-    });
-});
-
-
-$(function () {
-    var availableTags = [
-        "Australian Institute Optom (AIO)",
-        "AIOLT",
-        "AMI",
-        "BackTalk (BT)",
-        "Chiro Assc. Aus (CAA)",
-        "Disney (JH)",
-        "Koren 1",
-        "Koren 2",
-        "LT",
-        "MedART",
-        "SP"
-    ];
-    $("#product_supplier").autocomplete({
-        source: availableTags
-    });
-});
-
-
-$(function () {
-    $("#order_order_date").datepicker({ dateFormat: 'dd/mm/yy' });
-});
-
-
-$(function () {
-    $("#order_wanted_by").datepicker({ dateFormat: 'dd/mm/yy' });
-});
-
-
-jQuery(function ($) {
-    $("#product").mask("99/99/9999", {
-        completed: function () {
-            alert("You typed the following: " + this.val());
+        // console fix
+        if (typeof console == undefined) {
+            window.console = {
+                log: function (s) {
+                    return;
+                }
+            };
+            console.warn = console.debug = console.log;
         }
-    });
-});
 
-
-$(function () {
-    $("#order_shipping_cost").spinner({
-        min: 0,
-        max: 2500,
-        step: .15,
-        start: 1000,
-        numberFormat: "C",
-        culture: "en-AU"
-    });
-});
-
-
-$(function () {
-    $("#product_cost_price").spinner({
-        min: 0,
-        max: 2500,
-        step: .25,
-        start: 1000,
-        numberFormat: "C",
-        culture: "en-AU"
-    });
-});
-
-
-$(function () {
-    $("#product_current_stock").spinner({
-        min: 0,
-        max: 250000,
-        step: 1,
-        start: 1000,
-        culture: "en-AU"
-    });
-});
-
-
-$(function () {
-    $("#product_minimum_stock").spinner({
-        min: 0,
-        max: 250000,
-        step: 25,
-        start: 1000,
-        culture: "en-AU"
-    });
-});
-
-$(function () {
-    $.widget("ui.pcntspinner", $.ui.spinner, {
-        _format: function (value) {
-            return value + '%';
-        },
-
-        _parse: function (value) {
-            return parseFloat(value);
-        }
-    });
-    $("#order_product_item_percentage_ID").pcntspinner({
-        min: 0,
-        max: 100,
-        step: 5,
-        start: 0,
-        culture: "en-AU"
-    });
-    $("#order_product_item_percentage_ID2").pcntspinner({
-        min: 0,
-        max: 100,
-        step: 5,
-        start: 0,
-        culture: "en-AU"
-    });
-});
-
-(function ($) {
-    $.widget("custom.combobox", {
-        _create: function () {
-            this.wrapper = $("<span>")
-                .addClass("custom-combobox")
-                .insertAfter(this.element);
-
-            this.element.hide();
-            this._createAutocomplete();
-            this._createShowAllButton();
-        },
-
-        _createAutocomplete: function () {
-            var selected = this.element.children(":selected"),
-                value = selected.val() ? selected.text() : "";
-
-            this.input = $("<input>")
-                .appendTo(this.wrapper)
-                .val(value)
-                .attr("title", "")
-                .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
-                .autocomplete({
-                    delay: 0,
-                    minLength: 0,
-                    source: $.proxy(this, "_source")
-                })
-                .tooltip({
-                    tooltipClass: "ui-state-highlight"
+        $.ajax({url: '/lookup/states',
+            type: 'GET',
+            dataType: 'json',
+            headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+            success: function (json) {
+                $.each(json, function (k, v) {
+                    $('#customer_state').append(new Option(v, k));
+                    $('#customer_delivery_state').append(new Option(v, k));
                 });
+            },
+            error: function (xhr, status) {
+            },
+            complete: function (xhr, status) {
+            }
+        });
 
-            this._on(this.input, {
-                autocompleteselect: function (event, ui) {
-                    ui.item.option.selected = true;
-                    this._trigger("select", event, {
-                        item: ui.item.option
-                    });
+        $.taconite.debug = true;
+
+        // Save/Update Customer Details
+        $('#customer_control_action_save').live('click', function () {
+            var customer_id = $.trim($('#customer_id').val());
+            if (customer_id == "" || customer_id == undefined || customer_id == null)
+                customer_id = null;
+            var model_fields = $('#frm_customer').getDataFields();
+            var customer_json = [
+                {'pk': customer_id, 'model': 'frontend.customer', 'fields': model_fields['customer']}
+            ];
+            $.ajax({
+                url: '/customer/save/' + customer_id,
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                contentType: 'application/json; charset=UTF-8',
+                headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+                data: JSON.stringify(customer_json),
+                success: function (json) {
+                    console.log('/save/customer success!');
+                    console.debug(json);
+                    alert(json);
                 },
-
-                autocompletechange: "_removeIfInvalid"
-            });
-        },
-
-        _createShowAllButton: function () {
-            var input = this.input,
-                wasOpen = false;
-
-            $("<a>")
-                .attr("tabIndex", -1)
-                .attr("title", "Show All Items")
-                .tooltip()
-                .appendTo(this.wrapper)
-                .button({
-                    icons: {
-                        primary: "ui-icon-triangle-1-s"
-                    },
-                    text: false
-                })
-                .removeClass("ui-corner-all")
-                .addClass("custom-combobox-toggle ui-corner-right")
-                .mousedown(function () {
-                    wasOpen = input.autocomplete("widget").is(":visible");
-                })
-                .click(function () {
-                    input.focus();
-
-                    // Close if already visible
-                    if (wasOpen) {
-                        return;
-                    }
-
-                    // Pass empty string as value to search for, displaying all results
-                    input.autocomplete("search", "");
-                });
-        },
-
-        _source: function (request, response) {
-            var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-            response(this.element.children("option").map(function () {
-                var text = $(this).text();
-                if (this.value && (!request.term || matcher.test(text)))
-                    return {
-                        label: text,
-                        value: text,
-                        option: this
-                    };
-            }));
-        },
-
-        _removeIfInvalid: function (event, ui) {
-
-            // Selected an item, nothing to do
-            if (ui.item) {
-                return;
-            }
-
-            // Search for a match (case-insensitive)
-            var value = this.input.val(),
-                valueLowerCase = value.toLowerCase(),
-                valid = false;
-            this.element.children("option").each(function () {
-                if ($(this).text().toLowerCase() === valueLowerCase) {
-                    this.selected = valid = true;
-                    return false;
+                error: function (xhr, status) {
+                    console.log('Error requesting /save/customer! status:');
+                    console.log(status);
+                },
+                complete: function (xhr, status) {
+                    console.log('Complete request for /save/customer');
                 }
             });
+        });
 
-            // Found a match, nothing to do
-            if (valid) {
-                return;
+        // Search/Find Order by ID
+        $('#order_order_id_search').live('click', function () {
+            var order_id = $.trim($('#order_order_id').val());
+            if (!order_id) {
+                alert('You must enter a Order ID!');
+            } else {
+                $.get('/order/' + order_id);
             }
 
-            // Remove invalid value
-            this.input
-                .val("")
-                .attr("title", value + " didn't match any item")
-                .tooltip("open");
-            this.element.val("");
-            this._delay(function () {
-                this.input.tooltip("close").attr("title", "");
-            }, 2500);
-            this.input.data("ui-autocomplete").term = "";
+        });
+
+
+        // Search/Find Customer by ID
+        $('#customer_id_search').live('click', function () {
+            var id = $.trim($('#customer_id').val());
+
+            if (!id) {
+                alert('You must enter a Customer ID!');
+            } else {
+                $.get('/customer/' + id);
+            }
+        });
+
+        $('#customer_delivery_address_same').live("click", function () {
+            if ($('#customer_delivery_address_same').prop("checked")) {
+                $('#toggle_customer_main_options_delivery').hide('blind');
+            } else {
+                $('#toggle_customer_main_options_delivery').show('slide');
+            }
+        });
+
+        $("#window").draggable({
+            revert: "invalid"
+        });
+        $("#order_window").draggable({
+            revert: "invalid"
+        });
+
+        $("#container").droppable({
+            drop: function (event, ui) {
+                $(this)
+                        .find("#debug_msg")
+                        .html("window in position");
+            }
+        });
+
+        $(document).tooltip({
+            position: {
+                my: "right bottom+6",
+                at: "center bottom",
+                of: "#avator",
+                using: function (position, feedback) {
+                    $(this).css(position);
+                    $("<div>")
+                            .addClass("arrow")
+                            .addClass(feedback.vertical)
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
+                }
+            }
+        });
+
+        $("#order_content").dialog({
+            title: "Orders",
+            autoOpen: false,
+            width: 800
+        });
+        $("#button_orders_open_dialog").click(function () {
+            $("#order_content").dialog("open");
+        });
+
+        $("#customer_content").dialog({
+            title: "Customers",
+            autoOpen: false,
+            width: 414
+        });
+        $("#button_customers_open_dialog").click(function () {
+            $("#customer_content").dialog("open");
+        });
+
+        $("#customer_find").dialog({
+            title: "Find Customers",
+            autoOpen: false,
+            width: 'auto'
+        });
+        $("#button_customers_find_dialog").click(function () {
+            $("#customer_find").dialog("open");
+        });
+
+        $("#product_content").dialog({
+            title: "Products",
+            autoOpen: false,
+            width: 414
+        });
+
+        $("#button_products_open_dialog").click(function () {
+            $("#product_content").dialog("open");
+        });
+
+        $("#order_order_company22").autocomplete({
+            source: [
+                "ActionScript",
+                "AppleScript",
+                "Asp",
+                "BASIC",
+                "C",
+                "C++",
+                "Clojure",
+                "COBOL",
+                "ColdFusion",
+                "Erlang",
+                "Fortran",
+                "Groovy",
+                "Haskell",
+                "Java",
+                "JavaScript",
+                "Lisp",
+                "Perl",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme"
+            ]
+        });
+
+        $("#product_supplier").autocomplete({
+            source: [
+                "Australian Institute Optom (AIO)",
+                "AIOLT",
+                "AMI",
+                "BackTalk (BT)",
+                "Chiro Assc. Aus (CAA)",
+                "Disney (JH)",
+                "Koren 1",
+                "Koren 2",
+                "LT",
+                "MedART",
+                "SP"
+            ]
+        });
+
+        $("#order_order_date").datepicker({ dateFormat: 'dd/mm/yy' });
+
+        $("#order_wanted_by").datepicker({ dateFormat: 'dd/mm/yy' });
+
+        $("#product").mask("99/99/9999", {
+            completed: function () {
+                alert("You typed the following: " + this.val());
+            }
+        });
+
+        $("#order_shipping_cost").spinner({
+            min: 0,
+            max: 2500,
+            step: .15,
+            start: 1000,
+            numberFormat: "C",
+            culture: "en-AU"
+        });
+
+        $("#product_cost_price").spinner({
+            min: 0,
+            max: 2500,
+            step: .25,
+            start: 1000,
+            numberFormat: "C",
+            culture: "en-AU"
+        });
+
+        $("#product_current_stock").spinner({
+            min: 0,
+            max: 250000,
+            step: 1,
+            start: 1000,
+            culture: "en-AU"
+        });
+
+        $("#product_minimum_stock").spinner({
+            min: 0,
+            max: 250000,
+            step: 25,
+            start: 1000,
+            culture: "en-AU"
+        });
+
+        $.widget("ui.pcntspinner", $.ui.spinner, {
+            _format: function (value) {
+                return value + '%';
+            },
+
+            _parse: function (value) {
+                return parseFloat(value);
+            }
+        });
+        $("#order_product_item_percentage_ID").pcntspinner({
+            min: 0,
+            max: 100,
+            step: 5,
+            start: 0,
+            culture: "en-AU"
+        });
+        $("#order_product_item_percentage_ID2").pcntspinner({
+            min: 0,
+            max: 100,
+            step: 5,
+            start: 0,
+            culture: "en-AU"
+        });
+
+        $.widget("custom.combobox", {
+            _create: function () {
+                this.wrapper = $("<span>")
+                        .addClass("custom-combobox")
+                        .insertAfter(this.element);
+
+                this.element.hide();
+                this._createAutocomplete();
+                this._createShowAllButton();
+            },
+
+            _createAutocomplete: function () {
+                var selected = this.element.children(":selected"),
+                        value = selected.val() ? selected.text() : "";
+
+                this.input = $("<input>")
+                        .appendTo(this.wrapper)
+                        .val(value)
+                        .attr("title", "")
+                        .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
+                        .autocomplete({
+                            delay: 0,
+                            minLength: 0,
+                            source: $.proxy(this, "_source")
+                        })
+                        .tooltip({
+                            tooltipClass: "ui-state-highlight"
+                        });
+
+                this._on(this.input, {
+                    autocompleteselect: function (event, ui) {
+                        ui.item.option.selected = true;
+                        this._trigger("select", event, {
+                            item: ui.item.option
+                        });
+                    },
+
+                    autocompletechange: "_removeIfInvalid"
+                });
+            },
+
+            _createShowAllButton: function () {
+                var input = this.input,
+                        wasOpen = false;
+
+                $("<a>")
+                        .attr("tabIndex", -1)
+                        .attr("title", "Show All Items")
+                        .tooltip()
+                        .appendTo(this.wrapper)
+                        .button({
+                            icons: {
+                                primary: "ui-icon-triangle-1-s"
+                            },
+                            text: false
+                        })
+                        .removeClass("ui-corner-all")
+                        .addClass("custom-combobox-toggle ui-corner-right")
+                        .mousedown(function () {
+                            wasOpen = input.autocomplete("widget").is(":visible");
+                        })
+                        .click(function () {
+                            input.focus();
+
+                            // Close if already visible
+                            if (wasOpen) {
+                                return;
+                            }
+
+                            // Pass empty string as value to search for, displaying all results
+                            input.autocomplete("search", "");
+                        });
+            },
+
+            _source: function (request, response) {
+                var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                response(this.element.children("option").map(function () {
+                    var text = $(this).text();
+                    if (this.value && (!request.term || matcher.test(text)))
+                        return {
+                            label: text,
+                            value: text,
+                            option: this
+                        };
+                }));
+            },
+
+            _removeIfInvalid: function (event, ui) {
+
+                // Selected an item, nothing to do
+                if (ui.item) {
+                    return;
+                }
+
+                // Search for a match (case-insensitive)
+                var value = this.input.val(),
+                        valueLowerCase = value.toLowerCase(),
+                        valid = false;
+                this.element.children("option").each(function () {
+                    if ($(this).text().toLowerCase() === valueLowerCase) {
+                        this.selected = valid = true;
+                        return false;
+                    }
+                });
+
+                // Found a match, nothing to do
+                if (valid) {
+                    return;
+                }
+
+                // Remove invalid value
+                this.input
+                        .val("")
+                        .attr("title", value + " didn't match any item")
+                        .tooltip("open");
+                this.element.val("");
+                this._delay(function () {
+                    this.input.tooltip("close").attr("title", "");
+                }, 2500);
+                this.input.data("ui-autocomplete").term = "";
+            },
+
+            _destroy: function () {
+                this.wrapper.remove();
+                this.element.show();
+            }
+        });
+
+        $("#order_order_company").combobox();
+
+        $("#order_accordion").accordion({
+            collapsible: true
+        });
+
+        $("#customer_accordion").accordion({
+            collapsible: true
+        });
+    });
+
+
+    $.fn.extend({
+        getDataFields: function () {
+            var model_data = {};
+            var form_model = $(this).attr('data-model');
+            this.find('[data-field]').each(function () {
+                var field_model = $(this).attr('data-model');
+                var model = field_model ? field_model : form_model;
+                var type = $(this).attr('data-type');
+                var value = $.trim($(this).val());
+
+                if (model_data[model] == undefined)
+                    model_data[model] = {};
+
+                switch (type) {
+                    case 'integer':
+                        value = parseInt(value.replace(/[^\d.]/g, ''));
+                        if (isNaN(value)) {
+                            value = null;
+                        }
+                        break;
+
+                    case 'boolean':
+                        if (value.test(/true/i)) {
+                            value = true;
+                        } else {
+                            value = false;
+                        }
+                        break;
+                }
+
+                model_data[model][$(this).attr('data-field')] = value;
+            });
+            return model_data;
         },
 
-        _destroy: function () {
-            this.wrapper.remove();
-            this.element.show();
+        // appends a hidden input element to the target (form).  Used by fillFormModelData() when it cannot place a Models data in an element, and that field is not non-editable.
+        appendHiddenInput: function (field_data) {
+            var data_type = undefined;
+            switch (typeof field_data.value) {
+                case 'number':
+                    data_type = 'integer';
+                    break;
+
+                case 'object':
+                    if (field_data.value == null) {
+                        data_type = 'integer';
+                    }
+                    break;
+
+                case 'boolean':
+                    data_type = 'boolean';
+                    break;
+            }
+
+
+            $(this).append($('<input>')
+                    .prop('name', field_data.model + '_' + field_data.field)
+                    .prop('id', field_data.model + '_' + field_data.field + '_' + field_data.pk)
+                    .prop('type', 'hidden')
+                    .attr('data-model', field_data.model)
+                    .attr('data-field', field_data.field)
+                    .attr('data-type', data_type)
+                    .prop('value', field_data.value)
+            );
+        },
+
+        //    add to options ability to not create hidden fields for data-fields which are not found on the form.
+        //   When using the Customer form, the CustomerContacts are also sent; but the CustomerContacts do not go into input fields.  (We could add tags to the td's etc)
+        fillFormModelData: function (json, options) { //{'non_editable_models': [], 'non_editable_model_fields': []}) {
+            options = options || {};
+            options = $.extend({'non_editable_models': [], 'non_editable_model_fields': { } }, options);
+
+            var form_model = $(this).attr('data-model');
+            var form = this;
+
+            $(this).find('[data-field]').each(function () {
+                var field_model = $(this).attr('data-model');
+                var model = field_model ? field_model : form_model;
+                var field = $(this).attr('data-field');
+
+                $(this).val(json[model]['fields'][field]);
+                delete json[model]['fields'][field];
+                /* This currently makes no sense, its for a multiple model objects, e.g. 2 CustomerContacts for a Customer, but such requests would not need to fill form inputs for
+                 * each of these models (currently) - it is displayed text
+                 if ($.isArray(json[model])) {
+                 var index = parseInt($(this).attr('id').replace(model + '_' + field + '_', ''))
+                 console.log('model index is probably not right!! - ' + index);
+                 $(this).val(json[model][index]['fields'][field]);
+                 delete json[model][index]['fields'][field];
+                 } else { // no index } */
+            });
+
+            // Each data item is DELETED from the json once an element was found to store the data in.
+            // Any remaining fields in a models 'fields' has not been filled to an element.
+            // We go through these fields, check they shouldn't be ignored (non_editable_models, non_editable_model_fields)
+            // 	and create a hidden input element to store its value
+            $.each(json, function (model, model_data) {
+                if ($.inArray(model, options.non_editable_models) != -1) {
+                    console.debug('model; ' + model + ' is in ignore unpopulated fields for models list NOOPING');
+                    $.noop();
+                } else {
+                    if (!$.isArray(model_data)) {
+                        model_data = [model_data];
+                    }
+
+                    $.each(model_data, function (index, data_fields) {
+                        $.each(data_fields.fields, function (field, value) {
+                            if (options.non_editable_model_fields.model && $.inArray(field, options.non_editable_model_fields.model)) {
+                                console.debug('[IGNORE FIELD] model:' + model + '[' + index + '].' + field + ' is a non-editable model field; ignoring unpopulated fied');
+                                $.noop();
+                            } else {
+                                console.debug('[CREATE HIDDEN] model:' + model + '[' + index + '].' + field + ' was unpopulated, creating hidden input');
+                                $(form).appendHiddenInput({'model': model, 'pk': data_fields.pk, 'field': field, 'value': value});
+                            }
+                        });
+                    });
+
+                }
+            });
+        },
+
+        clear: function () {
+            $(this).val('');
         }
     });
-})(jQuery);
-
-$(function () {
-    $("#order_order_company").combobox();
-});
-
-
-$(function () {
-    $("#order_accordion").accordion({
-        collapsible: true
-    });
-});
-
-
-$(function () {
-    $("#customer_accordion").accordion({
-        collapsible: true
-    });
-});
-</script>
+    </script>
 {% endcompress %}
