@@ -52,6 +52,7 @@ class Customer(models.Model):
     from_src_company_id = models.IntegerField(null=True, blank=True)
     from_src_membadd_id = models.IntegerField(null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=150)
+    notes = models.ManyToManyField('Note', related_name='customer_notes')
 
     def save(self, *args, **kwargs):
         super(Customer, self).save(*args, **kwargs)
@@ -173,7 +174,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=150)
     description = models.CharField(max_length=255)
-    notes = models.TextField()
+    notes = models.ManyToManyField('Note', related_name='product_notes')
     message = models.TextField()
     current_stock = models.PositiveIntegerField(default=0)
     minimum_stock = models.PositiveIntegerField(default=0)
@@ -320,6 +321,7 @@ class Order(models.Model):
     from_borders_fakeid = models.IntegerField(null=True, blank=True)
     order_notes = models.CharField(max_length=510, null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=150)
+    notes = models.ManyToManyField('Note', related_name='order_notes')
 
     def save(self, *args, **kwargs):
         super(Order, self).save(*args, **kwargs)
@@ -431,3 +433,8 @@ class Invoice(models.Model):
 
     def __unicode__(self):
         return self.slug
+
+
+class Note(models.Model):
+    text = models.TextField()
+    create_dt = models.DateTimeField(auto_now_add=True)
