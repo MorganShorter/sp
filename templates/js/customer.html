@@ -1,0 +1,83 @@
+{% load compress %}
+{% compress js %}
+    <script type="text/javascript">
+    $(function () {
+        /* Customer
+        * */
+        $("#customer_content").dialog({
+            title: "Customers",
+            autoOpen: false,
+            width: 'auto'
+        });
+
+        $("#customer_find").dialog({
+            title: "Find Customers",
+            autoOpen: false,
+            width: 'auto'
+        });
+
+        $("#button_customers_open_dialog").click(function () {
+            $("#customer_content").dialog("open");
+        });
+        $("#button_customers_find_dialog").click(function () {
+            $("#customer_find").dialog("open");
+        });
+
+        $("#find_customer_search").click(function(){
+
+        });
+
+        // Save/Update Customer Details
+        $('#customer_control_action_save').live('click', function () {
+            var customer_id = $.trim($('#customer_id').val());
+            if (customer_id == "" || customer_id == undefined || customer_id == null)
+                customer_id = null;
+            var model_fields = $('#frm_customer').getDataFields();
+            var customer_json = [
+                {'pk': customer_id, 'model': 'frontend.customer', 'fields': model_fields['customer']}
+            ];
+            $.ajax({
+                url: '/customer/save/' + customer_id,
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                contentType: 'application/json; charset=UTF-8',
+                headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+                data: JSON.stringify(customer_json),
+                success: function (json) {
+                    console.log('/save/customer success!');
+                    console.debug(json);
+                    alert(json);
+                },
+                error: function (xhr, status) {
+                    console.log('Error requesting /save/customer! status:');
+                    console.log(status);
+                },
+                complete: function (xhr, status) {
+                    console.log('Complete request for /save/customer');
+                }
+            });
+        });
+
+        // Search/Find Customer by ID
+        $('#customer_id_search').live('click', function () {
+            var id = $.trim($('#customer_id').val());
+
+            if (!id) {
+                alert('You must enter a Customer ID!');
+            } else {
+                $.get('/customer/' + id);
+            }
+        });
+
+        $('#customer_delivery_address_same').live("click", function () {
+            if ($('#customer_delivery_address_same').prop("checked")) {
+                $('#toggle_customer_main_options_delivery').hide('blind');
+            } else {
+                $('#toggle_customer_main_options_delivery').show('slide');
+            }
+        });
+
+    });
+    </script>
+{% endcompress %}
