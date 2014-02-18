@@ -17,14 +17,18 @@
         });
 
         $("#button_customers_open_dialog").click(function () {
-            $("#customer_content").dialog("open");
+            $("#customer_find").dialog("open");
+        });
+        $("#customer_control_action_cancel").click(function () {
+            $("#customer_content").dialog("close");
         });
         $("#button_customers_find_dialog").click(function () {
             $("#customer_find").dialog("open");
         });
 
-        $("#find_customer_search").click(function(){
-
+        $("#find_customer_search").live('click', function(){
+            var queryString = $('#frm_find_customer').formSerialize();
+            $.get('{% url 'customer_list' %}?' + queryString);
         });
 
         // Save/Update Customer Details
@@ -59,15 +63,11 @@
             });
         });
 
-        // Search/Find Customer by ID
-        $('#customer_id_search').live('click', function () {
-            var id = $.trim($('#customer_id').val());
-
-            if (!id) {
-                alert('You must enter a Customer ID!');
-            } else {
-                $.get('/customer/' + id);
-            }
+        // Open customer detail
+        $('#customer_contact_search tbody tr').live('click', function(){
+            var cid = $(this).attr('cid');
+            $("#customer_content").dialog("open");
+            $.get('/customer/' + cid);
         });
 
         $('#customer_delivery_address_same').live("click", function () {

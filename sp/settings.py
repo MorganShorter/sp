@@ -23,7 +23,7 @@ TEMPLATE_DIRS = (
 EMAIL_HOST = '127.0.0.1'
 DEFAULT_FROM_EMAIL = 'noreply@ec2-54-215-172-148.us-west-1.compute.amazonaws.com"'
 SERVER_EMAIL = 'noreply@ec2-54-215-172-148.us-west-1.compute.amazonaws.com"'
-SITE_ID = 2
+SITE_ID = 1
 SITE_NAME = 'sp'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/

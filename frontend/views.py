@@ -1,9 +1,42 @@
 import json
-import frontend.formfields
+from django.views.generic import ListView
 from django.http import HttpResponse
-from frontend.models import Customer, Order, Invoice
 from django.core import serializers
 from django.template import loader, RequestContext
+
+from . import formfields
+from .models import Customer, Order, Invoice
+from .mixins import TacoMixin
+
+
+class CustomerList(TacoMixin, ListView):
+    model = Customer
+    template_name = 'taconite/customer_list.xml'
+
+    def get_queryset(self):
+        qs = super(CustomerList, self).get_queryset()
+        fltr = {}
+        if self.request.GET.get('customer_id', None):
+            fltr['pk'] = self.request.GET['customer_id']
+
+        if self.request.GET.get('find_customer_name', None):
+            fltr['name__icontains'] = self.request.GET['find_customer_name']
+
+        if self.request.GET.get('find_customer_phone', None):
+            fltr['telephone__icontains'] = self.request.GET['find_customer_phone']
+
+        if self.request.GET.get('find_customer_email', None):
+            fltr['email__icontains'] = self.request.GET['find_customer_email']
+
+        if not fltr:
+            return qs.none()
+
+        return qs.filter(**fltr)
+
+
+customer_list = CustomerList.as_view()
+
+
 
 
 def order_get(request, pk):
@@ -16,13 +49,13 @@ def order_get(request, pk):
         except Invoice.DoesNotExist:
             pass
 
-    fields = frontend.formfields.OrderForm(order, invoice)
+    fields = formfields.OrderForm(order, invoice)
     return __taco_render(request, 'taconite/order.xml', {'error':error, 'fields': fields, 'order': order})
 
 
 def customer_get(request, pk):
     pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
-    fields = frontend.formfields.CustomerForm(customer)
+    fields = formfields.CustomerForm(customer)
     return __taco_render(request, 'taconite/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
 
 

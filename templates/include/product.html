@@ -1,0 +1,106 @@
+<div id="product_content">
+	<form id="frm_product">
+	<fieldset>
+		<table id="product_main_options">
+		<tr>
+			<td id="product_main_options_product_code_td_label" class="form_cell"><label for="customer_id" class="form_label">product code:</label></td>
+			<td id="product_main_options_product_description_td_input" class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
+			<td id="product_main_options_customer_id_td_search" class="form_cell"><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_auto_name_td_input" class="form_cell"><input type="checkbox" id="product_auto_name" name="product_auto_name" value="true" checked /></td>
+			<td id="product_main_options_product_auto_name_td_label" class="form_cell" colspan="5">auto-generate product name</td>
+		</tr>
+		<tr>
+			<td id="product_main_options_customer_name_td_label" class="form_cell"><label for="customer_name" class="form_label">size:</label></td>
+			<td id="product_main_options_customer_name_td_input" class="form_cell"><select id="customer_type" name="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="large">Large</option>
+				  <option value="space">Inter-dimensional Space Sheet</option>
+				</select></td>
+			<td colspan="2">&nbsp;</td>
+			<td id="product_main_options_customer_type_td_label" class="form_cell"><label for="customer_type" class="form_label">type</label></td>
+			<td id="product_main_options_customer_type_td_input" class="form_cell">
+				<select id="customer_type" name="customer_type" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="hard">Hard</option>
+				  <option value="water">Water</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_cost_price_td_label" class="form_cell"><label for="product_cost_price" class="form_label">cost price:</label></td>
+			<td id="product_main_options_product_cost_price_td_input" class="form_cell"><input type="text" name="product_cost_price" id="product_cost_price" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_current_stock_td_label" class="form_cell"><label for="product_current_stock" class="form_label">current stock:</label></td>
+			<td id="product_main_options_product_current_stock_td_input" class="form_cell"><input type="text" name="product_current_stock" id="product_current_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td><a id="customer_id_search" title="find a product by code" href="#" class="sml_button button form_button"><img id="product_current_stock" src="{{ STATIC_URL }}img/icons/16_magic.png" /></a></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_minimum_stock_td_label" class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>
+			<td id="product_main_options_product_minimum_stock_td_input" class="form_cell"><input type="text" name="product_minimum_stock" id="product_minimum_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_supplier_td_label" class="form_cell"><label for="product_supplier" class="form_label">supplier:</label></td>
+			<td id="product_main_options_product_description_td_input" class="form_cell"><input type="text" name="product_supplier" id="product_supplier" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" /></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_royalty_img_td_label" class="form_cell"><label for="product_royalty_img" class="form_label">royalty image:</label></td>
+			<td id="product_main_options_product_royalty_img_input" class="form_cell">
+				<select id="product_royalty_img" name="product_royalty_img" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="">--- none ---</option>
+				  <option value="loon">Looney</option>
+				  <option value="nuts">Peanuts</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_auto_royalty_amount_td_input" class="form_cell"><input type="checkbox" id="product_auto_royalty_amount" name="product_auto_royalty_amount" value="true" checked /></td>
+			<td id="product_main_options_product_auto_royalty_amount_td_label" class="form_cell" colspan="5">auto-select royalty using royalty image</td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_use_price_template_td_input" class="form_cell"><input type="checkbox" id="product_use_price_template" name="product_use_price_template" value="true" checked /></td>
+			<td id="product_main_options_product_use_price_template_label" class="form_cell" colspan="5">use pricing template</td>
+		</tr>
+		<tr>
+			<td id="product_main_options_product_price_level_template_label" class="form_cell"><label for="product_price_level_template" class="form_label">price template:</label></td>
+			<td id="product_main_options_product_price_level_template_input" class="form_cell">
+				<select id="product_price_level_template" name="product_price_level_template" title="what type of customer is this?" class="text ui-widget-content ui-corner-all form_input">
+				  <option value="">--- none ---</option>
+				  <option value="loon">AR</option>
+				  <option value="nuts">FB</option>
+				  <option value="nuts">LC-LI</option>
+				  <option value="nuts">LI</option>
+				</select></td>
+		</tr>
+		</table>
+
+			<table id="product_items" class="form_list">
+				<tr class="form_list_row">
+					<th id="customer_contact_items_first_name_th" class="form_list_header">Price</th>
+					<th id="customer_contact_items_surname_th" class="form_list_header">Min Qty</th>
+					<th id="customer_contact_items_phone_th" class="form_list_header">Max Qty</th>
+					<th id="customer_contact_items_email_th" class="form_list_header">Block</th>
+					<th class="form_list_header">&nbsp;</th>
+				</tr>
+				<tr class="form_list_row">
+					<td id="customer_contact_item_product_code_td_{ID}" class="form_list_item">0.25</td>
+					<td id="customer_contact_item_cur_stock_td_{ID}" class="form_list_item">50</td>
+					<td id="customer_contact_item_quantity_td_{ID}" class="form_list_item">-</td>
+					<td id="customer_contact_email_td_{ID}" class="form_list_item">yes</td>
+					<td id="customer_contact_item_delete_td_{ID}" class="form_list_item"><a id="customer_contact_item_delete_{ID2}" title="delete this contact item from customer" href="#"><img id="icon_order_product_item_delete_{ID2}" src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
+				</tr>
+				<tr class="form_list_row">
+					<td colspan="5" class="form_list_item"><a id="customer_control_action_add_contact" title="add new price level" href="#"><img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a> </td>
+				</tr>
+			</table>
+
+
+		<table id="product_control_action">
+		<tr>
+		<td id="product_control_action_save" class="form_cell"><a id="order_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_product_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td id="product_control_action_new" class="form_cell"><a id="order_control_action_new" title="new" href="#" class="button form_button"><img id="icon_product_control_action_new" src="{{ STATIC_URL }}img/icons/32_new.png" /><br />new</a>&nbsp;</td>
+		<td id="product_control_action_cancel" class="form_cell"><a id="order_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_product_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+		</tr>
+		</table>
+	</fieldset>
+	</form>
+	</div>
+	<!-- End product_content -->

@@ -4,3 +4,4 @@ django-mathfilters
 django-compressor
 django-registration
 Pillow
+psycopg2==2.5.1

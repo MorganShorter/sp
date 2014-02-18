@@ -1,0 +1,16 @@
+<taconite>
+    <remove select="table#customer_contact_search tbody tr" />
+    <append select="table#customer_contact_search tbody">
+        {% for customer in object_list %}
+            <tr class="form_list_row" cid="{{ customer.pk }}">
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.email }}</td>
+            </tr>
+        {% empty %}
+            <tr class="form_list_row">
+                <td colspan="3">not found</td>
+            </tr>
+        {% endfor %}
+    </append>
+</taconite>
