@@ -72,16 +72,16 @@ class CustomerContact(models.Model):
     surname = models.CharField(max_length=100)
     phone = models.CharField(max_length=40, blank=True, null=True)
     email = models.EmailField(max_length=255, blank=True, null=True)
-    slug = models.SlugField(unique=True, max_length=150)
+    slug = models.SlugField(max_length=150, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super(CustomerContact, self).save(*args, **kwargs)
         if not self.slug:
             self.slug = "%i-%s" % (self.id, slugify("%s-%s" % (self.first_name, self.surname)))
-            super(CustomerContact, self).save(*args, **kwargs)
+            self.save()
 
     def __unicode__(self):
-        return ' '.join((self.first_name, self.surname)).strip()
+        return '%s  %s' % (self.first_name, self.surname)
 
 
 class Size(models.Model):

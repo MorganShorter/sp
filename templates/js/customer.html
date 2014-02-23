@@ -16,14 +16,30 @@
             width: 'auto'
         });
 
-        $("#button_customers_open_dialog").click(function () {
+        $("#add_contact").dialog({
+            title: "Add Contact",
+            autoOpen: false,
+            width: 'auto'
+        });
+
+        $("#button_customers_open_dialog").click(function() {
             $("#customer_find").dialog("open");
         });
-        $("#customer_control_action_cancel").click(function () {
+        $("#customer_control_action_cancel").click(function() {
             $("#customer_content").dialog("close");
         });
-        $("#button_customers_find_dialog").click(function () {
+        $("#button_customers_find_dialog").click(function() {
             $("#customer_find").dialog("open");
+        });
+        $("#customer_content").on('click', '#customer_control_action_add_contact', function(){
+            $("#add_contact").dialog("open");
+            $("#contact_customer_id").val($('#customer_id').val());
+            $("#contact_customer").val($('#customer_name').val());
+            return false;
+        });
+        $("#contact_control_action_cancel").click(function() {
+            $("#add_contact").dialog("close");
+            $('#frm_add_contact').trigger('reset');
         });
 
         $("#find_customer_search").live('click', function(){
@@ -59,6 +75,39 @@
                 },
                 complete: function (xhr, status) {
                     console.log('Complete request for /save/customer');
+                }
+            });
+        });
+
+        // Add contact
+        $('#contact_control_action_save').live('click', function () {
+            var model_fields = $('#frm_add_contact').getDataFields();
+            var send_json = [{
+                'model': 'frontend.customercontact',
+                'fields': model_fields['contact'],
+                'pk': null
+            }];
+            $.ajax({
+                url: '/contact/add/',
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                contentType: 'application/json; charset=UTF-8',
+                headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+                data: JSON.stringify(send_json),
+                success: function (json) {
+                    console.log('/contact/add/ success!');
+                    console.debug(json);
+                    $.get('/customer/' + $('#customer_id').val());
+                    $("#add_contact").dialog("close");
+                    $('#frm_add_contact').trigger('reset');
+                },
+                error: function (xhr, status) {
+                    console.log('Error requesting /contact/add/! status:');
+                    console.log(status);
+                },
+                complete: function (xhr, status) {
+                    console.log('Complete request for /contact/add/');
                 }
             });
         });

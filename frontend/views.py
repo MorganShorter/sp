@@ -5,7 +5,7 @@ from django.core import serializers
 from django.template import loader, RequestContext
 
 from . import formfields
-from .models import Customer, Order, Invoice
+from .models import Customer, Order, Invoice, CustomerContact
 from .mixins import TacoMixin
 
 
@@ -37,7 +37,17 @@ class CustomerList(TacoMixin, ListView):
 customer_list = CustomerList.as_view()
 
 
+def contact_add(request):
+    for obj in serializers.deserialize('json', request.body):
+        if obj.object.__class__ == CustomerContact:
+            obj.object.slug = None
+            obj.object.save()
+    return HttpResponse(json.dumps('Contact created'), content_type='application/json')
 
+
+'''
+ Old code
+'''
 
 def order_get(request, pk):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
@@ -68,7 +78,7 @@ def customer_save(request, pk):
         if customer.object.__class__ == Customer:
             if not customer.object.id:
                 new_customer = True
-                customer.object.slug = None;
+                customer.object.slug = None
             else:
                 new_customer = False
 

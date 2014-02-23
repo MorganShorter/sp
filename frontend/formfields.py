@@ -25,6 +25,7 @@ def CustomerForm(customer):
              'input#customer_from_src_company': (customer.from_src_company_id, None),
              'input#customer_slug': (customer.slug, None)}
 
+
 def OrderForm(order, invoice):
     return { 'input#order_order_id': (order.id, None),
              'input#order_customer_id': (order.customer.id, None),
