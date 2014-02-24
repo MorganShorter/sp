@@ -101,7 +101,7 @@
 		<div id="customer_accordion">
 			<h3>Contacts</h3>
 			<div>
-			<table id="customer_contact_items" class="form_list">
+			<table id="customer_contact_items" class="form_list with100">
 				<tr class="form_list_row">
 					<th id="customer_contact_items_first_name_th" class="form_list_header">First Name</th>
 					<th id="customer_contact_items_surname_th" class="form_list_header">Surname</th>
@@ -117,7 +117,20 @@
 			</table>
 			</div>
 			<h3>Notes</h3>
-			<div><p>&nbsp;</p></div>
+			<div>
+                <table id="customer_note_items" class="form_list with100">
+                    <tr class="form_list_row">
+                        <th class="form_list_header">Text</th>
+                        <th class="form_list_header">&nbsp;</th>
+                    </tr>
+                    <tr class="form_list_row">
+                        <td colspan="2" class="form_list_item">
+                            <a id="customer_control_action_add_note" title="add new note item for customer" href="#">
+                            <img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add note</a>
+                        </td>
+                    </tr>
+			    </table>
+            </div>
 		</div>
 		<table id="customer_control_action">
 		<tr>
@@ -142,7 +155,7 @@
 			<td id="customer_find_options_customer_id_td_input" class="form_cell"><input type="text" name="customer_id" id="find_customer_id" title="search for this type of customer id" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
 			<td>&nbsp;</td>
 			<td rowspan="5">
-			<table id="customer_contact_search" class="form_list">
+			<table id="customer_contact_search" class="form_list with100">
                 <thead>
                     <tr class="form_list_row">
 					    <th class="form_list_header">Name</th>

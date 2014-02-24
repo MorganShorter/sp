@@ -1,5 +1,6 @@
 <taconite>
 	<remove select="table#customer_contact_items tr:gt(0):not(:last)" />
+    <remove select="table#customer_note_items tr:gt(0):not(:last)" />
 
 {% if error %}
 	{% include "taconite/error.xml" with fields=fields error=error %}
@@ -16,6 +17,21 @@
 				<td class="form_list_item">{{ contact.email }}</td>
 				<td class="form_list_item">
 					<a class="contact_delete_btn" cid="{{ contact.pk }}" title="delete this contact item from customer" href="#">
+						<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</after>
+
+    <after select="table#customer_note_items tr:first">
+		{% for note in customer.notes.all %}
+			<tr class="form_list_row">
+				<td class="">
+                    <a href="#">{{ note.text|truncatechars:50 }}</a>
+                </td>
+				<td class="form_list_item">
+					<a class="note_delete_btn" cid="{{ note.pk }}" title="delete this note item from customer" href="#">
 						<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
 					</a>
 				</td>

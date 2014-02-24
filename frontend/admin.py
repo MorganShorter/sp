@@ -1,5 +1,7 @@
 from django.contrib import admin
-from frontend.models import ImportNote, Customer, CustomerContact, Size, Medium, RoyaltyImg, Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, PriceLevelGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice
+from frontend.models import ImportNote, Customer, CustomerContact, Size, Medium, \
+    RoyaltyImg, Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, \
+    PriceLevelGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice, Note
 
 # Register your models here.
 admin.site.register(ImportNote)
@@ -20,3 +22,4 @@ admin.site.register(OrderStatus)
 admin.site.register(OrderProduct)
 admin.site.register(Company)
 admin.site.register(Invoice)
+admin.site.register(Note)
