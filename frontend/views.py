@@ -1,4 +1,5 @@
 import json
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.core import serializers
@@ -44,6 +45,14 @@ def contact_add(request):
             obj.object.save()
     return HttpResponse(json.dumps('Contact created'), content_type='application/json')
 
+
+def contact_delete(request, pk):
+    try:
+        CustomerContact.objects.get(pk=pk).delete()
+    except CustomerContact.DoesNotExist:
+        print 'contact not found'
+
+    return HttpResponse('ok')
 
 '''
  Old code

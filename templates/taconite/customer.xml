@@ -10,13 +10,13 @@
 	<after select="table#customer_contact_items tr:first">
 		{% for contact in customer.contacts.all %}
 			<tr class="form_list_row">
-				<td class="form_list_item" id="customer_contact_item_first_name_{{ contact.id }}">{{ contact.first_name }}</td>
-				<td class="form_list_item" id="customer_contact_item_surname_{{ contact.id }}">{{ contact.surname }}</td>
-				<td class="form_list_item" id="customer_contact_item_phone_{{ contact.id }}">{{ contact.phone }}</td>
-				<td class="form_list_item" id="customer_contact_item_email_{{ contact.id }}">{{ contact.email }}</td>
-				<td class="form_list_item" id="customer_contact_item_delete_td">
-					<a id="customer_contact_item_delete_{{ contact.id }}" title="delete this contact item from customer" href="#">
-						<img id="icon_customer_contact_item_delete_{{ contact.id }}" src="{{ STATIC_URL }}img/icons/16_delete.png" />
+				<td class="form_list_item">{{ contact.first_name }}</td>
+				<td class="form_list_item">{{ contact.surname }}</td>
+				<td class="form_list_item">{{ contact.phone }}</td>
+				<td class="form_list_item">{{ contact.email }}</td>
+				<td class="form_list_item">
+					<a class="contact_delete_btn" cid="{{ contact.pk }}" title="delete this contact item from customer" href="#">
+						<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
 					</a>
 				</td>
 			</tr>

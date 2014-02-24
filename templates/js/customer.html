@@ -53,9 +53,11 @@
             if (customer_id == "" || customer_id == undefined || customer_id == null)
                 customer_id = null;
             var model_fields = $('#frm_customer').getDataFields();
-            var customer_json = [
-                {'pk': customer_id, 'model': 'frontend.customer', 'fields': model_fields['customer']}
-            ];
+            var customer_json = [{
+                'pk': customer_id,
+                'model': 'frontend.customer',
+                'fields': model_fields['customer']
+            }];
             $.ajax({
                 url: '/customer/save/' + customer_id,
                 type: 'POST',
@@ -110,6 +112,12 @@
                     console.log('Complete request for /contact/add/');
                 }
             });
+        });
+
+        // Delete contact
+        $("#customer_content").on('click', '.contact_delete_btn', function(){
+            $.get('/contact/delete/' + $(this).attr('cid'));
+            $(this).parents('.form_list_row').remove();
         });
 
         // Open customer detail
