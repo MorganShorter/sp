@@ -22,11 +22,20 @@
             width: 'auto'
         });
 
+        $("#show_note").dialog({
+            title: "Note",
+            autoOpen: true,
+            width: 'auto'
+        });
+
         $("#button_customers_open_dialog").click(function() {
             $("#customer_find").dialog("open");
         });
         $("#customer_control_action_cancel").click(function() {
             $("#customer_content").dialog("close");
+        });
+        $("#note_control_action_cancel").click(function() {
+            $("#show_note").dialog("close");
         });
         $("#button_customers_find_dialog").click(function() {
             $("#customer_find").dialog("open");

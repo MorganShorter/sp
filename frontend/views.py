@@ -94,11 +94,11 @@ def customer_save(request, pk):
             customer.save()
 
             if new_customer:
-                msg = 'Customer created (ID:%d)' % (customer.object.id)
+                msg = 'Customer created (ID:%d)' % customer.object.id
             else:
                 msg = 'Customer saved'
         else:
-            msg = 'Did not receive expected object Customer. You sent me a %s' % (customer.object.__class__.__name__)
+            msg = 'Did not receive expected object Customer. You sent me a %s' % customer.object.__class__.__name__
 
     return HttpResponse(json.dumps(msg), content_type='application/json')
 
