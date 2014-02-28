@@ -1,6 +1,21 @@
 <taconite>
     <replaceContent select="#show_note #note_text">{{ note.text }}</replaceContent>
-    <replaceContent select="#note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</replaceContent>
+    {% if not created %}
+        <replaceContent select="#note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</replaceContent>
+    {% else %}
+        <after select="table#customer_note_items tr:first">
+			<tr class="form_list_row">
+				<td class="note_item">
+                    <a href="#" note_id="{{ note.pk }}" c_id="{{ customer.pk }}" id="note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</a>
+                </td>
+				<td class="form_list_item">
+					<a class="note_delete_btn" cid="{{ note.pk }}" title="delete this note item from customer" href="#">
+						<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
+					</a>
+				</td>
+			</tr>
+	</after>
+    {% endif %}
     <attr select="#customer_note_save" name="cid" value="{{ customer.pk }}" />
     <attr select="#customer_note_save" name="nid" value="{{ note.pk }}" />
 </taconite>

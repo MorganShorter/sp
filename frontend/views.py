@@ -55,19 +55,26 @@ def contact_delete(request, pk):
 
     return HttpResponse('ok')
 
-def customer_note_get(request, c_pk, n_pk):
+def customer_note_get(request, c_pk, n_pk=None):
     try:
         c = Customer.objects.get(pk=c_pk)
-        note = c.notes.get(pk=n_pk)
+        if n_pk:
+            note = c.notes.get(pk=n_pk)
     except Exception, e:
         return HttpResponse('')
 
     if request.method == 'POST':
         text = request.POST.get('text', '')
+        if not n_pk:
+            note = c.notes.create()
         note.text = text
         note.save()
 
-    return __taco_render(request, 'taconite/note.xml', {'note': note, 'customer': c})
+    return __taco_render(request, 'taconite/note.xml', {
+        'note': note,
+        'customer': c,
+        'created': not bool(n_pk)
+    })
 
 '''
  Old code

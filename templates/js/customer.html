@@ -152,6 +152,7 @@
             $.get('/customer/note/' + cid + '/' + nid + '/');
         });
 
+        // Save note
         $('#customer_note_save').live("click", function(){
             var nid = $(this).attr('nid');
             var cid = $(this).attr('cid');
@@ -161,11 +162,20 @@
                 data: {'text': $("#show_note textarea").val()},
                 headers: {'X-CSRFToken': $.cookie('csrftoken')},
                 success: function (json) {
-                    $.get('/customer/note/' + cid + '/' + nid + '/');
+                    //$.get('/customer/note/' + cid + '/' + nid + '/');
                     $("#show_note").dialog("close");
                     $('#frm_add_note').trigger('reset');
                 }
             });
+        });
+
+        // New note
+        $('#customer_add_note').live("click", function(){
+            $("#show_note").dialog("open");
+            $('#customer_note_save')
+                    .attr('cid', $('#customer_id').val())
+                    .attr('nid', '');
+            $("#show_note textarea").val('');
         });
 
     });
