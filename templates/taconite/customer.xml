@@ -27,8 +27,8 @@
     <after select="table#customer_note_items tr:first">
 		{% for note in customer.notes.all %}
 			<tr class="form_list_row">
-				<td class="">
-                    <a href="#">{{ note.text|truncatechars:50 }}</a>
+				<td class="note_item">
+                    <a href="#" note_id="{{ note.pk }}" c_id="{{ customer.pk }}" id="note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</a>
                 </td>
 				<td class="form_list_item">
 					<a class="note_delete_btn" cid="{{ note.pk }}" title="delete this note item from customer" href="#">

@@ -1,0 +1,6 @@
+<taconite>
+    <replaceContent select="#show_note #note_text">{{ note.text }}</replaceContent>
+    <replaceContent select="#note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</replaceContent>
+    <attr select="#customer_note_save" name="cid" value="{{ customer.pk }}" />
+    <attr select="#customer_note_save" name="nid" value="{{ note.pk }}" />
+</taconite>

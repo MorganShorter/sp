@@ -13,7 +13,8 @@ urlpatterns = patterns('frontend.views',
     # Customer
     url(ur'^customer/save/?(?P<pk>\d*)', 'customer_save'),
     url(ur'^customer/list/', 'customer_list', name='customer_list'),
-    url(ur'^customer/?(?P<pk>\d*)', 'customer_get'),
+    url(ur'^customer/(?P<pk>\d*)/', 'customer_get'),
+    url(ur'^customer/note/(?P<c_pk>\d*)/?(?P<n_pk>\d*)/', 'customer_note_get'),
 
     # Order
     url(ur'^order/?(?P<pk>\d*)', 'order_get'),
@@ -21,6 +22,7 @@ urlpatterns = patterns('frontend.views',
     # Contact
     url(ur'^contact/add/', 'contact_add', name='contact_add'),
     url(ur'^contact/delete/?(?P<pk>\d*)', 'contact_delete'),
+
 
 )
 

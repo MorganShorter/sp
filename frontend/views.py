@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.core import serializers
@@ -54,6 +55,20 @@ def contact_delete(request, pk):
 
     return HttpResponse('ok')
 
+def customer_note_get(request, c_pk, n_pk):
+    try:
+        c = Customer.objects.get(pk=c_pk)
+        note = c.notes.get(pk=n_pk)
+    except Exception, e:
+        return HttpResponse('')
+
+    if request.method == 'POST':
+        text = request.POST.get('text', '')
+        note.text = text
+        note.save()
+
+    return __taco_render(request, 'taconite/note.xml', {'note': note, 'customer': c})
+
 '''
  Old code
 '''
@@ -76,6 +91,9 @@ def customer_get(request, pk):
     pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
     fields = formfields.CustomerForm(customer)
     return __taco_render(request, 'taconite/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
+
+
+
 
 
 def customer_save(request, pk):

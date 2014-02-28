@@ -126,7 +126,7 @@
                     <tr class="form_list_row">
                         <td colspan="2" class="form_list_item">
                             <a id="customer_control_action_add_note" title="add new note item for customer" href="#">
-                            <img id="icon_customer_control_action_add_contact" src="{{ STATIC_URL }}img/icons/16_add.png" />add note</a>
+                            <img id="customer_add_note" src="{{ STATIC_URL }}img/icons/16_add.png" />add note</a>
                         </td>
                     </tr>
 			    </table>
@@ -233,13 +233,11 @@
 	<fieldset>
         <input type="hidden" name="contact_customer_id" id="contact_customer_id" value="" data-field="customer">
         <input type="hidden" name="note_id" id="note_id" value="" data-field="pk">
-        <textarea name="note_text" id="note_text" class="text ui-widget-content ui-corner-all form_input">
-            hello world
-        </textarea>
+        <textarea name="note_text" id="note_text" class="text ui-widget-content ui-corner-all form_input"></textarea>
         <table>
             <tr>
-                <td class="form_cell"><a id="contact_control_action_save" title="save customer" href="#" class="button form_button"><img src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-                <td class="form_cell"><a id="contact_control_action_cancel" title="cancel" href="#" class="button form_button"><img src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+                <td class="form_cell">
+                    <a id="customer_note_save" title="save customer" href="#" class="button form_button"><img src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
             </tr>
 		</table>
 	</fieldset>

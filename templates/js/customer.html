@@ -24,7 +24,7 @@
 
         $("#show_note").dialog({
             title: "Note",
-            autoOpen: true,
+            autoOpen: false,
             width: 'auto'
         });
 
@@ -133,7 +133,7 @@
         $('#customer_contact_search tbody tr').live('click', function(){
             var cid = $(this).attr('cid');
             $("#customer_content").dialog("open");
-            $.get('/customer/' + cid);
+            $.get('/customer/' + cid + '/');
         });
 
         $('#customer_delivery_address_same').live("click", function () {
@@ -142,6 +142,30 @@
             } else {
                 $('#toggle_customer_main_options_delivery').show('slide');
             }
+        });
+
+        // Open note
+        $('#customer_note_items .note_item a').live("click", function(){
+            var nid = $(this).attr('note_id');
+            var cid = $(this).attr('c_id');
+            $("#show_note").dialog("open");
+            $.get('/customer/note/' + cid + '/' + nid + '/');
+        });
+
+        $('#customer_note_save').live("click", function(){
+            var nid = $(this).attr('nid');
+            var cid = $(this).attr('cid');
+            $.ajax({
+                type: "POST",
+                url: '/customer/note/' + cid + '/' + nid + '/',
+                data: {'text': $("#show_note textarea").val()},
+                headers: {'X-CSRFToken': $.cookie('csrftoken')},
+                success: function (json) {
+                    $.get('/customer/note/' + cid + '/' + nid + '/');
+                    $("#show_note").dialog("close");
+                    $('#frm_add_note').trigger('reset');
+                }
+            });
         });
 
     });
