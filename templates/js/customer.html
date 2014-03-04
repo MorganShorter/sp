@@ -109,7 +109,7 @@
                 success: function (json) {
                     console.log('/contact/add/ success!');
                     console.debug(json);
-                    $.get('/customer/' + $('#customer_id').val());
+                    $.get('/customer/' + $('#customer_id').val() + '/');
                     $("#add_contact").dialog("close");
                     $('#frm_add_contact').trigger('reset');
                 },
