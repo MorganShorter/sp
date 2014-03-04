@@ -1,13 +1,11 @@
 import json
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.core import serializers
 from django.template import loader, RequestContext
 
 from . import formfields
-from .models import Customer, Order, Invoice, CustomerContact
+from .models import Customer, Order, Invoice, CustomerContact, Note
 from .mixins import TacoMixin
 
 
@@ -51,9 +49,9 @@ def contact_delete(request, pk):
     try:
         CustomerContact.objects.get(pk=pk).delete()
     except CustomerContact.DoesNotExist:
-        print 'contact not found'
-
+        return HttpResponse('error')
     return HttpResponse('ok')
+
 
 def customer_note_get(request, c_pk, n_pk=None):
     try:
@@ -75,6 +73,21 @@ def customer_note_get(request, c_pk, n_pk=None):
         'customer': c,
         'created': not bool(n_pk)
     })
+
+
+def customer_note_delete(request, c_pk, n_pk):
+    try:
+        customer = Customer.objects.get(pk=c_pk)
+        note = Note.objects.get(pk=n_pk)
+    except CustomerContact.DoesNotExist:
+        print 'customer not found'
+        return HttpResponse('error')
+
+    print 'delete note'
+
+    customer.notes.remove(note)
+
+    return HttpResponse('ok')
 
 '''
  Old code

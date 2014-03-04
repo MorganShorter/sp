@@ -178,6 +178,14 @@
             $("#show_note textarea").val('');
         });
 
+        // Delete customer note
+        $("#customer_content").on('click', '.note_delete_btn', function(){
+            var nid = $(this).attr('nid');
+            var cid = $(this).attr('cid');
+            $.get('/customer/note/' + cid + '/' + nid + '/delete/');
+            $(this).parents('.form_list_row').remove();
+        });
+
     });
     </script>
 {% endcompress %}
