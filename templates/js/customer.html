@@ -7,25 +7,40 @@
         $("#customer_content").dialog({
             title: "Customers",
             autoOpen: false,
-            width: 'auto'
+            width: 'auto',
+            close: function( event, ui ) {
+                $("#add_contact").dialog('close');
+                $("#show_note").dialog('close');
+            }
         });
 
         $("#customer_find").dialog({
             title: "Find Customers",
             autoOpen: false,
-            width: 'auto'
+            width: 'auto',
+            close: function( event, ui ) {
+                $("#customer_content").dialog('close');
+                $("#add_contact").dialog('close');
+                $("#show_note").dialog('close');
+            }
         });
 
         $("#add_contact").dialog({
             title: "Add Contact",
             autoOpen: false,
-            width: 'auto'
+            width: 'auto',
+            close: function( event, ui ) {
+                $('#frm_add_contact').trigger('reset');
+            }
         });
 
         $("#show_note").dialog({
             title: "Note",
             autoOpen: false,
-            width: 'auto'
+            width: 'auto',
+            close: function( event, ui ) {
+                $('#frm_add_note').trigger('reset');
+            }
         });
 
         $("#button_customers_open_dialog").click(function() {
@@ -48,13 +63,15 @@
         });
         $("#contact_control_action_cancel").click(function() {
             $("#add_contact").dialog("close");
-            $('#frm_add_contact').trigger('reset');
         });
 
         $("#find_customer_search").live('click', function(){
             var queryString = $('#frm_find_customer').formSerialize();
             $.get('{% url 'customer_list' %}?' + queryString);
         });
+
+        // Add customer
+
 
         // Save/Update Customer Details
         $('#customer_control_action_save').live('click', function () {
