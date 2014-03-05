@@ -59,6 +59,17 @@ class Customer(models.Model):
         if not self.slug:
             self.slug = "%i-%s" % (self.id, slugify(self.name))
             super(Customer, self).save(*args, **kwargs)
+
+    @property
+    def same_delivery_address(self):
+        if self.address_line_1 == self.delivery_address_line_1 and \
+                self.address_line_2 == self.delivery_address_line_2 and \
+                self.delivery_suburb == self.suburb and \
+                self.delivery_state == self.state and \
+                self.delivery_postcode == self.postcode and \
+                self.name == self.delivery_attn:
+            return True
+        return False
  
     def __unicode__(self):
         return self.name

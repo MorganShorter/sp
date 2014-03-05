@@ -5,12 +5,14 @@
         /* Customer
         * */
         $("#customer_content").dialog({
-            title: "Customers",
+            title: "Customer",
             autoOpen: false,
             width: 'auto',
             close: function( event, ui ) {
                 $("#add_contact").dialog('close');
                 $("#show_note").dialog('close');
+                $('#toggle_customer_main_options_delivery').hide();
+                $('#customer_delivery_address_same').prop("checked", 1);
             }
         });
 
@@ -107,6 +109,15 @@
             });
         });
 
+        $('#customer_address_copy').live('click', function(){
+            $('#customer_delivery_attn').val($('#customer_name').val());
+            $('#customer_delivery_address1').val($('#customer_address1').val());
+            $('#customer_delivery_address2').val($('#customer_address2').val());
+            $('#customer_delivery_suburb').val($('#customer_suburb').val());
+            $('#customer_delivery_state').val($('#customer_state').val());
+            $('#customer_delivery_postcode').val($('#customer_postcode').val());
+        });
+
         // Add contact
         $('#contact_control_action_save').live('click', function () {
             var model_fields = $('#frm_add_contact').getDataFields();
@@ -142,8 +153,12 @@
 
         // Delete contact
         $("#customer_content").on('click', '.contact_delete_btn', function(){
-            $.get('/contact/delete/' + $(this).attr('cid'));
-            $(this).parents('.form_list_row').remove();
+            var cnf = confirm('Sure you want to delete this contact?');
+            if (cnf == true){
+                $.get('/contact/delete/' + $(this).attr('cid'));
+                $(this).parents('.form_list_row').remove();
+            }
+
         });
 
         // Open customer detail
@@ -156,6 +171,7 @@
         $('#customer_delivery_address_same').live("click", function () {
             if ($('#customer_delivery_address_same').prop("checked")) {
                 $('#toggle_customer_main_options_delivery').hide('blind');
+                $('#customer_address_copy').trigger('click');
             } else {
                 $('#toggle_customer_main_options_delivery').show('slide');
             }
@@ -179,9 +195,9 @@
                 data: {'text': $("#show_note textarea").val()},
                 headers: {'X-CSRFToken': $.cookie('csrftoken')},
                 success: function (json) {
-                    //$.get('/customer/note/' + cid + '/' + nid + '/');
                     $("#show_note").dialog("close");
                     $('#frm_add_note').trigger('reset');
+                    alert('Note has been saved');
                 }
             });
         });
@@ -199,8 +215,11 @@
         $("#customer_content").on('click', '.note_delete_btn', function(){
             var nid = $(this).attr('nid');
             var cid = $(this).attr('cid');
-            $.get('/customer/note/' + cid + '/' + nid + '/delete/');
-            $(this).parents('.form_list_row').remove();
+            var cnf = confirm('Sure you want to delete this note?');
+            if (cnf == true){
+                $.get('/customer/note/' + cid + '/' + nid + '/delete/');
+                $(this).parents('.form_list_row').remove();
+            }
         });
 
     });

@@ -7,7 +7,9 @@
 {% else %}
 	{% include "taconite/fields.xml" with fields=fields %}
 
-
+    {% if not customer.same_delivery_address %}
+        <eval>$('#customer_delivery_address_same').trigger('click')</eval>
+    {% endif %}
 	<after select="table#customer_contact_items tr:first">
 		{% for contact in customer.contacts.all %}
 			<tr class="form_list_row">
