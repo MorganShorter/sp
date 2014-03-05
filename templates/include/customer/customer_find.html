@@ -1,0 +1,44 @@
+<div id="customer_find">
+	<form id="frm_find_customer" action="" method="get">
+	<fieldset>
+		<table>
+		<tr>
+			<td class="form_cell"><label for="find_customer_id" class="form_label">customer ID:</label></td>
+			<td class="form_cell"><input type="text" name="customer_id" id="find_customer_id" title="search for this type of customer id" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+			<td>&nbsp;</td>
+			<td rowspan="5">
+			<table id="customer_contact_search" class="form_list with100">
+                <thead>
+                    <tr class="form_list_row">
+					    <th class="form_list_header">Name</th>
+					    <th class="form_list_header">Phone</th>
+					    <th class="form_list_header">Email</th>
+				    </tr>
+                </thead>
+				<tbody>
+                    <tr class="form_list_row">
+                        <td colspan="3">empty</td>
+                    </tr>
+                </tbody>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td class="form_cell"><label for="find_customer_name" class="form_label">customer name:</label></td>
+			<td class="form_cell"><input type="text" name="find_customer_name" id="find_customer_name" title="search for this type of customer name" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+		</tr>
+		<tr>
+			<td class="form_cell"><label for="find_customer_phone" class="form_label">customer phone:</label></td>
+			<td class="form_cell"><input type="text" name="find_customer_phone" id="find_customer_phone" title="search for this type of customer phone number" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+		</tr>
+		<tr>
+			<td class="form_cell"><label for="find_customer_email" class="form_label">customer email:</label></td>
+			<td class="form_cell"><input type="text" name="find_customer_email" id="find_customer_email" title="search for this type of customer email" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+		</tr>
+		<tr>
+			<td class="form_cell"><a id="find_customer_search" title="find customers" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png"></a></td>
+		</tr>
+		</table>
+	</fieldset>
+	</form>
+</div>

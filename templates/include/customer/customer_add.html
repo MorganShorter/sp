@@ -1,0 +1,33 @@
+<div id="add_contact">
+	<form id="frm_add_contact" data-model="contact">
+	<fieldset>
+		<table id="contact_add_table">
+            <input type="hidden" name="contact_customer_id" id="contact_customer_id" value="" data-field="customer">
+            <tr>
+                <td class="form_cell"><label for="contact_customer" class="form_label">customer:</label></td>
+                <td class="form_cell"><input type="text" name="contact_customer" id="contact_customer" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="contact_first_name" class="form_label">first name:</label></td>
+                <td class="form_cell"><input type="text" name="contact_first_name" id="contact_first_name" class="text ui-widget-content ui-corner-all form_input" value="" data-field="first_name" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="contact_surname" class="form_label">surname:</label></td>
+                <td class="form_cell"><input type="text" name="contact_surname" id="contact_surname" class="text ui-widget-content ui-corner-all form_input" value="" data-field="surname" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="contact_phone" class="form_label">phone:</label></td>
+                <td class="form_cell"><input type="text" name="contact_phone" id="contact_phone" class="text ui-widget-content ui-corner-all form_input" value="" data-field="phone" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="contact_email" class="form_label">email:</label></td>
+                <td class="form_cell"><input type="text" name="contact_email" id="contact_email" class="text ui-widget-content ui-corner-all form_input" value="" data-field="email" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><a id="contact_control_action_save" title="save customer" href="#" class="button form_button"><img src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+                <td class="form_cell"><a id="contact_control_action_cancel" title="cancel" href="#" class="button form_button"><img src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+            </tr>
+		</table>
+	</fieldset>
+	</form>
+</div>
