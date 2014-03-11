@@ -23,6 +23,12 @@ urlpatterns = patterns('frontend.views',
     # Contact
     url(ur'^contact/add/', 'contact_add', name='contact_add'),
     url(ur'^contact/delete/?(?P<pk>\d*)', 'contact_delete'),
+)
+
+
+urlpatterns += patterns('frontend.views.reports',
+    # Report
+    url(ur'^report/1/get/', 'report_1', name='report_1'),
 
 
 )

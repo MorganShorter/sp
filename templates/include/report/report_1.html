@@ -1,0 +1,16 @@
+<div id="model_report_1">
+	<form id="frm_report_1" action="{% url 'report_1' %}" method="get">
+        <a id="report_1_get" title="get report" href="#" class="button form_button"><img src="{{ STATIC_URL }}img/icons/32_find.png" /><br />Get data</a>
+        <table>
+            <tr>
+                <td class="form_cell"><label for="from" class="form_label">From:</label></td>
+                <td class="form_cell"><input type="text" name="from" id="report_1_from" class="text ui-corner-all form_input" value=""/></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="to" class="form_label">To:</label></td>
+                <td class="form_cell"><input type="text" name="to" id="report_1_to" class="text ui-corner-all form_input" value=""/></td>
+            </tr>
+		</table>
+
+	</form>
+</div>

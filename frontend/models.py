@@ -30,6 +30,7 @@ class ImportNote(models.Model):
 class Customer(models.Model):
     """ Customer; makes an order from SmartPractice
     """
+    MAIN_TYPES = ("CAA", "Chiro", "Dental", "Medical", "Optom", "Ortho", "Podiatry", "Vet")  # + 'input'
     registration = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     customer_type = models.CharField(max_length=255)
@@ -339,6 +340,10 @@ class Order(models.Model):
         if not self.slug:
             self.slug = "%i-%s" % (self.id, slugify("%s" % self.__class__.__name__))
             super(Order, self).save(*args, **kwargs)
+
+    @property
+    def order_date_str(self):
+        return '%s' % self.order_date.strftime("%Y-%m-%d")
 
     def __unicode__(self):
         return self.slug

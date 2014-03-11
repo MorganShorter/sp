@@ -1,0 +1,13 @@
+{% regroup object_list by order_date_str as order_by_day_list %}
+
+<ul>
+{% for o in order_by_day_list %}
+    <li>{{ o.grouper }}
+    <ul>
+        {% for item in o.list %}
+          <li>{{ item.customer }}: {{ item.sub_total }}</li>
+        {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>

@@ -1,0 +1,44 @@
+{% load compress %}
+{% compress js %}
+    <script type="text/javascript">
+    $(function () {
+        /* Report
+        * */
+        $("#model_report_1").dialog({
+            title: "Sales Order Listing",
+            autoOpen: false,
+            width: '280px',
+            close: function( event, ui ) {
+            }
+        });
+        $("#menu_report_1").click(function(){
+            $("#model_report_1").dialog("open");
+        });
+
+        $( "#report_1_from" ).datepicker({
+            defaultDate: "-1w",
+            changeMonth: true,
+            numberOfMonths: 1,
+            dateFormat: 'yy-mm-dd',
+            onClose: function( selectedDate ) {
+                $( "#report_1_to" ).datepicker( "option", "minDate", selectedDate );
+            }
+        });
+        $( "#report_1_to" ).datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 1,
+            dateFormat: 'yy-mm-dd',
+            onClose: function( selectedDate ) {
+                $( "#report_1_from" ).datepicker( "option", "maxDate", selectedDate );
+            }
+        });
+
+        $("#report_1_get").live("click", function(){
+            $('#frm_report_1').ajaxSubmit();
+        });
+
+
+    });
+    </script>
+{% endcompress %}
