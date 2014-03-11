@@ -4,9 +4,9 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.template import loader, RequestContext
 
-from . import formfields
-from .models import Customer, Order, Invoice, CustomerContact, Note
-from .mixins import TacoMixin
+from .. import formfields
+from ..models import Customer, Order, Invoice, CustomerContact, Note
+from ..mixins import TacoMixin
 
 
 class CustomerList(TacoMixin, ListView):
