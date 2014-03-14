@@ -1,13 +1,30 @@
-{% regroup object_list by order_date_str as order_by_day_list %}
-
-<ul>
-{% for o in order_by_day_list %}
-    <li>{{ o.grouper }}
-    <ul>
-        {% for item in o.list %}
-          <li>{{ item.customer }}: {{ item.sub_total }}</li>
+<taconite>
+    {% regroup object_list by order_date_str as order_by_day_list %}
+    <replaceContent select="#report1_accordion">
+        {% for o in order_by_day_list %}
+            <h1>{{ o.grouper }}</h1>
+            <div>
+                <table id="customer_contact_items" class="form_list with100">
+                    <tr class="form_list_row">
+                        <th class="form_list_header">Type</th>
+                        <th class="form_list_header">Order ID</th>
+                        <th class="form_list_header">Inv No</th>
+                        <th class="form_list_header">Despatch Da</th>
+                        <th class="form_list_header">Company name</th>
+                        <th class="form_list_header">Invoice Total</th>
+                    </tr>
+                    {% for item in o.list %}
+                        <tr class="form_list_row">
+                            <td class="form_list_header">Type</td>
+                            <td class="form_list_header">Order ID</td>
+                            <td class="form_list_header">Inv No</td>
+                            <td class="form_list_header">Despatch Da</td>
+                            <td class="form_list_header">{{ item.customer }}</td>
+                            <td class="form_list_header">{{ item.sub_total }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         {% endfor %}
-    </ul>
-    </li>
-{% endfor %}
-</ul>
+    </replaceContent>
+</taconite>

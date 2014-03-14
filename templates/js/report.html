@@ -4,10 +4,18 @@
     $(function () {
         /* Report
         * */
-        $("#model_report_1").dialog({
+         $("#model_report_1").dialog({
             title: "Sales Order Listing",
             autoOpen: false,
             width: '280px',
+            close: function( event, ui ) {
+                $("#model_report_1_table").dialog('close');
+            }
+        });
+        $("#model_report_1_table").dialog({
+            title: "Sales Order Listing",
+            autoOpen: false,
+            width: '800px',
             close: function( event, ui ) {
             }
         });
@@ -35,7 +43,15 @@
         });
 
         $("#report_1_get").live("click", function(){
-            $('#frm_report_1').ajaxSubmit();
+            $('#frm_report_1').ajaxSubmit({
+                success: function(){
+                    $("#model_report_1_table").dialog("open");
+                    $("#report1_accordion").accordion({
+                        collapsible: true
+                    });
+                }
+            });
+
         });
 
 

@@ -20,6 +20,6 @@ class Report1(ListView):
         if dto:
             dto = datetime.strptime(dto, '%Y-%m-%d')
             qs = qs.filter(order_date__lte=dto)
-        return qs
+        return qs.order_by('-order_date')
 
 report_1 = Report1.as_view()
