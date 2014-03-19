@@ -1,3 +1,4 @@
+import pdfkit
 from datetime import datetime
 from django.http import HttpResponse
 from django.views.generic import ListView
@@ -15,8 +16,18 @@ class Report1(ListView):
             if import_format == 'csv':
                 self.template_name = 'reports/csv/report_1.txt'
                 ret = super(Report1, self).render_to_response(context, **kwargs)
-                resp = HttpResponse(ret.rendered_content, mimetype='text/xml')
+                resp = HttpResponse(ret.rendered_content, mimetype='text/csv')
                 resp['Content-Disposition'] = 'attachment; filename="report1.csv"'
+                return resp
+
+            if import_format == 'pdf':
+                self.template_name = 'reports/pdf/report_1.html'
+                ret = super(Report1, self).render_to_response(context, **kwargs)
+
+                pdf = pdfkit.from_string(ret.rendered_content, False)
+                print 'pdf complete'
+                resp = HttpResponse(pdf, mimetype='application/pdf')
+                resp['Content-Disposition'] = 'attachment; filename="report1.pdf"'
                 return resp
 
         return super(Report1, self).render_to_response(context, **kwargs)

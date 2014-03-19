@@ -5,3 +5,5 @@ django-compressor
 django-registration
 Pillow
 psycopg2==2.5.1
+pdfkit
+# sudo apt-get install wkhtmltopdf

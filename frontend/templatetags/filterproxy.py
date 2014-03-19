@@ -16,3 +16,11 @@ def filterproxy(value, filters):
                 ret = getattr(defaultfilters, func)(ret, *filter_args)
 
     return ret
+
+@register.filter
+def total_sum(arr):
+    sum = 0
+    for o in arr:
+        sum += o.sub_total
+
+    return sum
