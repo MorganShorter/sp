@@ -22,13 +22,14 @@ class Report1(ListView):
 
             if import_format == 'pdf':
                 self.template_name = 'reports/pdf/report_1.html'
+                response = HttpResponse(mimetype='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename=report_1.pdf'
+
                 ret = super(Report1, self).render_to_response(context, **kwargs)
 
-                pdf = pdfkit.from_string(ret.rendered_content, False)
-                print 'pdf complete'
-                resp = HttpResponse(pdf, mimetype='application/pdf')
-                resp['Content-Disposition'] = 'attachment; filename="report1.pdf"'
-                return resp
+                pdf = pdfkit.from_string(ret.rendered_content, None)
+                response.write(pdf)
+                return response
 
         return super(Report1, self).render_to_response(context, **kwargs)
 
