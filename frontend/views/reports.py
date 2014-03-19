@@ -11,7 +11,7 @@ class Report1(ListView):
     def get_queryset(self):
         dfrom = self.request.GET.get('from', None)
         dto = self.request.GET.get('to', None)
-        qs = super(Report1, self).get_queryset()
+        qs = super(Report1, self).get_queryset().filter(statuses__status='SD')
 
         if dfrom:
             dfrom = datetime.strptime(dfrom, '%Y-%m-%d')

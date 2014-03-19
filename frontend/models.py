@@ -345,6 +345,14 @@ class Order(models.Model):
     def order_date_str(self):
         return '%s' % self.order_date.strftime("%Y-%m-%d")
 
+    @property
+    def last_invoice(self):
+        return self.invoices.order_by('-timestamp')[0] if self.invoices.count() else None
+
+    @property
+    def last_status(self):
+        return self.statuses.order_by('-timestamp')[0] if self.statuses.count() else None
+
     def __unicode__(self):
         return self.slug
 

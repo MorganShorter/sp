@@ -108,7 +108,7 @@ LANGUAGE_CODE = 'en-au'
 
 TIME_ZONE = 'Australia/Melbourne'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 

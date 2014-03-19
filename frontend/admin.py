@@ -18,7 +18,13 @@ admin.site.register(CatalogIssueProduct)
 admin.site.register(PriceLevelGroup)
 admin.site.register(PriceLevel)
 admin.site.register(Order)
-admin.site.register(OrderStatus)
+
+
+class OrderStatusAdmin(admin.ModelAdmin):
+    list_display = ('order', 'status', 'timestamp')
+
+admin.site.register(OrderStatus, OrderStatusAdmin)
+
 admin.site.register(OrderProduct)
 admin.site.register(Company)
 admin.site.register(Invoice)

@@ -1,30 +1,63 @@
 <taconite>
+    {% if object_list.count %}
     {% regroup object_list by order_date_str as order_by_day_list %}
     <replaceContent select="#report1_accordion">
         {% for o in order_by_day_list %}
             <h1>{{ o.grouper }}</h1>
             <div>
-                <table id="customer_contact_items" class="form_list with100">
-                    <tr class="form_list_row">
-                        <th class="form_list_header">Type</th>
-                        <th class="form_list_header">Order ID</th>
-                        <th class="form_list_header">Inv No</th>
-                        <th class="form_list_header">Despatch Da</th>
-                        <th class="form_list_header">Company name</th>
-                        <th class="form_list_header">Invoice Total</th>
-                    </tr>
-                    {% for item in o.list %}
+                <table class="form_list with100 report1_table">
+                    <thead>
                         <tr class="form_list_row">
-                            <td class="form_list_header">Type</td>
-                            <td class="form_list_header">Order ID</td>
-                            <td class="form_list_header">Inv No</td>
-                            <td class="form_list_header">Despatch Da</td>
-                            <td class="form_list_header">{{ item.customer }}</td>
-                            <td class="form_list_header">{{ item.sub_total }}</td>
+                            <th class="form_list_header">Type</th>
+                            <th class="form_list_header">Order ID</th>
+                            <th class="form_list_header">Inv No</th>
+                            <th class="form_list_header">Despatch Da</th>
+                            <th class="form_list_header">Company name</th>
+                            <th class="form_list_header">Invoice Total ($)</th>
                         </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% for item in o.list %}
+                            <tr class="form_list_row">
+                                <td class="">{{ item.customer.customer_type }}</td>
+                                <td class="">{{ item.pk }}</td>
+                                <td class="">{{ item.last_invoice.pk }}</td>
+                                <td class="">{% if item.last_status.status == 'SD' %}{{ item.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %}</td>
+                                <td class="">{{ item.customer }}</td>
+                                <td class="sub_total">{{ item.sub_total|floatformat }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td class="inv_num">No. invoices: <strong></strong></td>
+                            <td class="inv_total"><strong></strong></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         {% endfor %}
     </replaceContent>
+
+    {% else %}
+        <replaceContent select="#report1_accordion">Not found...</replaceContent>
+    {% endif %}
+
+    <eval><![CDATA[
+        $("#model_report_1_table").dialog("open");
+        $('.report1_table').dataTable({
+            "bPaginate": false,
+            "bFilter": false,
+            "bRetrieve": false,
+            "bDestroy": false,
+            "iDisplayLength": 500,
+            "sDom": '<"top">t<"bottom"><"clear">',
+            "aoColumnDefs": [
+                  { "sType": "numeric", "aTargets": [ 5 ] }
+            ]
+        });
+    ]]>
+    </eval>
+
 </taconite>
