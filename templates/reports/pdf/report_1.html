@@ -1,41 +1,39 @@
 {% load filterproxy %}
 {% regroup object_list by order_date_str as order_by_day_list %}
 
-<h1></h1>
+<h1>Sales Order Listing</h1>
 <hr>
 {% for o in order_by_day_list %}
     <h2>{{ o.grouper }}</h2>
-    <div>
-        <table style="width: 100%">
-            <thead>
+    <table style="width: 100%">
+        <thead>
+            <tr class="form_list_row">
+                <th class="form_list_header">Type</th>
+                <th class="form_list_header">Order ID</th>
+                <th class="form_list_header">Inv No</th>
+                <th class="form_list_header">Despatch Da</th>
+                <th class="form_list_header">Company name</th>
+                <th class="form_list_header">Invoice Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in o.list %}
                 <tr class="form_list_row">
-                    <th class="form_list_header">Type</th>
-                    <th class="form_list_header">Order ID</th>
-                    <th class="form_list_header">Inv No</th>
-                    <th class="form_list_header">Despatch Da</th>
-                    <th class="form_list_header">Company name</th>
-                    <th class="form_list_header">Invoice Total</th>
+                    <td class="">{{ item.customer.customer_type }}</td>
+                    <td class="">{{ item.pk }}</td>
+                    <td class="">{{ item.last_invoice.pk }}</td>
+                    <td class="">{% if item.last_status.status == 'SD' %}{{ item.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %}</td>
+                    <td class="">$ {{ item.customer }}</td>
+                    <td class="sub_total">$ {{ item.sub_total|floatformat }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for item in o.list %}
-                    <tr class="form_list_row">
-                        <td class="">{{ item.customer.customer_type }}</td>
-                        <td class="">{{ item.pk }}</td>
-                        <td class="">{{ item.last_invoice.pk }}</td>
-                        <td class="">{% if item.last_status.status == 'SD' %}{{ item.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %}</td>
-                        <td class="">$ {{ item.customer }}</td>
-                        <td class="sub_total">$ {{ item.sub_total|floatformat }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4"></td>
-                    <td class="inv_num">No. invoices: <strong>{{ o.list|length }}</strong></td>
-                    <td class="inv_total"><strong>{{ o.list|total_sum }}</strong></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td class="inv_num">No. invoices: <strong>{{ o.list|length }}</strong></td>
+                <td class="inv_total"><strong>{{ o.list|total_sum }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
 {% endfor %}
