@@ -127,7 +127,7 @@ select:focus {
     -webkit-box-shadow: inset 0px 0px 14px -3px #f2fadc;
     box-shadow: inset 0px 0px 14px -3px #f2fadc;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dbe6c4), color-stop(1, #9ba892));
-    background: -moz-linear-gradient(top, #dbe6c4 5%, #9ba892100%);
+    background: -moz-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
     background: -webkit-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
     background: -o-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
     background: -ms-linear-gradient(top, #dbe6c4 5%, #9ba892 100%);
@@ -623,5 +623,23 @@ ul.dropdown ul.sub_menu_reports {
 .report1_table thead th {
     cursor: pointer;
 }
+
+.buttons-right {
+    float: right;
+}
+
+.btn32 {
+    display: inline-block;
+    padding: 14px 5px 14px 40px;
+    margin: 5px;
+}
+.btn32-pdf {
+    background: url('{{ STATIC_URL }}img/icons/32_pdf.png') 5px no-repeat;
+}
+.btn32-csv {
+    background: url('{{ STATIC_URL }}img/icons/32_csv.png') 5px no-repeat;
+}
+
+
 </style>
 {% endcompress %}

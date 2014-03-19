@@ -43,13 +43,20 @@
             }
         });
 
+        $('.report_1_to_pdf').live("click", function(){
+            document.location = $('#frm_report_1').attr('action') + '?' + $('#frm_report_1').serialize() + '&format=pdf';
+        });
+        $('.report_1_to_csv').live("click", function(){
+            document.location = $('#frm_report_1').attr('action') + '?' + $('#frm_report_1').serialize() + '&format=csv';
+        });
         $("#report_1_get").live("click", function(){
             $("#model_report_1_table").dialog("close");
             $('#frm_report_1').ajaxSubmit({
                 success: function(){
                     report1_count_footer();
                     $("#report1_accordion").accordion({
-                        collapsible: true
+                        collapsible: true,
+                        heightStyle: 'content'
                     }).accordion( "refresh" );
                 }
             });

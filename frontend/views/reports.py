@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.http import HttpResponse
 from django.views.generic import ListView
 from ..models import Order
 
@@ -7,6 +8,18 @@ from ..models import Order
 class Report1(ListView):
     model = Order
     template_name = 'taconite/report_1.xml'
+
+    def render_to_response(self, context, **kwargs):
+        import_format = self.request.GET.get('format', None)
+        if import_format:
+            if import_format == 'csv':
+                self.template_name = 'reports/csv/report_1.txt'
+                ret = super(Report1, self).render_to_response(context, **kwargs)
+                resp = HttpResponse(ret.rendered_content, mimetype='text/xml')
+                resp['Content-Disposition'] = 'attachment; filename="report1.csv"'
+                return resp
+
+        return super(Report1, self).render_to_response(context, **kwargs)
 
     def get_queryset(self):
         dfrom = self.request.GET.get('from', None)
