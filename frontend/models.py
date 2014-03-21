@@ -346,6 +346,10 @@ class Order(models.Model):
         return '%s' % self.order_date.strftime("%Y-%m-%d")
 
     @property
+    def order_month_str(self):
+        return '%s' % self.order_date.strftime("%Y-%m")
+
+    @property
     def last_invoice(self):
         return self.invoices.order_by('-timestamp')[0] if self.invoices.count() else None
 

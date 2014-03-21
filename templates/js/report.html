@@ -53,7 +53,6 @@
             $("#model_report_1_table").dialog("close");
             $('#frm_report_1').ajaxSubmit({
                 success: function(){
-                    report1_count_footer();
                     $("#report1_accordion").accordion({
                         collapsible: true,
                         heightStyle: 'content'
@@ -66,16 +65,5 @@
 
     });
 
-    function report1_count_footer(){
-        $('.report1_table').each(function(){
-            $('tfoot .inv_num strong', $(this)).text($('tbody tr', $(this)).length);
-
-            var total_sum = 0;
-            $('tbody tr', $(this)).each(function(){
-                total_sum += parseFloat($('.sub_total', $(this)).text());
-            });
-            $('tfoot .inv_total strong', $(this)).text('$ ' + total_sum.toFixed(2));
-        });
-    }
     </script>
 {% endcompress %}
