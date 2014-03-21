@@ -1,14 +1,27 @@
-import pdfkit
+import cStringIO as StringIO
+import ho.pisa as pisa
 from datetime import datetime
 from django.http import HttpResponse
 from django.views.generic import ListView
 from ..models import Order
+from cgi import escape
 
 
 # Sales Order Listing
 class Report1(ListView):
     model = Order
     template_name = 'taconite/report_1.xml'
+
+    def render_to_pdf(self, context, **kwargs):
+        self.template_name = 'reports/pdf/report_1.html'
+        ret = super(Report1, self).render_to_response(context, **kwargs)
+        html = ret.rendered_content
+        result = StringIO.StringIO()
+
+        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), mimetype='application/pdf')
+        return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
 
     def render_to_response(self, context, **kwargs):
         import_format = self.request.GET.get('format', None)
@@ -21,15 +34,7 @@ class Report1(ListView):
                 return resp
 
             if import_format == 'pdf':
-                self.template_name = 'reports/pdf/report_1.html'
-                response = HttpResponse(mimetype='application/pdf')
-                response['Content-Disposition'] = 'attachment; filename=report_1.pdf'
-
-                ret = super(Report1, self).render_to_response(context, **kwargs)
-
-                pdf = pdfkit.from_string(ret.rendered_content, None)
-                response.write(pdf)
-                return response
+                return self.render_to_pdf(context, **kwargs)
 
         return super(Report1, self).render_to_response(context, **kwargs)
 
