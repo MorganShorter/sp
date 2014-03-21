@@ -11,4 +11,4 @@ pdfkit
 
 pisa
 html5lib
-reportlab
+reportlab==2.4
