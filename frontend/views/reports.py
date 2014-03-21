@@ -1,10 +1,14 @@
 import cStringIO as StringIO
-import ho.pisa as pisa
 from datetime import datetime
 from django.http import HttpResponse
 from django.views.generic import ListView
 from ..models import Order
 from cgi import escape
+
+try:
+    import ho.pisa as pisa
+except ImportError:
+    print 'pisa import error'
 
 
 # Sales Order Listing
