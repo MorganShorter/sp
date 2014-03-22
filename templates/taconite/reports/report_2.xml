@@ -1,0 +1,41 @@
+<taconite>
+    {% if object_list.count %}
+    <replaceContent select="#report2_result">
+        <div>
+            <table class="form_list with100 report2_table">
+                <thead>
+                    <tr class="form_list_row">
+                        <th class="form_list_header">ID</th>
+                        <th class="form_list_header">Company name</th>
+                        <th class="form_list_header">Type</th>
+                        <th class="form_list_header">Contact First name</th>
+                        <th class="form_list_header">Contact Last name</th>
+                        <th class="form_list_header">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object_list %}
+                        <tr class="form_list_row">
+                            <td class="">{{ item.customer__pk }}</td>
+                            <td class="">{{ item.customer__name }}</td>
+                            <td class="">{{ item.customer__customer_type }}</td>
+                            <td class="">-</td>
+                            <td class="">-</td>
+                            <td class="">${{ item.total|floatformat:"2" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </replaceContent>
+
+    {% else %}
+        <replaceContent select="#report2_result">Not found...</replaceContent>
+    {% endif %}
+
+    <eval><![CDATA[
+        $("#model_report_2_table").dialog("open");
+    ]]>
+    </eval>
+
+</taconite>

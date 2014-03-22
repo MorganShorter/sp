@@ -35,7 +35,7 @@ report_1 = Report1.as_view()
 # Top Sellers
 class Report2(ReportsMixin, ListView):
     model = Order
-    template_name = 'taconite/report_2.xml'
+    template_name = 'taconite/reports/report_2.xml'
     pdf_template = 'reports/pdf/report_2.html'
     csv_template = 'reports/csv/report_2.txt'
 
@@ -55,6 +55,6 @@ class Report2(ReportsMixin, ListView):
             dto = datetime.strptime(dto, '%Y-%m-%d')
             qs = qs.filter(order_date__lte=dto)
 
-        return qs.values('customer').annotate(total=Sum('total_cost')).filter(total__gt=0).order_by('-total')
+        return qs.values('customer__pk', 'customer__name', 'customer__customer_type').annotate(total=Sum('total_cost')).filter(total__gt=0).order_by('-total')[:100]
 
 report_2 = Report2.as_view()

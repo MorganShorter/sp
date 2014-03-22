@@ -1,0 +1,3 @@
+ID;Company name;Type;Contact First name;Contact Last name;Total
+{% for ob in object_list %}{{ ob.customer__pk }};{{ ob.customer__name|safe }};{{ ob.customer__customer_type|safe }};-;-;{{ ob.total|floatformat:"2" }}
+{% endfor %}
