@@ -4,7 +4,7 @@
     {% regroup object_list by order_month_str as order_by_day_list %}
     <replaceContent select="#report1_accordion">
         {% for o in order_by_day_list %}
-            <h1>{{ o.grouper }} <span>No. invoices: {{ o.list|length }}</span><span>Total: $ {{ o.list|total_sum }}</span></h1>
+            <h1>{{ o.grouper }} <span>Total: $ {{ o.list|total_sum }}</span><span>No. invoices: {{ o.list|length }}</span></h1>
             <div>
                 <table class="form_list with100 report1_table">
                     <thead>
@@ -25,7 +25,7 @@
                                 <td class="">{{ item.last_invoice.pk }}</td>
                                 <td class="">{% if item.last_status.status == 'SD' %}{{ item.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %}</td>
                                 <td class="">{{ item.customer }}</td>
-                                <td class="sub_total">$ {{ item.sub_total|floatformat }}</td>
+                                <td class="sub_total">${{ item.total_cost|floatformat }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

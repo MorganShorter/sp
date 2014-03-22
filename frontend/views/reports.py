@@ -1,46 +1,19 @@
-import cStringIO as StringIO
 from datetime import datetime
-from django.http import HttpResponse
 from django.views.generic import ListView
+from django.db.models import Count, Min, Sum, Avg
 from ..models import Order
-from cgi import escape
-
-try:
-    import ho.pisa as pisa
-except ImportError:
-    print 'pisa import error'
+from ..mixins import ReportsMixin
 
 
 # Sales Order Listing
-class Report1(ListView):
+class Report1(ReportsMixin, ListView):
     model = Order
-    template_name = 'taconite/report_1.xml'
+    template_name = 'taconite/reports/report_1.xml'
+    pdf_template = 'reports/pdf/report_1.html'
+    csv_template = 'reports/csv/report_1.txt'
 
-    def render_to_pdf(self, context, **kwargs):
-        self.template_name = 'reports/pdf/report_1.html'
-        ret = super(Report1, self).render_to_response(context, **kwargs)
-        html = ret.rendered_content
-        result = StringIO.StringIO()
-
-        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
-        if not pdf.err:
-            return HttpResponse(result.getvalue(), mimetype='application/pdf')
-        return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
-
-    def render_to_response(self, context, **kwargs):
-        import_format = self.request.GET.get('format', None)
-        if import_format:
-            if import_format == 'csv':
-                self.template_name = 'reports/csv/report_1.txt'
-                ret = super(Report1, self).render_to_response(context, **kwargs)
-                resp = HttpResponse(ret.rendered_content, mimetype='text/csv')
-                resp['Content-Disposition'] = 'attachment; filename="report1.csv"'
-                return resp
-
-            if import_format == 'pdf':
-                return self.render_to_pdf(context, **kwargs)
-
-        return super(Report1, self).render_to_response(context, **kwargs)
+    pdf_name = 'report1.pdf'
+    csv_name = 'report1.csv'
 
     def get_queryset(self):
         dfrom = self.request.GET.get('from', None)
@@ -57,3 +30,31 @@ class Report1(ListView):
         return qs.order_by('-order_date')
 
 report_1 = Report1.as_view()
+
+
+# Top Sellers
+class Report2(ReportsMixin, ListView):
+    model = Order
+    template_name = 'taconite/report_2.xml'
+    pdf_template = 'reports/pdf/report_2.html'
+    csv_template = 'reports/csv/report_2.txt'
+
+    pdf_name = 'report2.pdf'
+    csv_name = 'report2.csv'
+
+    def get_queryset(self):
+        dfrom = self.request.GET.get('from', None)
+        dto = self.request.GET.get('to', None)
+        qs = super(Report2, self).get_queryset().filter(statuses__status='SD')
+
+        if dfrom:
+            dfrom = datetime.strptime(dfrom, '%Y-%m-%d')
+            qs = qs.filter(order_date__gte=dfrom)
+
+        if dto:
+            dto = datetime.strptime(dto, '%Y-%m-%d')
+            qs = qs.filter(order_date__lte=dto)
+
+        return qs.values('customer').annotate(total=Sum('total_cost')).filter(total__gt=0).order_by('-total')
+
+report_2 = Report2.as_view()

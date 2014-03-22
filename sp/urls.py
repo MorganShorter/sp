@@ -29,6 +29,7 @@ urlpatterns = patterns('frontend.views',
 urlpatterns += patterns('frontend.views.reports',
     # Report
     url(ur'^report/1/get/', 'report_1', name='report_1'),
+    url(ur'^report/2/get/', 'report_1', name='report_2'),
 
 
 )

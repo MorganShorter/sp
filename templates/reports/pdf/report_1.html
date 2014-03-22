@@ -26,7 +26,7 @@
                 <td class="">{{ item.last_invoice.pk }}</td>
                 <td class="">{% if item.last_status.status == 'SD' %}{{ item.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %}</td>
                 <td class="">{{ item.customer }}</td>
-                <td class="sub_total">$ {{ item.sub_total|floatformat }}</td>
+                <td class="sub_total">$ {{ item.total_cost|floatformat }}</td>
             </tr>
         {% endfor %}
     {% endfor %}
