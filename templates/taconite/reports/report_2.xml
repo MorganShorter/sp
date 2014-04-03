@@ -1,3 +1,4 @@
+{% load frontend_tag %}
 <taconite>
     {% if object_list.count %}
     <replaceContent select="#report2_result">
@@ -8,8 +9,7 @@
                         <th class="form_list_header">ID</th>
                         <th class="form_list_header">Company name</th>
                         <th class="form_list_header">Type</th>
-                        <th class="form_list_header">Contact First name</th>
-                        <th class="form_list_header">Contact Last name</th>
+                        <th class="form_list_header">Contact</th>
                         <th class="form_list_header">Total</th>
                     </tr>
                 </thead>
@@ -19,8 +19,12 @@
                             <td class="">{{ item.customer__pk }}</td>
                             <td class="">{{ item.customer__name }}</td>
                             <td class="">{{ item.customer__customer_type }}</td>
-                            <td class="">-</td>
-                            <td class="">-</td>
+                            <td class="">
+                                {% get_customer_contacts item.customer__pk as contacts %}
+                                {% for c in contacts %}
+                                    <p>{{ c.info }}</p>
+                                {% endfor %}
+                            </td>
                             <td class="">${{ item.total|floatformat:"2" }}</td>
                         </tr>
                     {% endfor %}

@@ -93,8 +93,16 @@ class CustomerContact(models.Model):
             self.save()
 
     def __unicode__(self):
-        return '%s  %s' % (self.first_name, self.surname)
+        return '%s %s' % (self.first_name, self.surname)
 
+    def info(self):
+        ret = '%s %s' % (self.first_name, self.surname)
+        if self.phone:
+            ret = '%s, %s' % (ret, self.phone)
+        if self.email:
+            ret = '%s, %s' % (ret, self.email)
+
+        return ret
 
 class Size(models.Model):
     """ Product Size/Dimensions
