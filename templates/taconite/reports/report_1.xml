@@ -1,4 +1,4 @@
-{% load filterproxy %}
+{% load frontend_filter %}
 <taconite>
     {% if object_list.count %}
     {% regroup object_list by order_month_str as order_by_day_list %}

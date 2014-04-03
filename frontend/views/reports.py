@@ -58,3 +58,15 @@ class Report2(ReportsMixin, ListView):
         return qs.values('customer__pk', 'customer__name', 'customer__customer_type').annotate(total=Sum('total_cost')).filter(total__gt=0).order_by('-total')[:100]
 
 report_2 = Report2.as_view()
+
+
+# Sent items
+class Report3(Report1):
+    template_name = 'taconite/reports/report_3.xml'
+    pdf_template = 'reports/pdf/report_3.html'
+    csv_template = 'reports/csv/report_3.txt'
+
+    pdf_name = 'report3.pdf'
+    csv_name = 'report3.csv'
+
+report_3 = Report3.as_view()

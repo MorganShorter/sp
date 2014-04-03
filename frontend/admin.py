@@ -22,6 +22,7 @@ admin.site.register(Order)
 
 class OrderStatusAdmin(admin.ModelAdmin):
     list_display = ('order', 'status', 'timestamp')
+    raw_id_fields = ('order', )
 
 admin.site.register(OrderStatus, OrderStatusAdmin)
 

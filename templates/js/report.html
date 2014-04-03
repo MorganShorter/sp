@@ -98,6 +98,41 @@
 
         });
 
+        /* Report 3
+        * */
+         $("#model_report_3").dialog({
+            title: "Sent items",
+            autoOpen: false,
+            width: '280px',
+            close: function( event, ui ) {
+                $("#model_report_3_table").dialog('close');
+            }
+        });
+        $("#model_report_3_table").dialog({
+            title: "Sent items",
+            autoOpen: false,
+            width: 800,
+            height: 500,
+            close: function( event, ui ) {
+            }
+        });
+        $("#menu_report_3").click(function(){
+            $("#model_report_3").dialog("open");
+        });
+
+        $("#report_3_get").live("click", function(){
+            $("#model_report_3_table").dialog("close");
+            $('#frm_report_3').ajaxSubmit({
+                success: function(){
+                    $("#report3_accordion").accordion({
+                        collapsible: true,
+                        heightStyle: 'content'
+                    }).accordion( "refresh" );
+                }
+            });
+
+        });
+
     });
 
     </script>
