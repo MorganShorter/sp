@@ -604,6 +604,10 @@ ul.dropdown li:hover > ul {
     cursor: pointer;
 }
 
+#customer_contact_search tbody tr td {
+    border-right: 1px solid #ccc;
+}
+
 .with100, .with100 tr, .with100 tbody, .with100 thead {
     width: 100%;
 }
