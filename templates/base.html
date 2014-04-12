@@ -12,8 +12,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-1.10.3.custom.css">
     {% block stylesheet %}
-        {% include "stylesheet.html" %}
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/styles.css">
     {% endblock stylesheet %}
+
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/globalize.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/globalize.culture.en-AU.js"></script>
@@ -28,7 +29,17 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.taconite.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.cookie.min.js"></script>
     {% block javascript %}
-        {% include "js/javascript.html" %}
+        <script type="text/javascript">
+            __url_customer_list = "{% url 'customer_list' %}";
+
+
+        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/init.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/customer.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/order.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
     {% endblock javascript %}
 </head>
 <body>
