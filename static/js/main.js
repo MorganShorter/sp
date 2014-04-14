@@ -13,22 +13,6 @@ $(function () {
         console.warn = console.debug = console.log;
     }
 
-    $.ajax({url: '/lookup/states',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $.each(json, function (k, v) {
-                $('#customer_state').append(new Option(v, k));
-                $('#customer_delivery_state').append(new Option(v, k));
-            });
-        },
-        error: function (xhr, status) {
-        },
-        complete: function (xhr, status) {
-        }
-    });
-
     $.taconite.debug = true;
 
     $("#window").draggable({

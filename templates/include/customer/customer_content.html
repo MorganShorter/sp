@@ -1,5 +1,5 @@
 <div id="customer_content">
-	<form id="frm_customer" data-model="customer">
+	<form class="frm_customer" data-model="customer">
 	<fieldset>
 		<input type="hidden" id="customer_from_src_membadd" name="customer_from_src_membadd" data-field="from_src_membadd_id" data-type="integer" value="" />
 		<input type="hidden" id="customer_from_src_company" name="customer_from_src_company" data-field="from_src_company_id" data-type="integer" value="" />
@@ -10,7 +10,7 @@
 		<table>
 		<tr>
 			<td class="form_cell"><label for="customer_id" class="form_label">customer ID:</label></td>
-			<td class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input" readonly style="width: 60px;" value="" /></td>
+			<td class="form_cell"><input type="text" name="customer_id" id="customer_id" title="the customer or company id" class="text ui-widget-content ui-corner-all form_input customer_id" readonly style="width: 60px;" value="" /></td>
 		    <td colspan="3">&nbsp;</td>
         </tr>
 		<tr>
@@ -49,7 +49,7 @@
 		<tr>
 			<td class="form_cell"><label for="customer_state" class="form_label">state</label></td>
 			<td class="form_cell">
-				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input" data-field="state"></select>
+				<select id="customer_state" name="customer_state" title="which state is the customer located" class="text ui-widget-content ui-corner-all form_input customer_delivery_state" data-field="state"></select>
             </td>
 			<td>&nbsp;</td>
 		</tr>
@@ -88,7 +88,7 @@
 			<tr>
 				<td class="form_cell"><label for="customer_delivery_state" class="form_label">state</label></td>
 				<td class="form_cell">
-					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input" data-field="delivery_state">
+					<select id="customer_delivery_state" name="customer_delivery_state" title="which state is the delivery located" class="text ui-widget-content ui-corner-all form_input customer_delivery_state" data-field="delivery_state">
 					</select>
                 </td>
             </tr>
@@ -134,7 +134,7 @@
 		</div>
 		<table id="customer_control_action">
 		<tr>
-		<td class="form_cell"><a id="customer_control_action_save" title="save customer" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+		<td class="form_cell"><a title="save customer" href="#" class="button form_button customer_control_action_save"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
 		<td class="form_cell"><a id="customer_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
 		<td class="form_cell"><a id="customer_control_action_saveorder" title="save customer and place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
 		</tr>

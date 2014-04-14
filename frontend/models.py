@@ -56,10 +56,12 @@ class Customer(models.Model):
     notes = models.ManyToManyField('Note', related_name='c_notes')
 
     def save(self, *args, **kwargs):
+        self.set_slug()
         super(Customer, self).save(*args, **kwargs)
+
+    def set_slug(self):
         if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(Customer, self).save(*args, **kwargs)
+            self.slug = "%i-%s" % (Customer.objects.last().pk + 1, slugify(self.name))
 
     @property
     def same_delivery_address(self):

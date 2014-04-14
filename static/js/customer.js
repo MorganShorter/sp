@@ -1,6 +1,18 @@
 $(function () {
     /* Customer
     * */
+
+    $.ajax({url: '/lookup/states',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $.each(json, function (k, v) {
+                $('.customer_delivery_state').append(new Option(v, k));
+            });
+        }
+    });
+
     $("#customer_content").dialog({
         title: "Customer",
         autoOpen: false,
@@ -48,6 +60,8 @@ $(function () {
     $("#customer_control_action_cancel").click(function() {
         $("#customer_content").dialog("close");
     });
+
+
     $("#note_control_action_cancel").click(function() {
         $("#show_note").dialog("close");
     });
@@ -70,21 +84,47 @@ $(function () {
     });
 
     // Add customer
+    $("#customer_add").dialog({
+        title: "Add Customer",
+        autoOpen: false,
+        width: 'auto',
+        close: function( event, ui ) {
 
+        }
+    });
+    $("#button_customer_add").click(function(){
+        $("#customer_add").dialog("open");
+    });
+    $("#customer_add_control_action_cancel").click(function() {
+        $("#customer_add").dialog("close");
+    });
 
     // Save/Update Customer Details
-    $('#customer_control_action_save').live('click', function () {
-        var customer_id = $.trim($('#customer_id').val());
+    $('.customer_control_action_save').live('click', function () {
+        var c_form = $(this).parents('.frm_customer').eq(0);
+        var customer_id = $.trim($('.customer_id', c_form).val());
         if (customer_id == "" || customer_id == undefined || customer_id == null)
             customer_id = null;
-        var model_fields = $('#frm_customer').getDataFields();
+
+        if (!customer_id){
+            if ($('#customer_add_delivery_address_same').prop('checked')){
+                $('#customer_add_delivery_attn').val($('#customer_add_name').val());
+                $('#customer_add_delivery_address1').val($('#customer_add_address1').val());
+                $('#customer_add_delivery_address2').val($('#customer_add_address2').val());
+                $('#customer_add_delivery_suburb').val($('#customer_add_suburb').val());
+                $('#customer_add_delivery_state').val($('#customer_add_state').val());
+                $('#customer_add_delivery_postcode').val($('#customer_add_postcode').val());
+            }
+        }
+
+        var model_fields = c_form.getDataFields();
         var customer_json = [{
             'pk': customer_id,
             'model': 'frontend.customer',
             'fields': model_fields['customer']
         }];
         $.ajax({
-            url: '/customer/save/' + customer_id,
+            url: '/customer/save/',
             type: 'POST',
             dataType: 'json',
             cache: false,
@@ -94,7 +134,16 @@ $(function () {
             success: function (json) {
                 console.log('/save/customer success!');
                 console.debug(json);
-                alert(json);
+
+                if (!customer_id){
+                    c_form.resetForm();
+                    $("#customer_add").dialog("close");
+                    $("#customer_content").dialog("open");
+                    $.get('/customer/' + json['customer_id'] + '/');
+
+                }
+
+                alert(json['msg']);
             },
             error: function (xhr, status) {
                 console.log('Error requesting /save/customer! status:');
@@ -104,6 +153,7 @@ $(function () {
                 console.log('Complete request for /save/customer');
             }
         });
+        return false;
     });
 
     $('#customer_address_copy').live('click', function(){
@@ -173,7 +223,20 @@ $(function () {
             $('#toggle_customer_main_options_delivery').show('slide');
         }
     });
+    $('#customer_add_delivery_address_same').live("click", function () {
+        if ($('#customer_add_delivery_address_same').prop("checked")) {
+            $('#toggle_customer_add_main_options_delivery').hide('blind');
+            $('#customer_add_address_copy').trigger('click');
+        } else {
+            $('#toggle_customer_add_main_options_delivery').show('slide');
+        }
+    });
 
+    /*
+
+    NOTE
+
+     */
     // Open note
     $('#customer_note_items .note_item a').live("click", function(){
         var nid = $(this).attr('note_id');

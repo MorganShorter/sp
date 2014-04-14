@@ -113,10 +113,7 @@ def customer_get(request, pk):
     return __taco_render(request, 'taconite/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
 
 
-
-
-
-def customer_save(request, pk):
+def customer_save(request):
     print request.body
     print request.body.__class__.__name__
     for customer in serializers.deserialize('json', request.body):
@@ -124,8 +121,9 @@ def customer_save(request, pk):
         print customer.object
         if customer.object.__class__ == Customer:
             if not customer.object.id:
+                print 'new customer'
                 new_customer = True
-                customer.object.slug = None
+                customer.object.set_slug()
             else:
                 new_customer = False
 
@@ -138,7 +136,11 @@ def customer_save(request, pk):
         else:
             msg = 'Did not receive expected object Customer. You sent me a %s' % customer.object.__class__.__name__
 
-    return HttpResponse(json.dumps(msg), content_type='application/json')
+    return HttpResponse(json.dumps({
+        'msg': msg,
+        'customer_id': customer.object.id,
+        'creatred': True if new_customer else False
+    }), content_type='application/json')
 
 
 def __preprocess_get_request(request, pk, model):

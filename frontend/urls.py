@@ -7,7 +7,7 @@ urlpatterns = patterns('frontend.views',
     url(ur'^lookup/states/?', 'ajax_lookup_states'),
 
     # Customer
-    url(ur'^customer/save/?(?P<pk>\d*)', 'customer_save'),
+    url(ur'^customer/save/', 'customer_save'),
     url(ur'^customer/list/', 'customer_list', name='customer_list'),
     url(ur'^customer/note/(?P<c_pk>\d*)/?(?P<n_pk>\d*)/delete/', 'customer_note_delete'),
     url(ur'^customer/note/(?P<c_pk>\d*)/?(?P<n_pk>\d*)/', 'customer_note_get'),
