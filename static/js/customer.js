@@ -54,7 +54,7 @@ $(function () {
         }
     });
 
-    $("#button_customers_open_dialog").click(function() {
+    $(".button_customers_open_dialog").click(function() {
         $("#customer_find").dialog("open");
     });
     $("#customer_control_action_cancel").click(function() {
@@ -65,7 +65,7 @@ $(function () {
     $("#note_control_action_cancel").click(function() {
         $("#show_note").dialog("close");
     });
-    $("#button_customers_find_dialog").click(function() {
+    $(".button_customers_find_dialog").click(function() {
         $("#customer_find").dialog("open");
     });
     $("#customer_content").on('click', '#customer_control_action_add_contact', function(){
@@ -92,7 +92,7 @@ $(function () {
 
         }
     });
-    $("#button_customer_add").click(function(){
+    $(".button_customer_add").click(function(){
         $("#customer_add").dialog("open");
     });
     $("#customer_add_control_action_cancel").click(function() {

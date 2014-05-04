@@ -12,7 +12,7 @@ from . import __taco_render, __preprocess_get_request
 
 class CustomerList(TacoMixin, ListView):
     model = Customer
-    template_name = 'taconite/customer_list.xml'
+    template_name = 'taconite/customer/customer_list.xml'
 
     def get_queryset(self):
         qs = super(CustomerList, self).get_queryset()
@@ -69,7 +69,7 @@ def customer_note_get(request, c_pk, n_pk=None):
         note.text = text
         note.save()
 
-    return __taco_render(request, 'taconite/note.xml', {
+    return __taco_render(request, 'taconite/customer/note.xml', {
         'note': note,
         'customer': c,
         'created': not bool(n_pk)
@@ -94,7 +94,7 @@ def customer_note_delete(request, c_pk, n_pk):
 def customer_get(request, pk):
     pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
     fields = formfields.CustomerForm(customer)
-    return __taco_render(request, 'taconite/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
+    return __taco_render(request, 'taconite/customer/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
 
 
 def customer_save(request):
