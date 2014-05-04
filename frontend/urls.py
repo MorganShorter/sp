@@ -14,6 +14,7 @@ urlpatterns = patterns('frontend.views',
 # Product
 urlpatterns += patterns('frontend.views.product',
     url(ur'^product/list/', 'product_list', name='product_list'),
+    url(ur'^product/(?P<pk>\d*)/', 'product_get', name='product_get'),
 )
 
 # Customer

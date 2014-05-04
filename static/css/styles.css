@@ -605,6 +605,11 @@ ul.dropdown li:hover > ul {
     border-right: 1px solid #ccc;
 }
 
+#product_price_level_items {
+    width: 100%;
+}
+
+
 .with100, .with100 tr, .with100 tbody, .with100 thead {
     width: 100%;
 }

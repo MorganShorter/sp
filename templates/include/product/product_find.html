@@ -1,0 +1,33 @@
+<div id="product_find">
+	<form id="frm_find_product" action="" method="get">
+        <a id="find_product_search" title="find product" href="#" class="button form_button pull-right">
+            <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
+        </a>
+		<table>
+            <tr>
+                <td class="form_cell"><label for="find_product_code" class="form_label">product code:</label></td>
+                <td class="form_cell"><input type="text" name="product_code" id="find_product_code" title="search for this type of product code" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="find_product_name" class="form_label">product name:</label></td>
+                <td class="form_cell"><input type="text" name="find_product_name" id="find_product_name" title="search for this type of product name" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+            </tr>
+		</table>
+	</form>
+    <div id="product_search_result" class="search_result">
+        <table id="" class="form_list">
+            <thead>
+                <tr class="form_list_row">
+                    <th class="form_list_header">Code</th>
+                    <th class="form_list_header">Name</th>
+                    <th class="form_list_header">Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="form_list_row">
+                    <td colspan="3">empty</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

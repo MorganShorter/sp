@@ -3,6 +3,14 @@ from frontend.models import ImportNote, Customer, CustomerContact, Size, Medium,
     RoyaltyImg, Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, \
     PriceLevelGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice, Note
 
+
+class OrderProductInline(admin.StackedInline):
+    model = OrderProduct
+
+
+class InvoiceInline(admin.StackedInline):
+    model = Invoice
+
 # Register your models here.
 admin.site.register(ImportNote)
 admin.site.register(Customer)
@@ -17,7 +25,17 @@ admin.site.register(CatalogIssue)
 admin.site.register(CatalogIssueProduct)
 admin.site.register(PriceLevelGroup)
 admin.site.register(PriceLevel)
-admin.site.register(Order)
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('order_date', 'pk', 'customer', 'total_cost',)
+    raw_id_fields = ('customer',)
+    filter_horizontal = ('notes', 'products')
+    inlines = [
+        OrderProductInline, InvoiceInline
+    ]
+
+admin.site.register(Order, OrderAdmin)
 
 
 class OrderStatusAdmin(admin.ModelAdmin):

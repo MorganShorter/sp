@@ -1,0 +1,8 @@
+<taconite>
+
+{% if error %}
+	{% include "taconite/error.xml" with fields=fields error=error %}
+{% else %}
+	{% include "taconite/fields.xml" with fields=fields %}
+{% endif %}
+</taconite>

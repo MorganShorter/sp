@@ -53,7 +53,7 @@ class Customer(models.Model):
     from_src_company_id = models.IntegerField(null=True, blank=True)
     from_src_membadd_id = models.IntegerField(null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=150)
-    notes = models.ManyToManyField('Note', related_name='c_notes')
+    notes = models.ManyToManyField('Note', related_name='c_notes', blank=True)
 
     def save(self, *args, **kwargs):
         self.set_slug()
@@ -106,6 +106,7 @@ class CustomerContact(models.Model):
 
         return ret
 
+
 class Size(models.Model):
     """ Product Size/Dimensions
     """
@@ -148,7 +149,7 @@ class Medium(models.Model):
             super(Medium, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.name
+        return self.description
 
 
 class RoyaltyImg(models.Model):
@@ -196,7 +197,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=150)
     description = models.CharField(max_length=255)
-    notes = models.ManyToManyField('Note', related_name='p_notes')
+    notes = models.ManyToManyField('Note', related_name='p_notes', blank=True)
     message = models.TextField()
     current_stock = models.PositiveIntegerField(default=0)
     minimum_stock = models.PositiveIntegerField(default=0)
@@ -308,7 +309,7 @@ class PriceLevel(models.Model):
             super(PriceLevel, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.name
+        return self.price_level_group
 
 
 class Order(models.Model):

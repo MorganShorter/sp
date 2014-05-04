@@ -31,8 +31,7 @@
     {% block javascript %}
         <script type="text/javascript">
             __url_customer_list = "{% url 'customer_list' %}";
-
-
+            __url_product_list = "{% url 'product_list' %}";
         </script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/init.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
@@ -64,8 +63,8 @@
                         <img src="{{ STATIC_URL }}img/icons/16_customers.png"/>
                         <u>C</u>ustomers&nbsp;
                         <ul class="sub_menu">
-                            <li><a href="#" class="nounderline" id="button_customer_add"><img src="{{ STATIC_URL }}img/icons/16_new_customer.png"/>&nbsp;New</a></li>
-                            <li><a href="#" class="nounderline" id="button_customers_find_dialog"><img src="{{ STATIC_URL }}img/icons/16_find_customer.png"/>&nbsp;Find</a>
+                            <li><a href="#" class="nounderline button_customer_add"><img src="{{ STATIC_URL }}img/icons/16_new_customer.png"/>&nbsp;New</a></li>
+                            <li><a href="#" class="nounderline button_customers_find_dialog"><img src="{{ STATIC_URL }}img/icons/16_find_customer.png"/>&nbsp;Find</a>
                             </li>
                         </ul>
                     </li>
@@ -107,28 +106,46 @@
                 <table id="main_options">
                     <tr>
                         <td>
-                            <a id="button_orders_open_dialog" title="click for orders section" href="#" class="button">
-                                <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>orders
+                            <a title="click for add new customer" href="#" class="button button_customer_add">
+                                <img src="{{ STATIC_URL }}img/icons/64_customers.png"/><br/>add customer
                             </a>
                         </td>
                         <td>
-                            <a id="button_customers_open_dialog" title="click for customers section" href="#" class="button">
-                                <img src="{{ STATIC_URL }}img/icons/64_customers.png"/><br/>customers
+                            <a title="click for customers section" href="#" class="button button_customers_find_dialog">
+                                <img src="{{ STATIC_URL }}img/icons/64_customers.png"/><br/>find customer
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <!--a title="click for the reports section" href="#" class="button">
-                                <img src="{{ STATIC_URL }}img/icons/64_reports.png"/><br/>reports
-                            </a-->
+                            <a title="click for orders section" href="#" class="button">
+                                <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>add order
+                            </a>
+
                         </td>
                         <td>
-                            <a id="button_products_open_dialog" title="click for products section" href="#" class="button">
-                                <img src="{{ STATIC_URL }}img/icons/64_products.png"/><br/>products
+                            <a title="click for orders section" href="#" class="button">
+                                <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>find order
+                            </a>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <a title="click for products section" href="#" class="button button_products_open_dialog">
+                                <img src="{{ STATIC_URL }}img/icons/64_products.png"/><br/>add product
+                            </a>
+                        </td>
+                        <td>
+                            <a title="click for products section" href="#" class="button button_products_find_dialog">
+                                <img src="{{ STATIC_URL }}img/icons/64_products.png"/><br/>find product
                             </a>
                         </td>
                     </tr>
+                    <!--a title="click for the reports section" href="#" class="button">
+                        <img src="{{ STATIC_URL }}img/icons/64_reports.png"/><br/>reports
+                    </a-->
                 </table>
             </div>
             <div id="footer">
