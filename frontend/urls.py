@@ -5,6 +5,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('frontend.views',
     url(ur'^lookup/states/?', 'ajax_lookup_states'),
+    url(ur'^lookup/size/?', 'ajax_lookup_size'),
+    url(ur'^lookup/supplier/?', 'ajax_lookup_supplier'),
+    url(ur'^lookup/royalty_img/?', 'ajax_lookup_royalty_img'),
 
     # Order
     url(ur'^order/?(?P<pk>\d*)', 'order_get'),

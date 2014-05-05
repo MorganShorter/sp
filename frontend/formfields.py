@@ -52,7 +52,7 @@ def ProductForm(obj):
         'input#product_id': (obj.id, None),
         'input#product_name': (obj.name, None),
         'select#product_size': (obj.size_id, None),
-        'select#product_type': (obj.type, None),
+        'input#product_type': (obj.type, None),
         'input#product_cost_price': (obj.sp_cost, None),
         'input#product_current_stock': (obj.current_stock, None),
         'input#product_minimum_stock': (obj.minimum_stock, None),

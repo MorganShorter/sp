@@ -8,18 +8,29 @@ $(function () {
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('.customer_delivery_state').append(new Option(v, k));
+                $('#product_size').append(new Option(v, k));
             });
         }
     });
 
-    $.ajax({url: '/lookup/states',
+    $.ajax({url: '/lookup/supplier',
         type: 'GET',
         dataType: 'json',
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('.customer_delivery_state').append(new Option(v, k));
+                $('#product_supplier').append(new Option(v, k));
+            });
+        }
+    });
+
+    $.ajax({url: '/lookup/royalty_img',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $.each(json, function (k, v) {
+                $('#product_royalty_img').append(new Option(v, k));
             });
         }
     });

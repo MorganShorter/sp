@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader, RequestContext
 
 from .. import formfields
-from ..models import Order, Invoice
+from ..models import Order, Invoice, Size, Supplier, RoyaltyImg
 
 
 def order_get(request, pk):
@@ -72,3 +72,26 @@ def ajax_lookup_states(request):
 
     return HttpResponse(json.dumps(states), content_type='application/json')
 
+
+def ajax_lookup(request, model):
+    if request.is_ajax():
+        ret = {}
+        for s in model.objects.all():
+            ret.update({s.pk: str(s)})
+    else:
+        ret = {
+            'NOTAJAX': 'Not an AJAX Request'
+        }
+    return HttpResponse(json.dumps(ret), content_type='application/json')
+
+
+def ajax_lookup_size(request):
+    return ajax_lookup(request, Size)
+
+
+def ajax_lookup_supplier(request):
+    return ajax_lookup(request, Supplier)
+
+
+def ajax_lookup_royalty_img(request):
+    return ajax_lookup(request, RoyaltyImg)
