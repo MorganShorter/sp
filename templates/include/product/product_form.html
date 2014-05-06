@@ -1,10 +1,12 @@
 <div id="product_content">
-	<form id="frm_product">
+	<form id="frm_product" data-model="product">
+    <input type="hidden" id="product_id" name="product_id" class="product_id" value="" />
+
 	<fieldset>
 		<table id="product_main_options" border="1">
 		<tr>
 			<td class="form_cell"><label for="product_id" class="form_label">product code:</label></td>
-			<td class="form_cell"><input type="text" name="product_id" id="product_id" class="text ui-widget-content ui-corner-all form_input" readonly  style="width: 60px;" /></td>
+			<td class="form_cell"><input type="text" name="product_code" id="product_code" class="text ui-widget-content ui-corner-all form_input product_code" readonly data-field="code" /></td>
         </tr>
         {% if new_product %}
 		<tr>
@@ -14,44 +16,44 @@
         {% else %}
 		<tr>
 			<td class="form_cell"><label for="product_name" class="form_label">product name:</label></td>
-			<td class="form_cell"><input type="text" name="product_name" id="product_name" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td class="form_cell"><input type="text" name="product_name" id="product_name" class="text ui-widget-content ui-corner-all form_input" data-field="name" /></td>
         </tr>
         {% endif %}
 		<tr>
 			<td class="form_cell"><label for="product_size" class="form_label">size:</label></td>
 			<td class="form_cell">
-                <select id="product_size" name="product_size" title="what type of product is this?" class="text ui-widget-content ui-corner-all form_input">
+                <select id="product_size" name="product_size" title="what type of product is this?" class="text ui-widget-content ui-corner-all form_input" data-field="size">
 				</select>
             </td>
         </tr>
         <tr>
 			<td class="form_cell"><label for="product_type" class="form_label">type</label></td>
 			<td class="form_cell">
-                <input type="text" name="product_type" id="product_type" title="what type of product is this?" class="text ui-widget-content ui-corner-all form_input" />
+                <input type="text" name="product_type" id="product_type" title="what type of product is this?" class="text ui-widget-content ui-corner-all form_input" data-field="type" />
             </td>
 		</tr>
 		<tr>
 			<td class="form_cell"><label for="product_cost_price" class="form_label">cost price:</label></td>
-			<td class="form_cell"><input type="text" name="product_cost_price" id="product_cost_price" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td class="form_cell"><input type="text" name="product_cost_price" id="product_cost_price" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" data-field="sp_cost" /></td>
 		</tr>
 		<tr>
 			<td class="form_cell"><label for="product_current_stock" class="form_label">current stock:</label></td>
-			<td class="form_cell"><input type="text" name="product_current_stock" id="product_current_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td class="form_cell"><input type="text" name="product_current_stock" id="product_current_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" data-field="current_stock" /></td>
 		</tr>
 		<tr>
 			<td class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>
-			<td class="form_cell"><input type="text" name="product_minimum_stock" id="product_minimum_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" /></td>
+			<td class="form_cell"><input type="text" name="product_minimum_stock" id="product_minimum_stock" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" data-field="minimum_stock" /></td>
         </tr>
 		<tr>
 			<td class="form_cell"><label for="product_supplier" class="form_label">supplier:</label></td>
 			<td class="form_cell">
-                <select id="product_supplier" name="product_supplier" class="text ui-widget-content ui-corner-all form_input">
+                <select id="product_supplier" name="product_supplier" class="text ui-widget-content ui-corner-all form_input" data-field="supplier">
 				</select>
         </tr>
 		<tr>
 			<td class="form_cell"><label for="product_royalty_img" class="form_label">royalty image:</label></td>
 			<td class="form_cell">
-				<select id="product_royalty_img" name="product_royalty_img" class="text ui-widget-content ui-corner-all form_input">
+				<select id="product_royalty_img" name="product_royalty_img" class="text ui-widget-content ui-corner-all form_input" data-field="royalty_img">
 				  <!--option value="">--- none ---</option-->
 				</select>
             </td>
@@ -99,8 +101,8 @@
 
 		<table id="product_control_action">
             <tr>
-                <td class="form_cell"><a id="product_control_action_save" title="save product" href="#" class="button form_button"><img id="icon_product_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-                <td class="form_cell"><a id="product_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_product_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+                <td class="form_cell"><a title="save product" href="#" class="button form_button product_control_action_save"><img id="icon_product_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+                <td class="form_cell"><a title="cancel" href="#" class="button form_button product_control_action_cancel"><img id="icon_product_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
             </tr>
 		</table>
 	</fieldset>

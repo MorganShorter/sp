@@ -4,7 +4,7 @@ from django.template import loader, RequestContext
 
 
 def json_response(data):
-     HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 def __preprocess_get_request(request, pk, model):

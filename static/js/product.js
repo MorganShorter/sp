@@ -69,4 +69,61 @@ $(function () {
         $.get('/product/' + cid + '/');
     });
 
+    $(".product_control_action_cancel").click(function() {
+        $("#product_content").dialog("close");
+    });
+
+
+    // Save/Update Customer Details
+    $('.product_control_action_save').live('click', function () {
+        var c_form = $(this).parents('#frm_product').eq(0);
+        var obj_id = $.trim($('.product_id', c_form).val());
+        if (obj_id == "" || obj_id == undefined || obj_id == null)
+            obj_id = null;
+
+
+        var model_fields = c_form.getDataFields();
+
+        if (model_fields['product'].sp_cost[0] == "$")
+            model_fields['product'].sp_cost = model_fields['product'].sp_cost.slice(1);
+
+        var obj_json = [{
+            'pk': obj_id,
+            'model': 'frontend.product',
+            'fields': model_fields['product']
+        }];
+        $.ajax({
+            url: '/product/save/',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            contentType: 'application/json; charset=UTF-8',
+            headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+            data: JSON.stringify(obj_json),
+            success: function (json) {
+                console.log('prod save success!');
+                console.debug(json);
+
+                if (!obj_id){
+                    c_form.resetForm();
+                    $("#product_add").dialog("close");
+                    $("#product_content").dialog("open");
+                    $.get('/product/' + json['product_id'] + '/');
+
+                }
+
+                alert(json['msg']);
+            },
+            error: function (xhr, status) {
+                console.log('Error requesting /save/product! status:');
+                console.log(status);
+            },
+            complete: function (xhr, status) {
+                console.log('Complete request for /save/product');
+            }
+        });
+        return false;
+    });
+
+
 });

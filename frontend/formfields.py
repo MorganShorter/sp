@@ -50,6 +50,7 @@ def __apply_template_filters(form_fields):
 def ProductForm(obj):
     return {
         'input#product_id': (obj.id, None),
+        'input#product_code': (obj.code, None),
         'input#product_name': (obj.name, None),
         'select#product_size': (obj.size_id, None),
         'input#product_type': (obj.type, None),
@@ -57,4 +58,5 @@ def ProductForm(obj):
         'input#product_current_stock': (obj.current_stock, None),
         'input#product_minimum_stock': (obj.minimum_stock, None),
         'select#product_supplier': (obj.supplier_id, None),
+        'select#product_royalty_img': (obj.royalty_img_id, None),
     }
