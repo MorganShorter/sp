@@ -1,8 +1,10 @@
 from django.views.generic import ListView
+from django.core import serializers
+
 from ..models import Product
 from ..mixins import TacoMixin
+from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
-from . import __taco_render, __preprocess_get_request
 
 
 class ProductList(TacoMixin, ListView):
@@ -34,4 +36,32 @@ def product_get(request, pk):
         'error': error,
         'fields': fields,
         'obj': obj
+    })
+
+
+def product_save(request):
+    msg = ''
+    new_customer = False
+    for customer in serializers.deserialize('json', request.body):
+        print customer
+        print customer.object
+        if customer.object.__class__ == Product:
+            if not customer.object.id:
+                print 'new customer'
+                new_customer = True
+                customer.object.set_slug()
+
+            customer.save()
+
+            if new_customer:
+                msg = 'Customer created (ID:%d)' % customer.object.id
+            else:
+                msg = 'Customer saved'
+        else:
+            msg = 'Did not receive expected object Customer. You sent me a %s' % customer.object.__class__.__name__
+
+    return json_response({
+        'msg': msg,
+        'customer_id': customer.object.id,
+        'creatred': True if new_customer else False
     })

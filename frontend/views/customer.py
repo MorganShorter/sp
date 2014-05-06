@@ -1,4 +1,3 @@
-import json
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.core import serializers
@@ -7,7 +6,7 @@ from .. import formfields
 from ..models import Customer, CustomerContact, Note
 from ..mixins import TacoMixin
 
-from . import __taco_render, __preprocess_get_request
+from ..utils import __preprocess_get_request, __taco_render, json_response
 
 
 class CustomerList(TacoMixin, ListView):
@@ -43,7 +42,7 @@ def customer_contact_add(request):
         if obj.object.__class__ == CustomerContact:
             obj.object.slug = None
             obj.object.save()
-    return HttpResponse(json.dumps('Contact created'), content_type='application/json')
+    return json_response('Contact created')
 
 
 def customer_contact_delete(request, pk):
@@ -118,8 +117,8 @@ def customer_save(request):
         else:
             msg = 'Did not receive expected object Customer. You sent me a %s' % customer.object.__class__.__name__
 
-    return HttpResponse(json.dumps({
+    return json_response({
         'msg': msg,
         'customer_id': customer.object.id,
         'creatred': True if new_customer else False
-    }), content_type='application/json')
+    })

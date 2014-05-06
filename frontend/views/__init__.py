@@ -1,7 +1,4 @@
-import json
-from django.http import HttpResponse
-from django.template import loader, RequestContext
-
+from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
 from ..models import Order, Invoice, Size, Supplier, RoyaltyImg
 
@@ -17,38 +14,7 @@ def order_get(request, pk):
             pass
 
     fields = formfields.OrderForm(order, invoice)
-    return __taco_render(request, 'taconite/order.xml', {'error':error, 'fields': fields, 'order': order})
-
-
-def __preprocess_get_request(request, pk, model):
-    error = None
-    obj = None
-
-    if request.method == 'POST':
-        params = request.POST
-    elif request.method == 'GET':
-        params = request.GET
-    else:
-        params = {}
-
-    if not pk and params.has_key('id'):
-        pk = params['id']
-
-    if pk:
-        try:
-            obj = model.objects.get(pk=pk)
-        except model.DoesNotExist:
-            error = 'No %s found with id %s' % (model.__class__.__name__, pk)
-    else:
-        error = 'No primary key given to find %s' % model.__class__.__name__
-
-    return pk, params, obj, error
-
-
-def __taco_render(request, template, context):
-    taco_controlplate = loader.get_template(template)
-    c_royal = RequestContext(request, context)
-    return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
+    return __taco_render(request, 'taconite/order.xml', {'error': error, 'fields': fields, 'order': order})
 
 
 def ajax_lookup_states(request):
@@ -70,7 +36,7 @@ def ajax_lookup_states(request):
             'NOTAJAX': 'Not an AJAX Request'
         }
 
-    return HttpResponse(json.dumps(states), content_type='application/json')
+    return json_response(states)
 
 
 def ajax_lookup(request, model):
@@ -82,7 +48,7 @@ def ajax_lookup(request, model):
         ret = {
             'NOTAJAX': 'Not an AJAX Request'
         }
-    return HttpResponse(json.dumps(ret), content_type='application/json')
+    return json_response(ret)
 
 
 def ajax_lookup_size(request):
