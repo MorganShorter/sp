@@ -13,6 +13,17 @@ $(function () {
         }
     });
 
+    $.ajax({url: '/lookup/medium',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $.each(json, function (k, v) {
+                $('#product_medium').append(new Option(v, k));
+            });
+        }
+    });
+
     $.ajax({url: '/lookup/supplier',
         type: 'GET',
         dataType: 'json',

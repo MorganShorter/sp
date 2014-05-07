@@ -206,13 +206,6 @@ class Product(models.Model):
     medium = models.ForeignKey(Medium, related_name='+', null=True)
     royalty_img = models.ForeignKey(RoyaltyImg, related_name='+', null=True)
     supplier = models.ForeignKey(Supplier, related_name='products')
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(Product, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(Product, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.code)

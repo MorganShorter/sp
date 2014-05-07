@@ -1,6 +1,6 @@
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
-from ..models import Order, Invoice, Size, Supplier, RoyaltyImg
+from ..models import Order, Invoice, Size, Supplier, RoyaltyImg, Medium
 
 
 def order_get(request, pk):
@@ -61,3 +61,7 @@ def ajax_lookup_supplier(request):
 
 def ajax_lookup_royalty_img(request):
     return ajax_lookup(request, RoyaltyImg)
+
+
+def ajax_lookup_medium(request):
+    return ajax_lookup(request, Medium)

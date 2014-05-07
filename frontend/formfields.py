@@ -59,4 +59,5 @@ def ProductForm(obj):
         'input#product_minimum_stock': (obj.minimum_stock, None),
         'select#product_supplier': (obj.supplier_id, None),
         'select#product_royalty_img': (obj.royalty_img_id, None),
+        'select#product_medium': (obj.medium_id, None),
     }
