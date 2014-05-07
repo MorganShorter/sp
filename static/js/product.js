@@ -8,7 +8,7 @@ $(function () {
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('#product_size').append(new Option(v, k));
+                $('.product_size').append(new Option(v, k));
             });
         }
     });
@@ -19,7 +19,7 @@ $(function () {
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('#product_medium').append(new Option(v, k));
+                $('.product_medium').append(new Option(v, k));
             });
         }
     });
@@ -30,7 +30,7 @@ $(function () {
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('#product_supplier').append(new Option(v, k));
+                $('.product_supplier').append(new Option(v, k));
             });
         }
     });
@@ -41,7 +41,7 @@ $(function () {
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('#product_royalty_img').append(new Option(v, k));
+                $('.product_royalty_img').append(new Option(v, k));
             });
         }
     });

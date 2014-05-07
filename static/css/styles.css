@@ -605,7 +605,7 @@ ul.dropdown li:hover > ul {
     border-right: 1px solid #ccc;
 }
 
-#product_price_level_items {
+.price_table {
     width: 100%;
 }
 
