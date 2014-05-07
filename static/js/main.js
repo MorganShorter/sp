@@ -72,28 +72,8 @@ $(function () {
             "Scheme"
         ]
     });
-    $("#product_supplier").autocomplete({
-        source: [
-            "Australian Institute Optom (AIO)",
-            "AIOLT",
-            "AMI",
-            "BackTalk (BT)",
-            "Chiro Assc. Aus (CAA)",
-            "Disney (JH)",
-            "Koren 1",
-            "Koren 2",
-            "LT",
-            "MedART",
-            "SP"
-        ]
-    });
-    $("#order_order_date").datepicker({ dateFormat: 'dd/mm/yy' });
-    $("#order_wanted_by").datepicker({ dateFormat: 'dd/mm/yy' });
-    $("#product").mask("99/99/9999", {
-        completed: function () {
-            alert("You typed the following: " + this.val());
-        }
-    });
+
+
     $("#order_shipping_cost").spinner({
         min: 0,
         max: 2500,
@@ -102,28 +82,7 @@ $(function () {
         numberFormat: "C",
         culture: "en-AU"
     });
-    $("#product_cost_price").spinner({
-        min: 0,
-        max: 2500,
-        step: .25,
-        start: 1000,
-        numberFormat: "C",
-        culture: "en-AU"
-    });
-    $("#product_current_stock").spinner({
-        min: 0,
-        max: 250000,
-        step: 1,
-        start: 1000,
-        culture: "en-AU"
-    });
-    $("#product_minimum_stock").spinner({
-        min: 0,
-        max: 250000,
-        step: 25,
-        start: 1000,
-        culture: "en-AU"
-    });
+
     $("#order_product_item_percentage_ID").pcntspinner({
         min: 0,
         max: 100,

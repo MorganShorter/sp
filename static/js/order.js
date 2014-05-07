@@ -20,4 +20,7 @@ $(function () {
         }
 
     });
+
+    $("#order_order_date").datepicker({ dateFormat: 'dd/mm/yy' });
+    $("#order_wanted_by").datepicker({ dateFormat: 'dd/mm/yy' });
 });

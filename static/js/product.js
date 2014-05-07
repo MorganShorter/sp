@@ -47,7 +47,12 @@ $(function () {
     });
 
     $("#product_content").dialog({
-        title: "Products",
+        title: "Edit product",
+        autoOpen: false,
+        width: 414
+    });
+    $("#product_create").dialog({
+        title: "Create product",
         autoOpen: false,
         width: 414
     });
@@ -63,6 +68,9 @@ $(function () {
 
     $(".button_products_open_dialog").click(function () {
         $("#product_content").dialog("open");
+    });
+    $(".button_products_add_dialog").click(function () {
+        $("#product_create").dialog("open");
     });
     $(".button_products_find_dialog").click(function(){
         $("#product_find").dialog("open");
@@ -80,14 +88,17 @@ $(function () {
         $.get('/product/' + cid + '/');
     });
 
-    $(".product_control_action_cancel").click(function() {
+    $(".product_control_action_cancel", $("#product_content")).click(function() {
         $("#product_content").dialog("close");
     });
 
+    $(".product_control_action_cancel", $("#product_create")).click(function() {
+        $("#product_create").dialog("close");
+    });
 
-    // Save/Update Customer Details
+    // Create/Save/Update Customer Details
     $('.product_control_action_save').live('click', function () {
-        var c_form = $(this).parents('#frm_product').eq(0);
+        var c_form = $(this).parents('form').eq(0);
         var obj_id = $.trim($('.product_id', c_form).val());
         if (obj_id == "" || obj_id == undefined || obj_id == null)
             obj_id = null;
@@ -95,7 +106,7 @@ $(function () {
 
         var model_fields = c_form.getDataFields();
 
-        if (model_fields['product'].sp_cost[0] == "$")
+        if (model_fields['product'].sp_cost && model_fields['product'].sp_cost[0] == "$")
             model_fields['product'].sp_cost = model_fields['product'].sp_cost.slice(1);
 
         var obj_json = [{
@@ -114,15 +125,12 @@ $(function () {
             success: function (json) {
                 console.log('prod save success!');
                 console.debug(json);
-
                 if (!obj_id){
                     c_form.resetForm();
-                    $("#product_add").dialog("close");
+                    $("#product_create").dialog("close");
                     $("#product_content").dialog("open");
                     $.get('/product/' + json['product_id'] + '/');
-
                 }
-
                 alert(json['msg']);
             },
             error: function (xhr, status) {
@@ -136,5 +144,34 @@ $(function () {
         return false;
     });
 
+    $(".product_cost_price").spinner({
+        min: 0,
+        max: 2500,
+        step: .25,
+        start: 1000,
+        numberFormat: "C",
+        culture: "en-AU"
+    });
+    $(".product_current_stock").spinner({
+        min: 0,
+        max: 250000,
+        step: 1,
+        start: 1000,
+        culture: "en-AU"
+    });
+    $(".product_minimum_stock").spinner({
+        min: 0,
+        max: 250000,
+        step: 25,
+        start: 1000,
+        culture: "en-AU"
+    });
+
+    // ?????
+    $("#product").mask("99/99/9999", {
+        completed: function () {
+            alert("You typed the following: " + this.val());
+        }
+    });
 
 });
