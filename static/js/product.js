@@ -129,7 +129,7 @@ $(function () {
                     c_form.resetForm();
                     $("#product_create").dialog("close");
                     $("#product_content").dialog("open");
-                    $.get('/product/' + json['product_id'] + '/');
+                    $.get('/product/' + json['obj_id'] + '/');
                 }
                 alert(json['msg']);
             },
