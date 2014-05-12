@@ -9,6 +9,7 @@ urlpatterns = patterns('frontend.views',
     url(ur'^lookup/supplier/?', 'ajax_lookup_supplier'),
     url(ur'^lookup/royalty_img/?', 'ajax_lookup_royalty_img'),
     url(ur'^lookup/medium/?', 'ajax_lookup_medium'),
+    url(ur'^lookup/price_level_group/?', 'ajax_lookup_price_level_group'),
 
     # Order
     url(ur'^order/?(?P<pk>\d*)', 'order_get'),

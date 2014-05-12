@@ -46,6 +46,17 @@ $(function () {
         }
     });
 
+    $.ajax({url: '/lookup/price_level_group',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $.each(json, function (k, v) {
+                $('.product_price_level_template').append(new Option(v, k));
+            });
+        }
+    });
+
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,
