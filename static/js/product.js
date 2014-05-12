@@ -76,6 +76,11 @@ $(function () {
             $("#product_add").dialog('close');
         }
     });
+    $("#product_pricelevel").dialog({
+        title: "Product level template",
+        autoOpen: true,
+        width: 274
+    });
 
     $(".button_products_open_dialog").click(function () {
         $("#product_content").dialog("open");
@@ -86,6 +91,7 @@ $(function () {
     $(".button_products_find_dialog").click(function(){
         $("#product_find").dialog("open");
     });
+
 
     $("#find_product_search").live('click', function(){
         var queryString = $('#frm_find_product').formSerialize();
@@ -105,6 +111,9 @@ $(function () {
 
     $(".product_control_action_cancel", $("#product_create")).click(function() {
         $("#product_create").dialog("close");
+    });
+    $("#pricelevel_control_action_cancel").click(function(){
+        $("#product_pricelevel").dialog("close");
     });
 
     // Create/Save/Update Customer Details

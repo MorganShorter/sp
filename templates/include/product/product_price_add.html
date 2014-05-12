@@ -1,0 +1,43 @@
+<div id="product_pricelevel">
+	<form id="frm_add_pricelevel" data-model="pricelevel">
+	<fieldset>
+		<table id="pricelevel_table">
+            <input type="hidden" name="price_products_id" id="price_products_id" value="" data-field="products">
+            <tr>
+                <td class="form_cell"><label for="pricelevel_product" class="form_label">product:</label></td>
+                <td class="form_cell"><input type="text" name="pricelevel_product" id="pricelevel_product" class="text ui-widget-content ui-corner-all form_input" readonly value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="pricelevel_min_amount" class="form_label">min amount:</label></td>
+                <td class="form_cell"><input type="text" name="pricelevel_min_amount" id="pricelevel_min_amount" class="text ui-widget-content ui-corner-all form_input" value="" data-field="min_amount" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="pricelevel_max_amount" class="form_label">max amount:</label></td>
+                <td class="form_cell"><input type="text" name="pricelevel_max_amount" id="pricelevel_max_amount" class="text ui-widget-content ui-corner-all form_input" value="" data-field="max_amount" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="pricelevel_cost_per_item" class="form_label">cost per item:</label></td>
+                <td class="form_cell"><input type="text" name="pricelevel_cost_per_item" id="pricelevel_cost_per_item" class="text ui-widget-content ui-corner-all form_input" value="" data-field="cost_per_item" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="pricelevel_block_only" class="form_label">block only:</label></td>
+                <td class="form_cell"><input type="checkbox" name="pricelevel_block_only" id="pricelevel_block_only" class="" value="" data-field="block_only" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell">
+                    <a id="pricelevel_control_action_save" title="save customer" href="#" class="button form_button">
+                        <img src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save
+                    </a>
+                    &nbsp;
+                </td>
+                <td class="form_cell">
+                    <a id="pricelevel_control_action_cancel" title="cancel" href="#" class="button form_button">
+                        <img src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel
+                    </a>
+                    &nbsp;
+                </td>
+            </tr>
+		</table>
+	</fieldset>
+	</form>
+</div>
