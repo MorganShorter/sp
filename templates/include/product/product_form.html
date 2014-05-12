@@ -66,12 +66,12 @@
 		</tr>
 		<tr>
 			<td class="form_cell" colspan="5">
-                <input type="checkbox" class="product_auto_royalty_amount" name="product_auto_royalty_amount" value="true" checked />
+                <input type="checkbox" class="product_auto_royalty_amount" name="product_auto_royalty_amount" value="true" />
                 auto-select royalty using royalty image</td>
 		</tr>
 		<tr>
 			<td class="form_cell" colspan="5">
-                <input type="checkbox" class="product_use_price_template" name="product_use_price_template" value="true" checked />
+                <input type="checkbox" class="product_use_price_template" name="product_use_price_template" value="true" />
                 use pricing template</td>
 		</tr>
 		<tr>
@@ -85,27 +85,25 @@
 		</table>
 
         <table class="form_list price_table">
-            <tr class="form_list_row">
-                <th class="form_list_header">Price</th>
-                <th class="form_list_header">Min Qty</th>
-                <th class="form_list_header">Max Qty</th>
-                <th class="form_list_header">Block</th>
-                <th class="form_list_header">&nbsp;</th>
-            </tr>
-            <tr class="form_list_row">
-                <td class="form_list_item">0.25</td>
-                <td class="form_list_item">50</td>
-                <td class="form_list_item">-</td>
-                <td class="form_list_item">yes</td>
-                <td class="form_list_item">
-                    <a title="delete this price level" href="#"><img src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
-            </tr>
-            <tr class="form_list_row">
-                <td colspan="5" class="form_list_item">
-                    <a title="add new price level" href="#">
-                        <img src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a>
-                </td>
-            </tr>
+            <thead>
+                <tr class="form_list_row">
+                    <th class="form_list_header">Price</th>
+                    <th class="form_list_header">Min Qty</th>
+                    <th class="form_list_header">Max Qty</th>
+                    <th class="form_list_header">Block</th>
+                    <th class="form_list_header">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr class="form_list_row">
+                    <td colspan="5" class="form_list_item">
+                        <a title="add new price level" href="#">
+                            <img src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a>
+                    </td>
+                </tr>
+            </tfoot>
+
         </table>
 
 

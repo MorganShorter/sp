@@ -286,13 +286,13 @@ class PriceLevel(models.Model):
     """ Price Level for a Product; products can have multiple price levels
     """
     products = models.ManyToManyField(Product, related_name='price_levels')
-    price_level_group = models.ForeignKey(PriceLevelGroup, related_name='price_levels', null=True)
+    price_level_group = models.ForeignKey(PriceLevelGroup, related_name='price_levels', null=True, blank=True)
     min_amount = models.PositiveIntegerField()
-    max_amount = models.PositiveIntegerField()
+    max_amount = models.PositiveIntegerField(blank=True)
     cost_per_item = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     cost_per_block = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     block_only = models.BooleanField(default=False)
-    notes = models.TextField(null=True)
+    notes = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=150)
 
     def save(self, *args, **kwargs):
@@ -303,6 +303,9 @@ class PriceLevel(models.Model):
 
     def __unicode__(self):
         return 'Level #%s (Group: %s)' % (self.pk, self.price_level_group or '')
+
+    class Meta:
+        ordering = ('-min_amount',)
 
 
 class Order(models.Model):

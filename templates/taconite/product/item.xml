@@ -1,8 +1,22 @@
 <taconite>
+    {% if error %}{% include "taconite/error.xml" with fields=fields error=error %}
+    {% else %}{% include "taconite/fields.xml" with fields=fields %}
+    {% endif %}
 
-{% if error %}
-	{% include "taconite/error.xml" with fields=fields error=error %}
-{% else %}
-	{% include "taconite/fields.xml" with fields=fields %}
-{% endif %}
+    <replaceContent select="#frm_product table.price_table tbody">
+        {% for o in obj.price_levels.all %}
+            <tr class="form_list_row" pr_level_id="{{ o.pk }}">
+                <td class="form_list_item">{{ o.cost_per_item }}</td>
+                <td class="form_list_item">{{ o.min_amount }}</td>
+                <td class="form_list_item">{{ o.max_amount|default_if_none:'-' }}</td>
+                <td class="form_list_item">{% if o.block_only %}yes{% else %}no{% endif %}</td>
+                <td class="form_list_item">
+                    <a title="delete this price level" href="#"><img src="{{ STATIC_URL }}img/icons/16_delete.png" /></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </replaceContent>
+
 </taconite>
+
+
