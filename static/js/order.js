@@ -6,7 +6,7 @@ $(function () {
         autoOpen: false,
         width: 800
     });
-    $("#button_orders_open_dialog").click(function () {
+    $(".button_order_add_dialog").click(function () {
         $("#order_content").dialog("open");
     });
 
