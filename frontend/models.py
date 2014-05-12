@@ -302,7 +302,7 @@ class PriceLevel(models.Model):
             super(PriceLevel, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.price_level_group
+        return 'Level #%s (Group: %s)' % (self.pk, self.price_level_group or '')
 
 
 class Order(models.Model):
