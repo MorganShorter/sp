@@ -270,13 +270,6 @@ class PriceLevelGroup(models.Model):
     """
     name = models.CharField(max_length=10)
     description = models.CharField(max_length=255, null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(PriceLevelGroup, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(PriceLevelGroup, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
@@ -293,13 +286,6 @@ class PriceLevel(models.Model):
     cost_per_block = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     block_only = models.BooleanField(default=False)
     notes = models.TextField(null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(PriceLevel, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify("%s" % self.__class__.__name__))
-            super(PriceLevel, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return 'Level #%s (Group: %s)' % (self.pk, self.price_level_group or '')
