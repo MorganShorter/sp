@@ -281,7 +281,7 @@ class PriceLevel(models.Model):
     products = models.ManyToManyField(Product, related_name='price_levels')
     price_level_group = models.ForeignKey(PriceLevelGroup, related_name='price_levels', null=True, blank=True)
     min_amount = models.PositiveIntegerField()
-    max_amount = models.PositiveIntegerField(blank=True)
+    max_amount = models.PositiveIntegerField(blank=True, null=True)
     cost_per_item = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     cost_per_block = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     block_only = models.BooleanField(default=False)

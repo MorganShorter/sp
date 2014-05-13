@@ -60,7 +60,10 @@ $(function () {
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,
-        width: 414
+        width: 414,
+        close: function(event, ui){
+            $("#product_pricelevel").dialog("close");
+        }
     });
     $("#product_create").dialog({
         title: "Create product",
@@ -71,14 +74,15 @@ $(function () {
         title: "Find Product",
         autoOpen: false,
         width: 'auto',
-        close: function( event, ui ) {
+        close: function(event, ui) {
             $("#product_content").dialog('close');
             $("#product_add").dialog('close');
+            $("#product_pricelevel").dialog("close");
         }
     });
     $("#product_pricelevel").dialog({
         title: "Product level template",
-        autoOpen: true,
+        autoOpen: false,
         width: 274
     });
 
@@ -116,7 +120,7 @@ $(function () {
         $("#product_pricelevel").dialog("close");
     });
 
-    // Create/Save/Update Customer Details
+    // Create/Save/Update Product Details
     $('.product_control_action_save').live('click', function () {
         var c_form = $(this).parents('form').eq(0);
         var obj_id = $.trim($('.product_id', c_form).val());
@@ -186,6 +190,82 @@ $(function () {
         start: 1000,
         culture: "en-AU"
     });
+
+
+    // Price Levels
+    $('.price_table tbody tr').live("click", function(){
+        var price_id = $(this).attr('pr_level_id');
+        var prod_id = $('#product_content .product_id').val();
+        $("#product_pricelevel").dialog("open");
+        $.get('/product/pricelevel/' + prod_id + '/' + price_id + '/');
+        return false;
+    });
+    $('.price_table tbody tr .delete_item').live("click", function(){
+        var cid = $(this).parent('tr').attr('pr_level_id');
+        alert('delete ' + cid);
+        //$("#product_pricelevel").dialog("open");
+        //$.get('/customer/note/' + cid + '/' + nid + '/');
+
+        return false;
+    });
+
+    // Create/Save/Update price level
+    $('#pricelevel_control_action_save').live('click', function () {
+        var c_form = $(this).parents('form').eq(0);
+        var obj_id = $.trim($('.price_id', c_form).val());
+        if (obj_id == "" || obj_id == undefined || obj_id == null)
+            obj_id = null;
+
+        var product_id = $.trim($('.price_products_id', c_form).val());
+        var model_fields = c_form.getDataFields();
+
+        if (!$('.pricelevel_block_only', c_form).prop('checked')){
+            model_fields.pricelevel.block_only = 0;
+        } else {
+            model_fields.pricelevel.block_only = 1;
+        }
+
+        if (model_fields.pricelevel.max_amount == ''){
+            model_fields.pricelevel.max_amount = NaN;
+        }
+
+        var obj_json = [{
+            'pk': obj_id,
+            'model': 'frontend.pricelevel',
+            'fields': model_fields['pricelevel']
+        }];
+        $.ajax({
+            url: '/product/pricelevel/save/',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            contentType: 'application/json; charset=UTF-8',
+            headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+            data: JSON.stringify(obj_json),
+            success: function (json) {
+                console.log('price save success!');
+                console.debug(json);
+
+                if (json['saved']){
+                    c_form.resetForm();
+                    $("#product_pricelevel").dialog("close");
+                    $.get('/product/' + product_id + '/?only_price_levels=1');
+                }
+
+
+                alert(json['msg']);
+            },
+            error: function (xhr, status) {
+                console.log('Error requesting /product/pricelevel/save/! status:');
+                console.log(status);
+            },
+            complete: function (xhr, status) {
+                console.log('Complete request for /product/pricelevel/save/');
+            }
+        });
+        return false;
+    });
+
 
     // ?????
     $("#product").mask("99/99/9999", {

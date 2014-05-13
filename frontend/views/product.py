@@ -1,7 +1,8 @@
+from django.http import HttpResponse
 from django.views.generic import ListView
 from django.core import serializers
 
-from ..models import Product
+from ..models import Product, PriceLevel, PriceLevelGroup
 from ..mixins import TacoMixin
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
@@ -35,31 +36,93 @@ def product_get(request, pk):
     return __taco_render(request, 'taconite/product/item.xml', {
         'error': error,
         'fields': fields,
-        'obj': obj
+        'obj': obj,
+        'only_price_levels': bool(request.GET.get('only_price_levels', False))
     })
 
 
 def product_save(request):
     msg = ''
     new_obj = False
-    for obj in serializers.deserialize('json', request.body):
-        if obj.object.__class__ == Product:
-            if not obj.object.id:
-                print 'new obj'
-                new_obj = True
-                #obj.object.set_slug()
-
-            obj.save()
-
-            if new_obj:
-                msg = 'Product created (ID:%d)' % obj.object.id
+    try:
+        for obj in serializers.deserialize('json', request.body):
+            if obj.object.__class__ == Product:
+                if not obj.object.id:
+                    print 'new obj'
+                    new_obj = True
+                    obj.save()
+                else:
+                    if new_obj:
+                        msg = 'Product created (ID:%d)' % obj.object.id
+                    else:
+                        msg = 'Product saved'
             else:
-                msg = 'Product saved'
-        else:
-            msg = 'Did not receive expected object Product. You sent me a %s' % obj.object.__class__.__name__
+                msg = 'Did not receive expected object Product. You sent me a %s' % obj.object.__class__.__name__
+
+    except Exception, e:
+        msg = 'Wrong values'
 
     return json_response({
         'msg': msg,
         'obj_id': obj.object.id,
         'created': True if new_obj else False
+    })
+
+
+def product_price_get(request, prod_id, price_id=None):
+    pk, params, obj, error = __preprocess_get_request(request, price_id, PriceLevel)
+
+    if int(prod_id) not in obj.products.values_list('pk', flat=True):
+        obj = None
+        error = 'Wrong PK'
+
+    fields = formfields.PriceLevelForm(obj)
+    return __taco_render(request, 'taconite/product/price_level.xml', {
+        'error': error,
+        'fields': fields,
+        'obj': obj,
+        'prod_id': prod_id,
+    })
+
+
+def product_price_save(request):
+    msg = ''
+    new_obj = False
+    obj_id = None
+    saved = False
+    try:
+        for obj in serializers.deserialize('json', request.body):
+            if obj.object.__class__ == PriceLevel:
+                print 'update pricelevel'
+                if not obj.object.id:
+                    print 'new obj'
+                    new_obj = True
+
+                if obj.object.max_amount:
+                    if obj.object.min_amount >= obj.object.max_amount:
+                        msg = 'Max Qty should be bigger'
+                        break
+                else:
+                    obj.object.max_amount = None
+
+                obj.save()
+                obj_id = obj.object.id
+                saved = True
+
+                if new_obj:
+                    msg = 'Product price level created (ID:%d)' % obj.object.id
+                else:
+                    msg = 'Product price level saved'
+            else:
+                msg = 'Did not receive expected object PriceLevel. You sent me a %s' % obj.object.__class__.__name__
+
+    except Exception, e:
+        msg = 'Wrong values'
+        print e
+
+    return json_response({
+        'msg': msg,
+        'obj_id': obj_id,
+        'created': True if new_obj else False,
+        'saved': saved
     })

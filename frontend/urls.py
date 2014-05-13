@@ -21,6 +21,9 @@ urlpatterns += patterns('frontend.views.product',
     url(ur'^product/save/', 'product_save'),
     url(ur'^product/list/', 'product_list', name='product_list'),
     url(ur'^product/(?P<pk>\d*)/', 'product_get', name='product_get'),
+
+    url(ur'^product/pricelevel/save/', 'product_price_save'),
+    url(ur'^product/pricelevel/(?P<prod_id>\d*)/?(?P<price_id>\d*)/', 'product_price_get'),
 )
 
 # Customer
