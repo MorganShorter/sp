@@ -219,6 +219,10 @@ $(function () {
         var product_id = $.trim($('.price_products_id', c_form).val());
         var model_fields = c_form.getDataFields();
 
+        if (!obj_id){
+            delete model_fields.pricelevel.id;
+        }
+
         if (!$('.pricelevel_block_only', c_form).prop('checked')){
             model_fields.pricelevel.block_only = 0;
         } else {
@@ -264,6 +268,11 @@ $(function () {
             }
         });
         return false;
+    });
+
+    $('.price_level_add_btn').live('click', function(){
+        $("#product_pricelevel").dialog("open");
+        $('#frm_add_pricelevel .price_products_id').val($("#frm_product .product_id").val());
     });
 
 

@@ -67,7 +67,7 @@ def PriceLevelForm(obj):
     return {
         '#frm_add_pricelevel .price_id': (obj.pk, None),
         '#frm_add_pricelevel .pricelevel_min_amount': (obj.min_amount, None),
-        '#frm_add_pricelevel .pricelevel_max_amount': (obj.max_amount, None),
+        '#frm_add_pricelevel .pricelevel_max_amount': (obj.max_amount, 'default_if_none:""'),
         '#frm_add_pricelevel .pricelevel_cost_per_item': (obj.cost_per_item, None),
         '#frm_add_pricelevel .pricelevel_block_only': (obj.block_only, None),
     }
