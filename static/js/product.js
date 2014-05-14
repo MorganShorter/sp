@@ -201,11 +201,21 @@ $(function () {
         return false;
     });
     $('.price_table tbody tr .delete_item').live("click", function(){
-        var cid = $(this).parent('tr').attr('pr_level_id');
-        alert('delete ' + cid);
-        //$("#product_pricelevel").dialog("open");
-        //$.get('/customer/note/' + cid + '/' + nid + '/');
+        var price_id = $(this).parent('tr').attr('pr_level_id');
+        var prod_id = $('#product_content .product_id').val();
 
+        var cnf = confirm('Sure you want to delete this price level?');
+        if (cnf != true){
+            return false;
+        }
+        $.get('/product/pricelevel/' + prod_id + '/' + price_id + '/delete/', function(data){
+            if (data['status'] == 'error'){
+                alert('Error! ' + data['msg']);
+            } else {
+                $.get('/product/' + prod_id + '/?only_price_levels=1');
+                alert(data['msg']);
+            }
+        });
         return false;
     });
 

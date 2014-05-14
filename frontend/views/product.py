@@ -69,7 +69,7 @@ def product_save(request):
     })
 
 
-def product_price_get(request, prod_id, price_id=None):
+def product_price_get(request, prod_id, price_id):
     pk, params, obj, error = __preprocess_get_request(request, price_id, PriceLevel)
 
     if int(prod_id) not in obj.products.values_list('pk', flat=True):
@@ -93,9 +93,7 @@ def product_price_save(request):
     try:
         for obj in serializers.deserialize('json', request.body):
             if obj.object.__class__ == PriceLevel:
-                print 'update pricelevel'
                 if not obj.object.id:
-                    print 'new obj'
                     new_obj = True
 
                 if obj.object.max_amount:
@@ -125,4 +123,31 @@ def product_price_save(request):
         'obj_id': obj_id,
         'created': True if new_obj else False,
         'saved': saved
+    })
+
+
+def product_price_delete(request, prod_id, price_id):
+    try:
+        pl = PriceLevel.objects.get(pk=price_id)
+    except PriceLevel.DoesNotExist:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong ID'
+        })
+
+    products = pl.products.values_list('pk', flat=True)
+    if int(prod_id) not in products:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong product ID'
+        })
+
+    if len(products) > 1:
+        pl.products.remove(int(prod_id))
+    else:
+        pl.delete()
+
+    return json_response({
+        'status': 'ok',
+        'msg': 'PriceLevel has deleted!'
     })
