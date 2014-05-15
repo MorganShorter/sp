@@ -445,16 +445,9 @@ class Invoice(models.Model):
     company = models.ForeignKey(Company, related_name='+')
     number = models.PositiveIntegerField()
     timestamp = models.DateTimeField(default=datetime.now)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(Invoice, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify("%s-%s" % (self.__class__.__name__, self.company.name)))
-            super(Invoice, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.slug
+        return 'Order %s; Number: %s' % (self.order, self.number)
 
 
 class Note(models.Model):

@@ -56,6 +56,8 @@ admin.site.register(Company)
 
 class InvoiceAdmin(admin.ModelAdmin):
     raw_id_fields = ('order',)
+    list_display = ('order', 'company', 'number', 'timestamp')
+    list_filter = ('company', 'timestamp')
 
 admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Note)
