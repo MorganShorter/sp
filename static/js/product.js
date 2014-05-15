@@ -200,6 +200,14 @@ $(function () {
         start: 1000,
         culture: "en-AU"
     });
+    $(".product_royalty").spinner({
+        min: 0,
+        max: 100,
+        step: 5,
+        start: 0,
+        culture: "en-AU"
+    });
+
 
 
     // Price Levels

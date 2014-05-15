@@ -206,6 +206,7 @@ class Product(models.Model):
     medium = models.ForeignKey(Medium, related_name='+', null=True)
     royalty_img = models.ForeignKey(RoyaltyImg, related_name='+', null=True)
     supplier = models.ForeignKey(Supplier, related_name='products')
+    royalty = models.PositiveSmallIntegerField(help_text='[0..100]%', default=0)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.code)

@@ -58,7 +58,7 @@ def ProductForm(obj):
         '#frm_product .product_current_stock': (obj.current_stock, None),
         '#frm_product .product_minimum_stock': (obj.minimum_stock, None),
         '#frm_product .product_supplier': (obj.supplier_id, None),
-        '#frm_product .product_royalty_img': (obj.royalty_img_id, None),
+        '#frm_product .product_royalty': (obj.royalty, None),
         '#frm_product .product_medium': (obj.medium_id, None),
     }
 
