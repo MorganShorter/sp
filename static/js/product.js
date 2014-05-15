@@ -62,6 +62,7 @@ $(function () {
         autoOpen: false,
         width: 414,
         close: function(event, ui){
+            $('#frm_product').resetForm();
             $("#product_pricelevel").dialog("close");
         }
     });
@@ -83,7 +84,10 @@ $(function () {
     $("#product_pricelevel").dialog({
         title: "Product level template",
         autoOpen: false,
-        width: 274
+        width: 274,
+        close: function(event, ui) {
+            $('.frm_add_pricelevel').resetForm()
+        }
     });
 
     $(".button_products_open_dialog").click(function () {
@@ -136,7 +140,8 @@ $(function () {
         var obj_json = [{
             'pk': obj_id,
             'model': 'frontend.product',
-            'fields': model_fields['product']
+            'fields': model_fields['product'],
+            'price_template': $('.product_price_level_template', c_form).val()
         }];
         $.ajax({
             url: '/product/save/',
@@ -149,12 +154,17 @@ $(function () {
             success: function (json) {
                 console.log('prod save success!');
                 console.debug(json);
-                if (!obj_id){
-                    c_form.resetForm();
-                    $("#product_create").dialog("close");
-                    $("#product_content").dialog("open");
-                    $.get('/product/' + json['obj_id'] + '/');
+                if (json['saved']){
+                    if (!obj_id){ // Created
+                        c_form.resetForm();
+                        $("#product_create").dialog("close");
+                        $("#product_content").dialog("open");
+                        $.get('/product/' + json['obj_id'] + '/');
+                    } else { // Updated
+                        $("#product_content").dialog("close");
+                    }
                 }
+
                 alert(json['msg']);
             },
             error: function (xhr, status) {
@@ -242,6 +252,8 @@ $(function () {
         if (model_fields.pricelevel.max_amount == ''){
             model_fields.pricelevel.max_amount = NaN;
         }
+
+        model_fields.pricelevel.products = [parseInt(model_fields.pricelevel.products)]
 
         var obj_json = [{
             'pk': obj_id,

@@ -288,7 +288,7 @@ class PriceLevel(models.Model):
     notes = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return 'Level #%s (Group: %s)' % (self.pk, self.price_level_group or '')
+        return 'Level #%s' % self.pk
 
     class Meta:
         ordering = ('-min_amount',)

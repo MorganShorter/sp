@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+import json
 from django.views.generic import ListView
 from django.core import serializers
 
@@ -44,18 +44,36 @@ def product_get(request, pk):
 def product_save(request):
     msg = ''
     new_obj = False
+    obj_id = None
+    saved = False
     try:
         for obj in serializers.deserialize('json', request.body):
             if obj.object.__class__ == Product:
                 if not obj.object.id:
-                    print 'new obj'
                     new_obj = True
                     obj.save()
+                    saved = True
+
+                    price_template = json.loads(request.body)[0].get('price_template', None)
+                    if price_template:
+                        try:
+                            price_group = PriceLevelGroup.objects.get(pk=int(price_template))
+                            for price_item in price_group.price_levels.all():
+                                price_item.pk = None
+                                price_item.price_level_group = None
+                                price_item.save()
+                                price_item.products.add(obj.object)
+                        except Exception, e:
+                            print 'Error product_save [103]'
+                            pass
+                    msg = 'Product created (ID:%d)' % obj.object.id
+
                 else:
-                    if new_obj:
-                        msg = 'Product created (ID:%d)' % obj.object.id
-                    else:
-                        msg = 'Product saved'
+                    obj.save()
+                    saved = True
+                    msg = 'Product saved'
+
+                obj_id = obj.object.id
             else:
                 msg = 'Did not receive expected object Product. You sent me a %s' % obj.object.__class__.__name__
 
@@ -63,8 +81,9 @@ def product_save(request):
         msg = 'Wrong values'
 
     return json_response({
+        'saved': saved,
         'msg': msg,
-        'obj_id': obj.object.id,
+        'obj_id': obj_id,
         'created': True if new_obj else False
     })
 

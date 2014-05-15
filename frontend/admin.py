@@ -24,7 +24,13 @@ admin.site.register(Catalog)
 admin.site.register(CatalogIssue)
 admin.site.register(CatalogIssueProduct)
 admin.site.register(PriceLevelGroup)
-admin.site.register(PriceLevel)
+
+
+class PriceLevelAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'id', 'min_amount', 'max_amount', 'cost_per_item', 'block_only', 'price_level_group')
+    list_filter = ('price_level_group', )
+
+admin.site.register(PriceLevel, PriceLevelAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):

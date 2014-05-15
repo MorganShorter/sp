@@ -8,17 +8,10 @@
 			<td class="form_cell"><label for="product_id" class="form_label">product code:</label></td>
 			<td class="form_cell"><input type="text" name="product_code" id="product_code" class="text ui-widget-content ui-corner-all form_input product_code" readonly data-field="code" /></td>
         </tr>
-        {% if new_product %}
-		<tr>
-			<td class="form_cell"><input type="checkbox" class="product_auto_name" name="product_auto_name" value="true" checked /></td>
-			<td class="form_cell">auto-generate product name</td>
-		</tr>
-        {% else %}
 		<tr>
 			<td class="form_cell"><label for="product_name" class="form_label">product name:</label></td>
 			<td class="form_cell"><input type="text" name="product_name" class="product_name text ui-widget-content ui-corner-all form_input" data-field="name" /></td>
         </tr>
-        {% endif %}
 		<tr>
 			<td class="form_cell"><label for="product_size" class="form_label">size:</label></td>
 			<td class="form_cell">
@@ -69,19 +62,7 @@
                 <input type="checkbox" class="product_auto_royalty_amount" name="product_auto_royalty_amount" value="true" />
                 auto-select royalty using royalty image</td>
 		</tr>
-		<tr>
-			<td class="form_cell" colspan="5">
-                <input type="checkbox" class="product_use_price_template" name="product_use_price_template" value="true" />
-                use pricing template</td>
-		</tr>
-		<tr>
-			<td class="form_cell"><label for="product_price_level_template" class="form_label">price template:</label></td>
-			<td class="form_cell">
-				<select name="product_price_level_template" class="product_price_level_template text ui-widget-content ui-corner-all form_input">
-				  <option value="">--- none ---</option>
-				</select>
-            </td>
-		</tr>
+
 		</table>
 
         <table class="form_list price_table">
