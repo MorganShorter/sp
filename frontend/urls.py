@@ -12,6 +12,13 @@ urlpatterns = patterns('frontend.views',
     url(ur'^lookup/price_level_group/?', 'ajax_lookup_price_level_group'),
 
     # Order
+
+
+)
+
+# Order
+urlpatterns += patterns('frontend.views.order',
+    url(ur'^order/list/', 'order_list', name='order_list'),
     url(ur'^order/?(?P<pk>\d*)', 'order_get'),
 
 )

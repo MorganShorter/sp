@@ -32,6 +32,7 @@
         <script type="text/javascript">
             __url_customer_list = "{% url 'customer_list' %}";
             __url_product_list = "{% url 'product_list' %}";
+            __url_order_list = "{% url 'order_list' %}";
         </script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/init.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
@@ -74,7 +75,7 @@
                         <ul class="sub_menu">
                             <li><a href="#" class="nounderline"><img src="{{ STATIC_URL }}img/icons/16_new_order.png"/>&nbsp;New</a></li>
                             <li><a href="#" class="nounderline"><img src="{{ STATIC_URL }}img/icons/16_edit_order.png"/>&nbsp;Edit</a></li>
-                            <li><a href="#" class="nounderline"><img src="{{ STATIC_URL }}img/icons/16_find_order.png"/>&nbsp;Find</a></li>
+                            <li><a href="#" class="nounderline button_order_show_dialog"><img src="{{ STATIC_URL }}img/icons/16_find_order.png"/>&nbsp;Find</a></li>
                         </ul>
                     </li>
                     <li>
@@ -118,13 +119,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <a title="click for orders section" href="#" class="button button_order_add_dialog">
+                            <a title="click for orders section" href="#" class="button button_order_show_dialog">
                                 <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>add order
                             </a>
 
                         </td>
                         <td>
-                            <a title="click for orders section" href="#" class="button">
+                            <a title="click for orders section" href="#" class="button button_order_find_dialog">
                                 <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>find order
                             </a>
 

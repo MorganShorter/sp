@@ -1,0 +1,37 @@
+<div id="order_find">
+	<form id="frm_find_order" action="" method="get">
+        <a id="find_order_search" title="find order" href="#" class="button form_button pull-right">
+            <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
+        </a>
+		<table>
+            <tr>
+                <td class="form_cell"><label for="find_order_customer" class="form_label">customer ID:</label></td>
+                <td class="form_cell"><input type="text" name="order_customer" id="find_order_customer" title="search order by customer ID" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="find_order_id" class="form_label">order ID:</label></td>
+                <td class="form_cell"><input type="text" name="find_order_id" id="find_order_id" title="search order by order id" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="find_order_inv_num" class="form_label">invoice Number:</label></td>
+                <td class="form_cell"><input type="text" name="find_order_inv_num" id="find_order_inv_num" title="search order by invoice number" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+            </tr>
+		</table>
+	</form>
+    <div id="order_search_result" class="search_result">
+        <table id="" class="form_list">
+            <thead>
+                <tr class="form_list_row">
+                    <th class="form_list_header">ID</th>
+                    <th class="form_list_header">Customer Name</th>
+                    <th class="form_list_header">Order Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="form_list_row">
+                    <td colspan="3">empty</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

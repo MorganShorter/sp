@@ -52,5 +52,10 @@ admin.site.register(OrderStatus, OrderStatusAdmin)
 
 admin.site.register(OrderProduct)
 admin.site.register(Company)
-admin.site.register(Invoice)
+
+
+class InvoiceAdmin(admin.ModelAdmin):
+    raw_id_fields = ('order',)
+
+admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Note)

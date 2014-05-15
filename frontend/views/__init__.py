@@ -1,20 +1,5 @@
-from ..utils import __preprocess_get_request, __taco_render, json_response
-from .. import formfields
-from ..models import Order, Invoice, Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup
-
-
-def order_get(request, pk):
-    pk, params, order, error = __preprocess_get_request(request, pk, Order)
-    invoice = Invoice()
-
-    if not error:
-        try:
-            invoice = Invoice.objects.filter(order_id=order.id).first()
-        except Invoice.DoesNotExist:
-            pass
-
-    fields = formfields.OrderForm(order, invoice)
-    return __taco_render(request, 'taconite/order.xml', {'error': error, 'fields': fields, 'order': order})
+from ..utils import json_response
+from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup
 
 
 def ajax_lookup_states(request):
