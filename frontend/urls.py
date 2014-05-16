@@ -19,7 +19,7 @@ urlpatterns = patterns('frontend.views',
 # Order
 urlpatterns += patterns('frontend.views.order',
     url(ur'^order/list/', 'order_list', name='order_list'),
-    url(ur'^order/?(?P<pk>\d*)', 'order_get'),
+    url(ur'^order/get/(?P<pk>\d*)/', 'order_get'),
 
 )
 

@@ -11,6 +11,7 @@
 		<html select="div#order_main_options_customer_details_content">
 			Customer Details
 			<div id="order_main_options_customer_details_content_addressblock">
+                Shipping info:<br/>
 				{{ order.shipping_attn }}<br />
 				{{ order.shipping_address_line_1 }}<br />
 				{{ order.shipping_address_line_2 }}<br />
@@ -27,7 +28,7 @@
 		{% for order_product in order.orderproduct_set.all %}
 			{% with product=order_product.product %}
 			<before select="table#order_product_items tr:last">
-				<tr class="form_list_row">
+				<tr class="form_list_row" cid="{{ order_product.id }}">
 					<td class="form_list_item">{{ product.code }}</td>
 					<td class="form_list_item">{{ product.current_stock }}</td>
 					<td class="form_list_item">{{ order_product.quantity }}</td>
@@ -43,8 +44,16 @@
 					</td>
 					<td class="form_list_item">${{ order_product.quantity|mul:order_product.unit_price|sub:order_product.discount_price }}</td>
 					<td class="form_list_item">
-						<a id="order_product_item_delete_{{ order_product.id }}" title="delete this product item from order" href="#">
-							<img id="icon_order_product_item_delete_{{ order_product.id }}" src="{{ STATIC_URL }}img/icons/16_delete.png" />
+                        <a class="order_product_item_show" title="show product info" href="#">
+							<img src="{{ STATIC_URL }}img/icons/16_products.png" />
+						</a>
+
+                        <a class="order_product_item_edit" title="edit product from order" href="#">
+							<img src="{{ STATIC_URL }}img/icons/16_edit_order.png" />
+						</a>
+
+						<a class="order_product_item_delete" title="delete this product item from order" href="#">
+							<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
 						</a>
 					</td>
 				</tr>
@@ -52,23 +61,19 @@
 			{% endwith %}
 		{% endfor %}
 
-		<after select="table#order_product_summary tr:last">
-			<tr class="form_list_row">
-				<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost }}</td>
-				<td id="order_product_summary_">${{ order.sp_cost }}</td>
-				<td id="order_product_summary_">${{ order.sub_total }}</td>
-				<td id="order_product_summary_">${{ order.discount }}</td>
-				<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</td>
-				<td id="order_product_summary_">${{ order.sp_cost|add:order.discount }}</td>
-				<td id="order_product_summary_">${{ order.sub_total|sub:order.discount }}</td>
-				<td id="order_product_summary_">${{ order.tax }}</td>
-				<td id="order_product_summary_">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</td>
-				<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax }}</td>
-				<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax }}</td>
-				<td id="order_product_summary_">${{ order.shipping_cost }}</td>
-				<td id="order_product_summary_">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</td>
-				<td id="order_product_summary_">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</td>
-			</tr>
-		</after>
+        <replaceContent select=".order_product_summary li:eq(0) span">${{ order.sub_total|sub:order.sp_cost }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(1) span">${{ order.sp_cost }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(2) span">${{ order.sub_total }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(3) span">${{ order.discount }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(4) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(5) span">${{ order.sp_cost|add:order.discount }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(6) span">${{ order.sub_total|sub:order.discount }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(7) span">${{ order.tax }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(8) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(9) span">${{ order.sp_cost|add:order.discount|add:order.tax }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(10) span">${{ order.sub_total|sub:order.discount|add:order.tax }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(11) span">${{ order.shipping_cost }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(12) span">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
+        <replaceContent select=".order_product_summary li:eq(13) span">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
 	{% endif %}
 </taconite>

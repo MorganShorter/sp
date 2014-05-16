@@ -32,13 +32,16 @@ def CustomerForm(obj):
 
 def OrderForm(order, invoice):
     return {
-        'input#order_order_id': (order.id, None),
-        'input#order_customer_id': (order.customer.id, None),
-        'input#order_invoice_number': (invoice.number, 'date:d/m/Y'),
-        'input#order_order_date': (order.order_date, 'date:d/m/Y'),
-        'input#order_order_company': (invoice.company.name, None),
-        'input#order_wanted_by': (order.wanted_by, 'date:d/m/Y'),
-        'input#order_shipping_cost': (order.shipping_cost, None)
+        '#frm_order .order_id': (order.id, None),
+        '#frm_order .customer_id': (order.customer.id, None),
+        '#frm_order .order_customer': (order.customer.name, None),
+        '#frm_order .order_order_id': (order.id, None),
+
+        '#frm_order .order_order_date': (order.order_date, 'date:d/m/Y'),
+        '#frm_order .order_wanted_by': (order.wanted_by, 'date:d/m/Y'),
+        '#frm_order .order_shipping_cost': (order.shipping_cost, None),
+
+        '#frm_order .order_invoice_number': (invoice.number, None) if invoice else ('-', None)
     }
 
 

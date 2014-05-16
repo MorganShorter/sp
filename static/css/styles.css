@@ -529,7 +529,7 @@ ul.dropdown li:hover > ul {
 	/* margin-top: -10px; */
 }
 /* Orders Form Styling */
-#order_main_options, #order_detail_options, #order_product_items, #order_product_summary, #customer_contact_items {
+#order_main_options, #order_detail_options, #order_product_items, #customer_contact_items {
 	width: 100%;
 	font-size: 14px;
 }
@@ -661,4 +661,16 @@ ul.dropdown ul.sub_menu_reports {
 
 #report1_accordion h1 span:last-child {
     right: 200px;
+}
+
+.order_product_summary {
+    padding: 5px 15px;
+}
+.order_product_summary li {
+    float: none;
+}
+
+.order_product_summary li strong {
+    display: inline-block;
+    width: 100px;
 }

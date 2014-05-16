@@ -25,6 +25,13 @@ $(function () {
         $.get(__url_order_list + '?' + queryString);
     });
 
+    // Open product detail
+    $('#order_search_result tbody tr').live('click', function(){
+        var cid = $(this).attr('cid');
+        $("#order_content").dialog("open");
+        $.get('/order/get/' + cid + '/');
+    });
+
 
     $("#order_order_date").datepicker({ dateFormat: 'dd/mm/yy' });
     $("#order_wanted_by").datepicker({ dateFormat: 'dd/mm/yy' });

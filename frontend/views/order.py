@@ -33,7 +33,7 @@ order_list = OrderList.as_view()
 
 def order_get(request, pk):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
-    invoice = Invoice()
+    invoice = None
 
     if not error:
         try:
@@ -45,5 +45,5 @@ def order_get(request, pk):
     return __taco_render(request, 'taconite/order/item.xml', {
         'error': error,
         'fields': fields,
-        'order': order}
-    )
+        'order': order
+    })

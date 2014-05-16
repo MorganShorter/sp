@@ -283,9 +283,12 @@ class Order(models.Model):
     tax = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     discount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     total_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+
     sp_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+
     order_date = models.DateTimeField(default=datetime.now)
     wanted_by = models.DateTimeField(default=datetime.now)
+
     invoice_company_name = models.CharField(max_length=255)
     invoice_company_reg = models.CharField(max_length=120)
     invoice_address_line_1 = models.CharField(max_length=255)
@@ -294,6 +297,7 @@ class Order(models.Model):
     invoice_state = models.CharField(max_length=100)
     invoice_postcode = models.CharField(max_length=10)
     invoice_country = models.CharField(max_length=100)
+
     shipping_attn = models.CharField(max_length=255)
     shipping_address_line_1 = models.CharField(max_length=255)
     shipping_address_line_2 = models.CharField(max_length=255)
@@ -301,8 +305,10 @@ class Order(models.Model):
     shipping_state = models.CharField(max_length=100)
     shipping_postcode = models.CharField(max_length=10)
     shipping_country = models.CharField(max_length=100)
+
     from_src_order_id = models.IntegerField(null=True, blank=True)
     from_borders_fakeid = models.IntegerField(null=True, blank=True)
+
     order_notes = models.CharField(max_length=510, null=True, blank=True)
     notes = models.ManyToManyField('Note', related_name='o_notes')
 
