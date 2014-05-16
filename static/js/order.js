@@ -39,4 +39,15 @@ $(function () {
     $('#frm_find_order .form_input').on('input', function(){
         $('#frm_find_order .form_input').not(this).val('');
     });
+
+    $.ajax({url: '/lookup/company',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $.each(json, function (k, v) {
+                $('.invoice_company').append(new Option(v, k));
+            });
+        }
+    });
 });

@@ -1,5 +1,5 @@
 from ..utils import json_response
-from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup
+from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup, Company
 
 
 def ajax_lookup_states(request):
@@ -54,3 +54,7 @@ def ajax_lookup_medium(request):
 
 def ajax_lookup_price_level_group(request):
     return ajax_lookup(request, PriceLevelGroup)
+
+
+def ajax_lookup_company(request):
+    return ajax_lookup(request, Company)

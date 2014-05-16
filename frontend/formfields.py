@@ -41,7 +41,8 @@ def OrderForm(order, invoice):
         '#frm_order .order_wanted_by': (order.wanted_by, 'date:d/m/Y'),
         '#frm_order .order_shipping_cost': (order.shipping_cost, None),
 
-        '#frm_order .order_invoice_number': (invoice.number, None) if invoice else ('-', None)
+        '#frm_order .order_invoice_number': (invoice.number, None) if invoice else ('-', None),
+        '#frm_order .invoice_company': (invoice.company.id, None) if invoice else ('', None),
     }
 
 

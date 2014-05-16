@@ -36,14 +36,10 @@
                     <td class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
                     <td class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value="" data-field="order_date" /></td>
                     <td>&nbsp;</td>
-                    <td class="form_cell"><label for="order_order_company" class="form_label">invoicing company</label></td>
+                    <td class="form_cell"><label for="invoice_company" class="form_label">invoicing company</label></td>
                     <td class="form_cell">
-                        <div class="ui-widget">
-                            <select id="order_order_company" name="order_order_company" title="which company is responsible for this order?" class="text ui-widget-content ui-corner-all form_input" data-model="company" data-field="name">
-                                <option value="1">SmartPractice</option>
-                                <option value="2">SmartMethods</option>
-                            </select>
-                        </div>
+                        <select name="invoice_company" class="invoice_company text ui-widget-content ui-corner-all form_input" title="which company is responsible for this order?" data-model="company" data-field="name">
+				        </select>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
