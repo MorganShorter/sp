@@ -28,7 +28,7 @@
 		{% for order_product in order.orderproduct_set.all %}
 			{% with product=order_product.product %}
 			<before select="table#order_product_items tr:last">
-				<tr class="form_list_row" cid="{{ order_product.id }}">
+				<tr class="form_list_row" cid="{{ product.id }}">
 					<td class="form_list_item">{{ product.code }}</td>
 					<td class="form_list_item">{{ product.current_stock }}</td>
 					<td class="form_list_item">{{ order_product.quantity }}</td>
@@ -48,7 +48,7 @@
 							<img src="{{ STATIC_URL }}img/icons/16_products.png" />
 						</a>
 
-                        <a class="order_product_item_edit" title="edit product from order" href="#">
+                        <a class="order_product_item_edit" title="edit product" href="#">
 							<img src="{{ STATIC_URL }}img/icons/16_edit_order.png" />
 						</a>
 

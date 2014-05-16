@@ -18,6 +18,16 @@ $(function () {
     $(".button_order_find_dialog").click(function () {
         $("#order_find").dialog("open");
     });
+    $(".order_customer_id_search").click(function(){
+        var cid = $("#frm_order .customer_id").val();
+        $("#customer_content").dialog("open");
+        $.get('/customer/' + cid + '/');
+    });
+    $(".order_product_item_show").live('click', function(){
+        var cid = $(this).parents('tr').attr('cid');
+        $("#product_content").dialog("open");
+        $.get('/product/' + cid + '/');
+    });
 
     // Search/Find Order
     $("#find_order_search").live('click', function(){
