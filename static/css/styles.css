@@ -674,3 +674,7 @@ ul.dropdown ul.sub_menu_reports {
     display: inline-block;
     width: 100px;
 }
+
+#customer_order_items td {
+    cursor: pointer;
+}

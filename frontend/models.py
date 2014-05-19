@@ -331,6 +331,9 @@ class Order(models.Model):
     def __unicode__(self):
         return 'Order %s' % self.pk
 
+    class Meta:
+        ordering = ('-order_date',)
+
 
 class OrderStatus(models.Model):
     """ Status for an Order; an Order can have multiple OrderStatus's as it progresses from Processing -> Shipped etc

@@ -282,4 +282,16 @@ $(function () {
         }
     });
 
+    /*
+
+    ORDER
+
+     */
+
+    $('#customer_order_items tr:gt(0)').live('click', function(){
+        var cid = $(this).attr('cid');
+        $("#order_content").dialog("open");
+        $.get('/order/get/' + cid + '/');
+    });
+
 });
