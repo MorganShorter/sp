@@ -61,6 +61,7 @@ $(function () {
             } else {
                 $("#order_content").dialog("close");
                 $("#order_search_result tr[cid=" + cid + "]").remove();
+                $("#customer_order_items tr[cid=" + cid + "]").remove();
                 alert(data['msg']);
             }
         });

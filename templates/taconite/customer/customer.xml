@@ -46,7 +46,7 @@
 		{% for obj in customer.orders.all %}
 			<tr class="form_list_row" cid="{{ obj.pk }}">
 				<td>{{ obj.pk }}</td>
-                <td>{{ obj.order_date }}</td>
+                <td>{{ obj.order_date|date:"Y-m-d" }}</td>
                 <td>${{ obj.total_cost }}</td>
 			</tr>
 		{% endfor %}

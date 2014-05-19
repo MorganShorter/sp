@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core import serializers
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
-from ..models import Order, Invoice
+from ..models import Order, Invoice, Company
 from ..mixins import TacoMixin
 
 
@@ -41,7 +41,17 @@ def order_get(request, pk):
         try:
             invoice = Invoice.objects.filter(order_id=order.id).first()
         except Invoice.DoesNotExist:
-            pass
+            invoice = None
+
+        if not invoice:
+            invoice = Invoice(
+                order=order,
+                number=0,
+                company=Company.objects.first()
+            )
+            invoice.save()
+            invoice.number = invoice.pk
+            invoice.save()
 
     fields = formfields.OrderForm(order, invoice)
     return __taco_render(request, 'taconite/order/item.xml', {

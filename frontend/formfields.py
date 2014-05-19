@@ -70,8 +70,8 @@ def OrderForm(order, invoice):
         '#frm_order .order_shipping_postcode': (order.shipping_postcode, None),
         '#frm_order .order_shipping_country': (order.shipping_country, None),
 
-        '#frm_order .order_from_src_order_id': (order.from_src_order_id, None),
-        '#frm_order .order_from_borders_fakeid': (order.from_borders_fakeid, None),
+        '#frm_order .order_from_src_order_id': (order.from_src_order_id, "default_if_none:0"),
+        '#frm_order .order_from_borders_fakeid': (order.from_borders_fakeid, "default_if_none:0"),
         '#frm_order .order_order_notes': (order.order_notes, None),
 
 
