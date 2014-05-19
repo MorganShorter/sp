@@ -38,13 +38,34 @@ $(function () {
         $.get(__url_order_list + '?' + queryString);
     });
 
-    // Open product detail
+    // Open order detail
     $('#order_search_result tbody tr').live('click', function(){
         var cid = $(this).attr('cid');
         $("#order_content").dialog("open");
         $.get('/order/get/' + cid + '/');
     });
 
+    // Delete order
+    $('#order_control_action_delete').live('click', function(){
+        var c_form = $(this).parents('form').eq(0);
+        var cid = $.trim($('.order_id', c_form).val());
+
+        var cnf = confirm('Sure you want to delete this order?');
+        if (cnf != true){
+            return false;
+        }
+
+        $.get('/order/delete/' + cid + '/', function(data){
+            if (data['status'] == 'error'){
+                alert('Error! ' + data['msg']);
+            } else {
+                $("#order_content").dialog("close");
+                $("#order_search_result tr[cid=" + cid + "]").remove();
+                alert(data['msg']);
+            }
+        });
+        return false;
+    });
 
     $(".order_order_date").datepicker({
         dateFormat: 'dd/mm/yy',

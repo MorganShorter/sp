@@ -98,3 +98,19 @@ def order_save(request):
         'obj_id': obj_id,
         'created': True if new_obj else False
     })
+
+
+def order_delete(request, pk):
+    try:
+        obj = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong ID'
+        })
+    obj.delete()
+
+    return json_response({
+        'status': 'ok',
+        'msg': 'Order has deleted!'
+    })
