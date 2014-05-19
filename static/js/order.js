@@ -94,13 +94,11 @@ $(function () {
         if (model_fields['order'].shipping_cost && model_fields['order'].shipping_cost[0] == "$")
             model_fields['order'].shipping_cost = model_fields['order'].shipping_cost.slice(1);
 
-
-
-
         var obj_json = [{
             'pk': obj_id,
             'model': 'frontend.order',
-            'fields': model_fields['order']
+            'fields': model_fields['order'],
+            'invoice': model_fields['invoice']
         }];
 
         $.ajax({

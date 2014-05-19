@@ -36,7 +36,7 @@
 
         <table id="order_main_options">
 			<tr>
-				<td  class="form_cell" ><label for="order_customer_id" class="form_label">customer ID:</label></td>
+				<td  class="form_cell"><label for="order_customer_id" class="form_label">customer ID:</label></td>
 				<td  class="form_cell"><input type="text" name="order_customer_id" title="the customer or company id" class="customer_id text ui-widget-content ui-corner-all form_input" readonly value="" data-field="customer" data-type="integer" /></td>
 				<td  class="form_cell"><a title="show more info about customer" href="#" id="order_customer_id_search" class="order_customer_id_search button form_button">
                     <img id="icon_order_customer_id_search" src="{{ STATIC_URL }}img/icons/16_find_customer.png" /></a>
@@ -54,7 +54,7 @@
 			</tr>
 			<tr>
 				<td class="form_cell"><label for="search" class="form_label">invoice Number:</label></td>
-				<td class="form_cell"><input type="text" name="order_invoice_number" title="the invoice number" class="order_invoice_number text ui-widget-content ui-corner-all form_input" readonly value="" data-model="invoice" data-field="number" data-type="integer"/></td>
+				<td class="form_cell"><input type="text" name="order_invoice_number" title="the invoice number" class="order_invoice_number text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
 				<td class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/16_find_invoice.png" /></a></td>
 			</tr>
         </table>
@@ -66,13 +66,7 @@
                 <tr>
                     <td class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
                     <td class="form_cell"><input type="text" name="order_order_date" title="the date order was placed" class="order_order_date text ui-widget-content ui-corner-all form_input" value="" /></td>
-                    <td>&nbsp;</td>
-                    <td class="form_cell"><label for="invoice_company" class="form_label">invoicing company</label></td>
-                    <td class="form_cell">
-                        <select name="invoice_company" class="invoice_company text ui-widget-content ui-corner-all form_input" title="which company is responsible for this order?" data-model="company" data-field="name">
-				        </select>
-                    </td>
-                    <td>&nbsp;</td>
+                    <td rowspan="4">&nbsp;</td>
                 </tr>
 
                 <tr>
@@ -129,6 +123,24 @@
                     <li><strong>Total Price:</strong> <span></span></li>
                 </ul>
             </div>
+
+            <h3>Invoice</h3>
+            <div>
+                <table>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_company" class="form_label">invoicing company</label></td>
+                        <td class="form_cell">
+                            <select name="invoice_company" class="invoice_company text ui-widget-content ui-corner-all form_input" title="which company is responsible for this order?" data-model="invoice" data-field="company">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_num" class="form_label">invoice Number:</label></td>
+                        <td class="form_cell"><input type="text" name="order_invoice_num" title="the invoice number" class="order_invoice_number text ui-widget-content ui-corner-all form_input" value="" data-model="invoice" data-field="number" data-type="integer"/></td>
+                    </tr>
+                </table>
+            </div>
+
 
 			<!--- End order_accordion -->
         </div>

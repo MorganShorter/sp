@@ -1,3 +1,4 @@
+import json
 from django.views.generic import ListView
 from django.core import serializers
 from ..utils import __preprocess_get_request, __taco_render, json_response
@@ -58,19 +59,26 @@ def order_save(request):
     try:
         for obj in serializers.deserialize('json', request.body):
             if obj.object.__class__ == Order:
-                print 'object decoded'
-
                 if not obj.object.id:
                     new_obj = True
                     obj.save()
                     saved = True
-
                     msg = 'Order created (ID:%d)' % obj.object.id
-
                 else:
                     obj.save()
                     saved = True
                     msg = 'Order saved'
+
+                invoice = json.loads(request.body)[0].get('invoice', None)
+                if obj.object.last_invoice:
+                    inv = obj.object.last_invoice
+                    try:
+                        inv.company_id = invoice['company']
+                        inv.number = invoice['number']
+                        inv.save()
+                    except Exception, e:
+                        print 'Error! Invoice error'
+
 
                 obj_id = obj.object.id
             else:
