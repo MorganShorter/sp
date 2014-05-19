@@ -39,10 +39,42 @@ def OrderForm(order, invoice):
 
         '#frm_order .order_order_date': (order.order_date, 'date:d/m/Y'),
         '#frm_order .order_wanted_by': (order.wanted_by, 'date:d/m/Y'),
-        '#frm_order .order_shipping_cost': (order.shipping_cost, None),
+        '#frm_order .hidden_order_date': (order.order_date, 'date:Y-m-d'),
+        '#frm_order .hidden_wanted_by': (order.wanted_by, 'date:Y-m-d'),
 
+        '#frm_order .order_shipping_cost': ('$%s' % order.shipping_cost, None),
         '#frm_order .order_invoice_number': (invoice.number, None) if invoice else ('-', None),
         '#frm_order .invoice_company': (invoice.company.id, None) if invoice else ('', None),
+
+        # Additional
+        '#frm_order .order_sub_total': (order.sub_total, None),
+        '#frm_order .order_tax': (order.tax, None),
+        '#frm_order .order_discount': (order.discount, None),
+        '#frm_order .order_total_cost': (order.total_cost, None),
+        '#frm_order .order_sp_cost': (order.sp_cost, None),
+
+        '#frm_order .order_invoice_company_name': (order.invoice_company_name, None),
+        '#frm_order .order_invoice_company_reg': (order.invoice_company_reg, None),
+        '#frm_order .order_invoice_address_line_1': (order.invoice_address_line_1, None),
+        '#frm_order .order_invoice_address_line_2': (order.invoice_address_line_2, None),
+        '#frm_order .order_invoice_suburb': (order.invoice_suburb, None),
+        '#frm_order .order_invoice_state': (order.invoice_state, None),
+        '#frm_order .order_invoice_postcode': (order.invoice_postcode, None),
+        '#frm_order .order_invoice_country': (order.invoice_country, None),
+
+        '#frm_order .order_shipping_attn': (order.shipping_attn, None),
+        '#frm_order .order_shipping_address_line_1': (order.shipping_address_line_1, None),
+        '#frm_order .order_shipping_address_line_2': (order.shipping_address_line_2, None),
+        '#frm_order .order_shipping_suburb': (order.shipping_suburb, None),
+        '#frm_order .order_shipping_state': (order.shipping_state, None),
+        '#frm_order .order_shipping_postcode': (order.shipping_postcode, None),
+        '#frm_order .order_shipping_country': (order.shipping_country, None),
+
+        '#frm_order .order_from_src_order_id': (order.from_src_order_id, None),
+        '#frm_order .order_from_borders_fakeid': (order.from_borders_fakeid, None),
+        '#frm_order .order_order_notes': (order.order_notes, None),
+
+
     }
 
 

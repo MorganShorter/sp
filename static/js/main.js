@@ -74,14 +74,7 @@ $(function () {
     });
 
 
-    $("#order_shipping_cost").spinner({
-        min: 0,
-        max: 2500,
-        step: .15,
-        start: 1000,
-        numberFormat: "C",
-        culture: "en-AU"
-    });
+
 
     $("#order_product_item_percentage_ID").pcntspinner({
         min: 0,

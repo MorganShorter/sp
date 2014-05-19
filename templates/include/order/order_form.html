@@ -2,6 +2,37 @@
 	<form id="frm_order" data-model="order">
         <input type="hidden" name="order_id" class="order_id" data-field="id">
         <input type="hidden" name="customer_id" class="customer_id" data-field="customer">
+        <input type="hidden" name="customer_id" class="customer_id" data-field="customer">
+        <input type="hidden" name="order_date" class="hidden_order_date" data-field="order_date">
+        <input type="hidden" name="wanted_by" class="hidden_wanted_by" data-field="wanted_by">
+
+        <input type="hidden" name="sub_total" class="order_sub_total" data-field="sub_total">
+        <input type="hidden" name="tax" class="order_tax" data-field="tax">
+        <input type="hidden" name="discount" class="order_discount" data-field="discount">
+        <input type="hidden" name="total_cost" class="order_total_cost" data-field="total_cost">
+        <input type="hidden" name="sp_cost" class="order_sp_cost" data-field="sp_cost">
+
+        <input type="hidden" name="invoice_company_name" class="order_invoice_company_name" data-field="invoice_company_name">
+        <input type="hidden" name="invoice_company_reg" class="order_invoice_company_reg" data-field="invoice_company_reg">
+        <input type="hidden" name="invoice_address_line_1" class="order_invoice_address_line_1" data-field="invoice_address_line_1">
+        <input type="hidden" name="invoice_address_line_2" class="order_invoice_address_line_2" data-field="invoice_address_line_2">
+        <input type="hidden" name="invoice_suburb" class="order_invoice_suburb" data-field="invoice_suburb">
+        <input type="hidden" name="invoice_state" class="order_invoice_state" data-field="invoice_state">
+        <input type="hidden" name="invoice_postcode" class="order_invoice_postcode" data-field="invoice_postcode">
+        <input type="hidden" name="invoice_country" class="order_invoice_country" data-field="invoice_country">
+
+        <input type="hidden" name="shipping_attn" class="order_shipping_attn" data-field="shipping_attn">
+        <input type="hidden" name="shipping_address_line_1" class="order_shipping_address_line_1" data-field="shipping_address_line_1">
+        <input type="hidden" name="shipping_address_line_2" class="order_shipping_address_line_2" data-field="shipping_address_line_2">
+        <input type="hidden" name="shipping_suburb" class="order_shipping_suburb" data-field="shipping_suburb">
+        <input type="hidden" name="shipping_state" class="order_shipping_state" data-field="shipping_state">
+        <input type="hidden" name="shipping_postcode" class="order_shipping_postcode" data-field="shipping_postcode">
+        <input type="hidden" name="shipping_country" class="order_shipping_country" data-field="shipping_country">
+
+        <input type="hidden" name="from_src_order_id" class="order_from_src_order_id" data-field="from_src_order_id">
+        <input type="hidden" name="from_borders_fakeid" class="order_from_borders_fakeid" data-field="from_borders_fakeid">
+        <input type="hidden" name="order_notes" class="order_order_notes" data-field="order_notes">
+
 
         <table id="order_main_options">
 			<tr>
@@ -34,7 +65,7 @@
             <table id="order_detail_options">
                 <tr>
                     <td class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
-                    <td class="form_cell"><input type="text" name="order_order_date" id="order_order_date" title="the date order was placed" class="text ui-widget-content ui-corner-all form_input" value="" data-field="order_date" /></td>
+                    <td class="form_cell"><input type="text" name="order_order_date" title="the date order was placed" class="order_order_date text ui-widget-content ui-corner-all form_input" value="" /></td>
                     <td>&nbsp;</td>
                     <td class="form_cell"><label for="invoice_company" class="form_label">invoicing company</label></td>
                     <td class="form_cell">
@@ -46,10 +77,10 @@
 
                 <tr>
                     <td class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
-                    <td class="form_cell"><input type="text" name="order_wanted_by" id="order_wanted_by" title="the date client wants to have recieved order" class="text ui-widget-content ui-corner-all form_input" value="" data-field="wanted_by" /></td>
+                    <td class="form_cell"><input type="text" name="order_wanted_by" title="the date client wants to have recieved order" class="order_wanted_by text ui-widget-content ui-corner-all form_input" value=""/></td>
                     <td>&nbsp;</td>
                     <td class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
-                    <td class="form_cell"><input type="text" name="order_shipping_cost" id="order_shipping_cost" title="the cost to ship the order" class="text ui-widget-content ui-corner-all form_input" value="" data-field="shipping_cost" /> </td>
+                    <td class="form_cell"><input type="text" name="order_shipping_cost" title="the cost to ship the order" class="order_shipping_cost text ui-widget-content ui-corner-all form_input" value="" data-field="shipping_cost" /> </td>
                     <td>&nbsp;</td>
                 </tr>
 			</table>
@@ -105,11 +136,11 @@
         <table id="order_control_action">
             <tr>
                 <td id="order_control_action_save" class="form_cell">
-                    <a id="order_control_action_save" title="save order" href="#" class="button form_button">
+                    <a id="order_control_action_save" title="save order" href="#" class="save_order button form_button">
                         <img id="icon_order_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;
                 </td>
                 <td id="order_control_action_cancel" class="form_cell">
-                    <a id="order_control_action_cancel" title="save order" href="#" class="button form_button">
+                    <a id="order_control_action_cancel" title="save order" href="#" class="dialog_close_order button form_button">
                         <img id="icon_order_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;
                 </td>
             </tr>

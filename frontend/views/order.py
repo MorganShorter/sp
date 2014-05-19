@@ -1,5 +1,6 @@
 from django.views.generic import ListView
-from ..utils import __preprocess_get_request, __taco_render
+from django.core import serializers
+from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
 from ..models import Order, Invoice
 from ..mixins import TacoMixin
@@ -46,4 +47,42 @@ def order_get(request, pk):
         'error': error,
         'fields': fields,
         'order': order
+    })
+
+
+def order_save(request):
+    msg = ''
+    new_obj = False
+    obj_id = None
+    saved = False
+    try:
+        for obj in serializers.deserialize('json', request.body):
+            if obj.object.__class__ == Order:
+                print 'object decoded'
+
+                if not obj.object.id:
+                    new_obj = True
+                    obj.save()
+                    saved = True
+
+                    msg = 'Order created (ID:%d)' % obj.object.id
+
+                else:
+                    obj.save()
+                    saved = True
+                    msg = 'Order saved'
+
+                obj_id = obj.object.id
+            else:
+                msg = 'Did not receive expected object Order. You sent me a %s' % obj.object.__class__.__name__
+
+    except Exception, e:
+        msg = 'Wrong values'
+        print e
+
+    return json_response({
+        'saved': saved,
+        'msg': msg,
+        'obj_id': obj_id,
+        'created': True if new_obj else False
     })
