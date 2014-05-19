@@ -407,7 +407,7 @@ class Invoice(models.Model):
     order = models.ForeignKey(Order, related_name='invoices')
     company = models.ForeignKey(Company, related_name='+')
     number = models.PositiveIntegerField()
-    timestamp = models.DateTimeField(default=datetime.now)
+    timestamp = models.DateTimeField(default=datetime.now, auto_now_add=True)
 
     def __unicode__(self):
         return 'Order %s; Number: %s' % (self.order, self.number)

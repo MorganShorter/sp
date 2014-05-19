@@ -72,12 +72,16 @@ def order_save(request):
                 invoice = json.loads(request.body)[0].get('invoice', None)
                 if obj.object.last_invoice:
                     inv = obj.object.last_invoice
-                    try:
-                        inv.company_id = invoice['company']
-                        inv.number = invoice['number']
-                        inv.save()
-                    except Exception, e:
-                        print 'Error! Invoice error'
+                else:
+                    inv = Invoice()
+                    inv.order = obj.object
+
+                try:
+                    inv.company_id = invoice['company']
+                    inv.number = invoice['number']
+                    inv.save()
+                except Exception, e:
+                    print 'Error! Invoice error'
 
 
                 obj_id = obj.object.id
