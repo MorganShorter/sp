@@ -19,6 +19,7 @@ urlpatterns += patterns('frontend.views.order',
     url(ur'^order/save/', 'order_save'),
     url(ur'^order/list/', 'order_list', name='order_list'),
     url(ur'^order/get/(?P<pk>\d*)/', 'order_get'),
+    url(ur'^order/create/(?P<customer_pk>\d*)/', 'order_create'),
     url(ur'^order/delete/(?P<pk>\d*)/', 'order_delete'),
 
 )

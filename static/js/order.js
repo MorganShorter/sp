@@ -31,6 +31,10 @@ $(function () {
         $("#product_content").dialog("open");
         $.get('/product/' + cid + '/');
     });
+    $(".button_order_create_dialog").live('click', function(){
+        alert("You can add the order via the customer dialog.");
+        return false;
+    });
 
     // Search/Find Order
     $("#find_order_search").live('click', function(){

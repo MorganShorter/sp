@@ -93,7 +93,15 @@ def customer_note_delete(request, c_pk, n_pk):
 def customer_get(request, pk):
     pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
     fields = formfields.CustomerForm(customer)
-    return __taco_render(request, 'taconite/customer/customer.xml', {'error': error, 'fields': fields, 'customer': customer})
+
+    only_orders = request.GET.get('only_orders', None)
+
+    return __taco_render(request, 'taconite/customer/customer.xml', {
+        'error': error,
+        'fields': fields,
+        'customer': customer,
+        'only_orders': only_orders,
+    })
 
 
 def customer_save(request):

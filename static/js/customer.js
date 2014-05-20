@@ -8,7 +8,7 @@ $(function () {
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $.each(json, function (k, v) {
-                $('.customer_delivery_state').append(new Option(v, k));
+                $('.state_list').append(new Option(v, k));
             });
         }
     });
@@ -292,6 +292,15 @@ $(function () {
         var cid = $(this).attr('cid');
         $("#order_content").dialog("open");
         $.get('/order/get/' + cid + '/');
+    });
+
+    $('#customer_control_action_add_order').live('click', function(){
+        var c_form = $(this).parents('.frm_customer').eq(0);
+        var customer_id = $.trim($('.customer_id', c_form).val());
+        $("#order_content").dialog("open");
+        $.get('/order/create/' + customer_id + '/');
+        $.get('/customer/' + customer_id + '/?only_orders=1');
+
     });
 
 });

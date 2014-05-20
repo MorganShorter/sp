@@ -1,55 +1,58 @@
 <taconite>
-	<remove select="table#customer_contact_items tr:gt(0):not(:last)" />
-    <remove select="table#customer_note_items tr:gt(0):not(:last)" />
-    <remove select="table#customer_order_items tr:gt(0)" />
+    {% if not only_orders %}
+        <remove select="table#customer_contact_items tr:gt(0):not(:last)" />
+        <remove select="table#customer_note_items tr:gt(0):not(:last)" />
 
-{% if error %}
-	{% include "taconite/error.xml" with fields=fields error=error %}
-{% else %}
-	{% include "taconite/fields.xml" with fields=fields %}
+        {% if error %}
+            {% include "taconite/error.xml" with fields=fields error=error %}
+        {% else %}
+            {% include "taconite/fields.xml" with fields=fields %}
 
-    {% if not customer.same_delivery_address %}
-        <eval>$('#customer_delivery_address_same').trigger('click')</eval>
+            {% if not customer.same_delivery_address %}
+                <eval>$('#customer_delivery_address_same').trigger('click')</eval>
+            {% endif %}
+            <after select="table#customer_contact_items tr:first">
+                {% for contact in customer.contacts.all %}
+                    <tr class="form_list_row">
+                        <td class="form_list_item">{{ contact.first_name }}</td>
+                        <td class="form_list_item">{{ contact.surname }}</td>
+                        <td class="form_list_item">{{ contact.phone }}</td>
+                        <td class="form_list_item">{{ contact.email }}</td>
+                        <td class="form_list_item">
+                            <a class="contact_delete_btn" cid="{{ contact.pk }}" title="delete this contact item from customer" href="#">
+                                <img src="{{ STATIC_URL }}img/icons/16_delete.png" />
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </after>
+
+            <after select="table#customer_note_items tr:first">
+                {% for note in customer.notes.all %}
+                    <tr class="form_list_row">
+                        <td class="note_item">
+                            <a href="#" note_id="{{ note.pk }}" c_id="{{ customer.pk }}" id="note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</a>
+                        </td>
+                        <td class="form_list_item">
+                            <a class="note_delete_btn" cid="{{ customer.pk }}" nid="{{ note.pk }}" title="delete this note item from customer" href="#">
+                                <img src="{{ STATIC_URL }}img/icons/16_delete.png" />
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </after>
+
+        {% endif %}
+
+        <remove select="table#customer_order_items tr:gt(0)" />
+        <after select="table#customer_order_items tr:first">
+            {% for obj in customer.orders.all %}
+                <tr class="form_list_row" cid="{{ obj.pk }}">
+                    <td>{{ obj.pk }}</td>
+                    <td>{{ obj.order_date|date:"Y-m-d" }}</td>
+                    <td>${{ obj.total_cost }}</td>
+                </tr>
+            {% endfor %}
+        </after>
     {% endif %}
-	<after select="table#customer_contact_items tr:first">
-		{% for contact in customer.contacts.all %}
-			<tr class="form_list_row">
-				<td class="form_list_item">{{ contact.first_name }}</td>
-				<td class="form_list_item">{{ contact.surname }}</td>
-				<td class="form_list_item">{{ contact.phone }}</td>
-				<td class="form_list_item">{{ contact.email }}</td>
-				<td class="form_list_item">
-					<a class="contact_delete_btn" cid="{{ contact.pk }}" title="delete this contact item from customer" href="#">
-						<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
-					</a>
-				</td>
-			</tr>
-		{% endfor %}
-	</after>
-
-    <after select="table#customer_note_items tr:first">
-		{% for note in customer.notes.all %}
-			<tr class="form_list_row">
-				<td class="note_item">
-                    <a href="#" note_id="{{ note.pk }}" c_id="{{ customer.pk }}" id="note_customer_{{ note.pk }}">{{ note.text|truncatechars:50 }}</a>
-                </td>
-				<td class="form_list_item">
-					<a class="note_delete_btn" cid="{{ customer.pk }}" nid="{{ note.pk }}" title="delete this note item from customer" href="#">
-						<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
-					</a>
-				</td>
-			</tr>
-		{% endfor %}
-	</after>
-
-    <after select="table#customer_order_items tr:first">
-		{% for obj in customer.orders.all %}
-			<tr class="form_list_row" cid="{{ obj.pk }}">
-				<td>{{ obj.pk }}</td>
-                <td>{{ obj.order_date|date:"Y-m-d" }}</td>
-                <td>${{ obj.total_cost }}</td>
-			</tr>
-		{% endfor %}
-	</after>
-{% endif %}
 </taconite>

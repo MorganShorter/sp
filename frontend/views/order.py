@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core import serializers
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
-from ..models import Order, Invoice, Company
+from ..models import Order, Invoice, Company, Customer
 from ..mixins import TacoMixin
 
 
@@ -46,11 +46,9 @@ def order_get(request, pk):
         if not invoice:
             invoice = Invoice(
                 order=order,
-                number=0,
+                number=order.pk,
                 company=Company.objects.first()
             )
-            invoice.save()
-            invoice.number = invoice.pk
             invoice.save()
 
     fields = formfields.OrderForm(order, invoice)
@@ -59,6 +57,43 @@ def order_get(request, pk):
         'fields': fields,
         'order': order
     })
+
+
+def order_create(request, customer_pk):
+    order = Order()
+
+    try:
+        customer = Customer.objects.get(pk=customer_pk)
+
+        order.customer_id = customer.pk
+
+        order.invoice_company_name = customer.name
+        order.invoice_company_reg = customer.registration
+        order.invoice_address_line_1 = customer.address_line_1
+        order.invoice_address_line_2 = customer.address_line_2
+        order.invoice_suburb = customer.suburb
+        order.invoice_state = customer.state
+        order.invoice_postcode = customer.postcode
+        order.invoice_country = customer.country
+
+        order.shipping_attn = customer.delivery_attn
+        order.shipping_address_line_1 = customer.delivery_address_line_1
+        order.shipping_address_line_2 = customer.delivery_address_line_2
+        order.shipping_suburb = customer.delivery_suburb
+        order.shipping_state = customer.delivery_state
+        order.shipping_postcode = customer.delivery_postcode
+        order.shipping_country = customer.delivery_country
+
+
+        order.save()
+    except Exception, e:
+        print 'Create order error'
+        print e
+        return json_response({
+            'status': 'error'
+        })
+
+    return order_get(request, order.pk)
 
 
 def order_save(request):

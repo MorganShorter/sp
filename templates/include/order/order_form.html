@@ -2,32 +2,13 @@
 	<form id="frm_order" data-model="order">
         <input type="hidden" name="order_id" class="order_id" data-field="id">
         <input type="hidden" name="customer_id" class="customer_id" data-field="customer">
-        <input type="hidden" name="customer_id" class="customer_id" data-field="customer">
         <input type="hidden" name="order_date" class="hidden_order_date" data-field="order_date">
         <input type="hidden" name="wanted_by" class="hidden_wanted_by" data-field="wanted_by">
 
         <input type="hidden" name="sub_total" class="order_sub_total" data-field="sub_total">
         <input type="hidden" name="tax" class="order_tax" data-field="tax">
-        <input type="hidden" name="discount" class="order_discount" data-field="discount">
         <input type="hidden" name="total_cost" class="order_total_cost" data-field="total_cost">
         <input type="hidden" name="sp_cost" class="order_sp_cost" data-field="sp_cost">
-
-        <input type="hidden" name="invoice_company_name" class="order_invoice_company_name" data-field="invoice_company_name">
-        <input type="hidden" name="invoice_company_reg" class="order_invoice_company_reg" data-field="invoice_company_reg">
-        <input type="hidden" name="invoice_address_line_1" class="order_invoice_address_line_1" data-field="invoice_address_line_1">
-        <input type="hidden" name="invoice_address_line_2" class="order_invoice_address_line_2" data-field="invoice_address_line_2">
-        <input type="hidden" name="invoice_suburb" class="order_invoice_suburb" data-field="invoice_suburb">
-        <input type="hidden" name="invoice_state" class="order_invoice_state" data-field="invoice_state">
-        <input type="hidden" name="invoice_postcode" class="order_invoice_postcode" data-field="invoice_postcode">
-        <input type="hidden" name="invoice_country" class="order_invoice_country" data-field="invoice_country">
-
-        <input type="hidden" name="shipping_attn" class="order_shipping_attn" data-field="shipping_attn">
-        <input type="hidden" name="shipping_address_line_1" class="order_shipping_address_line_1" data-field="shipping_address_line_1">
-        <input type="hidden" name="shipping_address_line_2" class="order_shipping_address_line_2" data-field="shipping_address_line_2">
-        <input type="hidden" name="shipping_suburb" class="order_shipping_suburb" data-field="shipping_suburb">
-        <input type="hidden" name="shipping_state" class="order_shipping_state" data-field="shipping_state">
-        <input type="hidden" name="shipping_postcode" class="order_shipping_postcode" data-field="shipping_postcode">
-        <input type="hidden" name="shipping_country" class="order_shipping_country" data-field="shipping_country">
 
         <input type="hidden" name="from_src_order_id" class="order_from_src_order_id" data-field="from_src_order_id">
         <input type="hidden" name="from_borders_fakeid" class="order_from_borders_fakeid" data-field="from_borders_fakeid">
@@ -61,23 +42,31 @@
 
 		<div id="order_accordion">
             <!-- INFO -->
-			<h3>Info</h3>
-            <table id="order_detail_options">
-                <tr>
-                    <td class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
-                    <td class="form_cell"><input type="text" name="order_order_date" title="the date order was placed" class="order_order_date text ui-widget-content ui-corner-all form_input" value="" /></td>
-                    <td rowspan="4">&nbsp;</td>
-                </tr>
+			<h3>General</h3>
+            <div>
+                <table>
+                    <tr>
+                        <td class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
+                        <td class="form_cell"><input type="text" name="order_order_date" title="the date order was placed" class="order_order_date text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
 
-                <tr>
-                    <td class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
-                    <td class="form_cell"><input type="text" name="order_wanted_by" title="the date client wants to have recieved order" class="order_wanted_by text ui-widget-content ui-corner-all form_input" value=""/></td>
-                    <td>&nbsp;</td>
-                    <td class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
-                    <td class="form_cell"><input type="text" name="order_shipping_cost" title="the cost to ship the order" class="order_shipping_cost text ui-widget-content ui-corner-all form_input" value="" data-field="shipping_cost" /> </td>
-                    <td>&nbsp;</td>
-                </tr>
-			</table>
+                    <tr>
+                        <td class="form_cell"><label for="order_wanted_by" class="form_label">wanted by:</label></td>
+                        <td class="form_cell"><input type="text" name="order_wanted_by" title="the date client wants to have recieved order" class="order_wanted_by text ui-widget-content ui-corner-all form_input" value=""/></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="order_shipping_cost" class="form_label">shipping cost:</label></td>
+                        <td class="form_cell"><input type="text" name="order_shipping_cost" title="the cost to ship the order" class="order_shipping_cost text ui-widget-content ui-corner-all form_input" value="" data-field="shipping_cost" /> </td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="order_discount" class="form_label">discount:</label></td>
+                        <td class="form_cell"><input type="text" name="order_discount" title="discount" class="order_discount text ui-widget-content ui-corner-all form_input" value="" data-field="discount" /> </td>
+                    </tr>
+
+			    </table>
+            </div>
+
+
 
             <!-- PRODUCTS -->
 			<h3>Product Items</h3>
@@ -103,6 +92,15 @@
 				</table>
 				</div>
 
+            <!-- STATUSES -->
+            <h3>Statuses history</h3>
+            <div>
+                <ul>
+                    <li>status 1</li>
+                    <li>status 2</li>
+                </ul>
+            </div>
+
             <!-- SUMMARY -->
 			<h3>Summary</h3>
             <div class="order_product_summary">
@@ -124,6 +122,42 @@
                 </ul>
             </div>
 
+            <!-- SHIPPING -->
+            <h3>Shipping</h3>
+            <div>
+                <table>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_attn" class="form_label">Attr:</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_attn" title="attr" data-field="shipping_attn" class="order_shipping_attn text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_address_line_1" class="form_label">Address (line 1):</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_address_line_1" title="address line 1" data-field="shipping_address_line_1" class="order_shipping_address_line_1 text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_address_line_2" class="form_label">Address (line 2):</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_address_line_2" title="address line 2" data-field="shipping_address_line_2" class="order_shipping_address_line_2 text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_suburb" class="form_label">Suburb:</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_suburb" title="suburb" data-field="shipping_suburb" class="order_shipping_suburb text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_state" class="form_label">State:</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_state" title="state" data-field="shipping_state" class="order_shipping_state text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_postcode" class="form_label">Postcode:</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_postcode" title="postcode" data-field="shipping_postcode" class="order_shipping_postcode text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="shipping_country" class="form_label">Country:</label></td>
+                        <td class="form_cell"><input type="text" name="shipping_country" title="country" data-field="shipping_country" class="order_shipping_country text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- INVOICE -->
             <h3>Invoice</h3>
             <div>
                 <table>
@@ -137,6 +171,39 @@
                     <tr>
                         <td class="form_cell"><label for="invoice_num" class="form_label">invoice Number:</label></td>
                         <td class="form_cell"><input type="text" name="order_invoice_num" title="the invoice number" class="order_invoice_number text ui-widget-content ui-corner-all form_input" value="" data-model="invoice" data-field="number" data-type="integer"/></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_company_name" class="form_label">Company name:</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_company_name" title="the company name" data-field="invoice_company_name" class="order_invoice_company_name text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+
+                    <tr>
+                        <td class="form_cell"><label for="invoice_company_reg" class="form_label">Company reg:</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_company_reg" title="Company reg" data-field="invoice_company_reg" class="order_invoice_company_reg text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_address_line_1" class="form_label">Address (line 1):</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_address_line_1" title="Address (line 1)" data-field="invoice_address_line_1" class="order_invoice_address_line_1 text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_address_line_2" class="form_label">Address (line 2):</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_address_line_2" title="Address (line 2)" data-field="invoice_address_line_2" class="order_invoice_address_line_2 text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_suburb" class="form_label">Suburb:</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_suburb" title="suburb" data-field="invoice_suburb" class="order_invoice_suburb text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_state" class="form_label">State:</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_state" title="state" data-field="invoice_state" class="order_invoice_state text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_postcode" class="form_label">Postcode:</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_postcode" title="postcode" data-field="invoice_postcode" class="order_invoice_postcode text ui-widget-content ui-corner-all form_input" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="invoice_country" class="form_label">Country:</label></td>
+                        <td class="form_cell"><input type="text" name="invoice_country" title="country" data-field="invoice_country" class="order_invoice_country text ui-widget-content ui-corner-all form_input" value="" /></td>
                     </tr>
                 </table>
             </div>
