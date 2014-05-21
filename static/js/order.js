@@ -1,6 +1,11 @@
 $(function () {
     /* Order
     * */
+
+    $("#order_accordion").accordion({
+        collapsible: true
+    });
+
     $("#order_content").dialog({
         title: "Show order",
         autoOpen: false,
@@ -47,6 +52,7 @@ $(function () {
         var cid = $(this).attr('cid');
         $("#order_content").dialog("open");
         $.get('/order/get/' + cid + '/');
+        order_init();
     });
 
     // Delete order
@@ -81,14 +87,6 @@ $(function () {
         dateFormat: 'dd/mm/yy',
         altField: ".hidden_wanted_by",
         altFormat: "yy-mm-dd"
-    });
-    $(".order_shipping_cost").spinner({
-        min: 0,
-        max: 2500,
-        step: .15,
-        start: 1000,
-        numberFormat: "C",
-        culture: "en-AU"
     });
 
     $('#frm_find_order .form_input').on('input', function(){
@@ -175,3 +173,53 @@ $(function () {
         return false;
     });
 });
+
+
+function order_init(){
+    $(".order_shipping_cost").spinner({
+        min: 0,
+        max: 2500,
+        step: .15,
+        start: 1000,
+        numberFormat: "C",
+        culture: "en-AU"
+    });
+
+    $(".order_product_quantity").spinner({
+        min: 1,
+        max: 2500,
+        step: 1,
+        start: 1,
+        culture: "en-AU",
+        create: product_recount
+    });
+
+    $(".order_product_percentage").spinner({
+        min: 0,
+        max: 100,
+        step: 5,
+        start: 0,
+        culture: "en-AU",
+        create: product_recount
+    });
+
+    $(".order_product_spinner").spinner({
+        spin: product_recount,
+        stop: product_recount
+    });
+
+    function product_recount (){
+        var parent = $(this).parents('tr');
+        var count = parseInt($('.order_product_quantity', parent).val());
+        var cost = parseFloat($('.order_product_cost', parent).text());
+        var discount = parseFloat($('.order_product_percentage', parent).val());
+        var result = cost;
+
+        if (discount > 0){
+            result = cost * (100 - discount) / 100;
+        }
+        result *= count;
+        $('.order_product_total', parent).text(result.toFixed(2));
+    }
+
+}

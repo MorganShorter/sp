@@ -74,27 +74,4 @@ $(function () {
     });
 
 
-
-
-    $("#order_product_item_percentage_ID").pcntspinner({
-        min: 0,
-        max: 100,
-        step: 5,
-        start: 0,
-        culture: "en-AU"
-    });
-    $("#order_product_item_percentage_ID2").pcntspinner({
-        min: 0,
-        max: 100,
-        step: 5,
-        start: 0,
-        culture: "en-AU"
-    });
-    $("#order_order_company").combobox();
-    $("#order_accordion").accordion({
-        collapsible: true
-    });
-    $("#customer_accordion").accordion({
-        collapsible: true
-    });
 });

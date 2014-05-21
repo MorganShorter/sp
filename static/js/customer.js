@@ -2,6 +2,10 @@ $(function () {
     /* Customer
     * */
 
+    $("#customer_accordion").accordion({
+        collapsible: true
+    });
+
     $.ajax({url: '/lookup/states',
         type: 'GET',
         dataType: 'json',

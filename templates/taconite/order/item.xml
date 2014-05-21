@@ -29,27 +29,24 @@
 				<tr class="form_list_row" cid="{{ product.id }}">
 					<td class="form_list_item">{{ product.code }}</td>
 					<td class="form_list_item">{{ product.current_stock }}</td>
-					<td class="form_list_item">{{ order_product.quantity }}</td>
+					<td class="form_list_item">
+                        <input type="text" id="order_product_quantity_{{ order_product.id }}" name="order_product_quantity_{{ order_product.id }}" class="order_product_spinner order_product_quantity text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="quantity" value="{{ order_product.quantity }}" />
+                    </td>
 					<td class="form_list_item">
 						<img src="{{ STATIC_URL }}img/icons/16_{% if order_product.back_order %}yes{% else %}no{% endif %}.png" />
 					</td>
-					<td class="form_list_item">${{ order_product.unit_price }}</td>
+					<td class="form_list_item">$<span class="order_product_cost">{{ order_product.unit_price }}</span></td>
 					<td class="form_list_item">
-						<input type="text" id="order_product_percentage_{{ order_product.id }}" name="order_product_percentage_{{ order_product.id }}" class="text ui-widget-content ui-corner-all form_input" style="width: 40px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
+						<input type="text" id="order_product_percentage_{{ order_product.id }}" name="order_product_percentage_{{ order_product.id }}" class="order_product_spinner order_product_percentage text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
 					</td>
 					<td class="form_list_item">
 						<input type="checkbox" id="order_product_item_gst_{{ order_product.id }}" name="order_product_item_gst_{{ order_product.id }}" value="true" checked="{% if order_product.unit_tax != 0.00 %}true{% else %}false{% endif %}" />
 					</td>
-					<td class="form_list_item">${{ order_product.quantity|mul:order_product.unit_price|sub:order_product.discount_price }}</td>
-					<td class="form_list_item">
+					<td class="form_list_item">$<span class="order_product_total"></span></td>
+					<td class="">
                         <a class="order_product_item_show" title="show product info" href="#">
 							<img src="{{ STATIC_URL }}img/icons/16_products.png" />
 						</a>
-
-                        <a class="order_product_item_edit" title="edit product" href="#">
-							<img src="{{ STATIC_URL }}img/icons/16_edit_order.png" />
-						</a>
-
 						<a class="order_product_item_delete" title="delete this product item from order" href="#">
 							<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
 						</a>
@@ -58,6 +55,7 @@
 			</before>
 			{% endwith %}
 		{% endfor %}
+        <eval>order_init();</eval>
 
         <remove select="table#order_statuses tr:gt(0)" />
 		{% for order_status in order.statuses.all %}
