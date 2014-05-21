@@ -678,3 +678,8 @@ ul.dropdown ul.sub_menu_reports {
 #customer_order_items td {
     cursor: pointer;
 }
+
+.order_order_notes {
+    width: 300px;
+    height: 100px;
+}

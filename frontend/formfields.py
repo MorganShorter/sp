@@ -72,7 +72,7 @@ def OrderForm(order, invoice):
 
         '#frm_order .order_from_src_order_id': (order.from_src_order_id, "default_if_none:0"),
         '#frm_order .order_from_borders_fakeid': (order.from_borders_fakeid, "default_if_none:0"),
-        '#frm_order .order_order_notes': (order.order_notes, None),
+        '#frm_order .order_order_notes': ('<br>'.join(order.order_notes.splitlines()) if order.order_notes else '', None),
 
 
     }

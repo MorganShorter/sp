@@ -70,6 +70,7 @@
 		{% endfor %}
 
         <eval>$("#frm_order .order_status").val("{{ order.last_status.status }}");</eval>
+        <eval>$("#frm_order .order_order_notes").val($.br2nl($("#frm_order .order_order_notes").val()));</eval>
 
         <replaceContent select=".order_product_summary li:eq(0) span">${{ order.sub_total|sub:order.sp_cost }}</replaceContent>
         <replaceContent select=".order_product_summary li:eq(1) span">${{ order.sp_cost }}</replaceContent>

@@ -17,6 +17,7 @@ $(function () {
         title: "Customer",
         autoOpen: false,
         width: 'auto',
+        height: 'auto',
         close: function( event, ui ) {
             $("#add_contact").dialog('close');
             $("#show_note").dialog('close');

@@ -12,7 +12,7 @@
 
         <input type="hidden" name="from_src_order_id" class="order_from_src_order_id" data-field="from_src_order_id">
         <input type="hidden" name="from_borders_fakeid" class="order_from_borders_fakeid" data-field="from_borders_fakeid">
-        <input type="hidden" name="order_notes" class="order_order_notes" data-field="order_notes">
+
 
 
         <table id="order_main_options">
@@ -49,6 +49,13 @@
                     <tr>
                         <td class="form_cell"><label for="order_order_date"  class="form_label">order date:</label></td>
                         <td class="form_cell"><input type="text" name="order_order_date" title="the date order was placed" class="order_order_date text ui-widget-content ui-corner-all form_input" value="" /></td>
+                        <td class="form_cell" rowspan="5" style="vertical-align: top;">
+                            <div style="padding-left: 20px;">
+                                <div><strong>Notes</strong></div>
+                                <textarea name="order_notes" class="order_order_notes" data-field="order_notes"></textarea>
+                            </div>
+
+                        </td>
                     </tr>
 
                     <tr>

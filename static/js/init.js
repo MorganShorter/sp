@@ -136,6 +136,12 @@ $(function () {
         }
     });
 
+    $.br2nl = function(varTest){
+        return varTest.replace(/<br>/g, "\r");
+    };
+    $.nl2br = function(varTest){
+        return varTest.replace(/(\r\n|\n\r|\r|\n)/g, "<br>");
+    };
 
 });
 
