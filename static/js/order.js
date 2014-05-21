@@ -106,6 +106,17 @@ $(function () {
         }
     });
 
+    $.ajax({url: '/lookup/order/status/',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $.each(json, function (k, v) {
+                $('.order_status').append(new Option(v, k));
+            });
+        }
+    });
+
 
     // Create/Save/Update Order
     $('.save_order').live('click', function () {
@@ -124,7 +135,8 @@ $(function () {
             'pk': obj_id,
             'model': 'frontend.order',
             'fields': model_fields['order'],
-            'invoice': model_fields['invoice']
+            'invoice': model_fields['invoice'],
+            'status': $(".order_status", c_form).val()
         }];
 
         $.ajax({
@@ -147,6 +159,7 @@ $(function () {
                     } else { // Updated
                         $("#order_content").dialog("close");
                     }
+                    $.get('/customer/' + model_fields['order'].customer + '/?only_orders=1');
                 }
 
                 alert(json['msg']);

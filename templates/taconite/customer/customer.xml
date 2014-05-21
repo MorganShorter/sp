@@ -43,16 +43,18 @@
             </after>
 
         {% endif %}
-
-        <remove select="table#customer_order_items tr:gt(0)" />
-        <after select="table#customer_order_items tr:first">
-            {% for obj in customer.orders.all %}
-                <tr class="form_list_row" cid="{{ obj.pk }}">
-                    <td>{{ obj.pk }}</td>
-                    <td>{{ obj.order_date|date:"Y-m-d" }}</td>
-                    <td>${{ obj.total_cost }}</td>
-                </tr>
-            {% endfor %}
-        </after>
     {% endif %}
+
+    <remove select="table#customer_order_items tr:gt(0)" />
+    <after select="table#customer_order_items tr:first">
+        {% for obj in customer.orders.all %}
+            <tr class="form_list_row" cid="{{ obj.pk }}">
+                <td>{{ obj.pk }}</td>
+                <td>{{ obj.last_status.get_status_display }}</td>
+                <td>{{ obj.order_date|date:"Y-m-d" }}</td>
+                <td>${{ obj.total_cost }}</td>
+            </tr>
+        {% endfor %}
+    </after>
+
 </taconite>

@@ -11,6 +11,7 @@ urlpatterns = patterns('frontend.views',
     url(ur'^lookup/medium/?', 'ajax_lookup_medium'),
     url(ur'^lookup/price_level_group/?', 'ajax_lookup_price_level_group'),
     url(ur'^lookup/company/?', 'ajax_lookup_company'),
+    url(ur'^lookup/order/status/?', 'ajax_lookup_order_status'),
 
 )
 

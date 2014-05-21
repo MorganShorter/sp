@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core import serializers
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
-from ..models import Order, Invoice, Company, Customer
+from ..models import Order, Invoice, Company, Customer, OrderStatus
 from ..mixins import TacoMixin
 
 
@@ -35,7 +35,6 @@ order_list = OrderList.as_view()
 
 def order_get(request, pk):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
-    invoice = None
 
     if not error:
         try:
@@ -50,6 +49,9 @@ def order_get(request, pk):
                 company=Company.objects.first()
             )
             invoice.save()
+
+        if not order.last_status:
+            order.statuses.create()
 
     fields = formfields.OrderForm(order, invoice)
     return __taco_render(request, 'taconite/order/item.xml', {
@@ -127,6 +129,12 @@ def order_save(request):
                     inv.save()
                 except Exception, e:
                     print 'Error! Invoice error'
+
+                status = json.loads(request.body)[0].get('status', None)
+                if status != obj.object.last_status.status:
+                    if status in OrderStatus.STATUSES:
+                        obj.object.statuses.create(status=status)
+
 
 
                 obj_id = obj.object.id

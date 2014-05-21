@@ -1,5 +1,5 @@
 from ..utils import json_response
-from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup, Company
+from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup, Company, Order, OrderStatus
 
 
 def ajax_lookup_states(request):
@@ -22,6 +22,19 @@ def ajax_lookup_states(request):
         }
 
     return json_response(states)
+
+
+def ajax_lookup_order_status(request):
+    if request.is_ajax():
+        ret = {}
+        for o in OrderStatus.ORDER_STATUS_CHOICES:
+            ret.update({o[0]: o[1]})
+    else:
+        ret = {
+            'NOTAJAX': 'Not an AJAX Request'
+        }
+
+    return json_response(ret)
 
 
 def ajax_lookup(request, model):

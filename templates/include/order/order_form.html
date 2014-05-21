@@ -38,6 +38,7 @@
 				<td class="form_cell"><input type="text" name="order_invoice_number" title="the invoice number" class="order_invoice_number text ui-widget-content ui-corner-all form_input" readonly value=""/></td>
 				<td class="form_cell"><a id="order_invoice_id_search" title="find an invoice" href="#" class="button form_button"><img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/16_find_invoice.png" /></a></td>
 			</tr>
+
         </table>
 
 		<div id="order_accordion">
@@ -61,6 +62,13 @@
                     <tr>
                         <td class="form_cell"><label for="order_discount" class="form_label">discount:</label></td>
                         <td class="form_cell"><input type="text" name="order_discount" title="discount" class="order_discount text ui-widget-content ui-corner-all form_input" value="" data-field="discount" /> </td>
+                    </tr>
+                    <tr>
+                        <td class="form_cell"><label for="order_status" class="form_label">order status</label></td>
+                        <td class="form_cell">
+                            <select name="order_status" id="order_status" class="order_status text ui-widget-content ui-corner-all form_input" title="which status has this order?">
+                            </select>
+                        </td>
                     </tr>
 
 			    </table>
@@ -90,15 +98,17 @@
                     </td>
 				</tr>
 				</table>
-				</div>
+            </div>
 
             <!-- STATUSES -->
             <h3>Statuses history</h3>
             <div>
-                <ul>
-                    <li>status 1</li>
-                    <li>status 2</li>
-                </ul>
+				<table id="order_statuses" class="form_list with100">
+                    <tr class="form_list_row">
+                        <th  class="form_list_header">Date</th>
+                        <th class="form_list_header">Status</th>
+                    </tr>
+				</table>
             </div>
 
             <!-- SUMMARY -->

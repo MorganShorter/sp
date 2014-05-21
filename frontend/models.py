@@ -354,6 +354,7 @@ class OrderStatus(models.Model):
         (IN_FORFILLMENT, 'In Forfillment'),
         (SHIPPED, 'Complete (Shipped)'),
     )
+    STATUSES = [x[0] for x in ORDER_STATUS_CHOICES]
 
     order = models.ForeignKey(Order, related_name='statuses')
     status = models.CharField(max_length=2, choices=ORDER_STATUS_CHOICES, default=PROCESSING)
@@ -362,6 +363,9 @@ class OrderStatus(models.Model):
 
     def __unicode__(self):
         return '%s - %s' % (self.order, self.status)
+
+    class Meta:
+        ordering = ('-timestamp',)
 
 
 class OrderProduct(models.Model):
