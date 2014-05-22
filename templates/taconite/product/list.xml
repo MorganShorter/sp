@@ -6,10 +6,11 @@
                 <td>{{ obj.code }}</td>
                 <td>{{ obj.name }}</td>
                 <td>{{ obj.type }}</td>
+                <td class="form_cell"><a href="#" title="add product to opened order" class="img16 add_product_to_order"></a></td>
             </tr>
         {% empty %}
             <tr class="form_list_row">
-                <td colspan="3">not found</td>
+                <td colspan="4">not found</td>
             </tr>
         {% endfor %}
     </append>

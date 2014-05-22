@@ -23,6 +23,10 @@ urlpatterns += patterns('frontend.views.order',
     url(ur'^order/create/(?P<customer_pk>\d*)/', 'order_create'),
     url(ur'^order/delete/(?P<pk>\d*)/', 'order_delete'),
 
+    # product in order
+    url(ur'^order/add_product/(?P<order_id>\d+)/(?P<product_id>\d+)/', 'order_add_product'),
+    url(ur'^order/delete_product/(?P<order_id>\d+)/(?P<product_id>\d+)/', 'order_delete_product'),
+
 )
 
 # Product

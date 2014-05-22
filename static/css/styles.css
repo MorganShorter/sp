@@ -683,3 +683,34 @@ ul.dropdown ul.sub_menu_reports {
     width: 300px;
     height: 100px;
 }
+
+.img16 {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.img32 {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+.add_product_to_order {
+    background: url('../img/icons/16_add.png') no-repeat;
+    display: none;
+}
+
+.back_order_yes {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/icons/16_yes.png') no-repeat;
+}
+
+.back_order_no {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/icons/16_no.png') no-repeat;
+}

@@ -103,7 +103,11 @@ $(function () {
 
     $("#find_product_search").live('click', function(){
         var queryString = $('#frm_find_product').formSerialize();
-        $.get(__url_product_list + '?' + queryString);
+        $.get(__url_product_list + '?' + queryString, function(data){
+            if ($("#order_content").dialog('isOpen')){
+                $('.add_product_to_order').css('display', 'block');
+            }
+        });
     });
 
     // Open product detail

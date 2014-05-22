@@ -9,7 +9,13 @@ $(function () {
     $("#order_content").dialog({
         title: "Show order",
         autoOpen: false,
-        width: 800
+        width: 800,
+        close: function(){
+            $('.add_product_to_order').css('display', 'none');
+        },
+        open: function(){
+            $('.add_product_to_order').css('display', 'block');
+        }
     });
     $("#order_find").dialog({
         title: "Find order",
@@ -153,10 +159,8 @@ $(function () {
                         c_form.resetForm();
                         $("#order_create").dialog("close");
                         $("#order_content").dialog("open");
-                        $.get('/order/get/' + json['obj_id'] + '/');
-                    } else { // Updated
-                        $("#order_content").dialog("close");
                     }
+                    $.get('/order/get/' + json['obj_id'] + '/');
                     $.get('/customer/' + model_fields['order'].customer + '/?only_orders=1');
                 }
 
@@ -172,26 +176,57 @@ $(function () {
         });
         return false;
     });
+
+    // Add product to current order
+    $('#order_control_action_add').live('click', function(){
+        $("#product_find").dialog("open");
+    });
+    $('.add_product_to_order').live('click', function(){
+        var prod_id = parseInt($(this).parents('tr').eq(0).attr('cid'));
+        var order_id = $('#frm_order .order_id').val();
+        console.log('Add product #' + prod_id + ' to order #' + order_id);
+
+        $.get('/order/add_product/' + order_id + '/' + prod_id + '/', function(data){
+            if (data['status'] == 'ok') {
+                $.get('/order/get/' + order_id + '/?only_products=1');
+                alert('Product has added to the order');
+            } else {
+                alert('Error! Product not added');
+            }
+        });
+
+        return false;
+    });
+
 });
 
 
 function order_init(){
     $(".order_shipping_cost").spinner({
         min: 0,
-        max: 2500,
+        max: 9999,
         step: .15,
         start: 1000,
         numberFormat: "C",
         culture: "en-AU"
     });
+    $(".order_product_cost").spinner({
+        min: 0,
+        step: 5,
+        start: 0,
+        numberFormat: "C",
+        culture: "en-AU",
+        spin: product_recount,
+        stop: product_recount
+    });
 
     $(".order_product_quantity").spinner({
         min: 1,
-        max: 2500,
+        max: 9999,
         step: 1,
         start: 1,
         culture: "en-AU",
-        create: product_recount
+        create: product_recount,
     });
 
     $(".order_product_percentage").spinner({
@@ -208,11 +243,22 @@ function order_init(){
         stop: product_recount
     });
 
-    function product_recount (){
+
+    function product_recount(){
         var parent = $(this).parents('tr');
         var count = parseInt($('.order_product_quantity', parent).val());
-        var cost = parseFloat($('.order_product_cost', parent).text());
+        var cost = parseFloat($('.order_product_cost', parent).spinner('value'));
         var discount = parseFloat($('.order_product_percentage', parent).val());
+        var stock = parseInt($('.order_product_stock', parent).text());
+
+        $('.back_order_icon', parent).removeClass('back_order_yes').removeClass('back_order_no');
+        if (count > stock){
+            $('.back_order_icon', parent).addClass('back_order_yes');
+        } else {
+            $('.back_order_icon', parent).addClass('back_order_no');
+        }
+
+
         var result = cost;
 
         if (discount > 0){
@@ -221,5 +267,4 @@ function order_init(){
         result *= count;
         $('.order_product_total', parent).text(result.toFixed(2));
     }
-
 }

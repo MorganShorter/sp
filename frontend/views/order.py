@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core import serializers
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
-from ..models import Order, Invoice, Company, Customer, OrderStatus
+from ..models import Order, Invoice, Company, Customer, OrderStatus, Product, OrderProduct
 from ..mixins import TacoMixin
 
 
@@ -57,7 +57,8 @@ def order_get(request, pk):
     return __taco_render(request, 'taconite/order/item.xml', {
         'error': error,
         'fields': fields,
-        'order': order
+        'order': order,
+        'only_products': request.GET.get('only_products', None)
     })
 
 
@@ -166,4 +167,40 @@ def order_delete(request, pk):
     return json_response({
         'status': 'ok',
         'msg': 'Order has deleted!'
+    })
+
+
+def order_add_product(request, order_id, product_id):
+    print 'add product'
+
+    try:
+        order = Order.objects.get(pk=int(order_id))
+        product = Product.objects.get(pk=int(product_id))
+    except Exception, e:
+        return json_response({
+            'status': 'error'
+        })
+
+    OrderProduct(
+        order=order,
+        product=product,
+        quantity=1,
+        unit_price=0,
+        unit_tax=0,
+        discount_percentage=0,
+        discount_price=0,
+        sp_price=order.sp_cost,
+        royalty_amount=product.royalty,
+        back_order=False
+    ).save()
+
+    return json_response({
+        'status': 'ok'
+    })
+
+
+def order_delete_product(request, order_id, product_id):
+    print 'delete product'
+    return json_response({
+        'status': 'ok'
     })

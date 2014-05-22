@@ -3,50 +3,76 @@
 	{% if error %}
 		{% include "taconite/error.xml" with fields=fields error=error %}
 	{% else %}
-		{% include "taconite/fields.xml" with fields=fields %}
+        {% if not only_products %}
+            {% include "taconite/fields.xml" with fields=fields %}
+            <html select="div#order_main_options_customer_details_content">
+                Customer Details
+                <div id="order_main_options_customer_details_content_addressblock">
+                    Shipping info:<br/>
+                    {{ order.shipping_attn }}<br />
+                    {{ order.shipping_address_line_1 }}<br />
+                    {{ order.shipping_address_line_2 }}<br />
+                    {{ order.shipping_suburb }}, {{ order.shipping_postcode }}, {{ order.shipping_state }}<br />
+                    {{ order.shipping_country }}
+                </div>
+                <br />
+                {{ order.customer.name }}
+                {% for contact in order.customer.contacts.all %}
+                    <br /> {{ contact.first_name }} {{ contact.surname }} {{ contact.phone }}
+                {% endfor %}
+            </html>
 
-		<html select="div#order_main_options_customer_details_content">
-			Customer Details
-			<div id="order_main_options_customer_details_content_addressblock">
-                Shipping info:<br/>
-				{{ order.shipping_attn }}<br />
-				{{ order.shipping_address_line_1 }}<br />
-				{{ order.shipping_address_line_2 }}<br />
-				{{ order.shipping_suburb }}, {{ order.shipping_postcode }}, {{ order.shipping_state }}<br />
-				{{ order.shipping_country }}
-			</div>
-			<br />
-			{{ order.customer.name }}
-			{% for contact in order.customer.contacts.all %}
-				<br /> {{ contact.first_name }} {{ contact.surname }} {{ contact.phone }}
-			{% endfor %}
-		</html>
+            <remove select="table#order_statuses tr:gt(0)" />
+            {% for order_status in order.statuses.all %}
+                <after select="table#order_statuses tr:last">
+                <tr class="form_list_row">
+                    <td class="form_list_item">{{ order_status.timestamp }}</td>
+                    <td class="form_list_item">{{ order_status.get_status_display }}</td>
+                </tr>
+                </after>
+            {% endfor %}
+
+            <eval>$("#frm_order .order_status").val("{{ order.last_status.status }}");</eval>
+            <eval>$("#frm_order .order_order_notes").val($.br2nl($("#frm_order .order_order_notes").val()));</eval>
+
+            <replaceContent select=".order_product_summary li:eq(0) span">${{ order.sub_total|sub:order.sp_cost }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(1) span">${{ order.sp_cost }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(2) span">${{ order.sub_total }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(3) span">${{ order.discount }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(4) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(5) span">${{ order.sp_cost|add:order.discount }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(6) span">${{ order.sub_total|sub:order.discount }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(7) span">${{ order.tax }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(8) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(9) span">${{ order.sp_cost|add:order.discount|add:order.tax }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(10) span">${{ order.sub_total|sub:order.discount|add:order.tax }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(11) span">${{ order.shipping_cost }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(12) span">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
+            <replaceContent select=".order_product_summary li:eq(13) span">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
+        {% endif %}
 
         <remove select="table#order_product_items tr:gt(0):not(:last)" />
 		{% for order_product in order.orderproduct_set.all %}
 			{% with product=order_product.product %}
 			<before select="table#order_product_items tr:last">
 				<tr class="form_list_row" cid="{{ product.id }}">
-					<td class="form_list_item">{{ product.code }}</td>
-					<td class="form_list_item">{{ product.current_stock }}</td>
+					<td class="form_list_item"><a href="#" class="order_product_item_show" title="show product info">{{ product.code }}</a></td>
+					<td class="form_list_item order_product_stock">{{ product.current_stock }}</td>
 					<td class="form_list_item">
-                        <input type="text" id="order_product_quantity_{{ order_product.id }}" name="order_product_quantity_{{ order_product.id }}" class="order_product_spinner order_product_quantity text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="quantity" value="{{ order_product.quantity }}" />
+                        <input type="text" name="order_product_quantity_{{ order_product.id }}" class="order_product_spinner order_product_quantity text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="quantity" value="{{ order_product.quantity }}" />
                     </td>
+					<td class="form_list_item back_order_icon back_order_no"></td>
 					<td class="form_list_item">
-						<img src="{{ STATIC_URL }}img/icons/16_{% if order_product.back_order %}yes{% else %}no{% endif %}.png" />
+                        <input type="text" name="order_product_cost_{{ order_product.id }}" class="order_product_cost text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="quantity" value="{{ order_product.unit_price }}" />
 					</td>
-					<td class="form_list_item">$<span class="order_product_cost">{{ order_product.unit_price }}</span></td>
-					<td class="form_list_item">
-						<input type="text" id="order_product_percentage_{{ order_product.id }}" name="order_product_percentage_{{ order_product.id }}" class="order_product_spinner order_product_percentage text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
+                    <td class="form_list_item">
+						<input type="text" name="order_product_percentage_{{ order_product.id }}" class="order_product_spinner order_product_percentage text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
 					</td>
 					<td class="form_list_item">
 						<input type="checkbox" id="order_product_item_gst_{{ order_product.id }}" name="order_product_item_gst_{{ order_product.id }}" value="true" checked="{% if order_product.unit_tax != 0.00 %}true{% else %}false{% endif %}" />
 					</td>
 					<td class="form_list_item">$<span class="order_product_total"></span></td>
 					<td class="">
-                        <a class="order_product_item_show" title="show product info" href="#">
-							<img src="{{ STATIC_URL }}img/icons/16_products.png" />
-						</a>
 						<a class="order_product_item_delete" title="delete this product item from order" href="#">
 							<img src="{{ STATIC_URL }}img/icons/16_delete.png" />
 						</a>
@@ -57,32 +83,5 @@
 		{% endfor %}
         <eval>order_init();</eval>
 
-        <remove select="table#order_statuses tr:gt(0)" />
-		{% for order_status in order.statuses.all %}
-            <after select="table#order_statuses tr:last">
-            <tr class="form_list_row">
-                <td class="form_list_item">{{ order_status.timestamp }}</td>
-                <td class="form_list_item">{{ order_status.get_status_display }}</td>
-            </tr>
-            </after>
-		{% endfor %}
-
-        <eval>$("#frm_order .order_status").val("{{ order.last_status.status }}");</eval>
-        <eval>$("#frm_order .order_order_notes").val($.br2nl($("#frm_order .order_order_notes").val()));</eval>
-
-        <replaceContent select=".order_product_summary li:eq(0) span">${{ order.sub_total|sub:order.sp_cost }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(1) span">${{ order.sp_cost }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(2) span">${{ order.sub_total }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(3) span">${{ order.discount }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(4) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(5) span">${{ order.sp_cost|add:order.discount }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(6) span">${{ order.sub_total|sub:order.discount }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(7) span">${{ order.tax }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(8) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(9) span">${{ order.sp_cost|add:order.discount|add:order.tax }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(10) span">${{ order.sub_total|sub:order.discount|add:order.tax }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(11) span">${{ order.shipping_cost }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(12) span">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
-        <replaceContent select=".order_product_summary li:eq(13) span">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
 	{% endif %}
 </taconite>
