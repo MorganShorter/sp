@@ -55,7 +55,7 @@
 		{% for order_product in order.orderproduct_set.all %}
 			{% with product=order_product.product %}
 			<before select="table#order_product_items tr:last">
-				<tr class="form_list_row" cid="{{ product.id }}">
+				<tr class="form_list_row" cid="{{ order_product.id }}">
 					<td class="form_list_item"><a href="#" class="order_product_item_show" title="show product info">{{ product.code }}</a></td>
 					<td class="form_list_item order_product_stock">{{ product.current_stock }}</td>
 					<td class="form_list_item">
@@ -69,7 +69,7 @@
 						<input type="text" name="order_product_percentage_{{ order_product.id }}" class="order_product_spinner order_product_percentage text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="discount percentage, if any" value="{{ order_product.discount_percentage }}" />
 					</td>
 					<td class="form_list_item">
-						<input type="checkbox" id="order_product_item_gst_{{ order_product.id }}" name="order_product_item_gst_{{ order_product.id }}" value="true" checked="{% if order_product.unit_tax != 0.00 %}true{% else %}false{% endif %}" />
+						<input type="checkbox" class="order_product_tax" name="order_product_item_gst_{{ order_product.id }}" value="true" {% if order_product.with_tax %}checked="checked"{% endif %}" />
 					</td>
 					<td class="form_list_item">$<span class="order_product_total"></span></td>
 					<td class="">

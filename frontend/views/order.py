@@ -117,7 +117,8 @@ def order_save(request):
                     saved = True
                     msg = 'Order saved'
 
-                invoice = json.loads(request.body)[0].get('invoice', None)
+                order_data = json.loads(request.body)[0]
+                invoice = order_data.get('invoice', None)
                 if obj.object.last_invoice:
                     inv = obj.object.last_invoice
                 else:
@@ -130,6 +131,29 @@ def order_save(request):
                     inv.save()
                 except Exception, e:
                     print 'Error! Invoice error'
+
+                # products
+                products = order_data.get('products', None)
+                if products:
+                    for pr_obj in products.items():
+                        try:
+                            order_product = OrderProduct.objects.get(pk=int(pr_obj[0]), order=obj.object)
+                        except Exception, e:
+                            print 'OrderProduct not found'
+                            continue
+
+                        try:
+                            order_product.quantity = int(pr_obj[1]['quantity'])
+                            order_product.unit_price = float(pr_obj[1]['cost'])
+                            order_product.discount_percentage = float(pr_obj[1]['discount'])
+                            order_product.with_tax = pr_obj[1]['tax']
+                            order_product.save()
+                        except Exception, e:
+                            print 'OrderProduct save error'
+                            continue
+
+
+
 
                 status = json.loads(request.body)[0].get('status', None)
                 if status != obj.object.last_status.status:
@@ -171,8 +195,6 @@ def order_delete(request, pk):
 
 
 def order_add_product(request, order_id, product_id):
-    print 'add product'
-
     try:
         order = Order.objects.get(pk=int(order_id))
         product = Product.objects.get(pk=int(product_id))
@@ -200,7 +222,15 @@ def order_add_product(request, order_id, product_id):
 
 
 def order_delete_product(request, order_id, product_id):
-    print 'delete product'
+    try:
+        order = Order.objects.get(pk=int(order_id))
+        product = Product.objects.get(pk=int(product_id))
+        OrderProduct.objects.get(order=order, product=product).delete()
+    except Exception, e:
+        return json_response({
+            'status': 'error'
+        })
+
     return json_response({
         'status': 'ok'
     })

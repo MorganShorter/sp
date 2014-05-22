@@ -381,9 +381,13 @@ class OrderProduct(models.Model):
     sp_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     royalty_amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     back_order = models.BooleanField(default=False)
+    with_tax = models.BooleanField(default=False)
 
     def __unicode__(self):
         return '%s %s' % (self.order, self.product)
+
+    class Meta:
+        ordering = ('product__code',)
 
 
 class Company(models.Model):

@@ -135,12 +135,24 @@ $(function () {
         if (model_fields['order'].shipping_cost && model_fields['order'].shipping_cost[0] == "$")
             model_fields['order'].shipping_cost = model_fields['order'].shipping_cost.slice(1);
 
+        // products
+        var products = {};
+        $("#order_product_items tr:gt(0):not(:last)").each(function(){
+            products[$(this).attr('cid')] = {
+                quantity: $('.order_product_quantity', $(this)).val(),
+                cost: $('.order_product_cost', $(this)).spinner('value'),
+                discount: $('.order_product_percentage', $(this)).val(),
+                tax: $('.order_product_tax', $(this)).prop('checked')
+            }
+        });
+
         var obj_json = [{
             'pk': obj_id,
             'model': 'frontend.order',
             'fields': model_fields['order'],
             'invoice': model_fields['invoice'],
-            'status': $(".order_status", c_form).val()
+            'status': $(".order_status", c_form).val(),
+            'products': products
         }];
 
         $.ajax({
@@ -198,13 +210,32 @@ $(function () {
         return false;
     });
 
+    // Delete product
+    $('.order_product_item_delete').live('click', function(){
+        var prod_id = parseInt($(this).parents('tr').eq(0).attr('cid'));
+        var order_id = $('#frm_order .order_id').val();
+
+        var cnf = confirm('Sure you want to delete this product?');
+        if (cnf != true){
+            return false;
+        }
+
+        $.get('/order/delete_product/' + order_id + '/' + prod_id + '/', function(data){
+            if (data['status'] == 'ok') {
+                $.get('/order/get/' + order_id + '/?only_products=1');
+                alert('Product has removed from the order');
+            } else {
+                alert('Error! Product not removed');
+            }
+        });
+    });
+
 });
 
 
 function order_init(){
     $(".order_shipping_cost").spinner({
         min: 0,
-        max: 9999,
         step: .15,
         start: 1000,
         numberFormat: "C",
@@ -212,7 +243,7 @@ function order_init(){
     });
     $(".order_product_cost").spinner({
         min: 0,
-        step: 5,
+        step: 0.05,
         start: 0,
         numberFormat: "C",
         culture: "en-AU",
@@ -222,11 +253,10 @@ function order_init(){
 
     $(".order_product_quantity").spinner({
         min: 1,
-        max: 9999,
         step: 1,
         start: 1,
         culture: "en-AU",
-        create: product_recount,
+        create: product_recount
     });
 
     $(".order_product_percentage").spinner({

@@ -50,7 +50,11 @@ class OrderStatusAdmin(admin.ModelAdmin):
 
 admin.site.register(OrderStatus, OrderStatusAdmin)
 
-admin.site.register(OrderProduct)
+
+class OrderProductAdmin(admin.ModelAdmin):
+    raw_id_fields = ('order', 'product')
+
+admin.site.register(OrderProduct, OrderProductAdmin)
 admin.site.register(Company)
 
 
