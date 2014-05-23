@@ -345,7 +345,7 @@ class Order(models.Model):
             self.sp_cost += order_product.sp_price * order_product.quantity
             self.tax += order_product.unit_tax * order_product.quantity
 
-        self.total_cost = self.sub_total + self.shipping_cost
+        self.total_cost = self.sub_total + self.shipping_cost - self.discount
 
         if save:
             self.save(total_recount=False)
@@ -415,6 +415,7 @@ class OrderProduct(models.Model):
 
     def save(self, *args, **kwargs):
         print 'order_product save'
+        self.sp_price = self.product.sp_cost
         self.unit_tax = 0 if not self.with_tax else float(self.unit_price * settings.TAX_PERCENT) / 100
         self.discount_price = self.unit_price * self.discount_percentage / 100
         self.royalty_amount = self.quantity * (float(self.unit_price) - float(self.sp_price))
