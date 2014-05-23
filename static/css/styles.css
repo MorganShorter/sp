@@ -714,3 +714,7 @@ ul.dropdown ul.sub_menu_reports {
     height: 16px;
     background: url('../img/icons/16_no.png') no-repeat;
 }
+
+.order_product_pl {
+    font-size: 10px !important;
+}

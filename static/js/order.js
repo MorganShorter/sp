@@ -210,6 +210,15 @@ $(function () {
         return false;
     });
 
+    // Product price level
+    $('.order_product_pl').live('change', function(){
+        var val = $(this).val();
+        if (val){
+            $('.order_product_cost', $(this).parents('tr')).spinner('value', val);
+            call_product_recount($(this).parents('tr'));
+        }
+    });
+
     // Delete product
     $('.order_product_item_delete').live('click', function(){
         var prod_id = parseInt($(this).parents('tr').eq(0).attr('cid'));
@@ -243,12 +252,13 @@ function order_init(){
     });
     $(".order_product_cost").spinner({
         min: 0,
-        step: 0.05,
+        step: 0.01,
         start: 0,
         numberFormat: "C",
         culture: "en-AU",
         spin: product_recount,
-        stop: product_recount
+        stop: product_recount,
+        create: product_recount
     });
 
     $(".order_product_quantity").spinner({
@@ -272,29 +282,30 @@ function order_init(){
         spin: product_recount,
         stop: product_recount
     });
+}
 
+function product_recount(){
+    var parent = $(this).parents('tr');
+    call_product_recount(parent);
+}
 
-    function product_recount(){
-        var parent = $(this).parents('tr');
-        var count = parseInt($('.order_product_quantity', parent).val());
-        var cost = parseFloat($('.order_product_cost', parent).spinner('value'));
-        var discount = parseFloat($('.order_product_percentage', parent).val());
-        var stock = parseInt($('.order_product_stock', parent).text());
+function call_product_recount(parent){
+    var count = parseInt($('.order_product_quantity', parent).val());
+    var cost = parseFloat($('.order_product_cost', parent).spinner('value'));
+    var discount = parseFloat($('.order_product_percentage', parent).val());
+    var stock = parseInt($('.order_product_stock', parent).text());
 
-        $('.back_order_icon', parent).removeClass('back_order_yes').removeClass('back_order_no');
-        if (count > stock){
-            $('.back_order_icon', parent).addClass('back_order_yes');
-        } else {
-            $('.back_order_icon', parent).addClass('back_order_no');
-        }
-
-
-        var result = cost;
-
-        if (discount > 0){
-            result = cost * (100 - discount) / 100;
-        }
-        result *= count;
-        $('.order_product_total', parent).text(result.toFixed(2));
+    $('.back_order_icon', parent).removeClass('back_order_yes').removeClass('back_order_no');
+    if (count > stock){
+        $('.back_order_icon', parent).addClass('back_order_yes');
+    } else {
+        $('.back_order_icon', parent).addClass('back_order_no');
     }
+
+    var result = cost;
+    if (discount > 0){
+        result = cost * (100 - discount) / 100;
+    }
+    result *= count;
+    $('.order_product_total', parent).text(result.toFixed(2));
 }
