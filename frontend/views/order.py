@@ -150,10 +150,11 @@ def order_save(request):
                             order_product.save()
                         except Exception, e:
                             print 'OrderProduct save error'
+                            print e
                             continue
 
-
-
+                    # Recount total
+                    obj.object.total_recount(save=True)
 
                 status = json.loads(request.body)[0].get('status', None)
                 if status != obj.object.last_status.status:
@@ -211,7 +212,7 @@ def order_add_product(request, order_id, product_id):
         unit_tax=0,
         discount_percentage=0,
         discount_price=0,
-        sp_price=order.sp_cost,
+        sp_price=product.sp_cost,
         royalty_amount=product.royalty,
         back_order=False
     ).save()

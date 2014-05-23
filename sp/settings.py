@@ -190,6 +190,8 @@ COMPRESS_OUTPUT_DIR = 'compressed'
 COMPRESS_ENABLED = True
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 
+TAX_PERCENT = 10
+
 try:
     from .local_settings import *
 except ImportError:

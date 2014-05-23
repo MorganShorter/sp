@@ -116,8 +116,8 @@ def product_price_save(request):
                     new_obj = True
 
                 if obj.object.max_amount:
-                    if obj.object.min_amount >= obj.object.max_amount:
-                        msg = 'Max Qty should be bigger'
+                    if obj.object.min_amount >= obj.object.max_amount and not obj.object.block_only:
+                        msg = 'Max Qty should be bigger than Min Qty (if not a block)'
                         break
                 else:
                     obj.object.max_amount = None

@@ -52,7 +52,7 @@
         {% endif %}
 
         <remove select="table#order_product_items tr:gt(0):not(:last)" />
-		{% for order_product in order.orderproduct_set.all %}
+		{% for order_product in order.ordered_products.all %}
 			{% with product=order_product.product %}
 			<before select="table#order_product_items tr:last">
 				<tr class="form_list_row" cid="{{ order_product.id }}">

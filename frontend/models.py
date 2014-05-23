@@ -2,6 +2,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from datetime import datetime
+from django.conf import settings
 
 
 class ImportNote(models.Model):
@@ -331,6 +332,29 @@ class Order(models.Model):
     def __unicode__(self):
         return 'Order %s' % self.pk
 
+    def total_recount(self, save=False):
+        self.sub_total = 0
+        self.discount = 0
+        self.total_cost = 0
+        self.sp_cost = 0
+        self.tax = 0
+
+        for order_product in self.ordered_products.all():
+            self.sub_total += order_product.unit_price * order_product.quantity
+            self.discount += order_product.discount_price * order_product.quantity
+            self.sp_cost += order_product.sp_price * order_product.quantity
+            self.tax += order_product.unit_tax * order_product.quantity
+
+        self.total_cost = self.sub_total + self.shipping_cost
+
+        if save:
+            self.save(total_recount=False)
+
+    def save(self, total_recount=True, *args, **kwargs):
+        if total_recount:
+            self.total_recount(save=False)
+        super(Order, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ('-order_date',)
 
@@ -371,7 +395,7 @@ class OrderStatus(models.Model):
 class OrderProduct(models.Model):
     """ 'Line Item' for an order; contains Product ordered on an Order with its quantity
     """
-    order = models.ForeignKey(Order)
+    order = models.ForeignKey(Order, related_name='ordered_products')
     product = models.ForeignKey(Product)
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
@@ -383,11 +407,19 @@ class OrderProduct(models.Model):
     back_order = models.BooleanField(default=False)
     with_tax = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('product__code',)
+
     def __unicode__(self):
         return '%s %s' % (self.order, self.product)
 
-    class Meta:
-        ordering = ('product__code',)
+    def save(self, *args, **kwargs):
+        print 'order_product save'
+        self.unit_tax = 0 if not self.with_tax else float(self.unit_price * settings.TAX_PERCENT) / 100
+        self.discount_price = self.unit_price * self.discount_percentage / 100
+        self.royalty_amount = self.quantity * (float(self.unit_price) - float(self.sp_price))
+        self.back_order = True if self.quantity > self.product.current_stock else False
+        super(OrderProduct, self).save(*args, **kwargs)
 
 
 class Company(models.Model):
