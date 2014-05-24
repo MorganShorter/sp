@@ -208,13 +208,10 @@ def order_add_product(request, order_id, product_id):
         order=order,
         product=product,
         quantity=1,
-        unit_price=0,
-        unit_tax=0,
+        unit_price=product.unit_cost,
         discount_percentage=0,
-        discount_price=0,
         sp_price=product.sp_cost,
         royalty_amount=product.royalty,
-        back_order=False
     ).save()
 
     return json_response({

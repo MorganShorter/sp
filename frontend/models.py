@@ -190,6 +190,10 @@ class Product(models.Model):
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.code)
 
+    @property
+    def unit_cost(self):
+        return float(self.sp_cost * (100 + self.royalty) / 100)
+
 
 class Catalog(models.Model):
     """ Catalog's SmartPractice advertise products in

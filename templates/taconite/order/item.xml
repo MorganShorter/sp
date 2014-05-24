@@ -62,15 +62,14 @@
                         <input type="text" name="order_product_quantity_{{ order_product.id }}" class="order_product_spinner order_product_quantity text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="quantity" value="{{ order_product.quantity }}" />
                     </td>
 					<td class="form_list_item back_order_icon back_order_no"></td>
-                    <td class="form_list_item">
-                        {% if product.price_levels.count %}
-                        <select title="use price level" class="order_product_pl text ui-widget-content ui-corner-all form_input">
+                    <td class="">
+                        <select title="use price level" class="order_product_pl text ui-widget-content ui-corner-all form_input width100">
                             <option value="">-</option>
+                            <option value="{{ product.unit_cost }}">Default: ${{ product.unit_cost }} / item</option>
                             {% for o in product.price_levels.all %}
                                 <option value="{{ o.cost_per_item }}"><small>{{ o.min_amount }}..{{ o.max_amount }} = ${{ o.cost_per_item }}/item {% if o.block_only %}BO{% endif %}</small></option>
                             {% endfor %}
 				        </select>
-                        {% endif %}
                     </td>
 					<td class="form_list_item">
                         <input type="text" name="order_product_cost_{{ order_product.id }}" class="order_product_cost text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="price per item" value="{{ order_product.unit_price }}" />
