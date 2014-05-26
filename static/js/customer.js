@@ -339,4 +339,8 @@ $(function () {
 
     });
 
+
+    $(".droppable_customer_type").autocomplete({
+        source: ["CAA", "Chiro", "Dental", "Medical", "Optom", "Ortho", "Podiatry", "Vet"]
+    });
 });

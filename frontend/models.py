@@ -31,7 +31,6 @@ class ImportNote(models.Model):
 class Customer(models.Model):
     """ Customer; makes an order from SmartPractice
     """
-    MAIN_TYPES = ("CAA", "Chiro", "Dental", "Medical", "Optom", "Ortho", "Podiatry", "Vet")  # + 'input'
     registration = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     customer_type = models.CharField(max_length=255)
