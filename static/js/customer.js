@@ -34,10 +34,22 @@ $(function () {
         title: "Find Customers",
         autoOpen: false,
         width: 'auto',
-        close: function( event, ui ) {
+        open: function(event, ui){
+            $('#find_customer_additional_filter').hide();
+        },
+        close: function(event, ui) {
             $("#customer_content").dialog('close');
             $("#add_contact").dialog('close');
             $("#show_note").dialog('close');
+        },
+        focus: function(event, ui){
+            console.log('open');
+            console.log($('#customer_find_filter_field').val())
+            if ($('#customer_find_filter_field').val()){
+                $('#customer_find_label_display').text($('#customer_find_filter_label').val());
+                $('#customer_find_value_display').val($('#customer_find_filter_value').val());
+                $('#find_customer_additional_filter').show();
+            }
         }
     });
 
@@ -64,6 +76,25 @@ $(function () {
     });
     $("#customer_control_action_cancel").click(function() {
         $("#customer_content").dialog("close");
+    });
+
+    $(".frm_customer .form_label").live('click', function() {
+        var label = $(this).text();
+        var field = $('*[name="' + $(this).attr('for') + '"]');
+        $('#customer_find_filter_field').val(field.attr('data-field'));
+        $('#customer_find_filter_value').val(field.val());
+        $('#customer_find_filter_label').val(label);
+        $("#customer_find").dialog("moveToTop");
+        $("#find_customer_search").trigger('click');
+    });
+
+    $(".find_customer_close").live('click', function(){
+        $('#customer_find_filter_field').val('');
+        $('#customer_find_filter_value').val('');
+        $('#customer_find_filter_label').val('');
+        $('#customer_find_label_display').text('');
+        $('#customer_find_value_display').val('');
+        $('#find_customer_additional_filter').hide();
     });
 
 

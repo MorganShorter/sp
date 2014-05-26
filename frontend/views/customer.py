@@ -28,6 +28,10 @@ class CustomerList(TacoMixin, ListView):
         if self.request.GET.get('find_customer_email', None):
             fltr['email__icontains'] = self.request.GET['find_customer_email']
 
+        if self.request.GET.get('additional_field', None):
+            if self.request.GET.get('additional_value', None):
+                fltr[self.request.GET['additional_field']] = self.request.GET['additional_value']
+
         if not fltr:
             return qs.none()
 

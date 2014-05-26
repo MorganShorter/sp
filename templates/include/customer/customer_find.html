@@ -1,5 +1,9 @@
 <div id="customer_find">
 	<form id="frm_find_customer" action="" method="get">
+        <input type="hidden" id="customer_find_filter_field" name="additional_field">
+        <input type="hidden" id="customer_find_filter_value" name="additional_value">
+        <input type="hidden" id="customer_find_filter_label">
+
         <a id="find_customer_search" title="find customers" href="#" class="button form_button pull-right">
             <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
         </a>
@@ -19,6 +23,13 @@
             <tr>
                 <td class="form_cell"><label for="find_customer_email" class="form_label">customer email:</label></td>
                 <td class="form_cell"><input type="text" name="find_customer_email" id="find_customer_email" title="search for this type of customer email" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
+            </tr>
+            <tr id="find_customer_additional_filter">
+                <td class="form_cell"><label for="find_custom_field" class="form_label" id="customer_find_label_display"></label></td>
+                <td class="form_cell">
+                    <input type="text" name="find_custom_field" id="customer_find_value_display" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" readonly />
+                    <div class="find_customer_close"></div>
+                </td>
             </tr>
 		</table>
 	</form>

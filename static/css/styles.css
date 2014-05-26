@@ -718,3 +718,21 @@ ul.dropdown ul.sub_menu_reports {
 .order_product_pl {
     font-size: 10px !important;
 }
+
+.frm_customer .form_label {cursor: pointer;}
+
+.find_customer_close {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/icons/16_cancel.png') no-repeat;
+
+    position: absolute;
+    right: -20px;
+    top: 4px;
+    cursor: pointer;
+}
+
+#find_customer_additional_filter td:last-child {
+    position: relative;
+}
