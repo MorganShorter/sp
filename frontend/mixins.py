@@ -1,6 +1,9 @@
 import cStringIO as StringIO
 from cgi import escape
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 try:
     import ho.pisa as pisa
@@ -11,6 +14,7 @@ except ImportError:
 class TacoMixin(object):
     content_type = 'application/xml'
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         self.context = context = dict(kwargs)
@@ -31,6 +35,10 @@ class ReportsMixin(object):
     csv_template = ''
     pdf_name = 'report.pdf'
     csv_name = 'report.csv'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReportsMixin, self).dispatch(request, *args, **kwargs)
 
     def get_csv_name(self):
         return self.csv_name

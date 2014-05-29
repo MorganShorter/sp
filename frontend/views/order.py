@@ -1,6 +1,7 @@
 import json
 from django.views.generic import ListView
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
 from ..models import Order, Invoice, Company, Customer, OrderStatus, Product, OrderProduct
@@ -33,6 +34,7 @@ class OrderList(TacoMixin, ListView):
 order_list = OrderList.as_view()
 
 
+@login_required
 def order_get(request, pk):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
 
@@ -62,6 +64,7 @@ def order_get(request, pk):
     })
 
 
+@login_required
 def order_create(request, customer_pk):
     order = Order()
 
@@ -99,6 +102,7 @@ def order_create(request, customer_pk):
     return order_get(request, order.pk)
 
 
+@login_required
 def order_save(request):
     msg = ''
     new_obj = False
@@ -179,6 +183,7 @@ def order_save(request):
     })
 
 
+@login_required
 def order_delete(request, pk):
     try:
         obj = Order.objects.get(pk=pk)
@@ -195,6 +200,7 @@ def order_delete(request, pk):
     })
 
 
+@login_required
 def order_add_product(request, order_id, product_id):
     try:
         order = Order.objects.get(pk=int(order_id))
@@ -219,6 +225,7 @@ def order_add_product(request, order_id, product_id):
     })
 
 
+@login_required
 def order_delete_product(request, order_id, product_id):
     try:
         order = Order.objects.get(pk=int(order_id))

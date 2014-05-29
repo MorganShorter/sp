@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from django.http import HttpResponse
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 
 from .. import formfields
 from ..models import Customer, CustomerContact, Note
@@ -41,6 +42,7 @@ class CustomerList(TacoMixin, ListView):
 customer_list = CustomerList.as_view()
 
 
+@login_required
 def customer_contact_add(request):
     for obj in serializers.deserialize('json', request.body):
         if obj.object.__class__ == CustomerContact:
@@ -49,6 +51,7 @@ def customer_contact_add(request):
     return json_response('Contact created')
 
 
+@login_required
 def customer_contact_delete(request, pk):
     try:
         CustomerContact.objects.get(pk=pk).delete()
@@ -57,6 +60,7 @@ def customer_contact_delete(request, pk):
     return HttpResponse('ok')
 
 
+@login_required
 def customer_note_get(request, c_pk, n_pk=None):
     try:
         c = Customer.objects.get(pk=c_pk)
@@ -79,6 +83,7 @@ def customer_note_get(request, c_pk, n_pk=None):
     })
 
 
+@login_required
 def customer_note_delete(request, c_pk, n_pk):
     try:
         customer = Customer.objects.get(pk=c_pk)
@@ -94,6 +99,7 @@ def customer_note_delete(request, c_pk, n_pk):
     return HttpResponse('ok')
 
 
+@login_required
 def customer_get(request, pk):
     pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
     fields = formfields.CustomerForm(customer)
@@ -108,6 +114,7 @@ def customer_get(request, pk):
     })
 
 
+@login_required
 def customer_save(request):
     msg = ''
     new_customer = False

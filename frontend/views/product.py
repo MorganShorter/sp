@@ -1,6 +1,7 @@
 import json
 from django.views.generic import ListView
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 
 from ..models import Product, PriceLevel, PriceLevelGroup
 from ..mixins import TacoMixin
@@ -30,6 +31,7 @@ class ProductList(TacoMixin, ListView):
 product_list = ProductList.as_view()
 
 
+@login_required
 def product_get(request, pk):
     pk, params, obj, error = __preprocess_get_request(request, pk, Product)
     fields = formfields.ProductForm(obj)
@@ -41,6 +43,7 @@ def product_get(request, pk):
     })
 
 
+@login_required
 def product_save(request):
     msg = ''
     new_obj = False
@@ -88,6 +91,7 @@ def product_save(request):
     })
 
 
+@login_required
 def product_price_get(request, prod_id, price_id):
     pk, params, obj, error = __preprocess_get_request(request, price_id, PriceLevel)
 
@@ -104,6 +108,7 @@ def product_price_get(request, prod_id, price_id):
     })
 
 
+@login_required
 def product_price_save(request):
     msg = ''
     new_obj = False
@@ -145,6 +150,7 @@ def product_price_save(request):
     })
 
 
+@login_required
 def product_price_delete(request, prod_id, price_id):
     try:
         pl = PriceLevel.objects.get(pk=price_id)

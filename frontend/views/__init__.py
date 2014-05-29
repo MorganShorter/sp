@@ -1,5 +1,9 @@
+from django.views.generic.base import TemplateView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 from ..utils import json_response
-from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup, Company, Order, OrderStatus
+from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup, Company, OrderStatus
 
 
 def ajax_lookup_states(request):
@@ -71,3 +75,14 @@ def ajax_lookup_price_level_group(request):
 
 def ajax_lookup_company(request):
     return ajax_lookup(request, Company)
+
+
+class IndexView(TemplateView):
+    template_name = 'base.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(IndexView, self).dispatch(request, *args, **kwargs)
+
+
+index_entry = IndexView.as_view()

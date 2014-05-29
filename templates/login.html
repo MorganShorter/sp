@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="login_form_dialog">
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td class="form_cell"><label for="id_username" class="form_label">Login:</label></td>
+                <td class="form_cell"><input type="text" id="id_username" name="username" class="text ui-widget-content ui-corner-all form_input" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="id_password" class="form_label">Password:</label></td>
+                <td class="form_cell"><input type="password" id="id_password" name="password" class="text ui-widget-content ui-corner-all form_input" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><input type="submit" value="Login" class="button form_button" /></td>
+                <td class="form_cell"></td>
+            </tr>
+        </table>
+
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+</div>
+{% endblock %}
+
+{% block include_content %}{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/login.js"></script>
+{% endblock %}

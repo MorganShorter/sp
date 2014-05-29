@@ -52,12 +52,15 @@
                 version: <span id="version">1.0.1</span>, debug msg: <span id="debug_msg">none</span>
             </div>
             <div id="header_right">
-                Logged in as: <span id="login_name" class="bold">root</span>&nbsp;<img id="icon_user_prefs" src="{{ STATIC_URL }}img/icons/16_user_preferences.png"/>
+                {% if user.is_authenticated %}
+                Logged in as: <span id="login_name" class="bold">{{ user }}</span>&nbsp;<img id="icon_user_prefs" src="{{ STATIC_URL }}img/icons/16_user_preferences.png"/>
+                    &nbsp;<a href="{% url 'logout' %}">[logout]</a>
+                {% endif %}
             </div>
         </div>
+        {% block content %}
         <div id="window">
-            <div id="top">
-            </div>
+            <div id="top"></div>
             <div id="top_menu">
                 <ul class="dropdown">
                     <li>
@@ -149,21 +152,21 @@
                 </table>
             </div>
             <div id="footer">
-                <div id="database_name">
-                    postgres@db.fqdn
-                </div>
+                <div id="database_name"></div>
             </div>
         </div>
+        {% endblock %}
 
         <div id="order_footer"></div>
     </div>
     <!--- End container -->
     <div id="avator"><img id="avator_img" src="{{ STATIC_URL }}img/100_avator.png"/></div>
 
-    {% include 'include/customer.html' %}
-    {% include 'include/order.html' %}
-    {% include 'include/product.html' %}
-    {% include 'include/report.html' %}
-
+    {% block include_content %}
+        {% include 'include/customer.html' %}
+        {% include 'include/order.html' %}
+        {% include 'include/product.html' %}
+        {% include 'include/report.html' %}
+    {% endblock %}
 </body>
 </html>
