@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('frontend.views',
-    url('', 'index_entry', name='index'),
+    url(ur'^/', 'index_entry', name='index'),
     url(ur'^lookup/states/?', 'ajax_lookup_states'),
     url(ur'^lookup/size/?', 'ajax_lookup_size'),
     url(ur'^lookup/supplier/?', 'ajax_lookup_supplier'),
