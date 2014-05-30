@@ -19,6 +19,8 @@ $(function () {
         close: function(){
             $(this).dialog('open');
         }
+    }).dialogExtend({
+        "closable" : false
     });
 
 });
