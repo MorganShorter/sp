@@ -41,6 +41,10 @@
         <script type="text/javascript" src="{{ STATIC_URL }}js/customer.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/order.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/product.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/medium.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/size.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/supplier.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/level.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
     {% endblock javascript %}
 </head>
@@ -177,6 +181,10 @@
         {% include 'include/order.html' %}
         {% include 'include/product.html' %}
         {% include 'include/report.html' %}
+        {% include 'include/medium.html' %}
+        {% include 'include/size.html' %}
+        {% include 'include/supplier.html' %}
+        {% include 'include/level.html' %}
     {% endblock %}
 </body>
 </html>
