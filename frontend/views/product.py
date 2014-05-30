@@ -61,11 +61,12 @@ def product_save(request):
                     if price_template:
                         try:
                             price_group = PriceLevelGroup.objects.get(pk=int(price_template))
-                            for price_item in price_group.price_levels.all():
-                                price_item.pk = None
-                                price_item.price_level_group = None
-                                price_item.save()
-                                price_item.products.add(obj.object)
+                            PriceLevel(
+                                product=obj.object,
+                                min_amount=1,
+                                cost_per_item=float(obj.object.sp_cost * (1 + price_group.royalty / 100)),
+                                notes=price_group.name
+                            ).save()
                         except Exception, e:
                             print 'Error product_save [103]'
                             pass

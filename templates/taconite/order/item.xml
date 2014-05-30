@@ -69,7 +69,7 @@
                             <option value="">-</option>
                             <option value="{{ product.unit_cost }}">Default: ${{ product.unit_cost }} / item</option>
                             {% for o in product.price_levels.all %}
-                                <option value="{{ o.cost_per_item }}"><small>{{ o.min_amount }}..{{ o.max_amount }} = ${{ o.cost_per_item }}/item {% if o.block_only %}BO{% endif %}</small></option>
+                                <option value="{{ o.cost_per_item }}"><small>{{ o.min_amount }}..{{ o.max_amount|default:'∞' }} = ${{ o.cost_per_item }}/item {% if o.block_only %}BO{% endif %}</small></option>
                             {% endfor %}
 				        </select>
                     </td>

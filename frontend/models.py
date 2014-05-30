@@ -191,7 +191,7 @@ class Product(models.Model):
 
     @property
     def unit_cost(self):
-        return float(self.sp_cost * (100 + self.royalty) / 100)
+        return float(float(self.sp_cost) * (1.00 + float(self.royalty) / 100))
 
 
 class Catalog(models.Model):
@@ -262,7 +262,7 @@ class PriceLevelGroup(models.Model):
 class PriceLevel(models.Model):
     """ Price Level for a Product; products can have multiple price levels
     """
-    products = models.ManyToManyField(Product, related_name='price_levels')
+    product = models.ForeignKey(Product, related_name='price_levels', null=True, blank=True)
     min_amount = models.PositiveIntegerField()
     max_amount = models.PositiveIntegerField(blank=True, null=True)
     cost_per_item = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
@@ -348,7 +348,7 @@ class Order(models.Model):
             self.discount += order_product.discount_price * order_product.quantity
             self.sp_cost += order_product.sp_price * order_product.quantity
 
-        self.total_cost = self.sub_total + self.shipping_cost - self.discount
+        self.total_cost = self.sub_total + float(self.shipping_cost) - float(self.discount)
 
         if save:
             self.save(total_recount=False)
@@ -429,13 +429,13 @@ class OrderProduct(models.Model):
     @property
     def total_cost(self):
         if self.with_tax:
-            return self.unit_price * self.quantity * (settings.TAX_PERCENT/100 + 1)
-        return self.unit_price * self.quantity
+            return float(self.unit_price) * self.quantity * (float(settings.TAX_PERCENT) / 100 + 1)
+        return float(self.unit_price * self.quantity)
 
     @property
     def total_tax(self):
         if self.with_tax:
-            return self.unit_price * self.quantity * settings.TAX_PERCENT/100
+            return float(self.unit_price) * self.quantity * float(settings.TAX_PERCENT) / 100
         return 0
 
 
