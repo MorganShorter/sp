@@ -16,13 +16,6 @@ class ImportNote(models.Model):
     src_model = models.CharField(max_length=50, null=True, blank=True)
     src_model_id_field = models.CharField(max_length=50, null=True, blank=True)
     src_model_id_text = models.CharField(max_length=50, null=True, blank=True)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(ImportNote, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s-%i" % (self.id, slugify(self.model), self.model_id)
-            super(ImportNote, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.type + ' Import Note for ' + self.model + '.id = ' + str(self.model_id)
@@ -125,13 +118,6 @@ class Medium(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=400)
     notes = models.TextField(null=True)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(Medium, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(Medium, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.description
@@ -156,13 +142,6 @@ class Supplier(models.Model):
     """
     code = models.CharField(max_length=20)
     name = models.CharField(max_length=150)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(Supplier, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(Supplier, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return "%s : %s" % (self.code, self.name)
@@ -449,13 +428,6 @@ class Company(models.Model):
     logo_img = models.ImageField(upload_to='company_logos', max_length=255, height_field='logo_height', width_field='logo_width', null=True)
     logo_height = models.PositiveSmallIntegerField(null=True)
     logo_width = models.PositiveSmallIntegerField(null=True)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(Company, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
