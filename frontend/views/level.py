@@ -18,7 +18,7 @@ obj_list = LevelList.as_view()
 @login_required
 def obj_get(request, pk):
     pk, params, obj, error = __preprocess_get_request(request, pk, PriceLevelGroup)
-    fields = formfields.ProductForm(obj)
+    fields = formfields.PriceLevelGroupForm(obj)
     return __taco_render(request, 'taconite/level/item.xml', {
         'error': error,
         'fields': fields,

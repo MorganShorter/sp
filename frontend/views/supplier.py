@@ -8,17 +8,17 @@ from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
 
 
-class LevelList(TacoMixin, ListView):
+class SupplierList(TacoMixin, ListView):
     model = Supplier
     template_name = 'taconite/Supplier/list.xml'
 
-obj_list = LevelList.as_view()
+obj_list = SupplierList.as_view()
 
 
 @login_required
 def obj_get(request, pk):
     pk, params, obj, error = __preprocess_get_request(request, pk, Supplier)
-    fields = formfields.ProductForm(obj)
+    fields = formfields.SupplierForm(obj)
     return __taco_render(request, 'taconite/Supplier/item.xml', {
         'error': error,
         'fields': fields,

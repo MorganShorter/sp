@@ -107,3 +107,41 @@ def PriceLevelForm(obj):
         '#frm_add_pricelevel .pricelevel_cost_per_item': (obj.cost_per_item, None),
         '#frm_add_pricelevel .pricelevel_block_only': (obj.block_only, None),
     }
+
+
+def PriceLevelGroupForm(obj):
+    return {
+        '#frm_level .obj_id': (obj.pk, None),
+        '#frm_level .obj_name': (obj.name, None),
+        '#frm_level .obj_description': (obj.description, None),
+        '#frm_level .obj_royalty': (obj.royalty, "default_if_none:0"),
+    }
+
+
+def SizeForm(obj):
+    return {
+        '#frm_size .obj_id': (obj.pk, None),
+        '#frm_size .obj_width': (obj.width, None),
+        '#frm_size .obj_height': (obj.height, None),
+        '#frm_size .obj_depth': (obj.depth, None),
+        '#frm_size .obj_units': (obj.units, None),
+        '#frm_size .obj_notes': (obj.notes, None),
+        '#frm_size .obj_sub_notes': (obj.sub_notes, None),
+    }
+
+
+def SupplierForm(obj):
+    return {
+        '#frm_supplier .obj_id': (obj.pk, None),
+        '#frm_supplier .obj_code': (obj.code, None),
+        '#frm_supplier .obj_name': (obj.name, None),
+    }
+
+
+def MediumForm(obj):
+    return {
+        '#frm_medium .obj_id': (obj.pk, None),
+        '#frm_medium .obj_name': (obj.name, None),
+        '#frm_medium .obj_description': (obj.description, None),
+        '#frm_medium .obj_notes': (obj.notes, None),
+    }
