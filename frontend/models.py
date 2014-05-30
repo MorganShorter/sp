@@ -253,6 +253,7 @@ class PriceLevelGroup(models.Model):
     """
     name = models.CharField(max_length=10)
     description = models.CharField(max_length=255, null=True, blank=True)
+    royalty = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
     def __unicode__(self):
         return self.name
@@ -262,7 +263,6 @@ class PriceLevel(models.Model):
     """ Price Level for a Product; products can have multiple price levels
     """
     products = models.ManyToManyField(Product, related_name='price_levels')
-    price_level_group = models.ForeignKey(PriceLevelGroup, related_name='price_levels', null=True, blank=True)
     min_amount = models.PositiveIntegerField()
     max_amount = models.PositiveIntegerField(blank=True, null=True)
     cost_per_item = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)

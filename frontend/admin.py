@@ -27,8 +27,7 @@ admin.site.register(PriceLevelGroup)
 
 
 class PriceLevelAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'id', 'min_amount', 'max_amount', 'cost_per_item', 'block_only', 'price_level_group')
-    list_filter = ('price_level_group', )
+    list_display = ('__unicode__', 'id', 'min_amount', 'max_amount', 'cost_per_item', 'block_only')
 
 admin.site.register(PriceLevel, PriceLevelAdmin)
 
