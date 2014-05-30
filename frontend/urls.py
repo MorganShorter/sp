@@ -61,3 +61,31 @@ urlpatterns += patterns('frontend.views.reports',
     url(ur'^report/2/get/', 'report_2', name='report_2'),
     url(ur'^report/3/get/', 'report_3', name='report_3'),
 )
+
+# Price Level Group CRUD
+urlpatterns += patterns('frontend.views.level',
+    url(ur'^price_level/save/', 'obj_save'),
+    url(ur'^price_level/list/', 'obj_list', name='level_list'),
+    url(ur'^price_level/(?P<pk>\d*)/', 'obj_get', name='level_get')
+)
+
+# Size CRUD
+urlpatterns += patterns('frontend.views.size',
+    url(ur'^size/save/', 'obj_save'),
+    url(ur'^size/list/', 'obj_list', name='size_list'),
+    url(ur'^size/(?P<pk>\d*)/', 'obj_get', name='size_get')
+)
+
+# Medium CRUD
+urlpatterns += patterns('frontend.views.medium',
+    url(ur'^medium/save/', 'obj_save'),
+    url(ur'^medium/list/', 'obj_list', name='medium_list'),
+    url(ur'^medium/(?P<pk>\d*)/', 'obj_get', name='medium_get')
+)
+
+# Supplier CRUD
+urlpatterns += patterns('frontend.views.supplier',
+    url(ur'^supplier/save/', 'obj_save'),
+    url(ur'^supplier/list/', 'obj_list', name='supplier_list'),
+    url(ur'^supplier/(?P<pk>\d*)/', 'obj_get', name='supplier_get')
+)
