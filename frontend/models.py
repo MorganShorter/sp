@@ -343,10 +343,10 @@ class Order(models.Model):
         self.tax = 0
 
         for order_product in self.ordered_products.all():
-            self.sub_total += order_product.unit_price * order_product.quantity
+            self.sub_total += order_product.total_cost
+            self.tax += order_product.total_tax
             self.discount += order_product.discount_price * order_product.quantity
             self.sp_cost += order_product.sp_price * order_product.quantity
-            self.tax += order_product.unit_tax * order_product.quantity
 
         self.total_cost = self.sub_total + self.shipping_cost - self.discount
 
@@ -425,6 +425,18 @@ class OrderProduct(models.Model):
         self.royalty_amount = self.quantity * (float(self.unit_price) - float(self.sp_price))
         self.back_order = True if self.quantity > self.product.current_stock else False
         super(OrderProduct, self).save(*args, **kwargs)
+
+    @property
+    def total_cost(self):
+        if self.with_tax:
+            return self.unit_price * self.quantity * (settings.TAX_PERCENT/100 + 1)
+        return self.unit_price * self.quantity
+
+    @property
+    def total_tax(self):
+        if self.with_tax:
+            return self.unit_price * self.quantity * settings.TAX_PERCENT/100
+        return 0
 
 
 class Company(models.Model):
