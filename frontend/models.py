@@ -387,6 +387,7 @@ class OrderStatus(models.Model):
     status = models.CharField(max_length=2, choices=ORDER_STATUS_CHOICES, default=PROCESSING)
     notes = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
 
     def __unicode__(self):
         return '%s - %s' % (self.order, self.status)

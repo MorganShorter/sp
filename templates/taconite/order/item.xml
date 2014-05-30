@@ -26,8 +26,10 @@
             {% for order_status in order.statuses.all %}
                 <after select="table#order_statuses tr:last">
                 <tr class="form_list_row">
-                    <td class="form_list_item">{{ order_status.timestamp }}</td>
-                    <td class="form_list_item">{{ order_status.get_status_display }}</td>
+                    <td>{{ order_status.timestamp|date:"Y-m-d h:i a" }}</td>
+                    <td>{{ order_status.get_status_display }}</td>
+                    <td>{{ order_status.user|default_if_none:"-" }}</td>
+                    <td>{{ order_status.notes }}</td>
                 </tr>
                 </after>
             {% endfor %}

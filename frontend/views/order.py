@@ -163,9 +163,11 @@ def order_save(request):
                 status = json.loads(request.body)[0].get('status', None)
                 if status != obj.object.last_status.status:
                     if status in OrderStatus.STATUSES:
-                        obj.object.statuses.create(status=status)
-
-
+                        obj.object.statuses.create(
+                            status=status,
+                            user=request.user,
+                            notes="manually changed by %s" % request.user
+                        )
 
                 obj_id = obj.object.id
             else:
