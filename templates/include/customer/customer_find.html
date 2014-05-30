@@ -4,9 +4,15 @@
         <input type="hidden" id="customer_find_filter_value" name="additional_value">
         <input type="hidden" id="customer_find_filter_label">
 
-        <a id="find_customer_search" title="find customers" href="#" class="button form_button pull-right">
-            <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
-        </a>
+        <div id="find_customer_buttons" class="pull-right">
+            <a id="find_customer_search" title="find customers" href="#" class="button">
+                <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
+            </a>
+            <a title="add customer" href="#" class="button button_customer_add">
+                <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_new_customer.png">
+            </a>
+        </div>
+
 		<table>
             <tr>
                 <td class="form_cell"><label for="find_customer_id" class="form_label">customer ID:</label></td>

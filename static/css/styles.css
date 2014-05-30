@@ -736,3 +736,11 @@ ul.dropdown ul.sub_menu_reports {
 #find_customer_additional_filter td:last-child {
     position: relative;
 }
+
+#find_customer_buttons {
+    width: 82px;
+}
+
+#find_customer_search {
+    margin-bottom: 5px;
+}
