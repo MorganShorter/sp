@@ -58,3 +58,21 @@ def obj_save(request):
         'obj_id': obj_id,
         'created': True if new_obj else False
     })
+
+
+@login_required
+def obj_delete(request, pk):
+    try:
+        pl = Medium.objects.get(pk=pk)
+    except Medium.DoesNotExist:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong ID'
+        })
+
+    pl.delete()
+
+    return json_response({
+        'status': 'ok',
+        'msg': 'Medium has deleted!'
+    })

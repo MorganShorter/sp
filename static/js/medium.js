@@ -40,7 +40,29 @@ $(function(){
         }, {
             text: "Delete",
             click: function() {
+                var c_form = $('#frm_medium');
+                var obj_id = $.trim($('.obj_id', c_form).val());
+                if (obj_id == "" || obj_id == undefined || obj_id == null){
+                    alert('Error! ID not found');
+                    return false;
+                }
 
+                var cnf = confirm('Sure you want to delete this medium?');
+                if (cnf != true){
+                    return false;
+                }
+                $.get('/medium/delete/' + obj_id + '/', function(data){
+                    if (data['status'] == 'error'){
+                        alert('Error! ' + data['msg']);
+                    } else {
+                        alert(data['msg']);
+                        c_form.resetForm();
+                        $("#medium_item_dialog").dialog('close');
+                        $.get(__url_medium_list);
+                        $("#medium_list_dialog").dialog('open');
+                    }
+                });
+                return false;
             }
         }]
     });

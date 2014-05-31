@@ -80,7 +80,8 @@ urlpatterns += patterns('frontend.views.size',
 urlpatterns += patterns('frontend.views.medium',
     url(ur'^medium/save/', 'obj_save'),
     url(ur'^medium/list/', 'obj_list', name='medium_list'),
-    url(ur'^medium/open/(?P<pk>\d*)/', 'obj_get', name='medium_get')
+    url(ur'^medium/open/(?P<pk>\d*)/', 'obj_get', name='medium_get'),
+    url(ur'^medium/delete/(?P<pk>\d*)/', 'obj_delete')
 )
 
 # Supplier CRUD
