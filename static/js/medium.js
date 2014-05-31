@@ -60,6 +60,7 @@ $(function(){
                         $("#medium_item_dialog").dialog('close');
                         $.get(__url_medium_list);
                         $("#medium_list_dialog").dialog('open');
+                        refresh_medium();
                     }
                 });
                 return false;
@@ -94,6 +95,7 @@ $(function(){
                     $("#medium_item_dialog").dialog('close');
                     $.get(__url_medium_list);
                     $("#medium_list_dialog").dialog('open');
+                    refresh_medium();
                 }
                 alert(json['msg']);
             }

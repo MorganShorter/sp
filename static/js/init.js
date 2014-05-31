@@ -271,3 +271,73 @@ $.fn.extend({
         $(this).val('');
     }
 });
+
+function refresh_size(){
+    $.ajax({url: '/lookup/size',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $('.product_size').html('');
+            $.each(json, function (k, v) {
+                $('.product_size').append(new Option(v, k));
+            });
+        }
+    });
+}
+
+function refresh_medium(){
+    $.ajax({url: '/lookup/medium',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $('.product_medium').html('');
+            $.each(json, function (k, v) {
+                $('.product_medium').append(new Option(v, k));
+            });
+        }
+    });
+}
+
+function refresh_supplier(){
+    $.ajax({url: '/lookup/supplier',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $('.product_supplier').html('');
+            $.each(json, function (k, v) {
+                $('.product_supplier').append(new Option(v, k));
+            });
+        }
+    });
+}
+
+function refresh_royalty_img(){
+    $.ajax({url: '/lookup/royalty_img',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $('.product_royalty_img').html('');
+            $.each(json, function (k, v) {
+                $('.product_royalty_img').append(new Option(v, k));
+            });
+        }
+    });
+}
+
+function refresh_level(){
+    $.ajax({url: '/lookup/price_level_group',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $('.product_price_level_template').html('');
+            $.each(json, function (k, v) {
+                $('.product_price_level_template').append(new Option(v, k));
+            });
+        }
+    });
+}

@@ -60,6 +60,7 @@ $(function(){
                         $("#level_item_dialog").dialog('close');
                         $.get(__url_level_list);
                         $("#level_list_dialog").dialog('open');
+                        refresh_level();
                     }
                 });
                 return false;
@@ -94,6 +95,7 @@ $(function(){
                     $("#level_item_dialog").dialog('close');
                     $.get(__url_level_list);
                     $("#level_list_dialog").dialog('open');
+                    refresh_level();
                 }
                 alert(json['msg']);
             }

@@ -46,4 +46,10 @@ $(function () {
         }
     });
 
+    refresh_size();
+    refresh_medium();
+    refresh_supplier();
+    refresh_royalty_img();
+    refresh_level();
+
 });

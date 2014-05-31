@@ -60,6 +60,7 @@ $(function(){
                         $("#size_item_dialog").dialog('close');
                         $.get(__url_size_list);
                         $("#size_list_dialog").dialog('open');
+                        refresh_size();
                     }
                 });
                 return false;
@@ -94,6 +95,7 @@ $(function(){
                     $("#size_item_dialog").dialog('close');
                     $.get(__url_size_list);
                     $("#size_list_dialog").dialog('open');
+                    refresh_size();
                 }
                 alert(json['msg']);
             }

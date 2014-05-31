@@ -60,6 +60,7 @@ $(function(){
                         $("#supplier_item_dialog").dialog('close');
                         $.get(__url_supplier_list);
                         $("#supplier_list_dialog").dialog('open');
+                        refresh_supplier();
                     }
                 });
                 return false;
@@ -94,6 +95,7 @@ $(function(){
                     $("#supplier_item_dialog").dialog('close');
                     $.get(__url_supplier_list);
                     $("#supplier_list_dialog").dialog('open');
+                    refresh_supplier();
                 }
                 alert(json['msg']);
             }

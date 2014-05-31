@@ -3,11 +3,14 @@
     <append select="#size_list_result tbody">
         {% for obj in object_list %}
             <tr class="form_list_row" cid="{{ obj.pk }}">
-                <td>{{ obj }}</td>
+                <td>{{ obj.width }}</td>
+                <td>{{ obj.height }}</td>
+                <td>{{ obj.depth }}</td>
+                <td>{{ obj.units }}</td>
             </tr>
         {% empty %}
             <tr class="form_list_row">
-                <td>not found</td>
+                <td colspan="4">not found</td>
             </tr>
         {% endfor %}
     </append>

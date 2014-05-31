@@ -2,61 +2,6 @@ $(function () {
     /* Product
     * */
 
-    $.ajax({url: '/lookup/size',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $.each(json, function (k, v) {
-                $('.product_size').append(new Option(v, k));
-            });
-        }
-    });
-
-    $.ajax({url: '/lookup/medium',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $.each(json, function (k, v) {
-                $('.product_medium').append(new Option(v, k));
-            });
-        }
-    });
-
-    $.ajax({url: '/lookup/supplier',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $.each(json, function (k, v) {
-                $('.product_supplier').append(new Option(v, k));
-            });
-        }
-    });
-
-    $.ajax({url: '/lookup/royalty_img',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $.each(json, function (k, v) {
-                $('.product_royalty_img').append(new Option(v, k));
-            });
-        }
-    });
-
-    $.ajax({url: '/lookup/price_level_group',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $.each(json, function (k, v) {
-                $('.product_price_level_template').append(new Option(v, k));
-            });
-        }
-    });
-
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,
