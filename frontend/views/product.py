@@ -123,7 +123,7 @@ def product_price_save(request):
 
                 if obj.object.max_amount:
                     if obj.object.min_amount >= obj.object.max_amount and not obj.object.block_only:
-                        msg = 'Max Qty should be bigger than Min Qty (if not a block)'
+                        msg = 'Max Qty should be bigger than Min Qty (if it doesn`t a block)'
                         break
                 else:
                     obj.object.max_amount = None
@@ -154,24 +154,17 @@ def product_price_save(request):
 @login_required
 def product_price_delete(request, prod_id, price_id):
     try:
-        pl = PriceLevel.objects.get(pk=price_id)
+        pl = PriceLevel.objects.get(
+            pk=price_id,
+            product_id=int(prod_id)
+        )
     except PriceLevel.DoesNotExist:
         return json_response({
             'status': 'error',
             'msg': 'Wrong ID'
         })
 
-    products = pl.products.values_list('pk', flat=True)
-    if int(prod_id) not in products:
-        return json_response({
-            'status': 'error',
-            'msg': 'Wrong product ID'
-        })
-
-    if len(products) > 1:
-        pl.products.remove(int(prod_id))
-    else:
-        pl.delete()
+    pl.delete()
 
     return json_response({
         'status': 'ok',

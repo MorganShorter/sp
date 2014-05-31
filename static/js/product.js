@@ -265,7 +265,6 @@ $(function () {
             model_fields.pricelevel.max_amount = NaN;
         }
 
-        model_fields.pricelevel.products = [parseInt(model_fields.pricelevel.products)]
 
         var obj_json = [{
             'pk': obj_id,
