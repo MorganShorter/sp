@@ -173,6 +173,7 @@ class Product(models.Model):
     royalty_img = models.ForeignKey(RoyaltyImg, related_name='+', null=True, on_delete=models.PROTECT)
     supplier = models.ForeignKey(Supplier, related_name='products', on_delete=models.PROTECT)
     royalty = models.PositiveSmallIntegerField(help_text='[0..100]%', default=0)
+    last_read = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('name',)

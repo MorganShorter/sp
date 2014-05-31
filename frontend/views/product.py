@@ -23,7 +23,10 @@ class ProductList(TacoMixin, ListView):
             fltr['name__icontains'] = self.request.GET['find_product_name']
 
         if not fltr:
-            return qs.none()
+            if self.request.GET.get('last', None):
+                return qs.order_by('-last_read')[:10]
+            else:
+                return qs.none()
 
         return qs.filter(**fltr)
 
@@ -35,6 +38,8 @@ product_list = ProductList.as_view()
 def product_get(request, pk):
     pk, params, obj, error = __preprocess_get_request(request, pk, Product)
     fields = formfields.ProductForm(obj)
+    obj.save()  # update last_read
+
     return __taco_render(request, 'taconite/product/item.xml', {
         'error': error,
         'fields': fields,

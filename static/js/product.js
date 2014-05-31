@@ -24,6 +24,9 @@ $(function () {
             $("#product_content").dialog('close');
             $("#product_add").dialog('close');
             $("#product_pricelevel").dialog("close");
+        },
+        create: function(event, ui) {
+            $.get(__url_product_list + '?last=1');
         }
     });
     $("#product_pricelevel").dialog({
@@ -58,6 +61,9 @@ $(function () {
     // Open product detail
     $('#product_search_result tbody tr').live('click', function(){
         var cid = $(this).attr('cid');
+        if (cid == undefined)
+            return false;
+
         $("#product_content").dialog("open");
         $.get('/product/' + cid + '/');
     });
@@ -157,8 +163,6 @@ $(function () {
         culture: "en-AU"
     });
 
-
-
     // Price Levels
     $('.price_table tbody tr').live("click", function(){
         var price_id = $(this).attr('pr_level_id');
@@ -210,7 +214,6 @@ $(function () {
             model_fields.pricelevel.max_amount = NaN;
         }
 
-
         var obj_json = [{
             'pk': obj_id,
             'model': 'frontend.pricelevel',
@@ -251,14 +254,6 @@ $(function () {
     $('.price_level_add_btn').live('click', function(){
         $("#product_pricelevel").dialog("open");
         $('#frm_add_pricelevel .price_products_id').val($("#frm_product .product_id").val());
-    });
-
-
-    // ?????
-    $("#product").mask("99/99/9999", {
-        completed: function () {
-            alert("You typed the following: " + this.val());
-        }
     });
 
 });
