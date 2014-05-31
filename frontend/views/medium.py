@@ -1,3 +1,4 @@
+from django.db.models import ProtectedError
 from django.views.generic import ListView
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
@@ -70,9 +71,15 @@ def obj_delete(request, pk):
             'msg': 'Wrong ID'
         })
 
-    pl.delete()
+    try:
+        pl.delete()
+    except ProtectedError:
+        return json_response({
+            'status': 'error',
+            'msg': 'You cant delete this record because it is used!'
+        })
 
     return json_response({
         'status': 'ok',
-        'msg': 'Medium has deleted!'
+        'msg': 'Medium has been deleted!'
     })

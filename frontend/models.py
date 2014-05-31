@@ -168,11 +168,14 @@ class Product(models.Model):
     current_stock = models.PositiveIntegerField(default=0)
     minimum_stock = models.PositiveIntegerField(default=0)
     sp_cost = models.DecimalField(max_digits=12, decimal_places=2, null=True)
-    size = models.ForeignKey(Size, related_name='+')
-    medium = models.ForeignKey(Medium, related_name='+', null=True)
-    royalty_img = models.ForeignKey(RoyaltyImg, related_name='+', null=True)
-    supplier = models.ForeignKey(Supplier, related_name='products')
+    size = models.ForeignKey(Size, related_name='+', on_delete=models.PROTECT)
+    medium = models.ForeignKey(Medium, related_name='+', null=True, on_delete=models.PROTECT)
+    royalty_img = models.ForeignKey(RoyaltyImg, related_name='+', null=True, on_delete=models.PROTECT)
+    supplier = models.ForeignKey(Supplier, related_name='products', on_delete=models.PROTECT)
     royalty = models.PositiveSmallIntegerField(help_text='[0..100]%', default=0)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.code)

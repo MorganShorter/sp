@@ -1,3 +1,4 @@
+from django.db.models import ProtectedError
 from django.views.generic import ListView
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
@@ -57,4 +58,28 @@ def obj_save(request):
         'msg': msg,
         'obj_id': obj_id,
         'created': True if new_obj else False
+    })
+
+
+@login_required
+def obj_delete(request, pk):
+    try:
+        pl = Size.objects.get(pk=pk)
+    except Size.DoesNotExist:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong ID'
+        })
+
+    try:
+        pl.delete()
+    except ProtectedError:
+        return json_response({
+            'status': 'error',
+            'msg': 'You cant delete this record because it is used!'
+        })
+
+    return json_response({
+        'status': 'ok',
+        'msg': 'Size object has been deleted!'
     })
