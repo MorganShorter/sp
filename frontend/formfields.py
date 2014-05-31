@@ -143,5 +143,5 @@ def MediumForm(obj):
         '#frm_medium .obj_id': (obj.pk, None),
         '#frm_medium .obj_name': (obj.name, None),
         '#frm_medium .obj_description': (obj.description, None),
-        '#frm_medium .obj_notes': (obj.notes, None),
+        '#frm_medium .obj_notes': (obj.notes, "default_if_none:"),
     }

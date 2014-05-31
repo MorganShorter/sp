@@ -4,10 +4,11 @@
         {% for obj in object_list %}
             <tr class="form_list_row" cid="{{ obj.pk }}">
                 <td>{{ obj.name }}</td>
+                <td>{{ obj.description }}</td>
             </tr>
         {% empty %}
             <tr class="form_list_row">
-                <td>not found</td>
+                <td colspan="2">not found</td>
             </tr>
         {% endfor %}
     </append>

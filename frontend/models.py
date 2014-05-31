@@ -103,6 +103,9 @@ class Size(models.Model):
     notes = models.TextField(null=True)
     sub_notes = models.TextField(null=True)
 
+    class Meta:
+        ordering = ('width', 'height', 'depth', 'units')
+
     def __unicode__(self):
         if self.width and self.height and self.depth:
             return "W:%d H:%d D:%d" % (self.width, self.height, self.depth)
@@ -118,6 +121,9 @@ class Medium(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=400)
     notes = models.TextField(null=True)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.description
@@ -142,6 +148,9 @@ class Supplier(models.Model):
     """
     code = models.CharField(max_length=20)
     name = models.CharField(max_length=150)
+
+    class Meta:
+        ordering = ('code', 'name')
 
     def __unicode__(self):
         return "%s : %s" % (self.code, self.name)
@@ -233,6 +242,9 @@ class PriceLevelGroup(models.Model):
     name = models.CharField(max_length=10)
     description = models.CharField(max_length=255, null=True, blank=True)
     royalty = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
