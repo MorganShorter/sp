@@ -74,7 +74,6 @@ def OrderForm(order, invoice):
         '#frm_order .order_from_borders_fakeid': (order.from_borders_fakeid, "default_if_none:0"),
         '#frm_order .order_order_notes': ('<br>'.join(order.order_notes.splitlines()) if order.order_notes else '', None),
 
-
     }
 
 
@@ -125,8 +124,8 @@ def SizeForm(obj):
         '#frm_size .obj_height': (obj.height, None),
         '#frm_size .obj_depth': (obj.depth, None),
         '#frm_size .obj_units': (obj.units, None),
-        '#frm_size .obj_notes': (obj.notes, None),
-        '#frm_size .obj_sub_notes': (obj.sub_notes, None),
+        '#frm_size .obj_notes': ('<br>'.join(obj.notes.splitlines()) if obj.notes else '', None),
+        '#frm_size .obj_sub_notes': ('<br>'.join(obj.sub_notes.splitlines()) if obj.sub_notes else '', None),
     }
 
 

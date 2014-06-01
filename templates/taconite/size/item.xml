@@ -1,3 +1,5 @@
 <taconite>
-{% include "taconite/fields.xml" with fields=fields %}
+    {% include "taconite/fields.xml" with fields=fields %}
+    <eval>$("#frm_size .obj_notes").val($.br2nl($("#frm_size .obj_notes").val()));</eval>
+    <eval>$("#frm_size .obj_sub_notes").val($.br2nl($("#frm_size .obj_sub_notes").val()));</eval>
 </taconite>

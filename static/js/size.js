@@ -1,38 +1,6 @@
 $(function(){
-    $("#size_list_dialog").dialog({
-        title: "Size list",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
-            text: "Create",
-            click: function() {
-
-            }
-        }, {
-            text: "Close",
-            click: function() {
-                $("#size_list_dialog").dialog('close');
-            }
-        }]
-    });
-
-    $('.button_products_size').click(function(){
-        $("#size_list_dialog").dialog('open');
-        $.get(__url_size_list);
-    });
-
-    $('#size_list_result tbody tr').live('click', function(){
-        var cid = $(this).attr('cid');
-        $.get('/size/open/' + cid + '/');
-        $("#size_item_dialog").dialog("open");
-        return false;
-    });
-
-    $("#size_item_dialog").dialog({
-        title: "Edit Size",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
+    var size_item_default_btn = [
+        {
             text: "Save",
             click: function() {
                 save_size()
@@ -65,7 +33,66 @@ $(function(){
                 });
                 return false;
             }
+        }
+    ];
+
+    var size_item_create_btn = [
+        {
+            text: "Create",
+            click: function() {
+                save_size()
+            }
+        }
+    ]
+
+    $("#size_list_dialog").dialog({
+        title: "Size list",
+        autoOpen: false,
+        width: 414,
+
+        buttons: [{
+            text: "Create",
+            click: function() {
+                $("#size_item_dialog")
+                    .dialog("close")
+                    .dialog("option", "title", "Create Size")
+                    .dialog("option", "buttons", size_item_create_btn)
+                    .dialog("open");
+            }
+        }, {
+            text: "Close",
+            click: function() {
+                $("#size_list_dialog").dialog('close');
+            }
         }]
+    });
+
+    $('.button_products_size').click(function(){
+        $("#size_list_dialog").dialog('open');
+        $.get(__url_size_list);
+    });
+
+    $('#size_list_result tbody tr').live('click', function(){
+        var cid = $(this).attr('cid');
+        $.get('/size/open/' + cid + '/');
+        $("#size_item_dialog")
+            .dialog("close")
+            .dialog("option", "title", "Edit Size")
+            .dialog("option", "buttons", size_item_default_btn)
+            .dialog("open");
+        return false;
+    });
+
+
+    $("#size_item_dialog").dialog({
+        title: "Edit Size",
+        autoOpen: false,
+        width: 414,
+        close: function(){
+            $('form', this).resetForm();
+            $('form .obj_id', this).val('');
+        },
+        buttons: size_item_default_btn
     });
 
     function save_size() {
