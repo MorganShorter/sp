@@ -1,38 +1,5 @@
 $(function(){
-    $("#royalty_list_dialog").dialog({
-        title: "Royalty Groups",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
-            text: "Create",
-            click: function() {
-
-            }
-        }, {
-            text: "Close",
-            click: function() {
-                $("#royalty_list_dialog").dialog('close');
-            }
-        }]
-    });
-
-    $('.button_products_royalty').click(function(){
-        $("#royalty_list_dialog").dialog('open');
-        $.get(__url_royalty_list);
-    });
-
-    $('#royalty_list_result tbody tr').live('click', function(){
-        var cid = $(this).attr('cid');
-        $.get('/royalty/open/' + cid + '/');
-        $("#royalty_item_dialog").dialog("open");
-        return false;
-    });
-
-    $("#royalty_item_dialog").dialog({
-        title: "Edit Royalty Group",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
+    var royalty_item_default_btn = [{
             text: "Save",
             click: function() {
                 save_royalty()
@@ -65,7 +32,61 @@ $(function(){
                 });
                 return false;
             }
+        }
+    ];
+
+    var royalty_item_create_btn = [
+        {
+            text: "Create",
+            click: function() {
+                save_royalty()
+            }
+        }
+    ];
+
+
+    $("#royalty_list_dialog").dialog({
+        title: "Royalty Groups",
+        autoOpen: false,
+        width: 414,
+        buttons: [{
+            text: "Create",
+            click: function() {
+                $("#royalty_item_dialog")
+                    .dialog("close")
+                    .dialog("option", "title", "Create Royalty Group")
+                    .dialog("option", "buttons", royalty_item_create_btn)
+                    .dialog("open");
+            }
+        }, {
+            text: "Close",
+            click: function() {
+                $("#royalty_list_dialog").dialog('close');
+            }
         }]
+    });
+
+    $('.button_products_royalty').click(function(){
+        $("#royalty_list_dialog").dialog('open');
+        $.get(__url_royalty_list);
+    });
+
+    $('#royalty_list_result tbody tr').live('click', function(){
+        var cid = $(this).attr('cid');
+        $.get('/royalty/open/' + cid + '/');
+        $("#royalty_item_dialog")
+            .dialog("close")
+            .dialog("option", "title", "Edit Royalty Group")
+            .dialog("option", "buttons", royalty_item_default_btn)
+            .dialog("open");
+        return false;
+    });
+
+    $("#royalty_item_dialog").dialog({
+        title: "Edit Royalty Group",
+        autoOpen: false,
+        width: 414,
+        buttons: royalty_item_default_btn
     });
 
     function save_royalty() {

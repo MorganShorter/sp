@@ -1,38 +1,6 @@
 $(function(){
-    $("#supplier_list_dialog").dialog({
-        title: "Suppliers list",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
-            text: "Create",
-            click: function() {
 
-            }
-        }, {
-            text: "Close",
-            click: function() {
-                $("#supplier_list_dialog").dialog('close');
-            }
-        }]
-    });
-
-    $('.button_products_supplier').click(function(){
-        $("#supplier_list_dialog").dialog('open');
-        $.get(__url_supplier_list);
-    });
-
-    $('#supplier_list_result tbody tr').live('click', function(){
-        var cid = $(this).attr('cid');
-        $.get('/supplier/open/' + cid + '/');
-        $("#supplier_item_dialog").dialog("open");
-        return false;
-    });
-
-    $("#supplier_item_dialog").dialog({
-        title: "Edit Supplier",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
+    var supplier_item_default_btn = [{
             text: "Save",
             click: function() {
                 save_supplier()
@@ -65,7 +33,60 @@ $(function(){
                 });
                 return false;
             }
+        }
+    ];
+
+    var supplier_item_create_btn = [
+        {
+            text: "Create",
+            click: function() {
+                save_supplier()
+            }
+        }
+    ];
+
+    $("#supplier_list_dialog").dialog({
+        title: "Suppliers list",
+        autoOpen: false,
+        width: 414,
+        buttons: [{
+            text: "Create",
+            click: function() {
+                $("#supplier_item_dialog")
+                    .dialog("close")
+                    .dialog("option", "title", "Create Supplier")
+                    .dialog("option", "buttons", supplier_item_create_btn)
+                    .dialog("open");
+            }
+        }, {
+            text: "Close",
+            click: function() {
+                $("#supplier_list_dialog").dialog('close');
+            }
         }]
+    });
+
+    $('.button_products_supplier').click(function(){
+        $("#supplier_list_dialog").dialog('open');
+        $.get(__url_supplier_list);
+    });
+
+    $('#supplier_list_result tbody tr').live('click', function(){
+        var cid = $(this).attr('cid');
+        $.get('/supplier/open/' + cid + '/');
+        $("#supplier_item_dialog")
+            .dialog("close")
+            .dialog("option", "title", "Edit Supplier")
+            .dialog("option", "buttons", supplier_item_default_btn)
+            .dialog("open");
+        return false;
+    });
+
+    $("#supplier_item_dialog").dialog({
+        title: "Edit Supplier",
+        autoOpen: false,
+        width: 414,
+        buttons: supplier_item_default_btn
     });
 
     function save_supplier() {

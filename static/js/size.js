@@ -43,13 +43,12 @@ $(function(){
                 save_size()
             }
         }
-    ]
+    ];
 
     $("#size_list_dialog").dialog({
         title: "Size list",
         autoOpen: false,
         width: 414,
-
         buttons: [{
             text: "Create",
             click: function() {

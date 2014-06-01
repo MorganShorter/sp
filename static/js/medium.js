@@ -1,38 +1,5 @@
 $(function(){
-    $("#medium_list_dialog").dialog({
-        title: "Medium list",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
-            text: "Create",
-            click: function() {
-
-            }
-        }, {
-            text: "Close",
-            click: function() {
-                $("#medium_list_dialog").dialog('close');
-            }
-        }]
-    });
-
-    $('.button_products_medium').click(function(){
-        $("#medium_list_dialog").dialog('open');
-        $.get(__url_medium_list);
-    });
-
-    $('#medium_list_result tbody tr').live('click', function(){
-        var cid = $(this).attr('cid');
-        $.get('/medium/open/' + cid + '/');
-        $("#medium_item_dialog").dialog("open");
-        return false;
-    });
-
-    $("#medium_item_dialog").dialog({
-        title: "Edit Medium",
-        autoOpen: false,
-        width: 414,
-        buttons: [{
+    var medium_item_default_btn = [{
             text: "Save",
             click: function() {
                 save_medium()
@@ -65,7 +32,61 @@ $(function(){
                 });
                 return false;
             }
+        }
+    ];
+
+    var medium_item_create_btn = [
+        {
+            text: "Create",
+            click: function() {
+                save_medium()
+            }
+        }
+    ]
+
+
+    $("#medium_list_dialog").dialog({
+        title: "Medium list",
+        autoOpen: false,
+        width: 414,
+        buttons: [{
+            text: "Create",
+            click: function() {
+                $("#medium_item_dialog")
+                    .dialog("close")
+                    .dialog("option", "title", "Create Medium")
+                    .dialog("option", "buttons", medium_item_create_btn)
+                    .dialog("open");
+            }
+        }, {
+            text: "Close",
+            click: function() {
+                $("#medium_list_dialog").dialog('close');
+            }
         }]
+    });
+
+    $('.button_products_medium').click(function(){
+        $("#medium_list_dialog").dialog('open');
+        $.get(__url_medium_list);
+    });
+
+    $('#medium_list_result tbody tr').live('click', function(){
+        var cid = $(this).attr('cid');
+        $.get('/medium/open/' + cid + '/');
+        $("#medium_item_dialog")
+            .dialog("close")
+            .dialog("option", "title", "Edit Medium")
+            .dialog("option", "buttons", medium_item_default_btn)
+            .dialog("open");
+        return false;
+    });
+
+    $("#medium_item_dialog").dialog({
+        title: "Edit Medium",
+        autoOpen: false,
+        width: 414,
+        buttons: medium_item_default_btn
     });
 
     function save_medium() {
