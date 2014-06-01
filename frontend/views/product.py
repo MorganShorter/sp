@@ -17,7 +17,7 @@ class ProductList(TacoMixin, ListView):
         qs = super(ProductList, self).get_queryset()
         fltr = {}
         if self.request.GET.get('product_code', None):
-            fltr['code'] = self.request.GET['product_code']
+            fltr['code__istartswith'] = self.request.GET['product_code']
 
         if self.request.GET.get('find_product_name', None):
             fltr['name__icontains'] = self.request.GET['find_product_name']
