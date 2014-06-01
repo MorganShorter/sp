@@ -388,9 +388,9 @@ class OrderProduct(models.Model):
     unit_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     unit_tax = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    discount_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+    discount_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)  # total discount for all products
     sp_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    royalty_amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)
+    royalty_amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)  # total_cost -
     back_order = models.BooleanField(default=False)
     with_tax = models.BooleanField(default=False)
 
@@ -404,22 +404,29 @@ class OrderProduct(models.Model):
         print 'order_product save'
         self.sp_price = self.product.sp_cost
         self.unit_tax = 0 if not self.with_tax else float(self.unit_price * settings.TAX_PERCENT) / 100
-        self.discount_price = self.unit_price * self.discount_percentage / 100
-        self.royalty_amount = self.quantity * (float(self.unit_price) - float(self.sp_price))
+        self.discount_price = self.quantity * self.unit_price * self.discount_percentage / 100
+        self.royalty_amount = self.quantity * self.unit_price * self.product.royalty / 100
         self.back_order = True if self.quantity > self.product.current_stock else False
         super(OrderProduct, self).save(*args, **kwargs)
 
     @property
     def total_cost(self):
+        total = float(self.unit_price) * self.quantity
+
+        if self.discount_price:
+            total -= self.discount_price
+
+        if self.royalty_amount:
+            total += self.royalty_amount
+
         if self.with_tax:
-            return float(self.unit_price) * self.quantity * (float(settings.TAX_PERCENT) / 100 + 1)
-        return float(self.unit_price * self.quantity)
+            total += self.total_tax
+
+        return total
 
     @property
     def total_tax(self):
-        if self.with_tax:
-            return float(self.unit_price) * self.quantity * float(settings.TAX_PERCENT) / 100
-        return 0
+        return float(self.unit_tax) * self.quantity
 
 
 class Company(models.Model):
