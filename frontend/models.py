@@ -233,7 +233,7 @@ class CatalogIssueProduct(models.Model):
 class RoyaltyGroup(models.Model):
     """ Price Level Group for a PriceLevel; 'AR', 'LI', etc..
     """
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=64)
     description = models.CharField(max_length=255, null=True, blank=True)
     royalty = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 

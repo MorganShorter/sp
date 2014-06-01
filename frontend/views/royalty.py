@@ -52,6 +52,7 @@ def obj_save(request):
 
     except Exception, e:
         msg = 'Wrong values'
+        print e
 
     return json_response({
         'saved': saved,
