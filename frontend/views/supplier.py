@@ -11,7 +11,7 @@ from .. import formfields
 
 class SupplierList(TacoMixin, ListView):
     model = Supplier
-    template_name = 'taconite/Supplier/list.xml'
+    template_name = 'taconite/supplier/list.xml'
 
 obj_list = SupplierList.as_view()
 
@@ -20,7 +20,7 @@ obj_list = SupplierList.as_view()
 def obj_get(request, pk):
     pk, params, obj, error = __preprocess_get_request(request, pk, Supplier)
     fields = formfields.SupplierForm(obj)
-    return __taco_render(request, 'taconite/Supplier/item.xml', {
+    return __taco_render(request, 'taconite/supplier/item.xml', {
         'error': error,
         'fields': fields,
         'obj': obj,

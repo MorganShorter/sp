@@ -11,7 +11,7 @@ from .. import formfields
 
 class SizeList(TacoMixin, ListView):
     model = Size
-    template_name = 'taconite/Size/list.xml'
+    template_name = 'taconite/size/list.xml'
 
 obj_list = SizeList.as_view()
 
@@ -20,7 +20,7 @@ obj_list = SizeList.as_view()
 def obj_get(request, pk):
     pk, params, obj, error = __preprocess_get_request(request, pk, Size)
     fields = formfields.SizeForm(obj)
-    return __taco_render(request, 'taconite/Size/item.xml', {
+    return __taco_render(request, 'taconite/size/item.xml', {
         'error': error,
         'fields': fields,
         'obj': obj,
