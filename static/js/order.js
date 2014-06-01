@@ -298,7 +298,7 @@ function call_product_recount(parent){
     var discount = parseFloat($('.order_product_percentage', parent).val());
     var stock = parseInt($('.order_product_stock', parent).text());
     var tax = $('.order_product_tax', parent).prop('checked');
-
+    var royalty = parseFloat($('.order_product_royalty', parent).text());
 
     $('.back_order_icon', parent).removeClass('back_order_yes').removeClass('back_order_no');
     if (count > stock){
@@ -309,11 +309,15 @@ function call_product_recount(parent){
 
     var result = cost;
     if (discount > 0){
-        result = cost * (100 - discount) / 100;
+        result -= cost * (discount/100);
     }
 
     if (tax){
-        result = result * (__tax_percent/100 +1);
+        result += cost * (__tax_percent/100);
+    }
+
+    if (royalty){
+        result += cost * (royalty/100);
     }
 
     result *= count;

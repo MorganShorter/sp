@@ -37,10 +37,6 @@
 			<td class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>
 			<td class="form_cell"><input type="text" name="product_minimum_stock" title="the cost to ship the order" class="product_minimum_stock text ui-widget-content ui-corner-all form_input" data-field="minimum_stock" /></td>
         </tr>
-        <tr>
-			<td class="form_cell"><label for="product_royalty" class="form_label">royalty (%):</label></td>
-			<td class="form_cell"><input type="text" name="product_royalty" title="the royalty percent 0...100" class="product_royalty text ui-widget-content ui-corner-all form_input" data-field="royalty" placeholder="1.100" /></td>
-        </tr>
 		<tr>
 			<td class="form_cell"><label for="product_supplier" class="form_label">supplier:</label></td>
 			<td class="form_cell">
@@ -53,7 +49,18 @@
                 <select name="product_medium" class="product_medium text ui-widget-content ui-corner-all form_input" data-field="medium">
 				</select>
         </tr>
-
+        <tr>
+			<td class="form_cell"><label for="product_royalty_group" class="form_label">royalty group:</label></td>
+			<td class="form_cell">
+				<select name="product_royalty_group" class="product_royalty_group text ui-widget-content ui-corner-all form_input" data-field="royalty_group">
+				  <option value="">--- none ---</option>
+				</select>
+            </td>
+		</tr>
+        <tr>
+			<td class="form_cell"><label for="product_manual_royalty" class="form_label">manual royalty (%):</label></td>
+			<td class="form_cell"><input type="text" name="product_manual_royalty" title="the royalty percent 0...100" class="product_manual_royalty text ui-widget-content ui-corner-all form_input" data-field="manual_royalty" placeholder="1.100" /></td>
+        </tr>
 
 		</table>
 
@@ -63,14 +70,13 @@
                     <th class="form_list_header">Price</th>
                     <th class="form_list_header">Min Qty</th>
                     <th class="form_list_header">Max Qty</th>
-                    <th class="form_list_header">Block</th>
                     <th class="form_list_header">&nbsp;</th>
                 </tr>
             </thead>
             <tbody></tbody>
             <tfoot>
                 <tr class="form_list_row">
-                    <td colspan="5" class="form_list_item">
+                    <td colspan="4" class="form_list_item">
                         <a title="add new price level" href="#" class="price_level_add_btn">
                             <img src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a>
                     </td>

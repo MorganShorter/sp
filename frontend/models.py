@@ -129,20 +129,6 @@ class Medium(models.Model):
         return self.description
 
 
-class RoyaltyImg(models.Model):
-    """ Royalty Percent/Img for a Product
-    """
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=400)
-    image = models.ImageField(upload_to='royalty_images', max_length=255, height_field='image_height', width_field='image_width', null=True)
-    image_height = models.PositiveSmallIntegerField(null=True)
-    image_width = models.PositiveSmallIntegerField(null=True)
-    percentage = models.DecimalField(max_digits=5, decimal_places=2)
-
-    def __unicode__(self):
-        return self.name
-
-
 class Supplier(models.Model):
     """ Supplier of Products SP sells (SP, JH, AIO, ...)
     """
@@ -170,20 +156,24 @@ class Product(models.Model):
     sp_cost = models.DecimalField(max_digits=12, decimal_places=2, null=True)
     size = models.ForeignKey(Size, related_name='+', on_delete=models.PROTECT)
     medium = models.ForeignKey(Medium, related_name='+', null=True, on_delete=models.PROTECT)
-    royalty_img = models.ForeignKey(RoyaltyImg, related_name='+', null=True, on_delete=models.PROTECT)
     supplier = models.ForeignKey(Supplier, related_name='products', on_delete=models.PROTECT)
-    royalty = models.PositiveSmallIntegerField(help_text='[0..100]%', default=0)
-    last_read = models.DateTimeField(auto_now=True)
+    royalty_group = models.ForeignKey('RoyaltyGroup', null=True, on_delete=models.PROTECT)
+    manual_royalty = models.PositiveSmallIntegerField(help_text='[0..100]%', null=True)
+    last_read = models.DateTimeField(auto_now=True, null=True, blank=True, editable=False)
+
+    @property
+    def royalty(self):
+        return self.manual_royalty or self.royalty_group.royalty if self.royalty_group else 0
+
+    @property
+    def unit_cost(self):
+        return float(float(self.sp_cost) * (1.00 + float(self.royalty) / 100))
 
     class Meta:
         ordering = ('name',)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.code)
-
-    @property
-    def unit_cost(self):
-        return float(float(self.sp_cost) * (1.00 + float(self.royalty) / 100))
 
 
 class Catalog(models.Model):
@@ -240,7 +230,7 @@ class CatalogIssueProduct(models.Model):
         return "%s features in Issue %s of Catalog %s on Page %s Reference %s, %s" % (self.product, self.catalog_issue, self.catalog_issue.catalog, self.page_ref, self.img_ref, self.sub_ref)
 
 
-class PriceLevelGroup(models.Model):
+class RoyaltyGroup(models.Model):
     """ Price Level Group for a PriceLevel; 'AR', 'LI', etc..
     """
     name = models.CharField(max_length=10)
@@ -261,8 +251,6 @@ class PriceLevel(models.Model):
     min_amount = models.PositiveIntegerField()
     max_amount = models.PositiveIntegerField(blank=True, null=True)
     cost_per_item = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    cost_per_block = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    block_only = models.BooleanField(default=False)
     notes = models.TextField(null=True, blank=True)
 
     def __unicode__(self):

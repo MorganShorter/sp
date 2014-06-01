@@ -1,7 +1,7 @@
 from django.contrib import admin
 from frontend.models import ImportNote, Customer, CustomerContact, Size, Medium, \
-    RoyaltyImg, Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, \
-    PriceLevelGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice, Note
+    Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, \
+    RoyaltyGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice, Note
 
 
 class OrderProductInline(admin.StackedInline):
@@ -17,17 +17,16 @@ admin.site.register(Customer)
 admin.site.register(CustomerContact)
 admin.site.register(Size)
 admin.site.register(Medium)
-admin.site.register(RoyaltyImg)
 admin.site.register(Supplier)
 admin.site.register(Product)
 admin.site.register(Catalog)
 admin.site.register(CatalogIssue)
 admin.site.register(CatalogIssueProduct)
-admin.site.register(PriceLevelGroup)
+admin.site.register(RoyaltyGroup)
 
 
 class PriceLevelAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'id', 'min_amount', 'max_amount', 'cost_per_item', 'block_only')
+    list_display = ('__unicode__', 'id', 'min_amount', 'max_amount', 'cost_per_item')
 
 admin.site.register(PriceLevel, PriceLevelAdmin)
 

@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 from ..utils import json_response
-from ..models import Size, Supplier, RoyaltyImg, Medium, PriceLevelGroup, Company, OrderStatus
+from ..models import Size, Supplier, Medium, RoyaltyGroup, Company, OrderStatus
 
 
 def ajax_lookup_states(request):
@@ -61,16 +61,12 @@ def ajax_lookup_supplier(request):
     return ajax_lookup(request, Supplier)
 
 
-def ajax_lookup_royalty_img(request):
-    return ajax_lookup(request, RoyaltyImg)
-
-
 def ajax_lookup_medium(request):
     return ajax_lookup(request, Medium)
 
 
-def ajax_lookup_price_level_group(request):
-    return ajax_lookup(request, PriceLevelGroup)
+def ajax_lookup_royalty_group(request):
+    return ajax_lookup(request, RoyaltyGroup)
 
 
 def ajax_lookup_company(request):

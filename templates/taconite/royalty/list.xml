@@ -1,10 +1,10 @@
 <taconite>
-    <remove select="#level_list_result tbody tr" />
-    <append select="#level_list_result tbody">
+    <remove select="#royalty_list_result tbody tr" />
+    <append select="#royalty_list_result tbody">
         {% for obj in object_list %}
             <tr class="form_list_row" cid="{{ obj.pk }}">
                 <td>{{ obj.name }}</td>
-                <td>{{ obj.royalty }}</td>
+                <td>{{ obj.royalty }}%</td>
             </tr>
         {% empty %}
             <tr class="form_list_row">

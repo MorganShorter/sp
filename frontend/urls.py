@@ -8,9 +8,8 @@ urlpatterns = patterns('frontend.views',
     url(ur'^lookup/states/?', 'ajax_lookup_states'),
     url(ur'^lookup/size/?', 'ajax_lookup_size'),
     url(ur'^lookup/supplier/?', 'ajax_lookup_supplier'),
-    url(ur'^lookup/royalty_img/?', 'ajax_lookup_royalty_img'),
     url(ur'^lookup/medium/?', 'ajax_lookup_medium'),
-    url(ur'^lookup/price_level_group/?', 'ajax_lookup_price_level_group'),
+    url(ur'^lookup/royalty_group/?', 'ajax_lookup_royalty_group'),
     url(ur'^lookup/company/?', 'ajax_lookup_company'),
     url(ur'^lookup/order/status/?', 'ajax_lookup_order_status'),
 
@@ -62,12 +61,12 @@ urlpatterns += patterns('frontend.views.reports',
     url(ur'^report/3/get/', 'report_3', name='report_3'),
 )
 
-# Price Level Group CRUD
-urlpatterns += patterns('frontend.views.level',
-    url(ur'^price_level/save/', 'obj_save'),
-    url(ur'^price_level/list/', 'obj_list', name='level_list'),
-    url(ur'^price_level/open/(?P<pk>\d*)/', 'obj_get', name='level_get'),
-    url(ur'^price_level/delete/(?P<pk>\d*)/', 'obj_delete'),
+# Royalty Group CRUD
+urlpatterns += patterns('frontend.views.royalty',
+    url(ur'^royalty/save/', 'obj_save'),
+    url(ur'^royalty/list/', 'obj_list', name='royalty_list'),
+    url(ur'^royalty/open/(?P<pk>\d*)/', 'obj_get', name='royalty_get'),
+    url(ur'^royalty/delete/(?P<pk>\d*)/', 'obj_delete'),
 )
 
 # Size CRUD

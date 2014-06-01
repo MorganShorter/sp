@@ -314,29 +314,15 @@ function refresh_supplier(){
     });
 }
 
-function refresh_royalty_img(){
-    $.ajax({url: '/lookup/royalty_img',
+function refresh_royalty(){
+    $.ajax({url: '/lookup/royalty_group',
         type: 'GET',
         dataType: 'json',
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
-            $('.product_royalty_img').html('');
+            $('.product_royalty_group').html('').append(new Option('--- none ---', ''));
             $.each(json, function (k, v) {
-                $('.product_royalty_img').append(new Option(v, k));
-            });
-        }
-    });
-}
-
-function refresh_level(){
-    $.ajax({url: '/lookup/price_level_group',
-        type: 'GET',
-        dataType: 'json',
-        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
-        success: function (json) {
-            $('.product_price_level_template').html('');
-            $.each(json, function (k, v) {
-                $('.product_price_level_template').append(new Option(v, k));
+                $('.product_royalty_group').append(new Option(v, k));
             });
         }
     });

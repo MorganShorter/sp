@@ -533,6 +533,13 @@ ul.dropdown li:hover > ul {
 	width: 100%;
 	font-size: 14px;
 }
+
+#order_product_items .form_list_header {
+    font-size: 12px;
+}
+#order_product_items .form_list_item {
+    font-size: 12px;
+}
 #order_main_options_customer_details {
 	width: 400px;
 	border-color: grey;
@@ -620,6 +627,10 @@ ul.dropdown li:hover > ul {
 }
 
 ul.dropdown ul.sub_menu_reports {
+    width: 220px;
+}
+
+ul.dropdown ul.sub_menu_products {
     width: 220px;
 }
 

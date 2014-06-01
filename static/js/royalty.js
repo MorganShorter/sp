@@ -1,6 +1,6 @@
 $(function(){
-    $("#level_list_dialog").dialog({
-        title: "Price Level Groups",
+    $("#royalty_list_dialog").dialog({
+        title: "Royalty Groups",
         autoOpen: false,
         width: 414,
         buttons: [{
@@ -11,56 +11,56 @@ $(function(){
         }, {
             text: "Close",
             click: function() {
-                $("#level_list_dialog").dialog('close');
+                $("#royalty_list_dialog").dialog('close');
             }
         }]
     });
 
-    $('.button_products_level').click(function(){
-        $("#level_list_dialog").dialog('open');
-        $.get(__url_level_list);
+    $('.button_products_royalty').click(function(){
+        $("#royalty_list_dialog").dialog('open');
+        $.get(__url_royalty_list);
     });
 
-    $('#level_list_result tbody tr').live('click', function(){
+    $('#royalty_list_result tbody tr').live('click', function(){
         var cid = $(this).attr('cid');
-        $.get('/price_level/open/' + cid + '/');
-        $("#level_item_dialog").dialog("open");
+        $.get('/royalty/open/' + cid + '/');
+        $("#royalty_item_dialog").dialog("open");
         return false;
     });
 
-    $("#level_item_dialog").dialog({
-        title: "Edit Price Level Group",
+    $("#royalty_item_dialog").dialog({
+        title: "Edit Royalty Group",
         autoOpen: false,
         width: 414,
         buttons: [{
             text: "Save",
             click: function() {
-                save_level()
+                save_royalty()
             }
         }, {
             text: "Delete",
             click: function() {
-                var c_form = $('#frm_level');
+                var c_form = $('#frm_royalty');
                 var obj_id = $.trim($('.obj_id', c_form).val());
                 if (obj_id == "" || obj_id == undefined || obj_id == null){
                     alert('Error! ID not found');
                     return false;
                 }
 
-                var cnf = confirm('Sure you want to delete this Price Level Group?');
+                var cnf = confirm('Sure you want to delete this Royalty Group?');
                 if (cnf != true){
                     return false;
                 }
-                $.get('/price_level/delete/' + obj_id + '/', function(data){
+                $.get('/royalty/delete/' + obj_id + '/', function(data){
                     if (data['status'] == 'error'){
                         alert('Error! ' + data['msg']);
                     } else {
                         alert(data['msg']);
                         c_form.resetForm();
-                        $("#level_item_dialog").dialog('close');
-                        $.get(__url_level_list);
-                        $("#level_list_dialog").dialog('open');
-                        refresh_level();
+                        $("#royalty_item_dialog").dialog('close');
+                        $.get(__url_royalty_list);
+                        $("#royalty_list_dialog").dialog('open');
+                        refresh_royalty();
                     }
                 });
                 return false;
@@ -68,8 +68,8 @@ $(function(){
         }]
     });
 
-    function save_level() {
-        var c_form = $('#frm_level');
+    function save_royalty() {
+        var c_form = $('#frm_royalty');
         var obj_id = $.trim($('.obj_id', c_form).val());
         if (obj_id == "" || obj_id == undefined || obj_id == null)
             obj_id = null;
@@ -78,11 +78,11 @@ $(function(){
 
         var obj_json = [{
             'pk': obj_id,
-            'model': 'frontend.pricelevelgroup',
-            'fields': model_fields['level']
+            'model': 'frontend.royaltygroup',
+            'fields': model_fields['royalty']
         }];
         $.ajax({
-            url: '/price_level/save/',
+            url: '/royalty/save/',
             type: 'POST',
             dataType: 'json',
             cache: false,
@@ -92,10 +92,10 @@ $(function(){
             success: function (json) {
                 if (json['saved']){
                     c_form.resetForm();
-                    $("#level_item_dialog").dialog('close');
-                    $.get(__url_level_list);
-                    $("#level_list_dialog").dialog('open');
-                    refresh_level();
+                    $("#royalty_item_dialog").dialog('close');
+                    $.get(__url_royalty_list);
+                    $("#royalty_list_dialog").dialog('open');
+                    refresh_royalty();
                 }
                 alert(json['msg']);
             }

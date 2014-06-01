@@ -82,6 +82,7 @@
 					<td class="form_list_item">
 						<input type="checkbox" class="order_product_tax" name="order_product_item_gst_{{ order_product.id }}" value="true" {% if order_product.with_tax %}checked="checked"{% endif %} />
 					</td>
+                    <td class="form_list_item"><span class="order_product_royalty">{{ order_product.product.royalty }}</span>%</td>
 					<td class="form_list_item">$<span class="order_product_total"></span></td>
 					<td class="">
 						<a class="order_product_item_delete" title="delete this product item from order" href="#">

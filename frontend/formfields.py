@@ -94,7 +94,8 @@ def ProductForm(obj):
         '#frm_product .product_current_stock': (obj.current_stock, None),
         '#frm_product .product_minimum_stock': (obj.minimum_stock, None),
         '#frm_product .product_supplier': (obj.supplier_id, None),
-        '#frm_product .product_royalty': (obj.royalty, None),
+        '#frm_product .product_manual_royalty': (obj.manual_royalty, 'default_if_none:'),
+        '#frm_product .product_royalty_group': (obj.royalty_group_id, 'default_if_none:'),
         '#frm_product .product_medium': (obj.medium_id, None),
     }
 
@@ -105,16 +106,15 @@ def PriceLevelForm(obj):
         '#frm_add_pricelevel .pricelevel_min_amount': (obj.min_amount, None),
         '#frm_add_pricelevel .pricelevel_max_amount': (obj.max_amount, 'default_if_none:""'),
         '#frm_add_pricelevel .pricelevel_cost_per_item': (obj.cost_per_item, None),
-        '#frm_add_pricelevel .pricelevel_block_only': (obj.block_only, None),
     }
 
 
-def PriceLevelGroupForm(obj):
+def RoyaltyGroupForm(obj):
     return {
-        '#frm_level .obj_id': (obj.pk, None),
-        '#frm_level .obj_name': (obj.name, None),
-        '#frm_level .obj_description': (obj.description, None),
-        '#frm_level .obj_royalty': (obj.royalty, "default_if_none:0"),
+        '#frm_royalty .obj_id': (obj.pk, None),
+        '#frm_royalty .obj_name': (obj.name, None),
+        '#frm_royalty .obj_description': (obj.description, None),
+        '#frm_royalty .obj_royalty': (obj.royalty, "default_if_none:0"),
     }
 
 

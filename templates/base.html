@@ -34,7 +34,7 @@
             __url_customer_list = "{% url 'customer_list' %}";
             __url_product_list = "{% url 'product_list' %}";
             __url_order_list = "{% url 'order_list' %}";
-            __url_level_list = "{% url 'level_list' %}";
+            __url_royalty_list = "{% url 'royalty_list' %}";
             __url_size_list = "{% url 'size_list' %}";
             __url_supplier_list = "{% url 'supplier_list' %}";
             __url_medium_list = "{% url 'medium_list' %}";
@@ -48,7 +48,7 @@
         <script type="text/javascript" src="{{ STATIC_URL }}js/medium.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/size.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/supplier.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/level.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/royalty.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
     {% endblock javascript %}
 </head>
@@ -93,10 +93,10 @@
                     <li>
                         <img src="{{ STATIC_URL }}img/icons/16_products.png"/>
                         <u>P</u>roducts&nbsp;
-                        <ul class="sub_menu">
+                        <ul class="sub_menu sub_menu_products">
                             <li><a href="#" class="nounderline button_products_add_dialog"><img src="{{ STATIC_URL }}img/icons/16_new_order.png"/>&nbsp;New</a></li>
                             <li><a href="#" class="nounderline button_products_find_dialog"><img src="{{ STATIC_URL }}img/icons/16_find_order.png"/>&nbsp;Find</a></li>
-                            <li><a href="#" class="nounderline button_products_level"><img src="{{ STATIC_URL }}img/icons/16_new.png"/>&nbsp;Edit Price Levels</a></li>
+                            <li><a href="#" class="nounderline button_products_royalty"><img src="{{ STATIC_URL }}img/icons/16_new.png"/>&nbsp;Edit Royalty Groups</a></li>
                             <li><a href="#" class="nounderline button_products_size"><img src="{{ STATIC_URL }}img/icons/16_new.png"/>&nbsp;Edit Sizes</a></li>
                             <li><a href="#" class="nounderline button_products_supplier"><img src="{{ STATIC_URL }}img/icons/16_new.png"/>&nbsp;Edit Suppliers</a></li>
                             <li><a href="#" class="nounderline button_products_medium"><img src="{{ STATIC_URL }}img/icons/16_new.png"/>&nbsp;Edit Mediums</a></li>
@@ -188,7 +188,7 @@
         {% include 'include/medium.html' %}
         {% include 'include/size.html' %}
         {% include 'include/supplier.html' %}
-        {% include 'include/level.html' %}
+        {% include 'include/royalty.html' %}
     {% endblock %}
 </body>
 </html>

@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 
-from ..models import Product, PriceLevel, PriceLevelGroup
+from ..models import Product, PriceLevel, RoyaltyGroup
 from ..mixins import TacoMixin
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
@@ -61,20 +61,15 @@ def product_save(request):
                     new_obj = True
                     obj.save()
                     saved = True
-
-                    price_template = json.loads(request.body)[0].get('price_template', None)
-                    if price_template:
-                        try:
-                            price_group = PriceLevelGroup.objects.get(pk=int(price_template))
-                            PriceLevel(
-                                product=obj.object,
-                                min_amount=1,
-                                cost_per_item=float(obj.object.sp_cost * (1 + price_group.royalty / 100)),
-                                notes=price_group.name
-                            ).save()
-                        except Exception, e:
-                            print 'Error product_save [103]'
-                            pass
+                    try:
+                        PriceLevel(
+                            product=obj.object,
+                            min_amount=1,
+                            cost_per_item=obj.object.sp_cost
+                        ).save()
+                    except Exception, e:
+                        print 'Error product_save [103]'
+                        pass
                     msg = 'Product created (ID:%d)' % obj.object.id
 
                 else:
@@ -88,6 +83,7 @@ def product_save(request):
 
     except Exception, e:
         msg = 'Wrong values'
+        print 'Error %s' % e
 
     return json_response({
         'saved': saved,

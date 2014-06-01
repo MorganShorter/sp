@@ -92,6 +92,10 @@ $(function () {
         if (model_fields['product'].sp_cost && model_fields['product'].sp_cost[0] == "$")
             model_fields['product'].sp_cost = model_fields['product'].sp_cost.slice(1);
 
+        if (model_fields['product'].manual_royalty == ''){
+            model_fields['product'].manual_royalty = NaN;
+        }
+
         var obj_json = [{
             'pk': obj_id,
             'model': 'frontend.product',
@@ -107,8 +111,6 @@ $(function () {
             headers: { 'X-CSRFToken': $.cookie('csrftoken') },
             data: JSON.stringify(obj_json),
             success: function (json) {
-                console.log('prod save success!');
-                console.debug(json);
                 if (json['saved']){
                     if (!obj_id){ // Created
                         c_form.resetForm();
@@ -121,13 +123,6 @@ $(function () {
                 }
 
                 alert(json['msg']);
-            },
-            error: function (xhr, status) {
-                console.log('Error requesting /save/product! status:');
-                console.log(status);
-            },
-            complete: function (xhr, status) {
-                console.log('Complete request for /save/product');
             }
         });
         return false;
@@ -204,11 +199,13 @@ $(function () {
             delete model_fields.pricelevel.id;
         }
 
+        /*
         if (!$('.pricelevel_block_only', c_form).prop('checked')){
             model_fields.pricelevel.block_only = 0;
         } else {
             model_fields.pricelevel.block_only = 1;
         }
+        */
 
         if (model_fields.pricelevel.max_amount == ''){
             model_fields.pricelevel.max_amount = NaN;

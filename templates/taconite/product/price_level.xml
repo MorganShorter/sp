@@ -5,9 +5,12 @@
     <eval>
     $("#frm_add_pricelevel .price_products_id").val("{{ prod_id }}");
     </eval>
+
+    {% comment %}
     {% if obj.block_only %}
         <eval>$("#frm_add_pricelevel .pricelevel_block_only").prop('checked', true);</eval>
     {% else %}
         <eval>$("#frm_add_pricelevel .pricelevel_block_only").prop('checked', false);</eval>
     {% endif %}
+    {% endcomment %}
 </taconite>
