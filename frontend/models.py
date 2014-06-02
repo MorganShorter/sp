@@ -180,13 +180,6 @@ class Catalog(models.Model):
     """ Catalog's SmartPractice advertise products in
     """
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(Catalog, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify(self.name))
-            super(Catalog, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
@@ -198,13 +191,6 @@ class CatalogIssue(models.Model):
     catalog = models.ForeignKey(Catalog, related_name='issues')
     products = models.ManyToManyField(Product, related_name='catalog_issues', through='CatalogIssueProduct')
     issue = models.CharField(max_length=80)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(CatalogIssue, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify("%s-%s" % (self.catalog.name, self.issue)))
-            super(CatalogIssue, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.issue
@@ -213,21 +199,21 @@ class CatalogIssue(models.Model):
 class CatalogIssueProduct(models.Model):
     """ Product advertised in specific issue of a catalog
     """
+    catalog_issue = models.ForeignKey(CatalogIssue)
+    product = models.ForeignKey(Product)
+
     page_ref = models.PositiveSmallIntegerField()
     img_ref = models.PositiveSmallIntegerField()
     sub_ref = models.CharField(max_length=3, null=True, blank=True)
-    catalog_issue = models.ForeignKey(CatalogIssue)
-    product = models.ForeignKey(Product)
-    slug = models.SlugField(unique=True, max_length=150)
-
-    def save(self, *args, **kwargs):
-        super(CatalogIssueProduct, self).save(*args, **kwargs)
-        if not self.slug:
-            self.slug = "%i-%s" % (self.id, slugify("%s-%s-%s" % (self.catalog_issue.catalog.name, self.catalog_issue.issue, self.product.name)))
-            super(CatalogIssueProduct, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "%s features in Issue %s of Catalog %s on Page %s Reference %s, %s" % (self.product, self.catalog_issue, self.catalog_issue.catalog, self.page_ref, self.img_ref, self.sub_ref)
+        return "%s features in Issue %s of Catalog %s on Page %s Reference %s, %s" % (
+            self.product,
+            self.catalog_issue,
+            self.catalog_issue.catalog,
+            self.page_ref,
+            self.img_ref,
+            self.sub_ref)
 
 
 class RoyaltyGroup(models.Model):
@@ -389,8 +375,7 @@ class OrderProduct(models.Model):
     unit_tax = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     discount_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)  # total discount for all products
-    sp_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    royalty_amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)  # total_cost -
+    royalty_amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)  #
     back_order = models.BooleanField(default=False)
     with_tax = models.BooleanField(default=False)
 
@@ -401,13 +386,15 @@ class OrderProduct(models.Model):
         return '%s %s' % (self.order, self.product)
 
     def save(self, *args, **kwargs):
-        print 'order_product save'
-        self.sp_price = self.product.sp_cost
         self.unit_tax = 0 if not self.with_tax else float(self.unit_price * settings.TAX_PERCENT) / 100
         self.discount_price = self.quantity * self.unit_price * self.discount_percentage / 100
         self.royalty_amount = self.quantity * self.unit_price * self.product.royalty / 100
         self.back_order = True if self.quantity > self.product.current_stock else False
         super(OrderProduct, self).save(*args, **kwargs)
+
+    @property
+    def sp_price(self):
+        return self.product.sp_cost
 
     @property
     def total_cost(self):
