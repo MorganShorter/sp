@@ -38,6 +38,7 @@
             __url_size_list = "{% url 'size_list' %}";
             __url_supplier_list = "{% url 'supplier_list' %}";
             __url_medium_list = "{% url 'medium_list' %}";
+            __url_catalog_list = "{% url 'catalog_list' %}";
             __tax_percent = 10;
         </script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/init.js"></script>
@@ -49,6 +50,7 @@
         <script type="text/javascript" src="{{ STATIC_URL }}js/size.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/supplier.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/royalty.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
     {% endblock javascript %}
 </head>
@@ -127,9 +129,9 @@
                 <table id="main_options">
                     <tr>
                         <td>
-                            <!--a title="click for add new customer" href="#" class="button button_customer_add">
-                                <img src="{{ STATIC_URL }}img/icons/64_customers.png"/><br/>add customer
-                            </a-->
+                            <a title="click for catalog section" href="#" class="button button_catalog_dialog">
+                                <img src="{{ STATIC_URL }}img/icons/64_find_order.png"/><br/>catalog
+                            </a>
                         </td>
                         <td>
                             <a title="click for customers section" href="#" class="button button_customers_find_dialog">
@@ -189,6 +191,7 @@
         {% include 'include/size.html' %}
         {% include 'include/supplier.html' %}
         {% include 'include/royalty.html' %}
+        {% include 'include/catalog.html' %}
     {% endblock %}
 </body>
 </html>

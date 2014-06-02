@@ -92,3 +92,11 @@ urlpatterns += patterns('frontend.views.supplier',
     url(ur'^supplier/open/(?P<pk>\d*)/', 'obj_get', name='supplier_get'),
     url(ur'^supplier/delete/(?P<pk>\d*)/', 'obj_delete'),
 )
+
+# Catalog CRUD
+urlpatterns += patterns('frontend.views.catalog',
+    url(ur'^catalog/save/', 'obj_save'),
+    url(ur'^catalog/list/', 'obj_list', name='catalog_list'),
+    url(ur'^catalog/open/(?P<pk>\d*)/', 'obj_get', name='catalog_get'),
+    url(ur'^catalog/delete/(?P<pk>\d*)/', 'obj_delete'),
+)

@@ -1,0 +1,14 @@
+<taconite>
+    <remove select="#catalog_list_result tbody tr" />
+    <append select="#catalog_list_result tbody">
+        {% for obj in object_list %}
+            <tr class="form_list_row" cid="{{ obj.pk }}">
+                <td>{{ obj.name }}</td>
+            </tr>
+        {% empty %}
+            <tr class="form_list_row">
+                <td>not found</td>
+            </tr>
+        {% endfor %}
+    </append>
+</taconite>

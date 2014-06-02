@@ -185,6 +185,9 @@ class Catalog(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        ordering = ('name',)
+
 
 class CatalogIssue(models.Model):
     """ An Issue of a Catalog
