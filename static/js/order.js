@@ -38,7 +38,7 @@ $(function () {
         $.get('/customer/' + cid + '/');
     });
     $(".order_product_item_show").live('click', function(){
-        var cid = $(this).parents('tr').attr('cid');
+        var cid = $(this).attr('cid');
         $("#product_content").dialog("open");
         $.get('/product/' + cid + '/');
     });
@@ -308,17 +308,19 @@ function call_product_recount(parent){
     }
 
     var result = cost;
-    if (discount > 0){
-        result -= cost * (discount/100);
-    }
-
-    if (tax){
-        result += cost * (__tax_percent/100);
-    }
-
     if (royalty){
         result += cost * (royalty/100);
     }
+
+    if (discount > 0){
+        result -= result * (discount/100);
+    }
+
+    if (tax){
+        result += result * (__tax_percent/100);
+    }
+
+
 
     result *= count;
     $('.order_product_total', parent).text(result.toFixed(2));

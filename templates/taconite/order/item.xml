@@ -37,20 +37,27 @@
             <eval>$("#frm_order .order_status").val("{{ order.last_status.status }}");</eval>
             <eval>$("#frm_order .order_order_notes").val($.br2nl($("#frm_order .order_order_notes").val()));</eval>
 
-            <replaceContent select=".order_product_summary li:eq(0) span">${{ order.sub_total|sub:order.sp_cost }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(1) span">${{ order.sp_cost }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(2) span">${{ order.sub_total }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(3) span">${{ order.discount }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(4) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(5) span">${{ order.sp_cost|add:order.discount }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(6) span">${{ order.sub_total|sub:order.discount }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(7) span">${{ order.tax }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(8) span">${{ order.sub_total|sub:order.sp_cost|sub:order.discount|add:order.tax }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(9) span">${{ order.sp_cost|add:order.discount|add:order.tax }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(10) span">${{ order.sub_total|sub:order.discount|add:order.tax }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(11) span">${{ order.shipping_cost }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(12) span">${{ order.sp_cost|add:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
-            <replaceContent select=".order_product_summary li:eq(13) span">${{ order.sub_total|sub:order.discount|add:order.tax|add:order.shipping_cost }}</replaceContent>
+            <replaceContent select=".order_product_summary">
+                <ul>
+                    <li><strong>Sub Profit:</strong> <span>${{ order.summary.sub_profit|floatformat }}</span></li>
+                    <li><strong>Sub Cost:</strong> <span>${{ order.summary.sub_cost|floatformat }}</span></li>
+                    <li><strong>Sub Price:</strong> <span>${{ order.summary.sub_price|floatformat }}</span></li>
+                    <li><hr/></li>
+                    <li><strong>Disc:</strong> <span>${{ order.summary.discount|floatformat }}</span></li>
+                    <li><strong>Gross Profit:</strong> <span>${{ order.summary.gross_profit|floatformat }}</span></li>
+                    <li><strong>Gross Cost:</strong> <span>${{ order.summary.gross_cost|floatformat }}</span></li>
+                    <li><strong>Gross Price:</strong> <span>${{ order.summary.gross_price|floatformat }}</span></li>
+                    <li><hr/></li>
+                    <li><strong>Tax:</strong> <span>${{ order.summary.tax|floatformat }}</span></li>
+                    <li><strong>Net Profit:</strong> <span>${{ order.summary.net_profit|floatformat }}</span></li>
+                    <li><strong>Net Cost:</strong> <span>${{ order.summary.net_cost|floatformat }}</span></li>
+                    <li><strong>Net Price:</strong> <span>${{ order.summary.net_price|floatformat }}</span></li>
+                    <li><hr/></li>
+                    <li><strong>Ship:</strong> <span>${{ order.shipping_cost|floatformat }}</span></li>
+                    <li><strong>Total Cost:</strong> <span>${{ order.total_cost|floatformat }}</span></li>
+                    <li><strong>Total Price:</strong> <span>${{ order.total_price|floatformat }}</span></li>
+                </ul>
+            </replaceContent>
         {% endif %}
 
         <remove select="table#order_product_items tr:gt(0):not(:last)" />
@@ -58,7 +65,7 @@
 			{% with product=order_product.product %}
 			<before select="table#order_product_items tr:last">
 				<tr class="form_list_row" cid="{{ order_product.id }}">
-					<td class="form_list_item"><a href="#" class="order_product_item_show" title="show product info">{{ product.code }}</a></td>
+					<td class="form_list_item"><a href="#" cid="{{ product.id }}" class="order_product_item_show" title="show product info">{{ product.code }}</a></td>
 					<td class="form_list_item order_product_stock">{{ product.current_stock }}</td>
 					<td class="form_list_item">
                         <input type="text" name="order_product_quantity_{{ order_product.id }}" class="order_product_spinner order_product_quantity text ui-widget-content ui-corner-all form_input" style="width: 50px;" title="quantity" value="{{ order_product.quantity }}" />
@@ -67,7 +74,7 @@
                     <td class="">
                         <select title="use price level" class="order_product_pl text ui-widget-content ui-corner-all form_input width100">
                             <option value="">-</option>
-                            <option value="{{ product.unit_price }}">Default: ${{ product.unit_price }} / item</option>
+                            <option value="{{ product.default_price }}">Default: ${{ product.default_price }} / item</option>
                             {% for o in product.price_levels.all %}
                                 <option value="{{ o.cost_per_item }}"><small>{{ o.min_amount }}..{{ o.max_amount|default:'∞' }} = ${{ o.cost_per_item }}/item {% if o.block_only %}BO{% endif %}</small></option>
                             {% endfor %}

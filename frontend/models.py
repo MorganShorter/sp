@@ -3,6 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from datetime import datetime
 from django.conf import settings
+from decimal import Decimal
 
 
 class ImportNote(models.Model):
@@ -166,8 +167,8 @@ class Product(models.Model):
         return self.manual_royalty or self.royalty_group.royalty if self.royalty_group else 0
 
     @property
-    def unit_cost(self):
-        return float(float(self.sp_cost) * (1.00 + float(self.royalty) / 100))
+    def default_price(self):
+        return self.sp_cost
 
     class Meta:
         ordering = ('name',)
@@ -251,13 +252,10 @@ class Order(models.Model):
     """
     customer = models.ForeignKey(Customer, related_name='orders')
     products = models.ManyToManyField(Product, related_name='+', through='OrderProduct')
-    sub_total = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     shipping_cost = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    tax = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    discount = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    total_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
-    sp_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    total_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # total net_cost
+    total_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # total net_price + shipping_cost
 
     order_date = models.DateTimeField(default=datetime.now)
     wanted_by = models.DateTimeField(default=datetime.now)
@@ -304,20 +302,41 @@ class Order(models.Model):
     def __unicode__(self):
         return 'Order %s' % self.pk
 
-    def total_recount(self, save=False):
-        self.sub_total = 0
-        self.discount = 0
-        self.total_cost = 0
-        self.sp_cost = 0
-        self.tax = 0
+    @property
+    def summary(self):
+        data = {
+            'discount': Decimal(0),
+            'tax': Decimal(0),
+            'sub_cost': Decimal(0),
+            'sub_price': Decimal(0),
+            'sub_profit': Decimal(0),
+            'gross_cost': Decimal(0),
+            'gross_price': Decimal(0),
+            'gross_profit': Decimal(0),
+            'net_cost': Decimal(0),
+            'net_price': Decimal(0),
+            'net_profit': Decimal(0),
+        }
 
         for order_product in self.ordered_products.all():
-            self.sub_total += order_product.total_cost
-            self.tax += order_product.total_tax
-            self.discount += order_product.discount_price * order_product.quantity
-            self.sp_cost += order_product.sp_price * order_product.quantity
+            data['discount'] += order_product.discount_sum
+            data['tax'] += order_product.tax_sum
+            data['sub_cost'] += order_product.sub_cost
+            data['sub_price'] += order_product.sub_price
+            data['sub_profit'] += order_product.sub_profit
+            data['gross_cost'] += order_product.gross_cost
+            data['gross_price'] += order_product.gross_price
+            data['gross_profit'] += order_product.gross_profit
+            data['net_cost'] += order_product.net_cost
+            data['net_price'] += order_product.net_price
+            data['net_profit'] += order_product.net_profit
 
-        self.total_cost = self.sub_total + float(self.shipping_cost) - float(self.discount)
+        return data
+
+    def total_recount(self, save=False):
+        data = self.summary
+        self.total_price = float(data['net_price']) + float(self.shipping_cost)
+        self.total_cost = data['net_cost']
 
         if save:
             self.save(total_recount=False)
@@ -372,10 +391,7 @@ class OrderProduct(models.Model):
     product = models.ForeignKey(Product)
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
-    unit_tax = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    discount_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)  # total discount for all products
-    royalty_amount = models.DecimalField(max_digits=9, decimal_places=2, default=0)  #
     back_order = models.BooleanField(default=False)
     with_tax = models.BooleanField(default=False)
 
@@ -386,34 +402,77 @@ class OrderProduct(models.Model):
         return '%s %s' % (self.order, self.product)
 
     def save(self, *args, **kwargs):
-        self.unit_tax = 0 if not self.with_tax else float(self.unit_price * settings.TAX_PERCENT) / 100
-        self.discount_price = self.quantity * self.unit_price * self.discount_percentage / 100
-        self.royalty_amount = self.quantity * self.unit_price * self.product.royalty / 100
         self.back_order = True if self.quantity > self.product.current_stock else False
         super(OrderProduct, self).save(*args, **kwargs)
 
     @property
-    def sp_price(self):
-        return self.product.sp_cost
+    def cost(self):
+        return self.product.sp_cost * self.quantity
 
     @property
-    def total_cost(self):
-        total = float(self.unit_price) * self.quantity
+    def price(self):
+        return self.unit_price * self.quantity
 
-        if self.discount_price:
-            total -= self.discount_price
+    @property
+    def profit(self):
+        return self.price - self.cost
 
-        if self.royalty_amount:
-            total += self.royalty_amount
+    #  Sub is the basic cost (include royalty)
+    @property
+    def sub_cost(self):
+        return self.cost * (1 + self.product.royalty/100)
 
+    @property
+    def sub_price(self):
+        return self.price * (1 + self.product.royalty/100)
+
+    @property
+    def sub_profit(self):
+        return self.sub_price - self.sub_cost
+
+    #  Gross - including discount
+    @property
+    def discount_sum(self):
+        return self.sub_price * self.discount_percentage / 100
+
+    @property
+    def gross_cost(self):
+        return self.sub_cost
+
+    @property
+    def gross_price(self):
+        return self.sub_price - self.discount_sum
+
+    @property
+    def gross_profit(self):
+        return self.gross_price - self.gross_cost
+
+    #  NET - including TAX
+    @property
+    def tax_sum(self):
         if self.with_tax:
-            total += self.total_tax
-
-        return total
+            return self.gross_price * settings.TAX_PERCENT / 100
+        return Decimal(0)
 
     @property
-    def total_tax(self):
-        return float(self.unit_tax) * self.quantity
+    def net_cost(self):
+        return self.gross_cost + self.tax_sum
+        ''' Stevo, maybe we should take TAX from cost (not price)?
+        def cost_tax_sum(self):
+            if self.with_tax:
+                return self.gross_cost * settings.TAX_PERCENT / 100
+            return 0.00
+
+        return self.gross_cost + self.cost_tax_sum()
+        '''
+
+    @property
+    def net_price(self):
+        return self.gross_price + self.tax_sum
+
+    @property
+    def net_profit(self):
+        return self.net_price - self.net_cost
 
 
 class Company(models.Model):

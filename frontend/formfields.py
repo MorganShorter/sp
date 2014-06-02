@@ -46,13 +46,6 @@ def OrderForm(order, invoice):
         '#frm_order .order_invoice_number': (invoice.number, None) if invoice else ('-', None),
         '#frm_order .invoice_company': (invoice.company.id, None) if invoice else ('', None),
 
-        # Additional
-        '#frm_order .order_sub_total': (order.sub_total, None),
-        '#frm_order .order_tax': (order.tax, None),
-        '#frm_order .order_discount': (order.discount, None),
-        '#frm_order .order_total_cost': (order.total_cost, None),
-        '#frm_order .order_sp_cost': (order.sp_cost, None),
-
         '#frm_order .order_invoice_company_name': (order.invoice_company_name, None),
         '#frm_order .order_invoice_company_reg': (order.invoice_company_reg, None),
         '#frm_order .order_invoice_address_line_1': (order.invoice_address_line_1, None),
