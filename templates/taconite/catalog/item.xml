@@ -1,3 +1,26 @@
 <taconite>
-{% include "taconite/fields.xml" with fields=fields %}
+    {% include "taconite/fields.xml" with fields=fields %}
+
+    <replaceContent select="#frm_catalog .issues_list">
+        <table class="form_list with100">
+        <thead>
+            <tr class="form_list_row">
+                <th class="form_list_header">Issues</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if not obj.issues.count %}
+            <tr class="form_list_row">
+                <td>-- empty -- </td>
+            </tr>
+            {% else %}
+                {% for iss in obj.issues.all %}
+                    <tr class="form_list_row" cid="{{ iss.pk }}">
+                        <td>{{ iss }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+        </table>
+    </replaceContent>
 </taconite>

@@ -755,3 +755,7 @@ ul.dropdown ul.sub_menu_products {
 #find_customer_search {
     margin-bottom: 5px;
 }
+
+.issues_list .form_list_row td:last-child {
+    width: 30px;
+}

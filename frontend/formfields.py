@@ -144,3 +144,12 @@ def CatalogForm(obj):
         '#frm_catalog .obj_id': (obj.pk, None),
         '#frm_catalog .obj_name': (obj.name, None),
     }
+
+
+def CatalogIssueForm(obj):
+    return {
+        '#frm_catalog_issue .obj_id': (obj.pk, None),
+        '#frm_catalog_issue .obj_name': (obj.issue, None),
+        '#frm_catalog_issue .parent_id': (obj.catalog.id, None),
+        '#frm_catalog_issue .obj_parent': (obj.catalog.name, None),
+    }

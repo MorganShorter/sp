@@ -1,0 +1,3 @@
+<taconite>
+    {% include "taconite/fields.xml" with fields=fields %}
+</taconite>

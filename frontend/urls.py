@@ -99,4 +99,8 @@ urlpatterns += patterns('frontend.views.catalog',
     url(ur'^catalog/list/', 'obj_list', name='catalog_list'),
     url(ur'^catalog/open/(?P<pk>\d*)/', 'obj_get', name='catalog_get'),
     url(ur'^catalog/delete/(?P<pk>\d*)/', 'obj_delete'),
+
+    url(ur'^catalog/issue/save/', 'obj_issue_save'),
+    url(ur'^catalog/issue/open/(?P<pk>\d*)/', 'obj_issue_get'),
+    url(ur'^catalog/issue/delete/(?P<pk>\d*)/', 'obj_issue_delete'),
 )
