@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 from ..utils import json_response
-from ..models import Size, Supplier, Medium, RoyaltyGroup, Company, OrderStatus
+from ..models import Size, Supplier, Medium, RoyaltyGroup, Company, OrderStatus, Catalog
 
 
 def ajax_lookup_states(request):
@@ -71,6 +71,17 @@ def ajax_lookup_royalty_group(request):
 
 def ajax_lookup_company(request):
     return ajax_lookup(request, Company)
+
+
+def ajax_lookup_catalog(request):
+    ret = []
+    if request.is_ajax():
+        for s in Catalog.objects.all():
+            ret.append([0, str(s)])
+            for ss in s.issues.all():
+                ret.append([ss.pk, str(ss.issue)])
+
+    return json_response(ret)
 
 
 class IndexView(TemplateView):

@@ -1,5 +1,5 @@
 <taconite>
-    {% if not only_price_levels %}
+    {% if not only_list %}
         {% if error %}{% include "taconite/error.xml" with fields=fields error=error %}
         {% else %}{% include "taconite/fields.xml" with fields=fields %}
         {% endif %}
@@ -19,6 +19,16 @@
         {% endfor %}
     </replaceContent>
 
+    <replaceContent select="#frm_product table.catalog_list_table tbody">
+        {% for o in obj.catalog_links.all %}
+            <tr class="form_list_row cursor_pointer" cid="{{ o.pk }}">
+                <td class="form_list_item">{{ o.catalog_issue }}</td>
+                <td class="form_list_item">{{ o.page_ref }}</td>
+                <td class="form_list_item">{{ o.img_ref }}</td>
+                <td class="form_list_item">{{ o.sub_ref }}</td>
+            </tr>
+        {% endfor %}
+    </replaceContent>
 </taconite>
 
 

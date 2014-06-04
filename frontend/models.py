@@ -197,14 +197,14 @@ class CatalogIssue(models.Model):
     issue = models.CharField(max_length=80)
 
     def __unicode__(self):
-        return self.issue
+        return '%s / %s' % (self.catalog.name, self.issue)
 
 
 class CatalogIssueProduct(models.Model):
     """ Product advertised in specific issue of a catalog
     """
     catalog_issue = models.ForeignKey(CatalogIssue)
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, related_name='catalog_links')
 
     page_ref = models.PositiveSmallIntegerField()
     img_ref = models.PositiveSmallIntegerField()

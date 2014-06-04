@@ -759,3 +759,11 @@ ul.dropdown ul.sub_menu_products {
 .issues_list .form_list_row td:last-child {
     width: 30px;
 }
+
+.cursor_pointer {
+    cursor: pointer;
+}
+
+.catalog_issues option[disabled] {
+    font-weight: bold;
+}

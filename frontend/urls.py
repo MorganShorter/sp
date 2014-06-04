@@ -12,7 +12,7 @@ urlpatterns = patterns('frontend.views',
     url(ur'^lookup/royalty_group/?', 'ajax_lookup_royalty_group'),
     url(ur'^lookup/company/?', 'ajax_lookup_company'),
     url(ur'^lookup/order/status/?', 'ajax_lookup_order_status'),
-
+    url(ur'^lookup/catalog/?', 'ajax_lookup_catalog'),
 )
 
 # Order
@@ -39,6 +39,9 @@ urlpatterns += patterns('frontend.views.product',
     url(ur'^product/pricelevel/(?P<prod_id>\d*)/?(?P<price_id>\d*)/delete/', 'product_price_delete'),
     url(ur'^product/pricelevel/(?P<prod_id>\d*)/?(?P<price_id>\d*)/', 'product_price_get'),
 
+    url(ur'^product/issue/save/', 'product_issue_save'),
+    url(ur'^product/issue/(?P<prod_id>\d*)/?(?P<issue_id>\d*)/delete/', 'product_issue_delete'),
+    url(ur'^product/issue/(?P<prod_id>\d*)/?(?P<issue_id>\d*)/', 'product_issue_get'),
 )
 
 # Customer

@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 
-from ..models import Product, PriceLevel, RoyaltyGroup
+from ..models import Product, PriceLevel, CatalogIssueProduct
 from ..mixins import TacoMixin
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
@@ -44,7 +44,7 @@ def product_get(request, pk):
         'error': error,
         'fields': fields,
         'obj': obj,
-        'only_price_levels': bool(request.GET.get('only_price_levels', False))
+        'only_list': bool(request.GET.get('only_list', False)),
     })
 
 
@@ -97,7 +97,7 @@ def product_save(request):
 def product_price_get(request, prod_id, price_id):
     pk, params, obj, error = __preprocess_get_request(request, price_id, PriceLevel)
 
-    if int(prod_id) not in obj.products.values_list('pk', flat=True):
+    if int(prod_id) != obj.product_id:
         obj = None
         error = 'Wrong PK'
 
@@ -170,4 +170,80 @@ def product_price_delete(request, prod_id, price_id):
     return json_response({
         'status': 'ok',
         'msg': 'PriceLevel has deleted!'
+    })
+
+'''
+Catalog issue link
+
+'''
+@login_required
+def product_issue_get(request, prod_id, issue_id):
+    pk, params, obj, error = __preprocess_get_request(request, issue_id, CatalogIssueProduct)
+
+    if int(prod_id) != obj.product_id:
+        obj = None
+        error = 'Wrong PK'
+
+    fields = formfields.ProductIssueForm(obj)
+    return __taco_render(request, 'taconite/product/issue.xml', {
+        'error': error,
+        'fields': fields,
+        'obj': obj,
+        'prod_id': prod_id,
+    })
+
+
+@login_required
+def product_issue_save(request):
+    msg = ''
+    new_obj = False
+    obj_id = None
+    saved = False
+    try:
+        for obj in serializers.deserialize('json', request.body):
+            if obj.object.__class__ == CatalogIssueProduct:
+                if not obj.object.id:
+                    new_obj = True
+
+                obj.save()
+                obj_id = obj.object.id
+                saved = True
+
+                if new_obj:
+                    msg = 'Issue link created (ID:%d)' % obj.object.id
+                else:
+                    msg = 'Issue link saved'
+            else:
+                msg = 'Did not receive expected object CatalogIssueProduct. You sent me a %s' % obj.object.__class__.__name__
+
+    except Exception, e:
+        msg = 'Wrong values'
+        print e
+
+    return json_response({
+        'msg': msg,
+        'obj_id': obj_id,
+        'created': True if new_obj else False,
+        'saved': saved
+    })
+
+
+@login_required
+def product_issue_delete(request, prod_id, issue_id):
+    try:
+        pl = CatalogIssueProduct.objects.get(
+            pk=issue_id,
+            product_id=int(prod_id)
+        )
+    except CatalogIssueProduct.DoesNotExist:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong ID'
+        })
+
+    pl.delete()
+
+    return json_response({
+        'status': 'ok',
+        'msg': 'Catalog link has deleted!'
     })

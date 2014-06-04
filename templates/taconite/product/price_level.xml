@@ -3,7 +3,7 @@
     {% else %}{% include "taconite/fields.xml" with fields=fields %}
     {% endif %}
     <eval>
-    $("#frm_add_pricelevel .price_products_id").val("{{ prod_id }}");
+    $("#frm_add_pricelevel .price_product_id").val("{{ prod_id }}");
     </eval>
 
     {% comment %}

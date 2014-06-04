@@ -1,5 +1,6 @@
 $(function(){
-    var catalog_item_default_btn = [{
+    var catalog_item_default_btn = [
+        {
             text: "Save",
             click: function() {
                 save_catalog()
@@ -44,7 +45,7 @@ $(function(){
                         $("#catalog_item_dialog").dialog('close');
                         $.get(__url_catalog_list);
                         $("#catalog_list_dialog").dialog('open');
-                        //refresh_catalog();
+                        refresh_catalog();
                     }
                 });
                 return false;
@@ -95,6 +96,7 @@ $(function(){
                             .dialog("option", "title", "Edit Catalog")
                             .dialog("option", "buttons", catalog_item_default_btn)
                             .dialog("open");
+                        refresh_catalog();
                     }
                 });
                 return false;
@@ -186,7 +188,7 @@ $(function(){
                     $("#catalog_item_dialog").dialog('close');
                     $.get(__url_catalog_list);
                     $("#catalog_list_dialog").dialog('open');
-                    //refresh_catalog();
+                    refresh_catalog();
                 }
                 alert(json['msg']);
             }
@@ -253,6 +255,7 @@ $(function(){
                             .dialog("option", "title", "Edit Catalog")
                             .dialog("option", "buttons", catalog_item_default_btn)
                             .dialog("open");
+                    refresh_catalog();
                 }
                 alert(json['msg']);
             }

@@ -96,9 +96,12 @@ def PriceLevelForm(obj):
     return {
         '#frm_add_pricelevel .price_id': (obj.pk, None),
         '#frm_add_pricelevel .pricelevel_min_amount': (obj.min_amount, None),
-        '#frm_add_pricelevel .pricelevel_max_amount': (obj.max_amount, 'default_if_none:""'),
+        '#frm_add_pricelevel .pricelevel_max_amount': (obj.max_amount, 'default_if_none:'),
         '#frm_add_pricelevel .pricelevel_cost_per_item': (obj.cost_per_item, None),
     }
+
+def CatalogIssueProductForm(obj):
+    return {}
 
 
 def RoyaltyGroupForm(obj):
@@ -152,4 +155,16 @@ def CatalogIssueForm(obj):
         '#frm_catalog_issue .obj_name': (obj.issue, None),
         '#frm_catalog_issue .parent_id': (obj.catalog.id, None),
         '#frm_catalog_issue .obj_parent': (obj.catalog.name, None),
+    }
+
+
+def ProductIssueForm(obj):
+    return {
+        '#frm_product_catalog_issue .product_id': (obj.product.id, None),
+        '#frm_product_catalog_issue .product_name': (obj.product.name, None),
+        '#frm_product_catalog_issue .obj_id': (obj.id, None),
+        '#frm_product_catalog_issue .issue_id': (obj.catalog_issue.id, None),
+        '#frm_product_catalog_issue .obj_page': (obj.page_ref, None),
+        '#frm_product_catalog_issue .obj_img': (obj.img_ref, None),
+        '#frm_product_catalog_issue .obj_sub': (obj.sub_ref, None),
     }

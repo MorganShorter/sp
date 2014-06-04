@@ -1,0 +1,34 @@
+<div id="product_catalog_issue">
+	<form id="frm_product_catalog_issue" data-model="catalogissueproduct">
+	<fieldset>
+		<table>
+            <input type="hidden" name="products_id" class="product_id" value="" data-field="product">
+            <input type="hidden" name="obj_id" class="obj_id" value="">
+
+            <tr>
+                <td class="form_cell"><label class="form_label">product:</label></td>
+                <td class="form_cell"><input type="text" name="product_catalog_issue_product" class="product_name text ui-widget-content ui-corner-all form_input" readonly /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">catalog issue:</label></td>
+                <td class="form_cell">
+                    <select name="product_catalog_issue" class="issue_id text ui-widget-content ui-corner-all form_input catalog_issues" data-field="catalog_issue">
+				    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">Page:</label></td>
+                <td class="form_cell"><input type="text" name="product_catalog_issue_page" class="obj_page text ui-widget-content ui-corner-all form_input" value="" data-field="page_ref" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">Img:</label></td>
+                <td class="form_cell"><input type="text" name="product_catalog_issue_img" class="obj_img text ui-widget-content ui-corner-all form_input" value="" data-field="img_ref" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">Sub:</label></td>
+                <td class="form_cell"><input type="text" name="product_catalog_issue_sub" class="obj_sub text ui-widget-content ui-corner-all form_input" value="" data-field="sub_ref" /></td>
+            </tr>
+		</table>
+	</fieldset>
+	</form>
+</div>

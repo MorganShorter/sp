@@ -50,5 +50,6 @@ $(function () {
     refresh_medium();
     refresh_supplier();
     refresh_royalty();
+    refresh_catalog();
 
 });

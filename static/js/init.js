@@ -327,3 +327,28 @@ function refresh_royalty(){
         }
     });
 }
+
+function refresh_catalog(){
+    $.ajax({url: '/lookup/catalog',
+        type: 'GET',
+        dataType: 'json',
+        headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
+        success: function (json) {
+            $('.catalog_issues').html('');
+            var group;
+            $.each(json, function (k, v) {
+                if (v[0] == 0){
+                    if (group){
+                        $('.catalog_issues').append(group);
+                    }
+                    group = document.createElement('optgroup');
+                    group.label = v[1];
+                } else {
+                    var o = new Option(v[1], v[0]);
+                    group.appendChild(o);
+                }
+            });
+            $('.catalog_issues').append(group);
+        }
+    });
+}

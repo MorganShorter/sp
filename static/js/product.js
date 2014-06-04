@@ -9,6 +9,7 @@ $(function () {
         close: function(event, ui){
             $('#frm_product').resetForm();
             $("#product_pricelevel").dialog("close");
+            $("#product_catalog_issue").dialog("close");
         }
     });
     $("#product_create").dialog({
@@ -34,7 +35,10 @@ $(function () {
         autoOpen: false,
         width: 274,
         close: function(event, ui) {
-            $('.frm_add_pricelevel').resetForm()
+            var f = $('#frm_add_pricelevel');
+            f.resetForm();
+            $('.price_product_id', f).val('');
+            $('.price_id', f).val('');
         }
     });
 
@@ -158,11 +162,14 @@ $(function () {
         culture: "en-AU"
     });
 
+    //
     // Price Levels
     $('.price_table tbody tr').live("click", function(){
         var price_id = $(this).attr('pr_level_id');
         var prod_id = $('#product_content .product_id').val();
-        $("#product_pricelevel").dialog("open");
+        $("#product_pricelevel")
+            .dialog("close")
+            .dialog("open");
         $.get('/product/pricelevel/' + prod_id + '/' + price_id + '/');
         return false;
     });
@@ -178,7 +185,7 @@ $(function () {
             if (data['status'] == 'error'){
                 alert('Error! ' + data['msg']);
             } else {
-                $.get('/product/' + prod_id + '/?only_price_levels=1');
+                $.get('/product/' + prod_id + '/?only_lisr=1');
                 alert(data['msg']);
             }
         });
@@ -192,7 +199,7 @@ $(function () {
         if (obj_id == "" || obj_id == undefined || obj_id == null)
             obj_id = null;
 
-        var product_id = $.trim($('.price_products_id', c_form).val());
+        var product_id = $.trim($('.price_product_id', c_form).val());
         var model_fields = c_form.getDataFields();
 
         if (!obj_id){
@@ -231,7 +238,7 @@ $(function () {
                 if (json['saved']){
                     c_form.resetForm();
                     $("#product_pricelevel").dialog("close");
-                    $.get('/product/' + product_id + '/?only_price_levels=1');
+                    $.get('/product/' + product_id + '/?only_lisr=1');
                 }
 
 
@@ -249,8 +256,128 @@ $(function () {
     });
 
     $('.price_level_add_btn').live('click', function(){
-        $("#product_pricelevel").dialog("open");
-        $('#frm_add_pricelevel .price_products_id').val($("#frm_product .product_id").val());
+        $("#product_pricelevel").dialog("close").dialog("open");
+        $('#frm_add_pricelevel .price_product_id').val($("#frm_product .product_id").val());
     });
+
+
+    //
+    // Product - catalog links
+    var issue_link_default_btn = [
+        {
+            text: "Save",
+            click: function() {
+                save_issue_link();
+            }
+        }, {
+            text: "Delete",
+            click: function() {
+                var c_form = $('#frm_product_catalog_issue');
+                var obj_id = $.trim($('.obj_id', c_form).val());
+                var product_id = $.trim($('.product_id', c_form).val());
+                if (obj_id == "" || obj_id == undefined || obj_id == null){
+                    alert('Error! ID not found');
+                    return false;
+                }
+
+                var cnf = confirm('Sure you want to delete this Link?');
+                if (cnf != true){
+                    return false;
+                }
+                $.get('/product/issue/' + product_id + '/' + obj_id + '/delete/', function(data){
+                    if (data['status'] == 'error'){
+                        alert('Error! ' + data['msg']);
+                    } else {
+                        alert(data['msg']);
+                        c_form.resetForm();
+                        $("#product_catalog_issue").dialog('close');
+                        $.get('/product/' + product_id + '/?only_list=1');
+                    }
+                });
+                return false;
+            }
+        }
+    ];
+
+    var issue_link_create_btn = [
+        {
+            text: "Create",
+            click: function() {
+                save_issue_link()
+            }
+        }
+    ];
+
+    $("#product_catalog_issue").dialog({
+        title: "Edit Catalog link",
+        autoOpen: false,
+        width: 414,
+        buttons: issue_link_default_btn,
+        close: function(event, ui){
+            $("#product_catalog_issue")
+                .dialog("option", "title", "Edit Catalog link")
+                .dialog("option", "buttons", issue_link_default_btn);
+        }
+    });
+
+    $('.catalog_list_table tbody tr').live("click", function(){
+        var issue_id = $(this).attr('cid');
+        var prod_id = $('#product_content .product_id').val();
+        $("#product_catalog_issue")
+            .dialog("close")
+            .dialog("open");
+
+        $.get('/product/issue/' + prod_id + '/' + issue_id + '/');
+        return false;
+    });
+
+    $('.product_catalog_add_btn').live('click', function(){
+       $("#product_catalog_issue")
+               .dialog("close")
+               .dialog("option", "title", "Create Catalog link")
+               .dialog("option", "buttons", issue_link_create_btn)
+               .dialog("open");
+
+        var f = $('#frm_product_catalog_issue');
+
+        $('.product_id', f).val($('#product_content .product_id').val());
+        $('.obj_id', f).val('');
+        $('.product_name', f).val($('#product_content .product_name').val());
+    });
+
+    function save_issue_link(){
+        var c_form = $('#frm_product_catalog_issue');
+        var obj_id = $.trim($('.obj_id', c_form).val());
+        var product_id = $.trim($('.product_id', c_form).val());
+
+        if (obj_id == "" || obj_id == undefined || obj_id == null)
+            obj_id = null;
+
+        var model_fields = c_form.getDataFields();
+
+        var obj_json = [{
+            'pk': obj_id,
+            'model': 'frontend.catalogissueproduct',
+            'fields': model_fields['catalogissueproduct']
+        }];
+        $.ajax({
+            url: '/product/issue/save/',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            contentType: 'application/json; charset=UTF-8',
+            headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+            data: JSON.stringify(obj_json),
+            success: function (json) {
+                if (json['saved']){
+                    c_form.resetForm();
+                    $.get('/product/' + product_id + '/?only_list=1');
+                    $("#product_catalog_issue").dialog("close");
+                }
+                alert(json['msg']);
+            }
+        });
+        return false;
+    }
 
 });
