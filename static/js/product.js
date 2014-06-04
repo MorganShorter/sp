@@ -96,6 +96,10 @@ $(function () {
         if (model_fields['product'].sp_cost && model_fields['product'].sp_cost[0] == "$")
             model_fields['product'].sp_cost = model_fields['product'].sp_cost.slice(1);
 
+        if (model_fields['product'].royalty_group == ''){
+            model_fields['product'].royalty_group = NaN;
+        }
+
         if (model_fields['product'].manual_royalty == ''){
             model_fields['product'].manual_royalty = NaN;
         }
