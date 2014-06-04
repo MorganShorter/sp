@@ -257,7 +257,7 @@ class Order(models.Model):
     products = models.ManyToManyField(Product, related_name='+', through='OrderProduct')
     shipping_cost = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
-    total_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # total net_cost
+    total_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # total net_cost + shipping_cost
     total_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # total net_price + shipping_cost
 
     order_date = models.DateTimeField(default=datetime.now)
@@ -339,7 +339,7 @@ class Order(models.Model):
     def total_recount(self, save=False):
         data = self.summary
         self.total_price = float(data['net_price']) + float(self.shipping_cost)
-        self.total_cost = data['net_cost']
+        self.total_cost = float(data['net_cost']) + float(self.shipping_cost)
 
         if save:
             self.save(total_recount=False)
