@@ -454,7 +454,7 @@ class OrderProduct(models.Model):
     @property
     def tax_sum(self):
         if self.with_tax:
-            return self.gross_price * settings.TAX_PERCENT / 100
+            return self.price * settings.TAX_PERCENT / 100
         return Decimal(0)
 
     @property
