@@ -423,7 +423,7 @@ class OrderProduct(models.Model):
     #  Sub is the basic cost (include royalty)
     @property
     def sub_cost(self):
-        return self.cost * (1 + self.product.royalty/100)
+        return self.cost
 
     @property
     def sub_price(self):
