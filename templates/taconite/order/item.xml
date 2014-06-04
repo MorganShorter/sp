@@ -39,23 +39,23 @@
 
             <replaceContent select=".order_product_summary">
                 <ul>
-                    <li><strong>Sub Profit:</strong> <span>${{ order.summary.sub_profit|floatformat }}</span></li>
-                    <li><strong>Sub Cost:</strong> <span>${{ order.summary.sub_cost|floatformat }}</span></li>
-                    <li><strong>Sub Price:</strong> <span>${{ order.summary.sub_price|floatformat }}</span></li>
+                    <li><strong>Sub Profit:</strong> <span>${{ order.summary.sub_profit|floatformat:2 }}</span></li>
+                    <li><strong>Sub Cost:</strong> <span>${{ order.summary.sub_cost|floatformat:2 }}</span></li>
+                    <li><strong>Sub Price:</strong> <span>${{ order.summary.sub_price|floatformat:2 }}</span></li>
                     <li><hr/></li>
-                    <li><strong>Disc:</strong> <span>${{ order.summary.discount|floatformat }}</span></li>
-                    <li><strong>Gross Profit:</strong> <span>${{ order.summary.gross_profit|floatformat }}</span></li>
-                    <li><strong>Gross Cost:</strong> <span>${{ order.summary.gross_cost|floatformat }}</span></li>
-                    <li><strong>Gross Price:</strong> <span>${{ order.summary.gross_price|floatformat }}</span></li>
+                    <li><strong>Disc:</strong> <span>${{ order.summary.discount|floatformat:2 }}</span></li>
+                    <li><strong>Gross Profit:</strong> <span>${{ order.summary.gross_profit|floatformat:2 }}</span></li>
+                    <li><strong>Gross Cost:</strong> <span>${{ order.summary.gross_cost|floatformat:2 }}</span></li>
+                    <li><strong>Gross Price:</strong> <span>${{ order.summary.gross_price|floatformat:2 }}</span></li>
                     <li><hr/></li>
-                    <li><strong>Tax:</strong> <span>${{ order.summary.tax|floatformat }}</span></li>
-                    <li><strong>Net Profit:</strong> <span>${{ order.summary.net_profit|floatformat }}</span></li>
-                    <li><strong>Net Cost:</strong> <span>${{ order.summary.net_cost|floatformat }}</span></li>
-                    <li><strong>Net Price:</strong> <span>${{ order.summary.net_price|floatformat }}</span></li>
+                    <li><strong>Tax:</strong> <span>${{ order.summary.tax|floatformat:2 }}</span></li>
+                    <li><strong>Net Profit:</strong> <span>${{ order.summary.net_profit|floatformat:2 }}</span></li>
+                    <li><strong>Net Cost:</strong> <span>${{ order.summary.net_cost|floatformat:2 }}</span></li>
+                    <li><strong>Net Price:</strong> <span>${{ order.summary.net_price|floatformat:2 }}</span></li>
                     <li><hr/></li>
-                    <li><strong>Ship:</strong> <span>${{ order.shipping_cost|floatformat }}</span></li>
-                    <li><strong>Total Cost:</strong> <span>${{ order.total_cost|floatformat }}</span></li>
-                    <li><strong>Total Price:</strong> <span>${{ order.total_price|floatformat }}</span></li>
+                    <li><strong>Ship:</strong> <span>${{ order.shipping_cost|floatformat:2 }}</span></li>
+                    <li><strong>Total Cost:</strong> <span>${{ order.total_cost|floatformat:2 }}</span></li>
+                    <li><strong>Total Price:</strong> <span>${{ order.total_price|floatformat:2 }}</span></li>
                 </ul>
             </replaceContent>
         {% endif %}
