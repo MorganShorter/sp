@@ -74,7 +74,6 @@
                     <td class="">
                         <select title="use price level" class="order_product_pl text ui-widget-content ui-corner-all form_input width100">
                             <option value="">-</option>
-                            <option value="{{ product.default_price }}">Default: ${{ product.default_price }} / item</option>
                             {% for o in product.price_levels.all %}
                                 <option value="{{ o.cost_per_item }}"><small>{{ o.min_amount }}..{{ o.max_amount|default:'∞' }} = ${{ o.cost_per_item }}/item {% if o.block_only %}BO{% endif %}</small></option>
                             {% endfor %}
