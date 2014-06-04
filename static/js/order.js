@@ -248,8 +248,8 @@ $(function () {
 function order_init(){
     $(".order_shipping_cost").spinner({
         min: 0,
-        step: .15,
-        start: 1000,
+        step: 0.01,
+        start: 0,
         numberFormat: "C",
         culture: "en-AU"
     });
