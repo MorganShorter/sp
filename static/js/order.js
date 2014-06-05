@@ -275,7 +275,7 @@ function order_init(){
     $(".order_product_percentage").spinner({
         min: 0,
         max: 100,
-        step: 5,
+        step: 1,
         start: 0,
         culture: "en-AU",
         create: product_recount
@@ -307,21 +307,21 @@ function call_product_recount(parent){
         $('.back_order_icon', parent).addClass('back_order_no');
     }
 
+    cost *= count;
     var result = cost;
+    var royalty_total = 0;
     if (royalty){
-        result += cost * (royalty/100);
+        royalty_total = cost * (royalty/100)
+        result += royalty_total;
     }
 
     if (discount > 0){
-        result -= result * (discount/100);
+        result -= cost * (discount/100);
     }
 
     if (tax){
-        result += result * (__tax_percent/100);
+        result += (cost + royalty_total)  * __tax_percent / 100;
     }
 
-
-
-    result *= count;
     $('.order_product_total', parent).text(result.toFixed(2));
 }

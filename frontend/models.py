@@ -427,7 +427,7 @@ class OrderProduct(models.Model):
 
     @property
     def sub_price(self):
-        return self.price * (1 + self.product.royalty/100)
+        return self.price * (1 + Decimal(self.product.royalty)/100)
 
     @property
     def sub_profit(self):
@@ -436,7 +436,7 @@ class OrderProduct(models.Model):
     #  Gross - including discount
     @property
     def discount_sum(self):
-        return self.sub_price * self.discount_percentage / 100
+        return self.price * self.discount_percentage / 100
 
     @property
     def gross_cost(self):
@@ -454,7 +454,7 @@ class OrderProduct(models.Model):
     @property
     def tax_sum(self):
         if self.with_tax:
-            return self.price * settings.TAX_PERCENT / 100
+            return self.sub_price * settings.TAX_PERCENT / 100
         return Decimal(0)
 
     @property
