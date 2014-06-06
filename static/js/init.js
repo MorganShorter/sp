@@ -335,6 +335,7 @@ function refresh_catalog(){
         headers: { 'X_HTTP_REQUESTED_WITH': 'XMLHttpRequest' },
         success: function (json) {
             $('.catalog_issues').html('');
+            $('.catalog_issues.with_none').append(new Option('', ''));
             var group;
             $.each(json, function (k, v) {
                 if (v[0] == 0){
@@ -348,7 +349,9 @@ function refresh_catalog(){
                     group.appendChild(o);
                 }
             });
-            $('.catalog_issues').append(group);
+            if (group) {
+                $('.catalog_issues').append(group);
+            }
         }
     });
 }

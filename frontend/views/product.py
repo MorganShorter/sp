@@ -22,6 +22,21 @@ class ProductList(TacoMixin, ListView):
         if self.request.GET.get('find_product_name', None):
             fltr['name__icontains'] = self.request.GET['find_product_name']
 
+        if self.request.GET.get('issue_id', None):
+            fltr['catalog_links__catalog_issue_id'] = self.request.GET['issue_id']
+
+            if self.request.GET.get('issue_page', None):
+                if self.request.GET['issue_page'].isdigit():
+                    fltr['catalog_links__page_ref'] = self.request.GET['issue_page']
+
+            if self.request.GET.get('issue_img', None):
+                if self.request.GET['issue_img'].isdigit():
+                    fltr['catalog_links__img_ref'] = self.request.GET['issue_img']
+
+            if self.request.GET.get('issue_sub', None):
+                if self.request.GET['issue_sub'].isdigit():
+                    fltr['catalog_links__sub_ref'] = self.request.GET['issue_sub']
+
         if not fltr:
             if self.request.GET.get('last', None):
                 return qs.order_by('-last_read')[:10]

@@ -31,7 +31,7 @@ fieldset label, td label {
     border-radius: 5px 0 0 5px;
     border-right: 1px solid #FFF;
     font-size: 13px;
-    padding: 0px;
+    padding: 0 0 0 5px;
     float: right;
     margin: 0px;
     height: 14px;
@@ -766,4 +766,8 @@ ul.dropdown ul.sub_menu_products {
 
 .catalog_issues option[disabled] {
     font-weight: bold;
+}
+
+#product_find_catalog_block {
+    margin: 0 0 5px 0;
 }

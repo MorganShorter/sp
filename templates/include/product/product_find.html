@@ -1,9 +1,28 @@
 <div id="product_find">
 	<form id="frm_find_product" action="" method="get">
-        <a id="find_product_search" title="find product" href="#" class="button form_button pull-right">
-            <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
-        </a>
-		<table>
+		<table id="product_find_catalog_block" class="pull-right">
+            <tr>
+                <td class="form_cell"><label class="form_label">catalog / issue:</label></td>
+                <td class="form_cell">
+                    <select name="issue_id" class="text ui-widget-content ui-corner-all form_input catalog_issues with_none">
+				    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">catalog page:</label></td>
+                <td class="form_cell"><input type="text" name="issue_page" title="" class="text ui-widget-content ui-corner-all form_input" value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">catalog img:</label></td>
+                <td class="form_cell"><input type="text" name="issue_img" title="" class="text ui-widget-content ui-corner-all form_input" value="" /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">catalog sub:</label></td>
+                <td class="form_cell"><input type="text" name="issue_sub" title="" class="text ui-widget-content ui-corner-all form_input" value="" /></td>
+            </tr>
+		</table>
+
+        <table>
             <tr>
                 <td class="form_cell"><label for="find_product_code" class="form_label">product code:</label></td>
                 <td class="form_cell"><input type="text" name="product_code" id="find_product_code" title="search for this type of product code" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
@@ -13,6 +32,10 @@
                 <td class="form_cell"><input type="text" name="find_product_name" id="find_product_name" title="search for this type of product name" class="text ui-widget-content ui-corner-all form_input" style="width: 60px;" value="" /></td>
             </tr>
 		</table>
+
+        <a id="find_product_search" title="find product" href="#" class="button form_button">
+            <img id="icon_order_invoice_id_search" src="{{ STATIC_URL }}img/icons/32_find_invoice.png">
+        </a>
 	</form>
     <div id="product_search_result" class="search_result">
         <table id="" class="form_list">
