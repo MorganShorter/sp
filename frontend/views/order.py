@@ -19,6 +19,9 @@ class OrderList(TacoMixin, ListView):
         if self.request.GET.get('order_customer', None):
             fltr['customer_id'] = self.request.GET['order_customer']
 
+        if self.request.GET.get('order_customer_name', None):
+            fltr['customer__name__icontains'] = self.request.GET['order_customer_name']
+
         if self.request.GET.get('find_order_id', None):
             fltr['pk'] = self.request.GET['find_order_id']
 
@@ -26,7 +29,10 @@ class OrderList(TacoMixin, ListView):
             fltr['invoices__number'] = self.request.GET['find_order_inv_num']
 
         if not fltr:
-            return qs.none()
+            if self.request.GET.get('last', None):
+                return qs.order_by('-last_read')[:20]
+            else:
+                return qs.none()
 
         return qs.filter(**fltr)
 
@@ -37,12 +43,13 @@ order_list = OrderList.as_view()
 @login_required
 def order_get(request, pk):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
+    invoice = None
 
     if not error:
         try:
             invoice = Invoice.objects.filter(order_id=order.id).first()
         except Invoice.DoesNotExist:
-            invoice = None
+            pass
 
         if not invoice:
             invoice = Invoice(
@@ -54,6 +61,8 @@ def order_get(request, pk):
 
         if not order.last_status:
             order.statuses.create()
+
+        order.save()  # update last_read date
 
     fields = formfields.OrderForm(order, invoice)
     return __taco_render(request, 'taconite/order/item.xml', {

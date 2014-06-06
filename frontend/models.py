@@ -287,6 +287,7 @@ class Order(models.Model):
 
     order_notes = models.CharField(max_length=510, null=True, blank=True)
     notes = models.ManyToManyField('Note', related_name='o_notes')
+    last_read = models.DateTimeField(auto_now=True, null=True, blank=True, editable=False)
 
     @property
     def order_date_str(self):

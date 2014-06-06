@@ -20,7 +20,10 @@ $(function () {
     $("#order_find").dialog({
         title: "Find order",
         autoOpen: false,
-        width: 'auto'
+        width: 'auto',
+        create: function(event, ui) {
+            $.get(__url_order_list + '?last=1');
+        }
     });
 
     $(".button_order_show_dialog").click(function () {

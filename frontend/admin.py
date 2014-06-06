@@ -32,7 +32,7 @@ admin.site.register(PriceLevel, PriceLevelAdmin)
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('order_date', 'pk', 'customer', 'total_cost',)
+    list_display = ('order_date', 'pk', 'customer', 'total_cost', 'last_read')
     raw_id_fields = ('customer',)
     filter_horizontal = ('notes', 'products')
     inlines = [
