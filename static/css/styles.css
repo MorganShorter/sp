@@ -635,11 +635,11 @@ ul.dropdown ul.sub_menu_products {
 }
 
 .pull-right {
-    float: right;
+    float: right !important;
 }
 
 .pull-left {
-    float: left;
+    float: left !important;
 }
 .report1_table thead th {
     cursor: pointer;
@@ -770,4 +770,11 @@ ul.dropdown ul.sub_menu_products {
 
 #product_find_catalog_block {
     margin: 0 0 5px 0;
+}
+
+.order_form_control {
+    margin: 10px 0;
+}
+.order_form_control div {
+    float: left;
 }

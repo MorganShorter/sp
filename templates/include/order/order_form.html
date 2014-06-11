@@ -207,22 +207,29 @@
 			<!--- End order_accordion -->
         </div>
 
-        <table id="order_control_action">
-            <tr>
-                <td id="order_control_action_save" class="form_cell">
-                    <a id="order_control_action_save" title="save order" href="#" class="save_order button form_button">
-                        <img id="icon_order_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;
-                </td>
-                <td id="order_control_action_delete" class="form_cell">
-                    <a id="order_control_action_delete" title="save order" href="#" class="dialog_delete_order button form_button">
-                        <img id="icon_order_control_action_delete" src="{{ STATIC_URL }}img/icons/32_erase.png" /><br />delete</a>&nbsp;
-                </td>
-                <td id="order_control_action_cancel" class="form_cell">
-                    <a id="order_control_action_cancel" title="save order" href="#" class="dialog_close_order button form_button">
-                        <img id="icon_order_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;
-                </td>
-            </tr>
-        </table>
+        <div class="order_form_control">
+            <div>
+                <a id="order_control_action_save" title="save order" href="#" class="save_order button form_button">
+                    <img src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;
+            </div>
+            <div>
+                <a id="order_control_action_delete" title="save order" href="#" class="dialog_delete_order button form_button">
+                    <img id="icon_order_control_action_delete" src="{{ STATIC_URL }}img/icons/32_erase.png" /><br />delete</a>&nbsp;
+            </div>
+            <div>
+                <a id="order_control_action_cancel" title="save order" href="#" class="dialog_close_order button form_button">
+                    <img id="icon_order_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;
+            </div>
+            <div class="pull-right">
+                <a title="print order" href="#" class="button form_button">
+                    <img src="{{ STATIC_URL }}img/icons/32_printer.png" /><br />print</a>&nbsp;
+            </div>
+            <div class="pull-right">
+                <a title="email order" href="#" class="button form_button">
+                    <img src="{{ STATIC_URL }}img/icons/32_email.png" /><br />email</a>&nbsp;
+            </div>
+        </div>
+
 	</form>
 	<!-- End order_content  -->
 	</div>
