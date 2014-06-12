@@ -6,7 +6,7 @@ $(function () {
         collapsible: true
     });
 
-    $("#order_content").dialog({
+    $("#order_content").dialogExtend({
         title: "Show order",
         autoOpen: false,
         width: 800,
