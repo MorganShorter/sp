@@ -32,6 +32,7 @@ $(function () {
      $("#model_report_1").dialog({
         title: "Sales Order Listing",
         autoOpen: false,
+        resizable: false,
         width: '280px',
         close: function( event, ui ) {
             $("#model_report_1_table").dialog('close');
@@ -40,6 +41,7 @@ $(function () {
     $("#model_report_1_table").dialog({
         title: "Sales Order Listing",
         autoOpen: false,
+        resizable: false,
         width: 800,
         height: 500,
         close: function( event, ui ) {
@@ -69,6 +71,7 @@ $(function () {
      $("#model_report_2").dialog({
         title: "Top Sellers",
         autoOpen: false,
+        resizable: false,
         width: '280px',
         close: function( event, ui ) {
             $("#model_report_2_table").dialog('close');
@@ -77,6 +80,7 @@ $(function () {
     $("#model_report_2_table").dialog({
         title: "Top Sellers (first 100)",
         autoOpen: false,
+        resizable: false,
         width: 800,
         height: 500,
         close: function( event, ui ) {
@@ -100,6 +104,7 @@ $(function () {
      $("#model_report_3").dialog({
         title: "Sent items",
         autoOpen: false,
+        resizable: false,
         width: '280px',
         close: function( event, ui ) {
             $("#model_report_3_table").dialog('close');
@@ -108,6 +113,7 @@ $(function () {
     $("#model_report_3_table").dialog({
         title: "Sent items",
         autoOpen: false,
+        resizable: false,
         width: 800,
         height: 500,
         close: function( event, ui ) {

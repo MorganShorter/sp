@@ -48,6 +48,7 @@ $(function(){
     $("#royalty_list_dialog").dialog({
         title: "Royalty Groups",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: [{
             text: "Create",
@@ -85,6 +86,7 @@ $(function(){
     $("#royalty_item_dialog").dialog({
         title: "Edit Royalty Group",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: royalty_item_default_btn
     });

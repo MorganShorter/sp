@@ -48,6 +48,7 @@ $(function(){
     $("#supplier_list_dialog").dialog({
         title: "Suppliers list",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: [{
             text: "Create",
@@ -85,6 +86,7 @@ $(function(){
     $("#supplier_item_dialog").dialog({
         title: "Edit Supplier",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: supplier_item_default_btn
     });

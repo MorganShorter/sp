@@ -117,6 +117,7 @@ $(function(){
     $("#catalog_list_dialog").dialog({
         title: "catalog list",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: [{
             text: "Create",
@@ -154,6 +155,7 @@ $(function(){
     $("#catalog_item_dialog").dialog({
         title: "Edit catalog",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: catalog_item_default_btn,
         close: function(){
@@ -215,6 +217,7 @@ $(function(){
     $("#catalog_issue_item_dialog").dialog({
         title: "Edit catalog",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: catalog_issue_item_default_btn,
         close: function(){

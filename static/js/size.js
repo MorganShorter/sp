@@ -48,6 +48,7 @@ $(function(){
     $("#size_list_dialog").dialog({
         title: "Size list",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: [{
             text: "Create",
@@ -86,6 +87,7 @@ $(function(){
     $("#size_item_dialog").dialog({
         title: "Edit Size",
         autoOpen: false,
+        resizable: false,
         width: 414,
         close: function(){
             $('form', this).resetForm();

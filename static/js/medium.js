@@ -48,6 +48,7 @@ $(function(){
     $("#medium_list_dialog").dialog({
         title: "Medium list",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: [{
             text: "Create",
@@ -85,6 +86,7 @@ $(function(){
     $("#medium_item_dialog").dialog({
         title: "Edit Medium",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: medium_item_default_btn
     });

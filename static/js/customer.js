@@ -20,6 +20,7 @@ $(function () {
     $("#customer_content").dialog({
         title: "Customer",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         height: 'auto',
         close: function( event, ui ) {
@@ -33,6 +34,7 @@ $(function () {
     $("#customer_find").dialog({
         title: "Find Customers",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         open: function(event, ui){
             $('#find_customer_additional_filter').hide();
@@ -56,6 +58,7 @@ $(function () {
     $("#add_contact").dialog({
         title: "Add Contact",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         close: function( event, ui ) {
             $('#frm_add_contact').trigger('reset');
@@ -65,6 +68,7 @@ $(function () {
     $("#show_note").dialog({
         title: "Note",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         close: function( event, ui ) {
             $('#frm_add_note').trigger('reset');
@@ -123,6 +127,7 @@ $(function () {
     $("#customer_add").dialog({
         title: "Add Customer",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         close: function( event, ui ) {
 

@@ -5,6 +5,7 @@ $(function () {
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,
+        resizable: false,
         width: 414,
         close: function(event, ui){
             $('#frm_product').resetForm();
@@ -15,11 +16,13 @@ $(function () {
     $("#product_create").dialog({
         title: "Create product",
         autoOpen: false,
+        resizable: false,
         width: 414
     });
     $("#product_find").dialog({
         title: "Find Product",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         close: function(event, ui) {
             $("#product_content").dialog('close');
@@ -33,6 +36,7 @@ $(function () {
     $("#product_pricelevel").dialog({
         title: "Product level template",
         autoOpen: false,
+        resizable: false,
         width: 274,
         close: function(event, ui) {
             var f = $('#frm_add_pricelevel');
@@ -315,6 +319,7 @@ $(function () {
     $("#product_catalog_issue").dialog({
         title: "Edit Catalog link",
         autoOpen: false,
+        resizable: false,
         width: 414,
         buttons: issue_link_default_btn,
         close: function(event, ui){
