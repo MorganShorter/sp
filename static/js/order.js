@@ -41,7 +41,7 @@ $(function () {
         "maximize" : function(evt, dlg){ alert(evt.type); },
         "minimize" : function(evt, dlg){ alert(evt.type); },
         "restore" : function(evt, dlg){ alert(evt.type); }
-      });
+	});
     $("#order_find").dialog({
         title: "Find order",
         autoOpen: false,
@@ -49,8 +49,31 @@ $(function () {
         create: function(event, ui) {
             $.get(__url_order_list + '?last=1');
         }
-    });
-
+        .dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "titlebar" : "transparent",  
+        "minimizeLocation" : "right",
+        "icons" : {
+          "close" : "ui-icon-circle-close",
+          "maximize" : "ui-icon-circle-plus",
+          "minimize" : "ui-icon-circle-minus",
+          "collapse" : "ui-icon-triangle-1-s",
+          "restore" : "ui-icon-bullet"
+        },
+        "load" : function(evt, dlg){ alert(evt.type); },
+        "beforeCollapse" : function(evt, dlg){ alert(evt.type); },
+        "beforeMaximize" : function(evt, dlg){ alert(evt.type); },
+        "beforeMinimize" : function(evt, dlg){ alert(evt.type); },
+        "beforeRestore" : function(evt, dlg){ alert(evt.type); },
+        "collapse" : function(evt, dlg){ alert(evt.type); },
+        "maximize" : function(evt, dlg){ alert(evt.type); },
+        "minimize" : function(evt, dlg){ alert(evt.type); },
+        "restore" : function(evt, dlg){ alert(evt.type); }
+        });
     $(".button_order_show_dialog").click(function () {
         $("#order_content").dialog("open");
     });
