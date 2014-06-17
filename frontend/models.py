@@ -514,3 +514,14 @@ class Note(models.Model):
 
     def __unicode__(self):
         return '%s...' % self.text[:30]
+
+
+class BackOrder(models.Model):
+    order = models.ForeignKey('Order', related_name='back_orders')
+    product = models.ForeignKey('Product', related_name='back_orders')
+    amount = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    complete = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('-timestamp',)

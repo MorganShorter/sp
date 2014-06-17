@@ -1,7 +1,7 @@
 from django.contrib import admin
 from frontend.models import ImportNote, Customer, CustomerContact, Size, Medium, \
     Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, \
-    RoyaltyGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice, Note
+    RoyaltyGroup, PriceLevel, Order, OrderStatus, OrderProduct, Company, Invoice, Note, BackOrder
 
 
 class OrderProductInline(admin.StackedInline):
@@ -23,6 +23,14 @@ admin.site.register(Catalog)
 admin.site.register(CatalogIssue)
 admin.site.register(CatalogIssueProduct)
 admin.site.register(RoyaltyGroup)
+
+
+class BackOrderAdmin(admin.ModelAdmin):
+    raw_id_fields = ('order', 'product')
+    list_display = ('timestamp', 'order', 'product', 'amount', 'complete')
+    list_filter = ('complete',)
+
+admin.site.register(BackOrder, BackOrderAdmin)
 
 
 class PriceLevelAdmin(admin.ModelAdmin):
