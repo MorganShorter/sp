@@ -9,6 +9,7 @@ $(function () {
     $("#order_content").dialog({
         title: "Show order",
         autoOpen: false,
+        resizable: false,
         width: 800,
         close: function(){
             $('.add_product_to_order').css('display', 'none');
@@ -21,10 +22,18 @@ $(function () {
     $("#order_find").dialog({
         title: "Find order",
         autoOpen: false,
+        resizable: false,
         width: 'auto',
         create: function (event, ui) {
             $.get(__url_order_list + '?last=1');
         }
+    }).dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
     });
 
     $(".button_order_show_dialog").click(function () {

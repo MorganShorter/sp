@@ -275,9 +275,9 @@ select:focus {
 
 #avator {
     position: fixed;
-    bottom: 5px;
+    bottom: 25px;
     right: 5px;
-    padding: 25px;
+    padding: 25px 25px 0 25px;
     z-index: 999999;
 }
 /* Order window div */
@@ -439,6 +439,7 @@ ul.dropdown li:hover > ul {
 .ui-widget-header {
 	border: 1px solid grey;
 	background: #dbdada;
+    min-width: 170px;
 }
 .ui-widget, .ui-widget button {
 	font-family: Tahoma, Helvetica, Geneva, Arial, sans-serif;
@@ -481,6 +482,16 @@ ul.dropdown li:hover > ul {
 	height: 14px;	
 	margin: -7px 0 0 0;
 }
+
+.ui-dialog-titlebar-buttonpane a.ui-corner-all {
+	width: 12px;
+	height: 12px;
+}
+
+.ui-dialog-titlebar-buttonpane a.ui-corner-all span.ui-icon {
+    margin: -1px 0 0 -2px;
+}
+
 .ui-dialog-title {
 	font-family: impact;
 	font-size: 14px;
@@ -587,7 +598,7 @@ ul.dropdown li:hover > ul {
 	font-size: 10px;
 }
 #order_customer_id_search, #order_order_id_search, #order_invoice_id_search, #customer_name_search, .sml_button {
-	padding: 0px;
+	padding: 0;
 }
 #customer_main_options_customer_delivery_address_same_td_input, #product_main_options_product_auto_royalty_amount_td_input, 
 #product_main_options_product_use_price_template_td_input, #product_main_options_product_auto_name_td_input {
@@ -598,6 +609,12 @@ ul.dropdown li:hover > ul {
     width: 400px;
     height: 210px;
     overflow-y: scroll;
+}
+
+.ui-dialog-maximized .search_result {
+    width: 100%;
+    height: 100%;
+
 }
 
 .search_result table {
@@ -777,4 +794,8 @@ ul.dropdown ul.sub_menu_products {
 }
 .order_form_control div {
     float: left;
+}
+
+.ui-dialog-titlebar-buttonpane {
+    padding-top: 3px;
 }
