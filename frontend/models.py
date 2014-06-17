@@ -525,3 +525,25 @@ class BackOrder(models.Model):
 
     class Meta:
         ordering = ('-timestamp',)
+
+
+class StockAdjust(models.Model):
+    R_NEW, R_ERROR, R_TAKE = range(3)
+    REASONS = (
+        (R_NEW, 'New stock'),
+        (R_ERROR, 'Stock Error'),
+        (R_TAKE, 'Stock take')
+    )
+
+    product = models.ForeignKey('Product', related_name='stock_adjust')
+    current_amount = models.IntegerField()
+    added_amount = models.IntegerField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    reason = models.PositiveSmallIntegerField(choices=REASONS)
+
+    def __unicode__(self):
+        return '%s added %s' % (self.product, self.added_amount)
+
+    class Meta:
+        ordering = ('-timestamp', )
