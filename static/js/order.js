@@ -242,7 +242,7 @@ $(function () {
 
     // Delete product
     $('.order_product_item_delete').live('click', function(){
-        var prod_id = parseInt($(this).parents('tr').eq(0).attr('cid'));
+        var order_prod_id = parseInt($(this).parents('tr').eq(0).attr('cid'));
         var order_id = $('#frm_order .order_id').val();
 
         var cnf = confirm('Sure you want to delete this product?');
@@ -250,7 +250,7 @@ $(function () {
             return false;
         }
 
-        $.get('/order/delete_product/' + order_id + '/' + prod_id + '/', function(data){
+        $.get('/order/delete_product/' + order_prod_id + '/', function(data){
             if (data['status'] == 'ok') {
                 $.get('/order/get/' + order_id + '/?only_products=1');
                 alert('Product has removed from the order');

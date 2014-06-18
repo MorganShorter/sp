@@ -408,25 +408,29 @@ class OrderProduct(models.Model):
     def __unicode__(self):
         return '%s %s' % (self.order, self.product)
 
-    def save(self, *args, **kwargs):
-        if self.last_quantity != self.quantity:
-            delta = self.quantity - self.last_quantity
+    def stock_update(self, quantity=None):
+        if quantity is None:
+            quantity = self.quantity
+
+        if self.last_quantity != quantity:
+            bo_query = self.back_orders.filter(complete=False)
+            delta = quantity - self.last_quantity
             if delta > 0:  # ordered more
                 if delta > self.product.current_stock:
                     bo_amount = delta - self.product.current_stock
                     self.product.current_stock = 0
 
                     # Create BackOrder
-                    if self.back_orders.exists():
-                        self.back_orders.update(amount=models.F('amount')+bo_amount)  # must be only one!
+                    if bo_query.exists():
+                        bo_query.update(amount=models.F('amount')+bo_amount)  # must be only one!
                     else:
                         self.back_orders.create(amount=bo_amount)
                 else:
                     self.product.current_stock -= delta
             else:  # ordered less
                 delta *= -1  # delta -50 => 50
-                if self.back_orders.exists():
-                    bo = self.back_orders.get()
+                if bo_query.exists():
+                    bo = bo_query.get()
                     delta_with_bo = bo.amount - delta
                     if delta_with_bo > 0:
                         bo.amount = delta_with_bo
@@ -440,8 +444,15 @@ class OrderProduct(models.Model):
             self.product.save()
             self.last_quantity = self.quantity
 
+    def save(self, *args, **kwargs):
+        self.stock_update()
         self.back_order = True if self.back_orders.exists() else False
         super(OrderProduct, self).save(*args, **kwargs)
+
+    def delete(self, using=None):
+        self.stock_update(quantity=0)
+        super(OrderProduct, self).delete(using)
+
 
     @property
     def cost(self):

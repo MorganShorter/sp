@@ -233,11 +233,9 @@ def order_add_product(request, order_id, product_id):
 
 
 @login_required
-def order_delete_product(request, order_id, product_id):
+def order_delete_product(request, order_product_id):
     try:
-        order = Order.objects.get(pk=int(order_id))
-        product = Product.objects.get(pk=int(product_id))
-        OrderProduct.objects.get(order=order, product=product).delete()
+        OrderProduct.objects.get(pk=order_product_id).delete()
     except Exception, e:
         return json_response({
             'status': 'error'

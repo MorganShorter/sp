@@ -25,7 +25,7 @@ urlpatterns += patterns('frontend.views.order',
 
     # product in order
     url(ur'^order/add_product/(?P<order_id>\d+)/(?P<product_id>\d+)/', 'order_add_product'),
-    url(ur'^order/delete_product/(?P<order_id>\d+)/(?P<product_id>\d+)/', 'order_delete_product'),
+    url(ur'^order/delete_product/(?P<order_product_id>\d+)/', 'order_delete_product'),
 
 )
 
