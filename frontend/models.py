@@ -396,6 +396,7 @@ class OrderProduct(models.Model):
     order = models.ForeignKey(Order, related_name='ordered_products')
     product = models.ForeignKey(Product)
     quantity = models.PositiveSmallIntegerField()
+    last_quantity = models.PositiveSmallIntegerField(default=0)
     unit_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     back_order = models.BooleanField(default=False)
@@ -408,7 +409,38 @@ class OrderProduct(models.Model):
         return '%s %s' % (self.order, self.product)
 
     def save(self, *args, **kwargs):
-        self.back_order = True if self.quantity > self.product.current_stock else False
+        if self.last_quantity != self.quantity:
+            delta = self.quantity - self.last_quantity
+            if delta > 0:  # ordered more
+                if delta > self.product.current_stock:
+                    bo_amount = delta - self.product.current_stock
+                    self.product.current_stock = 0
+
+                    # Create BackOrder
+                    if self.back_orders.exists():
+                        self.back_orders.update(amount=models.F('amount')+bo_amount)  # must be only one!
+                    else:
+                        self.back_orders.create(amount=bo_amount)
+                else:
+                    self.product.current_stock -= delta
+            else:  # ordered less
+                delta *= -1  # delta -50 => 50
+                if self.back_orders.exists():
+                    bo = self.back_orders.get()
+                    delta_with_bo = bo.amount - delta
+                    if delta_with_bo > 0:
+                        bo.amount = delta_with_bo
+                        bo.save()
+                    else:
+                        bo.delete()
+                        self.product.current_stock -= delta_with_bo
+                else:
+                    self.product.current_stock += delta
+
+            self.product.save()
+            self.last_quantity = self.quantity
+
+        self.back_order = True if self.back_orders.exists() else False
         super(OrderProduct, self).save(*args, **kwargs)
 
     @property
@@ -517,8 +549,7 @@ class Note(models.Model):
 
 
 class BackOrder(models.Model):
-    order = models.ForeignKey('Order', related_name='back_orders')
-    product = models.ForeignKey('Product', related_name='back_orders')
+    order_product = models.ForeignKey('OrderProduct', related_name='back_orders')
     amount = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)

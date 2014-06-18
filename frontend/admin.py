@@ -27,8 +27,8 @@ admin.site.register(RoyaltyGroup)
 
 
 class BackOrderAdmin(admin.ModelAdmin):
-    raw_id_fields = ('order', 'product')
-    list_display = ('timestamp', 'order', 'product', 'amount', 'complete')
+    raw_id_fields = ('order_product',)
+    list_display = ('timestamp', 'order_product', 'amount', 'complete')
     list_filter = ('complete',)
 
 admin.site.register(BackOrder, BackOrderAdmin)
