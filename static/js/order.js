@@ -17,13 +17,20 @@ $(function () {
         open: function(){
             $('.add_product_to_order').css('display', 'block');
         }
+    }).dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
     });
 
     $("#order_find").dialog({
         title: "Find order",
         autoOpen: false,
         resizable: false,
-        width: 'auto',
+        width: 420,
         create: function (event, ui) {
             $.get(__url_order_list + '?last=1');
         }

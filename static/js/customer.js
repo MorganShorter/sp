@@ -29,13 +29,20 @@ $(function () {
             $('#toggle_customer_main_options_delivery').hide();
             $('#customer_delivery_address_same').prop("checked", 1);
         }
+    }).dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
     });
 
     $("#customer_find").dialog({
         title: "Find Customers",
         autoOpen: false,
         resizable: false,
-        width: 'auto',
+        width: 420,
         open: function(event, ui){
             $('#find_customer_additional_filter').hide();
         },
@@ -53,6 +60,13 @@ $(function () {
                 $('#find_customer_additional_filter').show();
             }
         }
+    }).dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
     });
 
     $("#add_contact").dialog({

@@ -12,6 +12,13 @@ $(function () {
             $("#product_pricelevel").dialog("close");
             $("#product_catalog_issue").dialog("close");
         }
+    }).dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
     });
     $("#product_create").dialog({
         title: "Create product",
@@ -23,7 +30,7 @@ $(function () {
         title: "Find Product",
         autoOpen: false,
         resizable: false,
-        width: 'auto',
+        width: 420,
         close: function(event, ui) {
             $("#product_content").dialog('close');
             $("#product_add").dialog('close');
@@ -32,6 +39,13 @@ $(function () {
         create: function(event, ui) {
             $.get(__url_product_list + '?last=1');
         }
+    }).dialogExtend({
+        "closable" : true,
+        "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
     });
     $("#product_pricelevel").dialog({
         title: "Product level template",
