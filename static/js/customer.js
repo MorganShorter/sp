@@ -20,7 +20,6 @@ $(function () {
     $("#customer_content").dialog({
         title: "Customer",
         autoOpen: false,
-        resizable: false,
         width: 'auto',
         height: 'auto',
         close: function( event, ui ) {
@@ -41,7 +40,6 @@ $(function () {
     $("#customer_find").dialog({
         title: "Find Customers",
         autoOpen: false,
-        resizable: false,
         width: 420,
         open: function(event, ui){
             $('#find_customer_additional_filter').hide();

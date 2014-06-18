@@ -9,7 +9,6 @@ $(function () {
     $("#order_content").dialog({
         title: "Show order",
         autoOpen: false,
-        resizable: false,
         width: 800,
         close: function(){
             $('.add_product_to_order').css('display', 'none');
@@ -29,7 +28,6 @@ $(function () {
     $("#order_find").dialog({
         title: "Find order",
         autoOpen: false,
-        resizable: false,
         width: 420,
         create: function (event, ui) {
             $.get(__url_order_list + '?last=1');

@@ -5,7 +5,6 @@ $(function () {
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,
-        resizable: false,
         width: 414,
         close: function(event, ui){
             $('#frm_product').resetForm();
@@ -29,7 +28,6 @@ $(function () {
     $("#product_find").dialog({
         title: "Find Product",
         autoOpen: false,
-        resizable: false,
         width: 420,
         close: function(event, ui) {
             $("#product_content").dialog('close');
