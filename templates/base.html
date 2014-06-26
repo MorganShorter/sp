@@ -39,6 +39,7 @@
             __url_supplier_list = "{% url 'supplier_list' %}";
             __url_medium_list = "{% url 'medium_list' %}";
             __url_catalog_list = "{% url 'catalog_list' %}";
+            __url_bo_list = "{% url 'bo_list' %}";
             __tax_percent = 10;
         </script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/init.js"></script>
@@ -51,6 +52,7 @@
         <script type="text/javascript" src="{{ STATIC_URL }}js/supplier.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/royalty.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/catalog.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/bo.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
     {% endblock javascript %}
 </head>
@@ -141,13 +143,14 @@
                     </tr>
                     <tr>
                         <td>
-
+                            <a title="click for BO section" href="#" class="button button_bo_find_dialog">
+                                <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>find BO
+                            </a>
                         </td>
                         <td>
                             <a title="click for orders section" href="#" class="button button_order_find_dialog">
                                 <img src="{{ STATIC_URL }}img/icons/64_orders.png"/><br/>find order
                             </a>
-
                         </td>
                     </tr>
 
@@ -189,6 +192,7 @@
         {% include 'include/supplier.html' %}
         {% include 'include/royalty.html' %}
         {% include 'include/catalog.html' %}
+        {% include 'include/bo.html' %}
     {% endblock %}
 </body>
 </html>

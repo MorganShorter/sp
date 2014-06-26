@@ -799,3 +799,17 @@ ul.dropdown ul.sub_menu_products {
 .ui-dialog-titlebar-buttonpane {
     padding-top: 3px;
 }
+
+.icon_true {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/icons/16_yes.png') no-repeat;
+}
+
+.icon_false {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('../img/icons/16_no.png') no-repeat;
+}

@@ -1,0 +1,17 @@
+<taconite>
+    <remove select="#bo_list_result tbody tr" />
+    <append select="#bo_list_result tbody">
+        {% for obj in object_list %}
+            <tr class="" cid="{{ obj.pk }}">
+                <td>{{ obj.timestamp }}</td>
+                <td>{{ obj.order_product.product }}</td>
+                <td>{{ obj.amount }}</td>
+                <td><div class="icon_{{ obj.complete|lower }}"></div></td>
+            </tr>
+        {% empty %}
+            <tr class="">
+                <td colspan="4">not found</td>
+            </tr>
+        {% endfor %}
+    </append>
+</taconite>

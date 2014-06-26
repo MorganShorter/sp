@@ -107,3 +107,9 @@ urlpatterns += patterns('frontend.views.catalog',
     url(ur'^catalog/issue/open/(?P<pk>\d*)/', 'obj_issue_get'),
     url(ur'^catalog/issue/delete/(?P<pk>\d*)/', 'obj_issue_delete'),
 )
+
+# BO CRUD
+urlpatterns += patterns('frontend.views.bo',
+    url(ur'^bo/update/', 'obj_update'),
+    url(ur'^bo/list/', 'obj_list', name='bo_list'),
+)
