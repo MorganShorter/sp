@@ -813,3 +813,10 @@ ul.dropdown ul.sub_menu_products {
     height: 16px;
     background: url('../img/icons/16_no.png') no-repeat;
 }
+
+#bo_list_result tr td {
+    padding: 3px;
+}
+#bo_list_result .link_color {
+    color: #0033ff;
+}

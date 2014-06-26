@@ -72,7 +72,7 @@ $(function () {
     });
 
     // Open order detail
-    $('#order_search_result tbody tr').live('click', function(){
+    $('.open_order_detail').live('click', function(){
         var cid = $(this).attr('cid');
         $("#order_content").dialog("open");
         $.get('/order/get/' + cid + '/');

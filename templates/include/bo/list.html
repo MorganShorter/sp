@@ -1,17 +1,40 @@
 <div id="bo_list_dialog">
+	<form id="frm_find_bo">
+        <a id="frm_find_bo_btn" title="find BO" href="#" class="button form_button pull-right"><img src="{{ STATIC_URL }}img/icons/32_find.png" /><br />Get list</a>
+        <table>
+            <tr>
+                <td class="form_cell"><label for="from" class="form_label">From:</label></td>
+                <td class="form_cell"><input type="text" name="from" id="" class="text ui-corner-all form_input dt_from" value=""/></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="to" class="form_label">To:</label></td>
+                <td class="form_cell"><input type="text" name="to" id="" class="text ui-corner-all form_input dt_to" value=""/></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="to" class="form_label">Complete:</label></td>
+                <td class="form_cell">
+                    <select name="complete">
+                        <option value="">no</option>
+                        <option value="1">yes</option>
+                    </select>
+                </td>
+            </tr>
+		</table>
+	</form>
     <div id="bo_list_result" class="search_result">
         <table class="form_list">
             <thead>
                 <tr class="form_list_row">
-                    <th class="form_list_header">Date/time</th>
                     <th class="form_list_header">Product</th>
+                    <th class="form_list_header">Order</th>
+                    <th class="form_list_header">Date/time</th>
                     <th class="form_list_header">Amount</th>
                     <th class="form_list_header">Complete</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="">
-                    <td colspan="4">empty</td>
+                    <td colspan="5">empty</td>
                 </tr>
             </tbody>
         </table>

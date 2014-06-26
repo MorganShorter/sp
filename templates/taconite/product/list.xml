@@ -2,7 +2,7 @@
     <remove select="#product_search_result tbody tr" />
     <append select="#product_search_result tbody">
         {% for obj in object_list %}
-            <tr class="form_list_row" cid="{{ obj.pk }}">
+            <tr class="form_list_row open_product_detail" cid="{{ obj.pk }}">
                 <td>{{ obj.code }}</td>
                 <td>{{ obj.name }}</td>
                 <td>{{ obj.type }}</td>

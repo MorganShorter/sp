@@ -79,7 +79,7 @@ $(function () {
     });
 
     // Open product detail
-    $('#product_search_result tbody tr').live('click', function(){
+    $('.open_product_detail').live('click', function(){
         var cid = $(this).attr('cid');
         if (cid == undefined)
             return false;

@@ -2,11 +2,14 @@
     <remove select="#bo_list_result tbody tr" />
     <append select="#bo_list_result tbody">
         {% for obj in object_list %}
-            <tr class="" cid="{{ obj.pk }}">
+            <tr cid="{{ obj.pk }}">
+                <td>{{ obj.order_product.product }} <a href="#" cid="{{ obj.order_product.product.pk }}" class="link_color open_product_detail">open</a></td>
+                <td>ID #{{ obj.order_product.order.pk }} <a href="#" cid="{{ obj.order_product.order.pk }}" class="link_color open_order_detail">open</a></td>
                 <td>{{ obj.timestamp }}</td>
-                <td>{{ obj.order_product.product }}</td>
                 <td>{{ obj.amount }}</td>
-                <td><div class="icon_{{ obj.complete|lower }}"></div></td>
+                <td>
+                    <input type="checkbox" {% if obj.complete %}checked="checked"{% endif %} class="change_bo_status" cid="{{ obj.pk }}"></input>
+                </td>
             </tr>
         {% empty %}
             <tr class="">
