@@ -394,6 +394,9 @@ class OrderStatus(models.Model):
     def __unicode__(self):
         return '%s - %s' % (self.order, self.status)
 
+    def save(self, *args, **kwargs):
+        super(OrderStatus, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ('-timestamp',)
 
@@ -450,11 +453,13 @@ class OrderProduct(models.Model):
                     self.product.current_stock += delta
 
             self.product.save()
-            self.last_quantity = self.quantity
+            self.last_quantity = quantity
 
     def save(self, *args, **kwargs):
-        self.stock_update()
-        self.back_order = True if self.back_orders.exists() else False
+        if self.pk:
+            q = 0 if self.order.last_status.status == OrderStatus.CANCELLED else None
+            self.stock_update(quantity=q)
+            self.back_order = True if self.back_orders.exists() else False
         super(OrderProduct, self).save(*args, **kwargs)
 
     def delete(self, using=None):

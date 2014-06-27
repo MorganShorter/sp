@@ -129,6 +129,18 @@ def order_save(request):
                     msg = 'Order saved'
 
                 order_data = json.loads(request.body)[0]
+
+                # status. Must be updated before OrderProduct
+                status = json.loads(request.body)[0].get('status', None)
+                if status != obj.object.last_status.status:
+                    if status in OrderStatus.STATUSES:
+                        obj.object.statuses.create(
+                            status=status,
+                            user=request.user,
+                            notes="manually changed by %s" % request.user
+                        )
+
+                # invoice
                 invoice = order_data.get('invoice', None)
                 if obj.object.last_invoice:
                     inv = obj.object.last_invoice
@@ -167,21 +179,13 @@ def order_save(request):
                     # Recount total
                     obj.object.total_recount(save=True)
 
-                status = json.loads(request.body)[0].get('status', None)
-                if status != obj.object.last_status.status:
-                    if status in OrderStatus.STATUSES:
-                        obj.object.statuses.create(
-                            status=status,
-                            user=request.user,
-                            notes="manually changed by %s" % request.user
-                        )
-
                 obj_id = obj.object.id
             else:
                 msg = 'Did not receive expected object Order. You sent me a %s' % obj.object.__class__.__name__
 
     except Exception, e:
         msg = 'Wrong values'
+        saved = False
         print e
 
     return json_response({
