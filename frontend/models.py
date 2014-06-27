@@ -172,6 +172,16 @@ class Product(models.Model):
             return self.price_levels.order_by('-cost_per_item')[0].cost_per_item
         return self.sp_cost * (1 + Decimal(self.royalty)/100)
 
+    @property
+    def back_orders(self):
+        ret = []
+        for a in self.ordered_list.all():
+            for b in a.back_orders.filter(complete=False):
+                ret.append(b)
+
+        print ret
+        return ret
+
     class Meta:
         ordering = ('name',)
 
@@ -394,7 +404,7 @@ class OrderProduct(models.Model):
     """ 'Line Item' for an order; contains Product ordered on an Order with its quantity
     """
     order = models.ForeignKey(Order, related_name='ordered_products')
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey(Product, related_name='ordered_list')
     quantity = models.PositiveSmallIntegerField()
     last_quantity = models.PositiveSmallIntegerField(default=0)
     unit_price = models.DecimalField(max_digits=9, decimal_places=2, default=0)

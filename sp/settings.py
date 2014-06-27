@@ -120,9 +120,7 @@ LANGUAGE_CODE = 'en-au'
 TIME_ZONE = 'Australia/Melbourne'
 
 USE_I18N = False
-
-USE_L10N = True
-
+USE_L10N = False
 USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
@@ -149,15 +147,6 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.contrib.messages.context_processors.messages",
-)
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -181,6 +170,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 SKIP_SOUTH_TESTS = True
 
 DATE_FORMAT = 'j F Y'
+DATETIME_FORMAT = 'Y-m-d H:i'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 

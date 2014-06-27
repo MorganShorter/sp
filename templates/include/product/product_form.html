@@ -63,51 +63,74 @@
         </tr>
 
 		</table>
+        <div id="product_accordion">
+            <h3>Price levels</h3>
+            <div>
+                <table class="form_list price_table">
+                    <thead>
+                        <tr class="form_list_row">
+                            <th class="form_list_header">Price</th>
+                            <th class="form_list_header">Min Qty</th>
+                            <th class="form_list_header">Max Qty</th>
+                            <th class="form_list_header">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr class="form_list_row">
+                            <td colspan="4" class="form_list_item">
+                                <a title="add new price level" href="#" class="price_level_add_btn">
+                                    <img src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a>
+                            </td>
+                        </tr>
+                    </tfoot>
 
-        <table class="form_list price_table">
-            <thead>
-                <tr class="form_list_row">
-                    <th class="form_list_header">Price</th>
-                    <th class="form_list_header">Min Qty</th>
-                    <th class="form_list_header">Max Qty</th>
-                    <th class="form_list_header">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-                <tr class="form_list_row">
-                    <td colspan="4" class="form_list_item">
-                        <a title="add new price level" href="#" class="price_level_add_btn">
-                            <img src="{{ STATIC_URL }}img/icons/16_add.png" />add price level</a>
-                    </td>
-                </tr>
-            </tfoot>
+                </table>
+            </div>
 
-        </table>
-        <br><br>
-        <h2>Catalog links</h2>
-        <table class="form_list catalog_list_table with100">
-            <thead>
-                <tr class="form_list_row">
-                    <th class="form_list_header">Catalog / Issue</th>
-                    <th class="form_list_header">Page</th>
-                    <th class="form_list_header">Img</th>
-                    <th class="form_list_header">Sub</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-                <tr class="form_list_row">
-                    <td colspan="4" class="form_list_item">
-                        <a title="add new catalog link" href="#" class="product_catalog_add_btn">
-                            <img src="{{ STATIC_URL }}img/icons/16_add.png" />add catalog link</a>
-                    </td>
-                </tr>
-            </tfoot>
+            <h3>Catalog links</h3>
+            <div>
+                <table class="form_list catalog_list_table with100">
+                    <thead>
+                        <tr class="form_list_row">
+                            <th class="form_list_header">Catalog / Issue</th>
+                            <th class="form_list_header">Page</th>
+                            <th class="form_list_header">Img</th>
+                            <th class="form_list_header">Sub</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr class="form_list_row">
+                            <td colspan="4" class="form_list_item">
+                                <a title="add new catalog link" href="#" class="product_catalog_add_btn">
+                                    <img src="{{ STATIC_URL }}img/icons/16_add.png" />add catalog link</a>
+                            </td>
+                        </tr>
+                    </tfoot>
 
-        </table>
+                </table>
+            </div>
 
-
+            <h3>Back orders</h3>
+            <div>
+                <table class="form_list with100 product_bo_table">
+                    <thead>
+                        <tr class="form_list_row">
+                            <th class="form_list_header">Order</th>
+                            <th class="form_list_header">Date/time</th>
+                            <th class="form_list_header">Amount</th>
+                            <th class="form_list_header">Complete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="">
+                            <td colspan="4">empty</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 		<table>
             <tr>
                 <td class="form_cell"><a title="save product" href="#" class="button form_button product_control_action_save"><img src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>

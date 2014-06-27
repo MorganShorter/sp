@@ -2,6 +2,10 @@ $(function () {
     /* Product
     * */
 
+    $("#product_accordion").accordion({
+        collapsible: true
+    });
+
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,

@@ -29,6 +29,25 @@
             </tr>
         {% endfor %}
     </replaceContent>
+
+    <replaceContent select=".product_bo_table tbody">
+        {% if obj.back_orders|length %}
+            {% for bo_obj in obj.back_orders %}
+            <tr>
+                <td>ID #{{ bo_obj.order_product.order.pk }} <a href="#" cid="{{ bo_obj.order_product.order.pk }}" class="link_color open_order_detail">open</a></td>
+                <td>{{ bo_obj.timestamp }}</td>
+                <td>{{ bo_obj.amount }}</td>
+                <td>
+                    <input type="checkbox" {% if bo_obj.complete %}checked="checked"{% endif %} class="change_bo_status" cid="{{ bo_obj.pk }}"></input>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="">
+                <td colspan="4">empty</td>
+            </tr>
+        {% endif %}
+    </replaceContent>
 </taconite>
 
 
