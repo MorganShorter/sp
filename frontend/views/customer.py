@@ -92,8 +92,6 @@ def customer_note_delete(request, c_pk, n_pk):
         print 'customer not found'
         return HttpResponse('error')
 
-    print 'delete note'
-
     customer.notes.remove(note)
 
     return HttpResponse('ok')
@@ -119,11 +117,8 @@ def customer_save(request):
     msg = ''
     new_customer = False
     for customer in serializers.deserialize('json', request.body):
-        print customer
-        print customer.object
         if customer.object.__class__ == Customer:
             if not customer.object.id:
-                print 'new customer'
                 new_customer = True
                 customer.object.set_slug()
 

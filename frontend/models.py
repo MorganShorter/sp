@@ -178,8 +178,6 @@ class Product(models.Model):
         for a in self.ordered_list.all():
             for b in a.back_orders.filter(complete=False):
                 ret.append(b)
-
-        print ret
         return ret
 
     class Meta:
