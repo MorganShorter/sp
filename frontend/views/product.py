@@ -262,3 +262,39 @@ def product_issue_delete(request, prod_id, issue_id):
         'status': 'ok',
         'msg': 'Catalog link has deleted!'
     })
+
+
+@login_required
+def product_stock_adjust(request, prod_id):
+    try:
+        product = Product.objects.get(
+            pk=prod_id,
+        )
+    except Product.DoesNotExist:
+        return json_response({
+            'status': 'error',
+            'msg': 'Wrong ID'
+        })
+
+    print 'stock: %s' % product.current_stock
+
+    data = json.loads(request.body)
+    try:
+        product.stock_adjust.create(
+            reason=int(data['reason']),
+            current_amount=product.current_stock,
+            added_amount=int(data['amount']),
+            user=request.user
+        )
+    except Exception, e:
+        print 'Error (product_stock_adjust): %s' % e
+        return json_response({
+            'status': 'error',
+            'msg': 'Bad data'
+        })
+
+    return json_response({
+        'status': 'ok',
+        'msg': 'Amount added to current stock',
+        'current_stock': product.current_stock
+    })

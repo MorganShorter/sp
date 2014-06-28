@@ -42,6 +42,8 @@ urlpatterns += patterns('frontend.views.product',
     url(ur'^product/issue/save/', 'product_issue_save'),
     url(ur'^product/issue/(?P<prod_id>\d*)/?(?P<issue_id>\d*)/delete/', 'product_issue_delete'),
     url(ur'^product/issue/(?P<prod_id>\d*)/?(?P<issue_id>\d*)/', 'product_issue_get'),
+
+    url(ur'^product/stock_adjust/(?P<prod_id>\d*)/', 'product_stock_adjust'),
 )
 
 # Customer

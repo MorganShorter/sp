@@ -31,7 +31,12 @@
 		</tr>
 		<tr>
 			<td class="form_cell"><label for="product_current_stock" class="form_label">current stock:</label></td>
-			<td class="form_cell"><input type="text" name="product_current_stock" title="the cost to ship the order" class="product_current_stock text ui-widget-content ui-corner-all form_input" data-field="current_stock" /></td>
+			<td class="form_cell">
+                <input type="text" name="product_current_stock" title="the cost to ship the order" class="product_current_stock text ui-widget-content ui-corner-all form_input" data-field="current_stock" readonly />
+                <a title="Stock Adjust" href="#" id="product_form_stock_adjust" class="button form_button small_button">
+                    <img src="{{ STATIC_URL }}img/icons/16_magic.png" />
+                </a>
+            </td>
 		</tr>
 		<tr>
 			<td class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>

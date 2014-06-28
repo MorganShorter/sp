@@ -1,0 +1,29 @@
+<div id="product_stock">
+	<form id="frm_product_stock" data-model="stock">
+	<fieldset>
+		<table>
+            <input type="hidden" name="products_id" class="product_id" value="" data-field="product">
+            <tr>
+                <td class="form_cell"><label class="form_label">product:</label></td>
+                <td class="form_cell"><input type="text" class="product_name text ui-widget-content ui-corner-all form_input" readonly /></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">reason:</label></td>
+                <td class="form_cell">
+                    <select name="reason" class="text ui-widget-content ui-corner-all form_input" data-field="reason">
+                        <option value="0">New stock</option>
+                        <option value="1">Stock Error</option>
+                        <option value="2">Stock take</option>
+				    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label class="form_label">Add to amount:</label></td>
+                <td class="form_cell">
+                    <input type="text" name="amount" class="stock_amount text ui-widget-content ui-corner-all form_input" data-field="amount"/>
+                </td>
+            </tr>
+		</table>
+	</fieldset>
+	</form>
+</div>

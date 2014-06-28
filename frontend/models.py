@@ -600,5 +600,14 @@ class StockAdjust(models.Model):
     def __unicode__(self):
         return '%s added %s' % (self.product, self.added_amount)
 
+    def save(self, *args, **kwargs):
+        created = False if self.pk else True
+        super(StockAdjust, self).save(*args, **kwargs)
+
+        if created:
+            self.product.current_stock += self.added_amount
+            self.product.save()
+
+
     class Meta:
         ordering = ('-timestamp', )

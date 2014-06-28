@@ -14,6 +14,7 @@ $(function () {
             $('#frm_product').resetForm();
             $("#product_pricelevel").dialog("close");
             $("#product_catalog_issue").dialog("close");
+            $("#product_stock").dialog('close');
         }
     }).dialogExtend({
         "closable" : true,
@@ -164,6 +165,7 @@ $(function () {
         numberFormat: "C",
         culture: "en-AU"
     });
+    /*
     $(".product_current_stock").spinner({
         min: 0,
         max: 250000,
@@ -171,6 +173,7 @@ $(function () {
         start: 1000,
         culture: "en-AU"
     });
+    */
     $(".product_minimum_stock").spinner({
         min: 0,
         max: 250000,
@@ -404,5 +407,65 @@ $(function () {
         });
         return false;
     }
+
+    $("#product_stock").dialog({
+        title: "Stock Adjust",
+        autoOpen: false,
+        resizable: false,
+        width: 414,
+        buttons: [{
+            text: "Add",
+            click: function() {
+                var c_form = $('#frm_product_stock');
+                var model_fields = c_form.getDataFields();
+                var obj_json = model_fields['stock'];
+
+                $.ajax({
+                    url: '/product/stock_adjust/' + obj_json.product + '/',
+                    type: 'POST',
+                    dataType: 'json',
+                    cache: false,
+                    contentType: 'application/json; charset=UTF-8',
+                    headers: { 'X-CSRFToken': $.cookie('csrftoken') },
+                    data: JSON.stringify(obj_json),
+                    success: function (json) {
+                        if (json['status'] != 'error'){
+                            c_form.resetForm();
+                            $("#product_stock").dialog('close');
+                            // refresh current stock
+                            $('#frm_product .product_current_stock').val(json['current_stock']);
+                        }
+                        alert(json['msg']);
+                    }
+                });
+                return false;
+            }
+        }, {
+            text: "Close",
+            click: function() {
+                $("#product_stock").dialog('close');
+            }
+        }]
+    });
+
+    $('#product_form_stock_adjust').live('click', function(){
+        $("#product_stock").dialog('open');
+
+        var $f = $('#frm_product_stock'),
+            $sf = $('#product_content');
+
+        $f.resetForm();
+
+        $('.product_id', $f).val($('.product_id', $sf).val());
+        $('.product_name', $f).val($('.product_name', $sf).val());
+    });
+
+    $(".stock_amount").spinner({
+        min: 0,
+        max: 250000,
+        step: 1,
+        start: 1000,
+        culture: "en-AU"
+    });
 
 });

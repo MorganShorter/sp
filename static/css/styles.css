@@ -820,3 +820,14 @@ ul.dropdown ul.sub_menu_products {
 #bo_list_result .link_color {
     color: #0033ff;
 }
+
+.small_button {
+    padding: 0;
+    margin-left: 5px;
+}
+
+.product_current_stock {
+    width: 60px;
+    float: left;
+    margin-top: 1px;
+}
