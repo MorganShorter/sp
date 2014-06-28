@@ -434,6 +434,7 @@ $(function () {
                             $("#product_stock").dialog('close');
                             // refresh current stock
                             $('#frm_product .product_current_stock').val(json['current_stock']);
+                            $.get('/product/' + obj_json.product + '/?only_list=1');
                         }
                         alert(json['msg']);
                     }

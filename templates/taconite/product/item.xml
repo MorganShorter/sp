@@ -48,6 +48,24 @@
             </tr>
         {% endif %}
     </replaceContent>
+
+    <replaceContent select=".product_stock_table tbody">
+        {% if obj.stock_adjust.count %}
+            {% for stock_obj in obj.stock_adjust.all %}
+            <tr>
+                <td>{{ stock_obj.user }}</td>
+                <td>{{ stock_obj.timestamp }}</td>
+                <td>{{ stock_obj.current_amount }}</td>
+                <td>{{ stock_obj.added_amount }}</td>
+                <td>{{ stock_obj.get_reason_display }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="">
+                <td colspan="5" align="center">empty</td>
+            </tr>
+        {% endif %}
+    </replaceContent>
 </taconite>
 
 
