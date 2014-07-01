@@ -1,0 +1,32 @@
+{% load frontend_filter %}
+{% regroup object_list by order_month_str as order_by_day_list %}
+
+<h1>Sent items list</h1>
+<hr>
+
+
+<table style="width: 100%">
+    <thead>
+        <tr class="form_list_row">
+            <th class="form_list_header">Order ID</th>
+            <th class="form_list_header">Company name</th>
+            <th class="form_list_header">Type</th>
+            <th class="form_list_header">Suburb</th>
+            <th class="form_list_header">Telephone</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for o in order_by_day_list %}
+        <tr><td colspan="5"><h2>{{ o.grouper }}</h2></td></tr>
+        {% for item in o.list %}
+            <tr class="form_list_row">
+                <td class="">{{ item.pk }}</td>
+                <td class="">{{ item.customer }}</td>
+                <td class=""></td>
+                <td class="">{{ item.shipping_suburb }}</td>
+                <td class=""></td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
