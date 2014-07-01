@@ -1,0 +1,37 @@
+{% load frontend_filter %}
+<taconite>
+    {% if object_list.count %}
+    <replaceContent select="#report4">
+            <table class="form_list with100 report4_table">
+                <thead>
+                    <tr class="form_list_row">
+                        <th class="form_list_header">Product code</th>
+                        <th class="form_list_header">Product name</th>
+                        <th class="form_list_header">Minimum</th>
+                        <th class="form_list_header">QTY in stock</th>
+                        <th class="form_list_header">Sum of QTY out</th>
+                        <th class="form_list_header">Last In QTY</th>
+                        <th class="form_list_header">Last In Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in object_list %}
+                        <tr class="form_list_row">
+                            <td><a href="#" class="open_product_detail" cid="{{ o.pk }}">{{ o.code }}</a></td>
+                            <td>{{ o.name }}</td>
+                            <td>{{ o.minimum_stock }}</td>
+                            <td>{{ o.current_stock }}</td>
+                            <td>{{ o.stock_out }}</td>
+                            <td>{{ o.last_order.quantity }}</td>
+                            <td>{{ o.last_order.order.order_date|date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </replaceContent>
+
+    {% else %}
+        <replaceContent select="#report4">Not found...</replaceContent>
+    {% endif %}
+
+</taconite>

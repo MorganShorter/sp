@@ -19,11 +19,19 @@ $(function () {
     });
     $('.report_to_pdf').live("click", function(){
         var form = $('#' + $(this).parents('div[action_id]').attr('action_id'));
-        document.location = form.attr('action') + '?' + form.serialize() + '&format=pdf';
+        if (form.length == 0){
+            document.location = $(this).parent().parent().attr('report_get_url') + '?format=pdf';
+        } else{
+            document.location = form.attr('action') + '?' + form.serialize() + '&format=pdf';
+        }
     });
     $('.report_to_csv').live("click", function(){
         var form = $('#' + $(this).parents('div[action_id]').attr('action_id'));
-        document.location = form.attr('action') + '?' + form.serialize() + '&format=csv';
+        if (form.length == 0){
+            document.location = $(this).parent().parent().attr('report_get_url') + '?format=csv';
+        } else {
+            document.location = form.attr('action') + '?' + form.serialize() + '&format=csv';
+        }
     });
 
 
@@ -134,6 +142,22 @@ $(function () {
             }
         });
 
+    });
+
+    /* Report 4
+    * */
+    $("#model_report_4_table").dialog({
+        title: "Minimum Stock Report",
+        autoOpen: false,
+        resizable: false,
+        width: 800,
+        height: 500,
+        open: function( event, ui ) {
+            $.get($('#model_report_4_table').attr('report_get_url'));
+        }
+    });
+    $("#menu_report_4").click(function(){
+        $("#model_report_4_table").dialog("open");
     });
 
 });

@@ -180,6 +180,24 @@ class Product(models.Model):
                 ret.append(b)
         return ret
 
+    @property
+    def stock_out(self):
+        """
+        @return: sum of qty from all active orders
+        """
+        qty = 0
+        for o in self.ordered_list.all():
+            if o.order.last_status not in (OrderStatus.CANCELLED, OrderStatus.SHIPPED):
+                qty += o.quantity
+        return qty
+
+    @property
+    def last_order(self):
+        try:
+            return self.ordered_list.order_by('-order__order_date')[0]
+        except IndexError:
+            return None
+
     class Meta:
         ordering = ('name',)
 

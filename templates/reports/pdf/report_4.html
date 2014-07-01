@@ -1,0 +1,31 @@
+{% load frontend_filter %}
+
+<h1>Minimum Stock Report</h1>
+<hr>
+
+<table style="width: 100%">
+    <thead>
+        <tr class="form_list_row">
+            <th class="form_list_header">Product code</th>
+            <th class="form_list_header">Product name</th>
+            <th class="form_list_header">Minimum</th>
+            <th class="form_list_header">QTY in stock</th>
+            <th class="form_list_header">Sum of QTY out</th>
+            <th class="form_list_header">Last In QTY</th>
+            <th class="form_list_header">Last In Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for o in object_list %}
+            <tr class="form_list_row">
+                <td>{{ o.code }}</td>
+                <td>{{ o.name }}</td>
+                <td>{{ o.minimum_stock }}</td>
+                <td>{{ o.current_stock }}</td>
+                <td>{{ o.stock_out }}</td>
+                <td>{{ o.last_order.quantity }}</td>
+                <td>{{ o.last_order.order.order_date|date }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
