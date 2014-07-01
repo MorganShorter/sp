@@ -60,6 +60,11 @@ $(function () {
         $("#product_content").dialog("open");
         $.get('/product/' + cid + '/');
     });
+    $(".dialog_refresh_order").live('click', function(){
+        var c_form = $(this).parents('form').eq(0);
+        var cid = $.trim($('.order_id', c_form).val());
+        $.get('/order/get/' + cid + '/');
+    });
     $(".button_order_create_dialog").live('click', function(){
         alert("You can add the order via the customer dialog.");
         return false;

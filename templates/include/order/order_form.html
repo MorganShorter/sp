@@ -24,7 +24,7 @@
 
 			<tr>
 				<td class="form_cell"><label for="order_order_id"  class="form_label">order ID:</label></td>
-				<td colspan="2" class="form_cell"><input type="text" name="order_order_id" title="the order id" class="order_id text ui-widget-content ui-corner-all form_input" value=""/></td>
+				<td colspan="2" class="form_cell"><input type="text" name="order_order_id" title="the order id" class="order_id text ui-widget-content ui-corner-all form_input" value="" readonly/></td>
 			</tr>
 			<tr>
 				<td class="form_cell"><label for="search" class="form_label">invoice Number:</label></td>
@@ -215,6 +215,10 @@
             <div>
                 <a id="order_control_action_delete" title="save order" href="#" class="dialog_delete_order button form_button">
                     <img id="icon_order_control_action_delete" src="{{ STATIC_URL }}img/icons/32_erase.png" /><br />delete</a>&nbsp;
+            </div>
+            <div>
+                <a title="refresh dialog" href="#" class="dialog_refresh_order button form_button">
+                    <img id="icon_order_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_magic.png" /><br />refresh</a>&nbsp;
             </div>
             <div>
                 <a id="order_control_action_cancel" title="save order" href="#" class="dialog_close_order button form_button">
