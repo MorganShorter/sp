@@ -96,6 +96,11 @@ $(function () {
     $(".product_control_action_cancel", $("#product_content")).click(function() {
         $("#product_content").dialog("close");
     });
+    $(".dialog_refresh_product").live('click', function(){
+        var c_form = $(this).parents('form').eq(0);
+        var cid = $.trim($('.product_id', c_form).val());
+        $.get('/product/' + cid + '/');
+    });
 
     $(".product_control_action_cancel", $("#product_create")).click(function() {
         $("#product_create").dialog("close");
