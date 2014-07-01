@@ -18,7 +18,12 @@ class InvoiceInline(admin.StackedInline):
 
 # Register your models here.
 admin.site.register(ImportNote)
-admin.site.register(Customer)
+
+
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'customer_type', 'telephone', 'email')
+
+admin.site.register(Customer, CustomerAdmin)
 admin.site.register(CustomerContact)
 admin.site.register(Size)
 admin.site.register(Medium)

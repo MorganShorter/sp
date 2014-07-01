@@ -6,6 +6,7 @@ from datetime import datetime
 from django.conf import settings
 from decimal import Decimal
 from colorfield.fields import ColorField
+from frontend.utils import phone_for_search
 from .managers import SPUserManager
 
 
@@ -92,6 +93,7 @@ class Customer(models.Model):
     postcode = models.CharField(max_length=10)
     country = models.CharField(max_length=100, default='Australia')
     telephone = models.CharField(max_length=40)
+    telephone_clean = models.CharField(max_length=40)  # auto-generated field
     fax = models.CharField(max_length=40)
     email = models.EmailField(max_length=255)
     delivery_attn = models.CharField(max_length=255)
@@ -108,6 +110,7 @@ class Customer(models.Model):
 
     def save(self, *args, **kwargs):
         self.set_slug()
+        self.telephone_clean = phone_for_search(self.telephone)
         super(Customer, self).save(*args, **kwargs)
 
     def set_slug(self):

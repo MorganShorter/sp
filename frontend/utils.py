@@ -36,3 +36,7 @@ def __taco_render(request, template, context):
     taco_controlplate = loader.get_template(template)
     c_royal = RequestContext(request, context)
     return HttpResponse(taco_controlplate.render(c_royal), content_type='application/xml')
+
+
+def phone_for_search(s):
+    return str(s).translate(None, '-_ ,.[]()')

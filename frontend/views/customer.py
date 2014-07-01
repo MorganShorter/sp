@@ -7,7 +7,7 @@ from .. import formfields
 from ..models import Customer, CustomerContact, Note
 from ..mixins import TacoMixin
 
-from ..utils import __preprocess_get_request, __taco_render, json_response
+from ..utils import __preprocess_get_request, __taco_render, json_response, phone_for_search
 
 
 class CustomerList(TacoMixin, ListView):
@@ -24,7 +24,7 @@ class CustomerList(TacoMixin, ListView):
             fltr['name__icontains'] = self.request.GET['find_customer_name']
 
         if self.request.GET.get('find_customer_phone', None):
-            fltr['telephone__icontains'] = self.request.GET['find_customer_phone']
+            fltr['telephone_clean__icontains'] = phone_for_search(self.request.GET['find_customer_phone'])
 
         if self.request.GET.get('find_customer_email', None):
             fltr['email__icontains'] = self.request.GET['find_customer_email']
