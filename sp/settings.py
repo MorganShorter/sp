@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'south',
     'mathfilters',
     'frontend',
+    'colorfield',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -191,6 +192,8 @@ COMPRESS_ENABLED = True
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 
 TAX_PERCENT = 10
+
+AUTH_USER_MODEL = 'frontend.SPUser'
 
 try:
     from .local_settings import *

@@ -1,9 +1,66 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.template.defaultfilters import slugify
 from datetime import datetime
 from django.conf import settings
 from decimal import Decimal
+from colorfield.fields import ColorField
+from .managers import SPUserManager
+
+
+class SPUser(AbstractBaseUser):
+    F_WEIGHT = [
+        ('bold', 'bold'),
+        ('bolder', 'bolder'),
+        ('lighter', 'lighter'),
+        ('normal', 'normal')
+    ]
+
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True,
+    )
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    font_size = models.IntegerField(default=12)
+    font_weight = models.CharField(choices=F_WEIGHT, default='normal', max_length=16)
+    bg_color = ColorField(default='#ffffff')
+    label_bg_color = ColorField()
+    font_color = ColorField()
+    jodabrian_visible = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'
+    objects = SPUserManager()
+
+    def get_full_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    def get_short_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    def __unicode__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
 
 
 class ImportNote(models.Model):
