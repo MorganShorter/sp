@@ -34,7 +34,10 @@ class CustomerList(TacoMixin, ListView):
                 fltr[self.request.GET['additional_field']] = self.request.GET['additional_value']
 
         if not fltr:
-            return qs.none()
+            if self.request.GET.get('last', None):
+                return qs.filter(last_read__isnull=False).order_by('-last_read')[:20]
+            else:
+                return qs.none()
 
         return qs.filter(**fltr)
 
@@ -101,6 +104,7 @@ def customer_note_delete(request, c_pk, n_pk):
 def customer_get(request, pk):
     pk, params, customer, error = __preprocess_get_request(request, pk, Customer)
     fields = formfields.CustomerForm(customer)
+    customer.save()  # update last_read
 
     only_orders = request.GET.get('only_orders', None)
 

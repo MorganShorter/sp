@@ -73,7 +73,6 @@ $(function () {
         $("#product_find").dialog("open");
     });
 
-
     $("#find_product_search").live('click', function(){
         var queryString = $('#frm_find_product').formSerialize();
         $.get(__url_product_list + '?' + queryString, function(data){

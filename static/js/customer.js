@@ -49,6 +49,9 @@ $(function () {
             $("#add_contact").dialog('close');
             $("#show_note").dialog('close');
         },
+        create: function(event, ui) {
+            $.get(__url_customer_list + '?last=1');
+        },
         focus: function(event, ui){
             console.log('open');
             console.log($('#customer_find_filter_field').val())

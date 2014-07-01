@@ -107,6 +107,7 @@ class Customer(models.Model):
     from_src_membadd_id = models.IntegerField(null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=150)
     notes = models.ManyToManyField('Note', related_name='c_notes', blank=True)
+    last_read = models.DateTimeField(auto_now=True, null=True, blank=True, editable=False)
 
     def save(self, *args, **kwargs):
         self.set_slug()
