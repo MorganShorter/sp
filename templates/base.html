@@ -180,7 +180,9 @@
         <div id="order_footer"></div>
     </div>
     <!--- End container -->
+    {% if request.user.jodabrian_visible %}
     <div id="avator"><img id="avator_img" src="{{ STATIC_URL }}img/100_avator.png"/></div>
+    {% endif %}
 
     {% block include_content %}
         {% include 'include/customer.html' %}
@@ -194,5 +196,20 @@
         {% include 'include/catalog.html' %}
         {% include 'include/bo.html' %}
     {% endblock %}
+
+    <style>
+        .ui-widget-content {
+            background: {{ request.user.bg_color }};
+            color: {{ request.user.font_color }};
+        }
+        #content {
+            background-color: {{ request.user.bg_color }};
+        }
+        fieldset label, td label {
+            background-color: {{ request.user.label_bg_color }};
+            font-size: {{ request.user.font_size }}px;
+            font-weight: {{ request.user.font_weight }};
+        }
+    </style>
 </body>
 </html>

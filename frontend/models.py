@@ -27,9 +27,9 @@ class SPUser(AbstractBaseUser):
 
     font_size = models.IntegerField(default=12)
     font_weight = models.CharField(choices=F_WEIGHT, default='normal', max_length=16)
-    bg_color = ColorField(default='#ffffff')
-    label_bg_color = ColorField()
-    font_color = ColorField()
+    bg_color = ColorField(default='#FFFFFF')
+    label_bg_color = ColorField(default='#EEEEEE')
+    font_color = ColorField(default='#2B2B2B')
     jodabrian_visible = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'

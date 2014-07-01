@@ -30,21 +30,23 @@ $(function () {
         }
     });
 
-    $(document).tooltip({
-        position: {
-            my: "right bottom+6",
-            at: "center bottom",
-            of: "#avator",
-            using: function (position, feedback) {
-                $(this).css(position);
-                $("<div>")
+    if ($('#avator').length != 0) {
+        $(document).tooltip({
+            position: {
+                my: "right+30 bottom+6",
+                at: "center bottom",
+                of: "#avator",
+                using: function (position, feedback) {
+                    $(this).css(position);
+                    $("<div>")
                         .addClass("arrow")
                         .addClass(feedback.vertical)
                         .addClass(feedback.horizontal)
                         .appendTo(this);
+                }
             }
-        }
-    });
+        });
+    }
 
     refresh_size();
     refresh_medium();
