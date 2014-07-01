@@ -96,6 +96,14 @@ $(function () {
     $("#customer_control_action_cancel").click(function() {
         $("#customer_content").dialog("close");
     });
+    $(".dialog_refresh_customer").live('click', function(){
+        var c_form = $(this).parents('form').eq(0);
+        var cid = $.trim($('.customer_id', c_form).val());
+        $("#customer_content").dialog("close");
+        $.get('/customer/' + cid + '/');
+        $("#customer_content").dialog("open");
+        return false;
+    });
 
     $(".frm_customer .form_label").live('click', function() {
         var label = $(this).text();

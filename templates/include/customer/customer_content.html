@@ -145,13 +145,17 @@
 			    </table>
             </div>
 		</div>
-		<table id="customer_control_action">
-		<tr>
-		<td class="form_cell"><a title="save customer" href="#" class="button form_button customer_control_action_save"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
-		<td class="form_cell"><a id="customer_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
-		<td class="form_cell"><a id="customer_control_action_add_order" title="place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
-		</tr>
-		</table>
+        <table id="customer_control_action">
+            <tr>
+                <td class="form_cell"><a title="save customer" href="#" class="button form_button customer_control_action_save"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_save.png" /><br />save</a>&nbsp;</td>
+                <td class="form_cell">
+                    <a title="refresh dialog" href="#" class="dialog_refresh_customer button form_button">
+                            <img src="{{ STATIC_URL }}img/icons/32_magic.png" /><br />refresh</a>&nbsp;
+                </td>
+                <td class="form_cell"><a id="customer_control_action_cancel" title="cancel" href="#" class="button form_button"><img id="icon_customer_control_action_cancel" src="{{ STATIC_URL }}img/icons/32_cancel.png" /><br />cancel</a>&nbsp;</td>
+                <td class="form_cell"><a id="customer_control_action_add_order" title="place an order" href="#" class="button form_button"><img id="icon_customer_control_action_save" src="{{ STATIC_URL }}img/icons/32_new_order.png" /><br />order</a>&nbsp;</td>
+            </tr>
+        </table>
 
 	</fieldset>
 	</form>
