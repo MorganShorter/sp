@@ -26,11 +26,11 @@ class SPUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    font_size = models.IntegerField(default=12)
-    font_weight = models.CharField(choices=F_WEIGHT, default='normal', max_length=16)
-    bg_color = ColorField(default='#FFFFFF')
-    label_bg_color = ColorField(default='#EEEEEE')
-    font_color = ColorField(default='#2B2B2B')
+    font_size = models.IntegerField(default=12, null=True, blank=True)
+    font_weight = models.CharField(choices=F_WEIGHT, default='normal', max_length=16, null=True, blank=True)
+    bg_color = ColorField(default='#FFFFFF', null=True, blank=True)
+    label_bg_color = ColorField(default='#EEEEEE', null=True, blank=True)
+    font_color = ColorField(default='#2B2B2B', null=True, blank=True)
     jodabrian_visible = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'

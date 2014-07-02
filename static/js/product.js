@@ -33,7 +33,7 @@ $(function () {
     $("#product_find").dialog({
         title: "Find Product",
         autoOpen: false,
-        width: 420,
+        width: 560,
         close: function(event, ui) {
             $("#product_content").dialog('close');
             $("#product_add").dialog('close');

@@ -198,18 +198,50 @@
     {% endblock %}
 
     <style>
-        .ui-widget-content {
-            background: {{ request.user.bg_color }};
-            color: {{ request.user.font_color }};
-        }
-        #content {
-            background-color: {{ request.user.bg_color }};
-        }
-        fieldset label, td label {
-            background-color: {{ request.user.label_bg_color }};
-            font-size: {{ request.user.font_size }}px;
-            font-weight: {{ request.user.font_weight }};
-        }
+
+        {% if request.user.font_size %}
+            {% if request.user.font_size > 15 %}
+                fieldset label, td label { padding: 0 0 5px 5px; }
+            {% endif %}
+            fieldset label, td label {
+                font-size: {{ request.user.font_size }}px;
+            }
+            .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+                font-size: {{ request.user.font_size|add:"-2" }}px;
+            }
+            .form_list_header {
+                font-size: {{ request.user.font_size }}px;
+            }
+            .form_list tbody tr td {
+                font-size: {{ request.user.font_size }}px;
+            }
+        {% endif %}
+        {% if request.user.font_weight %}
+            fieldset label, td label {
+                font-weight: {{ request.user.font_weight }};
+            }
+        {% endif %}
+        {% if request.user.bg_color %}
+            .ui-widget-content {
+                background: {{ request.user.bg_color }};
+            }
+            #content {
+                background-color: {{ request.user.bg_color }};
+            }
+        {% endif %}
+        {% if request.user.label_bg_color %}
+            fieldset label, td label {
+                background-color: {{ request.user.label_bg_color }};
+            }
+            .form_list_header {
+                background: {{ request.user.label_bg_color }};
+            }
+        {% endif %}
+        {% if request.user.font_color %}
+            .ui-widget-content {
+                color: {{ request.user.font_color }};
+            }
+        {% endif %}
     </style>
 </body>
 </html>
