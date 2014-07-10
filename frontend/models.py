@@ -17,11 +17,13 @@ class SPUser(AbstractBaseUser):
         ('lighter', 'lighter'),
         ('normal', 'normal')
     ]
-
+    username = models.CharField(max_length=64, unique=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
+        null=True,
+        blank=True
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -33,7 +35,7 @@ class SPUser(AbstractBaseUser):
     font_color = ColorField(default='#2B2B2B', null=True, blank=True)
     jodabrian_visible = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     objects = SPUserManager()
 
     def get_full_name(self):
@@ -45,7 +47,7 @@ class SPUser(AbstractBaseUser):
         return self.email
 
     def __unicode__(self):
-        return self.email
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
