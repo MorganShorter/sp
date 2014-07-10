@@ -1,0 +1,44 @@
+<div id="model_report_5">
+	<form id="frm_report_5" action="{% url 'report_5' %}" method="get">
+        <input type="hidden" value="" name="product_ids" class="product_ids">
+        <a id="report_5_get" title="get report" href="#" class="button form_button pull-right"><img src="{{ STATIC_URL }}img/icons/32_find.png" /><br />Get data</a>
+        <table>
+            <tr>
+                <td class="form_cell"><label for="from" class="form_label">From:</label></td>
+                <td class="form_cell"><input type="text" name="from" id="report_5_from" class="text ui-corner-all form_input dt_from" value=""/></td>
+            </tr>
+            <tr>
+                <td class="form_cell"><label for="to" class="form_label">To:</label></td>
+                <td class="form_cell"><input type="text" name="to" id="report_5_to" class="text ui-corner-all form_input dt_to" value=""/></td>
+            </tr>
+        </table>
+        <br><br>
+        <h3>Products</h3>
+        <div class="report_5_products">
+        <table class="with100 form_list">
+            <thead>
+                <tr class="form_list_row">
+                    <th class="form_list_header">Code</th>
+                    <th class="form_list_header">Name</th>
+                    <th class="form_list_header" width="30">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="empty_row">
+                    <td colspan="3">List is empty. <br>If you want to add some product - open product details and click "Add to report"</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+	</form>
+</div>
+
+
+<div id="model_report_5_table" action_id="frm_report_5">
+	<div id="report5_accordion"></div>
+    <div class="buttons-right">
+        <a href="#" class="button btn32 btn32-pdf report_to_pdf">Save in PDF</a>
+        <a href="#" class="button btn32 btn32-csv report_to_csv">Save in CSV</a>
+    </div>
+</div>

@@ -831,3 +831,16 @@ ul.dropdown ul.sub_menu_products {
     float: left;
     margin-top: 1px;
 }
+
+.btn_cancel {
+    width: 16px;
+    height: 16px;
+    background: url('../img/icons/16_cancel.png');
+    cursor: pointer;
+}
+
+.report_5_products {
+    height: 100px;
+    overflow-y: scroll;
+}
+

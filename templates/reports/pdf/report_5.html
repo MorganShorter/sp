@@ -1,0 +1,32 @@
+<h1>Volume by Product</h1>
+<hr>
+
+{% for o in report_data %}
+    {% if o.complete_ordered_list|length %}
+    <h1>{{ o.code }}</h1>
+    <div>
+        <table style="width: 100%">
+            <thead>
+                <tr class="form_list_row">
+                    <th class="form_list_header">Company Name</th>
+                    <th class="form_list_header">Date</th>
+                    <th class="form_list_header">Qty Out</th>
+                    <th class="form_list_header">Unit Price</th>
+                    <th class="form_list_header">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in o.complete_ordered_list %}
+                    <tr class="form_list_row">
+                        <td>{{ item.order.customer }}</td>
+                        <td>{{ item.order.order_date_str }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.unit_price }}</td>
+                        <td>${{ item.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endfor %}

@@ -109,7 +109,7 @@ $(function () {
 
     /* Report 3
     * */
-     $("#model_report_3").dialog({
+    $("#model_report_3").dialog({
         title: "Sent items",
         autoOpen: false,
         resizable: false,
@@ -158,6 +158,82 @@ $(function () {
     });
     $("#menu_report_4").click(function(){
         $("#model_report_4_table").dialog("open");
+    });
+
+    /* Report 5
+    * */
+    $("#model_report_5").dialog({
+        title: "Volume by Product",
+        autoOpen: false,
+        resizable: false,
+        width: '400px',
+        close: function( event, ui ) {
+            $("#model_report_5_table").dialog('close');
+        }
+    });
+    $("#model_report_5_table").dialog({
+        title: "Volume by Product",
+        autoOpen: false,
+        resizable: false,
+        width: 800,
+        height: 500,
+        close: function( event, ui ) {
+        }
+    });
+    $("#menu_report_5").click(function(){
+        $("#model_report_5").dialog("open");
+    });
+
+    $('.add_product_to_report5').live('click', function(){
+        $('.report_5_products tbody .empty_row').hide();
+
+        var pform = $('#frm_product');
+        var pid = $('.product_id', pform).val(),
+            pcode = $('.product_code', pform).val(),
+            pname = $('.product_name', pform).val();
+
+        if ($('.report_5_products tbody tr[pid=' + pid + ']').length == 0){
+            $('.report_5_products tbody').append("<tr pid='"+ pid +
+                        "' class='form_list_row'><td>" + pcode + "</td><td>" + pname +
+                        "</td><td><div class='btn_cancel'></div></td></tr>");
+        }
+
+        if (!$("#model_report_5").dialog( "isOpen" )){
+            $("#model_report_5").dialog("open");
+        }
+    });
+
+    $('.report_5_products tbody .btn_cancel').live('click', function(){
+        $(this).parents('tr').remove();
+        if ($('.report_5_products tbody tr:visible').length == 0){
+            $('.report_5_products tbody .empty_row').show();
+        }
+    });
+
+    $("#report_5_get").live("click", function(){
+        if ($('.report_5_products tbody tr:not(.empty_row)').length == 0){
+            alert('You have to add some product');
+            return
+        }
+        var $table = $('#frm_report_5');
+
+        var prod_ids = $('.report_5_products tbody tr:not(.empty_row)').map(function() {
+            return $(this).attr('pid');
+        }).get().join();
+
+        $('.product_ids', $table).val(prod_ids);
+        $("#model_report_5_table").dialog("close");
+        $table.ajaxSubmit({
+            success: function(){
+                $("#report5_accordion").accordion({
+                    collapsible: true,
+                    heightStyle: 'content'
+                }).accordion( "refresh" );
+                $("#model_report_5_table").dialog("open");
+            }
+        });
+
+
     });
 
 });

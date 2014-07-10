@@ -1,0 +1,41 @@
+{% load frontend_filter %}
+<taconite>
+    {% if report_data|length %}
+    <replaceContent select="#report5_accordion">
+        {% for o in report_data %}
+            {% if o.complete_ordered_list|length %}
+            <h1>{{ o.code }}</h1>
+            <div>
+                <table class="form_list with100 report5_table">
+                    <thead>
+                        <tr class="form_list_row">
+                            <th class="form_list_header">Company Name</th>
+                            <th class="form_list_header">Date</th>
+                            <th class="form_list_header">Qty Out</th>
+                            <th class="form_list_header">Unit Price</th>
+                            <th class="form_list_header">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in o.complete_ordered_list %}
+                            <tr class="form_list_row">
+                                <td>{{ item.order.customer }}</td>
+                                <td>{{ item.order.order_date_str }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ item.unit_price }}</td>
+                                <td>${{ item.price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </replaceContent>
+
+    {% else %}
+        <replaceContent select="#report5_accordion">Not found...</replaceContent>
+    {% endif %}
+
+
+</taconite>

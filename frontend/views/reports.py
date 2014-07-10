@@ -1,6 +1,9 @@
 from datetime import datetime
-from django.views.generic import ListView
-from django.db.models import Count, Min, Sum, Avg, F
+from django.views.generic import ListView, TemplateView
+from django.db.models import Count, Min, Sum, Avg, F, Q
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 from ..models import Order, Product
 from ..mixins import ReportsMixin
 
@@ -86,3 +89,46 @@ class Report4(ReportsMixin, ListView):
         return super(Report4, self).get_queryset().filter(current_stock__lt=F('minimum_stock'))
 
 report_4 = Report4.as_view()
+
+
+# Volume by Product Report
+class Report5(ReportsMixin, TemplateView):
+    template_name = 'reports/taconite/report_5.xml'
+    pdf_template = 'reports/pdf/report_5.html'
+    csv_template = 'reports/csv/report_5.txt'
+
+    pdf_name = 'report5.pdf'
+    csv_name = 'report5.csv'
+
+    def get_context_data(self, **kwargs):
+        ret = super(Report5, self).get_context_data(**kwargs)
+
+        dfrom = self.request.GET.get('from', None)
+        dto = self.request.GET.get('to', None)
+        prod_ids = self.request.GET.get('product_ids', None)
+
+        if not prod_ids:
+            return ret
+
+        prod_ids = str(prod_ids).split(',')
+        prod_ids = map(int, prod_ids)
+
+        q_filter = []
+        if dfrom:
+            dfrom = datetime.strptime(dfrom, '%Y-%m-%d')
+            q_filter.append(Q(order__order_date__gte=dfrom))
+
+        if dto:
+            dto = datetime.strptime(dto, '%Y-%m-%d')
+            q_filter.append(Q(order__order_date__lte=dto))
+
+        products = list(Product.objects.filter(pk__in=prod_ids))
+        for p in products:
+            p.complete_ordered_list = []
+            for order_product in p.ordered_list.filter(*q_filter):
+                p.complete_ordered_list.append(order_product)
+
+        ret.update({'report_data': products})
+        return ret
+
+report_5 = Report5.as_view()
