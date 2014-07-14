@@ -3,10 +3,11 @@
     <append select="#product_search_result tbody">
         {% for obj in object_list %}
             <tr class="form_list_row open_product_detail" cid="{{ obj.pk }}">
-                <td>{{ obj.code }}</td>
-                <td>{{ obj.name }}</td>
+                <td class="pr_code">{{ obj.code }}</td>
+                <td class="pr_name">{{ obj.name }}</td>
                 <td>{{ obj.type }}</td>
                 <td class="form_cell"><a href="#" title="add product to opened order" class="img16 add_product_to_order"></a></td>
+                <td class="form_cell"><a href="#" title="add product to volume by product report" class="img16 add_product_from_list_to_report5"></a></td>
             </tr>
         {% empty %}
             <tr class="form_list_row">

@@ -3,7 +3,7 @@ $(function () {
         defaultDate: "-1w",
         changeMonth: true,
         numberOfMonths: 1,
-        dateFormat: 'yy-mm-dd',
+        dateFormat: 'mm/dd/yy',
         onClose: function(selectedDate) {
             $(this).parents('form').find(".dt_to").datepicker( "option", "minDate", selectedDate );
         }
@@ -12,7 +12,7 @@ $(function () {
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 1,
-        dateFormat: 'yy-mm-dd',
+        dateFormat: 'mm/dd/yy',
         onClose: function( selectedDate ) {
             $(this).parents('form').find(".dt_from").datepicker( "option", "maxDate", selectedDate );
         }
@@ -201,6 +201,28 @@ $(function () {
         if (!$("#model_report_5").dialog( "isOpen" )){
             $("#model_report_5").dialog("open");
         }
+        $("#model_report_5").dialog( "moveToTop" );
+    });
+
+    $('.add_product_from_list_to_report5').live('click', function(){
+        $('.report_5_products tbody .empty_row').hide();
+        var prnt = $(this).parents('tr');
+        var pid = $(prnt).attr('cid'),
+            pcode = $('.pr_code', prnt).text(),
+            pname = $('.pr_name', prnt).text();
+
+        if ($('.report_5_products tbody tr[pid=' + pid + ']').length == 0){
+            $('.report_5_products tbody').append("<tr pid='"+ pid +
+                        "' class='form_list_row'><td>" + pcode + "</td><td>" + pname +
+                        "</td><td><div class='btn_cancel'></div></td></tr>");
+        }
+
+        if (!$("#model_report_5").dialog( "isOpen" )){
+            $("#model_report_5").dialog("open");
+        }
+        $("#model_report_5").dialog( "moveToTop" );
+
+        return false;
     });
 
     $('.report_5_products tbody .btn_cancel').live('click', function(){

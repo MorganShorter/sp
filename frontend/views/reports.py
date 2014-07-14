@@ -1,8 +1,6 @@
 from datetime import datetime
 from django.views.generic import ListView, TemplateView
 from django.db.models import Count, Min, Sum, Avg, F, Q
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 
 from ..models import Order, Product
 from ..mixins import ReportsMixin
@@ -24,11 +22,11 @@ class Report1(ReportsMixin, ListView):
         qs = super(Report1, self).get_queryset().filter(statuses__status='SD')
 
         if dfrom:
-            dfrom = datetime.strptime(dfrom, '%Y-%m-%d')
+            dfrom = datetime.strptime(dfrom, '%m/%d/%Y')
             qs = qs.filter(order_date__gte=dfrom)
 
         if dto:
-            dto = datetime.strptime(dto, '%Y-%m-%d')
+            dto = datetime.strptime(dto, '%m/%d/%Y')
             qs = qs.filter(order_date__lte=dto)
         return qs.order_by('-order_date')
 
@@ -51,11 +49,11 @@ class Report2(ReportsMixin, ListView):
         qs = super(Report2, self).get_queryset().filter(statuses__status='SD')
 
         if dfrom:
-            dfrom = datetime.strptime(dfrom, '%Y-%m-%d')
+            dfrom = datetime.strptime(dfrom, '%m/%d/%Y')
             qs = qs.filter(order_date__gte=dfrom)
 
         if dto:
-            dto = datetime.strptime(dto, '%Y-%m-%d')
+            dto = datetime.strptime(dto, '%m/%d/%Y')
             qs = qs.filter(order_date__lte=dto)
 
         return qs.values('customer__pk', 'customer__name', 'customer__customer_type').annotate(total=Sum('total_cost')).filter(total__gt=0).order_by('-total')[:100]
@@ -115,11 +113,11 @@ class Report5(ReportsMixin, TemplateView):
 
         q_filter = []
         if dfrom:
-            dfrom = datetime.strptime(dfrom, '%Y-%m-%d')
+            dfrom = datetime.strptime(dfrom, '%m/%d/%Y')
             q_filter.append(Q(order__order_date__gte=dfrom))
 
         if dto:
-            dto = datetime.strptime(dto, '%Y-%m-%d')
+            dto = datetime.strptime(dto, '%m/%d/%Y')
             q_filter.append(Q(order__order_date__lte=dto))
 
         products = list(Product.objects.filter(pk__in=prod_ids))
