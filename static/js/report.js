@@ -44,7 +44,7 @@ $(function () {
         title: "Sales Order Listing",
         autoOpen: false,
         resizable: false,
-        width: '280px',
+        width: 'auto',
         close: function( event, ui ) {
             $("#model_report_1_table").dialog('close');
         }
@@ -87,7 +87,7 @@ $(function () {
         title: "Top Sellers",
         autoOpen: false,
         resizable: false,
-        width: '280px',
+        width: 'auto',
         close: function( event, ui ) {
             $("#model_report_2_table").dialog('close');
         }
@@ -124,7 +124,7 @@ $(function () {
         title: "Sent items",
         autoOpen: false,
         resizable: false,
-        width: '280px',
+        width: 'auto',
         close: function( event, ui ) {
             $("#model_report_3_table").dialog('close');
         }
@@ -185,7 +185,7 @@ $(function () {
         title: "Volume by Product",
         autoOpen: false,
         resizable: false,
-        width: '400px',
+        width: 'auto',
         close: function( event, ui ) {
             $("#model_report_5_table").dialog('close');
         }
@@ -287,7 +287,7 @@ $(function () {
         title: "Product Stock Costings (stocktake)",
         autoOpen: false,
         resizable: false,
-        width: '280px',
+        width: 'auto',
         close: function( event, ui ) {
             $("#model_report_6_table").dialog('close');
         }
