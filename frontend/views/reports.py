@@ -2,7 +2,7 @@ from datetime import datetime
 from django.views.generic import ListView, TemplateView
 from django.db.models import Count, Min, Sum, Avg, F, Q
 
-from ..models import Order, Product
+from ..models import Order, Product, OrderProduct
 from ..mixins import ReportsMixin
 
 
@@ -130,3 +130,31 @@ class Report5(ReportsMixin, TemplateView):
         return ret
 
 report_5 = Report5.as_view()
+
+
+# Product Stock Costings (stocktake)
+class Report6(ReportsMixin, ListView):
+    model = OrderProduct
+    template_name = 'reports/taconite/report_6.xml'
+    pdf_template = 'reports/pdf/report_6.html'
+    csv_template = 'reports/csv/report_6.txt'
+
+    pdf_name = 'report6.pdf'
+    csv_name = 'report6.csv'
+
+    def get_queryset(self):
+        dfrom = self.request.GET.get('from', None)
+        dto = self.request.GET.get('to', None)
+        # TODO: consider the status of order (Canceled status)
+        qs = super(Report6, self).get_queryset().select_related()
+
+        if dfrom:
+            dfrom = datetime.strptime(dfrom, '%m/%d/%Y')
+            qs = qs.filter(order__order_date__gte=dfrom)
+
+        if dto:
+            dto = datetime.strptime(dto, '%m/%d/%Y')
+            qs = qs.filter(order__order_date__lte=dto)
+        return qs.order_by('-order__order_date')
+
+report_6 = Report6.as_view()

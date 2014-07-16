@@ -1,0 +1,49 @@
+{% load frontend_filter %}
+
+<h1>Product Stock Costings (stocktake)</h1>
+<hr>
+
+{% if object_list.count %}
+    {% regroup object_list by order_date_str as order_by_day_list %}
+
+    {% for o in order_by_day_list %}
+        <h1>{{ o.grouper }}</h1>
+        <div class="report6_sub_accordion">
+            {% regroup o.list by supplier as order_by_supplier %}
+            {% for so in order_by_supplier %}
+                <h2>{{ so.grouper }}</h2>
+                <div>
+                    <table class="form_list with100 report1_table" style="width: 100%">
+                        <thead>
+                            <tr class="form_list_row">
+                                <th class="form_list_header">Product code</th>
+                                <th class="form_list_header">Product name</th>
+                                <th class="form_list_header">Cost Price EA</th>
+                                <th class="form_list_header">Qty</th>
+                                <th class="form_list_header">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in so.list %}
+                                <tr class="form_list_row">
+                                    <td class="">{{ item.product.code }}</td>
+                                    <td class="">{{ item.product.name }}</td>
+                                    <td class="">${{ item.product.sp_cost|floatformat:"2" }}</td>
+                                    <td class="">{{ item.quantity }}</td>
+                                    <td class="sub_total">${{ item.cost|floatformat:"2" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="form_list_row">
+                                <td colspan="3" class="form_list_header" align="right">Total: </td>
+                                <td class="form_list_header">{{ so.list|total_sum:'quantity' }}</td>
+                                <td class="form_list_header">${{ so.list|total_sum:'cost'|floatformat:"2" }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endif %}

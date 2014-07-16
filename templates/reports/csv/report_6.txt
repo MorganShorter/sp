@@ -1,0 +1,3 @@
+Date; Supplier; Product code; Product name; Cost Price EA; Qty; Total
+{% if object_list.count %}{% regroup object_list by order_date_str as order_by_day_list %}{% for o in order_by_day_list %}{% regroup o.list by supplier as order_by_supplier %}{% for so in order_by_supplier %}{% for item in so.list %}{{ o.grouper }};{{ so.grouper }};{{ item.product.code }};{{ item.product.name }};${{ item.product.sp_cost|floatformat:"2" }};{{ item.quantity }};${{ item.cost|floatformat:"2" }}
+{% endfor %}{% endfor %}{% endfor %}{% endif %}

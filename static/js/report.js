@@ -35,6 +35,9 @@ $(function () {
     });
 
 
+
+
+
     /* Report 1
     * */
      $("#model_report_1").dialog({
@@ -67,10 +70,14 @@ $(function () {
                     collapsible: true,
                     heightStyle: 'content'
                 }).accordion( "refresh" );
+                $("#model_report_1_table").dialog("open");
             }
         });
 
     });
+
+
+
 
 
 
@@ -106,6 +113,10 @@ $(function () {
         });
 
     });
+
+
+
+
 
     /* Report 3
     * */
@@ -144,6 +155,10 @@ $(function () {
 
     });
 
+
+
+
+
     /* Report 4
     * */
     $("#model_report_4_table").dialog({
@@ -159,6 +174,10 @@ $(function () {
     $("#menu_report_4").click(function(){
         $("#model_report_4_table").dialog("open");
     });
+
+
+
+
 
     /* Report 5
     * */
@@ -255,6 +274,54 @@ $(function () {
             }
         });
 
+
+    });
+
+
+
+
+
+    /* Report 6
+    * */
+     $("#model_report_6").dialog({
+        title: "Product Stock Costings (stocktake)",
+        autoOpen: false,
+        resizable: false,
+        width: '280px',
+        close: function( event, ui ) {
+            $("#model_report_6_table").dialog('close');
+        }
+    });
+    $("#model_report_6_table").dialog({
+        title: "Product Stock Costings (stocktake)",
+        autoOpen: false,
+        resizable: false,
+        width: 800,
+        height: 500,
+        close: function( event, ui ) {
+        }
+    });
+    $("#menu_report_6").click(function(){
+        $("#model_report_6").dialog("open");
+    });
+
+    $("#report_6_get").live("click", function(){
+        $("#model_report_6_table").dialog("close");
+        $('#frm_report_6').ajaxSubmit({
+            success: function(){
+                $("#report6_accordion").accordion({
+                    collapsible: true,
+                    heightStyle: 'content'
+                }).accordion( "refresh" );
+
+                $(".report6_sub_accordion").accordion({
+                    collapsible: true,
+                    heightStyle: 'content'
+                });
+
+                $("#model_report_6_table").dialog("open");
+            }
+        });
 
     });
 

@@ -4,8 +4,8 @@ register = template.Library()
 
 
 @register.filter
-def total_sum(arr):
+def total_sum(arr, param='total_cost'):
     sum = 0
     for o in arr:
-        sum += o.total_cost
+        sum += getattr(o, param, 0)
     return sum

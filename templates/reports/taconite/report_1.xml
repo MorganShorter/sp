@@ -38,8 +38,8 @@
         <replaceContent select="#report1_accordion">Not found...</replaceContent>
     {% endif %}
 
+    {% comment %}
     <eval><![CDATA[
-        $("#model_report_1_table").dialog("open");
         $('.report1_table').dataTable({
             "bPaginate": false,
             "bFilter": false,
@@ -53,5 +53,6 @@
         });
     ]]>
     </eval>
+    {% endcomment %}
 
 </taconite>

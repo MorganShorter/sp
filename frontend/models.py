@@ -547,6 +547,13 @@ class OrderProduct(models.Model):
         self.stock_update(quantity=0)
         super(OrderProduct, self).delete(using)
 
+    @property
+    def order_date_str(self):
+        return self.order.order_date_str
+
+    @property
+    def supplier(self):
+        return self.product.supplier.code
 
     @property
     def cost(self):
