@@ -34,14 +34,12 @@
                 <td class="">${{ item.net_royalty|floatformat:"2"|default:0 }}</td>
             </tr>
         {% endfor %}
-    {% endfor %}
-    </tbody>
-    <tfoot>
         <tr>
             <td colspan="5" align="right"><b>Total:</b> </td>
             <td><strong>{{ o.list|total_sum:"quantity" }}</strong></td>
             <td><strong>${{ o.list|total_sum:"net_price"|floatformat:"2" }}</strong></td>
             <td><strong>${{ o.list|total_sum:"net_royalty"|floatformat:"2" }}</strong></td>
         </tr>
-    </tfoot>
+    {% endfor %}
+    </tbody>
 </table>
