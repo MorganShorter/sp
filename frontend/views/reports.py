@@ -155,6 +155,6 @@ class Report6(ReportsMixin, ListView):
         if dto:
             dto = datetime.strptime(dto, '%m/%d/%Y')
             qs = qs.filter(order__order_date__lte=dto)
-        return qs.order_by('-order__order_date')
+        return qs.order_by('-order__order_date', 'product__supplier__code')
 
 report_6 = Report6.as_view()
