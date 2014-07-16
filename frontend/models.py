@@ -557,11 +557,17 @@ class OrderProduct(models.Model):
 
     @property
     def cost(self):
-        return self.product.sp_cost * self.quantity
+        try:
+            return self.product.sp_cost * self.quantity
+        except TypeError:
+            return 0
 
     @property
     def price(self):
-        return self.unit_price * self.quantity
+        try:
+            return self.unit_price * self.quantity
+        except TypeError:
+            return 0
 
     @property
     def profit(self):
