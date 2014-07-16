@@ -1,0 +1,48 @@
+{% load frontend_filter %}
+<taconite>
+    {% if object_list.count %}
+    {% regroup object_list by order_month_str as order_by_day_list %}
+    <replaceContent select="#report7_title">
+        <h1>{{ supplier.name }} Monthly Summary</h1>
+    </replaceContent>
+    <replaceContent select="#report7_accordion">
+        {% for o in order_by_day_list %}
+            <h1 class="report_accordion">{{ o.grouper }} <span><b>Royalty</b>: ${{ o.list|total_sum:"net_royalty"|floatformat:"2" }}</span><span><b>Sell Price</b>: ${{ o.list|total_sum:"net_price"|floatformat:"2" }} <b>Qty</b>: {{ o.list|total_sum:"quantity" }}</span></h1>
+            <div>
+                <table class="form_list with100 report7_table">
+                    <thead>
+                        <tr class="form_list_row">
+                            <th class="form_list_header">Date Inv</th>
+                            <th class="form_list_header">Inv No.</th>
+                            <th class="form_list_header">Company ID</th>
+                            <th class="form_list_header">Company Name</th>
+                            <th class="form_list_header">Code</th>
+                            <th class="form_list_header">Qty</th>
+                            <th class="form_list_header">Sell Price</th>
+                            <th class="form_list_header">Royalty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in o.list %}
+                            <tr class="form_list_row">
+                                <td class="">{{ item.order.last_invoice.timestamp|date:"m/d/Y" }}</td>
+                                <td class="">{{ item.order.last_invoice.pk }}</td>
+                                <td class="">{{ item.order.customer.pk }}</td>
+                                <td class="">{{ item.order.customer }}</td>
+                                <td class="">{{ item.product.code }}</td>
+                                <td class="">{{ item.quantity }}</td>
+                                <td class="">${{ item.net_price|floatformat:"2" }}</td>
+                                <td class="">${{ item.net_royalty|floatformat:"2"|default:0 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </replaceContent>
+
+    {% else %}
+        <replaceContent select="#report7_accordion">Not found...</replaceContent>
+    {% endif %}
+
+</taconite>

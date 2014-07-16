@@ -2,7 +2,7 @@ from datetime import datetime
 from django.views.generic import ListView, TemplateView
 from django.db.models import Count, Min, Sum, Avg, F, Q
 
-from ..models import Order, Product, OrderProduct
+from ..models import Order, Product, OrderProduct, Supplier
 from ..mixins import ReportsMixin
 
 
@@ -158,3 +158,50 @@ class Report6(ReportsMixin, ListView):
         return qs.order_by('-order__order_date', 'product__supplier__code')
 
 report_6 = Report6.as_view()
+
+
+# Royalty Summary by Type
+class Report7(ReportsMixin, ListView):
+    model = OrderProduct
+    supplier = None
+
+    template_name = 'reports/taconite/report_7.xml'
+    pdf_template = 'reports/pdf/report_7.html'
+    csv_template = 'reports/csv/report_7.txt'
+
+    pdf_name = 'report7.pdf'
+    csv_name = 'report7.csv'
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.supplier = Supplier.objects.get(pk=self.request.GET.get('supplier'))
+        except Supplier.DoesNotExist:
+            pass
+
+        return super(Report7, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ct = super(Report7, self).get_context_data(**kwargs)
+        ct.update({'supplier': self.supplier})
+        return ct
+
+    def get_queryset(self):
+        dfrom = self.request.GET.get('from', None)
+        dto = self.request.GET.get('to', None)
+        qs = super(Report7, self).get_queryset().select_related()
+
+        if not self.supplier:
+            return qs.none()
+
+        qs = qs.filter(product__supplier_id=self.supplier)
+
+        if dfrom:
+            dfrom = datetime.strptime(dfrom, '%m/%d/%Y')
+            qs = qs.filter(order__order_date__gte=dfrom)
+
+        if dto:
+            dto = datetime.strptime(dto, '%m/%d/%Y')
+            qs = qs.filter(order__order_date__lte=dto)
+        return qs.order_by('-order__order_date',)
+
+report_7 = Report7.as_view()

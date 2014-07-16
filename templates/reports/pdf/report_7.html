@@ -1,0 +1,47 @@
+{% load frontend_filter %}
+{% regroup object_list by order_month_str as order_by_day_list %}
+
+<h1>Royalty Summary by Type</h1>
+<h2>{{ supplier.name }} Monthly Summary</h2>
+<hr>
+
+
+<table style="width: 100%">
+    <thead>
+        <tr class="form_list_row">
+            <th class="form_list_header">Date Inv</th>
+            <th class="form_list_header">Inv No.</th>
+            <th class="form_list_header">Company ID</th>
+            <th class="form_list_header">Company Name</th>
+            <th class="form_list_header">Code</th>
+            <th class="form_list_header">Qty</th>
+            <th class="form_list_header">Sell Price</th>
+            <th class="form_list_header">Royalty</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for o in order_by_day_list %}
+        <tr><td colspan="8"><h2>{{ o.grouper }}</h2></td></tr>
+        {% for item in o.list %}
+            <tr class="form_list_row">
+                <td class="">{{ item.order.last_invoice.timestamp|date:"m/d/Y" }}</td>
+                <td class="">{{ item.order.last_invoice.pk }}</td>
+                <td class="">{{ item.order.customer.pk }}</td>
+                <td class="">{{ item.order.customer }}</td>
+                <td class="">{{ item.product.code }}</td>
+                <td class="">{{ item.quantity }}</td>
+                <td class="">${{ item.net_price|floatformat:"2" }}</td>
+                <td class="">${{ item.net_royalty|floatformat:"2"|default:0 }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" align="right"><b>Total:</b> </td>
+            <td><strong>{{ o.list|total_sum:"quantity" }}</strong></td>
+            <td><strong>${{ o.list|total_sum:"net_price"|floatformat:"2" }}</strong></td>
+            <td><strong>${{ o.list|total_sum:"net_royalty"|floatformat:"2" }}</strong></td>
+        </tr>
+    </tfoot>
+</table>

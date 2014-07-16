@@ -4,7 +4,7 @@
     {% regroup object_list by order_month_str as order_by_day_list %}
     <replaceContent select="#report1_accordion">
         {% for o in order_by_day_list %}
-            <h1>{{ o.grouper }} <span>Total: $ {{ o.list|total_sum }}</span><span>No. invoices: {{ o.list|length }}</span></h1>
+            <h1 class="report_accordion">{{ o.grouper }} <span>Total: $ {{ o.list|total_sum }}</span><span>No. invoices: {{ o.list|length }}</span></h1>
             <div>
                 <table class="form_list with100 report1_table">
                     <thead>

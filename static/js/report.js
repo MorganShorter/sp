@@ -325,4 +325,47 @@ $(function () {
 
     });
 
+
+
+
+
+
+    /* Report 7
+    * */
+     $("#model_report_7").dialog({
+        title: "Royalty Summary by Type",
+        autoOpen: false,
+        resizable: false,
+        width: 'auto',
+        close: function( event, ui ) {
+            $("#model_report_7_table").dialog('close');
+        }
+    });
+    $("#model_report_7_table").dialog({
+        title: "Royalty Summary by Type",
+        autoOpen: false,
+        resizable: false,
+        width: 800,
+        height: 500,
+        close: function( event, ui ) {
+        }
+    });
+    $("#menu_report_7").click(function(){
+        $("#model_report_7").dialog("open");
+    });
+
+    $("#report_7_get").live("click", function(){
+        $("#model_report_7_table").dialog("close");
+        $('#frm_report_7').ajaxSubmit({
+            success: function(){
+                $("#report7_accordion").accordion({
+                    collapsible: true,
+                    heightStyle: 'content'
+                }).accordion( "refresh" );
+                $("#model_report_7_table").dialog("open");
+            }
+        });
+
+    });
+
 });

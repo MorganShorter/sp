@@ -67,6 +67,7 @@ urlpatterns += patterns('frontend.views.reports',
     url(ur'^report/4/get/', 'report_4', name='report_4'),
     url(ur'^report/5/get/', 'report_5', name='report_5'),
     url(ur'^report/6/get/', 'report_6', name='report_6'),
+    url(ur'^report/7/get/', 'report_7', name='report_7'),
 )
 
 # Royalty Group CRUD

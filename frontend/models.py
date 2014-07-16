@@ -552,6 +552,10 @@ class OrderProduct(models.Model):
         return self.order.order_date_str
 
     @property
+    def order_month_str(self):
+        return self.order.order_month_str
+
+    @property
     def supplier(self):
         return self.product.supplier.code
 

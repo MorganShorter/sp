@@ -679,16 +679,16 @@ ul.dropdown ul.sub_menu_products {
     background: url('../img/icons/32_csv.png') 5px no-repeat;
 }
 
-#report1_accordion h1 {
+h1.report_accordion {
     position: relative;
 }
 
-#report1_accordion h1 span {
+h1.report_accordion span {
     position: absolute;
     right: 10px;
 }
 
-#report1_accordion h1 span:last-child {
+h1.report_accordion span:last-child {
     right: 200px;
 }
 
@@ -855,4 +855,8 @@ ul.dropdown ul.sub_menu_products {
 
 #frm_report_5 .button_products_find_dialog {
     margin-right: 5px;
+}
+
+#report7_title h1 {
+    font-size: 18px;
 }
