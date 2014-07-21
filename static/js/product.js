@@ -27,8 +27,8 @@ $(function () {
     $("#product_create").dialog({
         title: "Create product",
         autoOpen: false,
-        resizable: false,
-        width: 414
+        resizable: true,
+        width: 'auto'
     });
     $("#product_find").dialog({
         title: "Find Product",

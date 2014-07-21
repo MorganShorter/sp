@@ -243,7 +243,11 @@ select:focus {
 }
 
 #icon_logo {
-    height: 16px;
+    height: 28px;
+}
+#logo {
+	font-family: impact;
+	font-size: 30px;
 }
 
 #content {
