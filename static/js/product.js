@@ -9,7 +9,7 @@ $(function () {
     $("#product_content").dialog({
         title: "Edit product",
         autoOpen: false,
-        width: 414,
+        width: 'auto',
         close: function(event, ui){
             $('#frm_product').resetForm();
             $("#product_pricelevel").dialog("close");
