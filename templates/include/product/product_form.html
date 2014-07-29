@@ -3,13 +3,14 @@
     <input type="hidden" name="product_id" class="product_id" value="" />
 
 	<fieldset>
+	<div id="product_content_top_left">
 		<table>
 		<tr>
-			<td class="form_cell"><label for="product_id" class="form_label">product code:</label></td>
+			<td class="form_cell" style="width: 40%;"><label for="product_id" class="form_label">code:</label></td>
 			<td class="form_cell"><input type="text" name="product_code" id="product_code" class="text ui-widget-content ui-corner-all form_input product_code" readonly data-field="code" /></td>
         </tr>
 		<tr>
-			<td class="form_cell"><label for="product_name" class="form_label">product name:</label></td>
+			<td class="form_cell"><label for="product_name" class="form_label">name:</label></td>
 			<td class="form_cell"><input type="text" name="product_name" class="product_name text ui-widget-content ui-corner-all form_input" data-field="name" readonly /></td>
         </tr>
 		<tr>
@@ -25,8 +26,12 @@
                 <input type="text" name="product_type" title="what type of product is this?" class="product_type text ui-widget-content ui-corner-all form_input" data-field="type" />
             </td>
 		</tr>
+	</table>
+	</div>
+	<div id="product_content_top_middle">
+	<table>
 		<tr>
-			<td class="form_cell"><label for="product_cost_price" class="form_label">cost price:</label></td>
+			<td class="form_cell" style="width: 40%;"><label for="product_cost_price" class="form_label">cost price:</label></td>
 			<td class="form_cell"><input type="text" name="product_cost_price" title="the cost to ship the order" class="product_cost_price text ui-widget-content ui-corner-all form_input" data-field="sp_cost" /></td>
 		</tr>
 		<tr>
@@ -37,9 +42,9 @@
                     <img src="{{ STATIC_URL }}img/icons/16_magic.png" />
                 </a>
             </td>
-		</tr>
+		</tr>		
 		<tr>
-			<td class="form_cell"><label for="product_minimum_stock" class="form_label">minimum stock:</label></td>
+			<td class="form_cell"><label for="product_minimum_stock" class="form_label">min. stock:</label></td>
 			<td class="form_cell"><input type="text" name="product_minimum_stock" title="the cost to ship the order" class="product_minimum_stock text ui-widget-content ui-corner-all form_input" data-field="minimum_stock" /></td>
         </tr>
 		<tr>
@@ -48,8 +53,12 @@
                 <select name="product_supplier" class="product_supplier text ui-widget-content ui-corner-all form_input" data-field="supplier">
 				</select>
         </tr>
+	</table>
+	</div>
+	<div id="product_content_top_right">
+	<table>
         <tr>
-			<td class="form_cell"><label for="product_medium" class="form_label">medium:</label></td>
+			<td class="form_cell" style="width: 40%;"><label for="product_medium" class="form_label">medium:</label></td>
 			<td class="form_cell">
                 <select name="product_medium" class="product_medium text ui-widget-content ui-corner-all form_input" data-field="medium">
 				</select>
@@ -63,11 +72,12 @@
             </td>
 		</tr>
         <tr>
-			<td class="form_cell"><label for="product_manual_royalty" class="form_label">manual royalty (%):</label></td>
+			<td class="form_cell"><label for="product_manual_royalty" class="form_label">man. royalty:</label></td>
 			<td class="form_cell"><input type="text" name="product_manual_royalty" title="the royalty percent 0..100%" class="product_manual_royalty text ui-widget-content ui-corner-all form_input" data-field="manual_royalty" placeholder="1..100%" /></td>
         </tr>
 
 		</table>
+		</div>
         <div id="product_accordion">
             <h3>Price levels</h3>
             <div>
