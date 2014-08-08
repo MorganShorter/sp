@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.humanize',
     'django.contrib.flatpages',
+    'raven.contrib.django.raven_compat',
     'registration',
     'compressor',
     'south',
