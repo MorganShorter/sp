@@ -3,7 +3,7 @@ $(function () {
         defaultDate: "-1w",
         changeMonth: true,
         numberOfMonths: 1,
-        dateFormat: 'mm/dd/yy',
+        dateFormat: 'dd/mm/yy',
         onClose: function(selectedDate) {
             $(this).parents('form').find(".dt_to").datepicker( "option", "minDate", selectedDate );
         }
@@ -12,7 +12,7 @@ $(function () {
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 1,
-        dateFormat: 'mm/dd/yy',
+        dateFormat: 'dd/mm/yy',
         onClose: function( selectedDate ) {
             $(this).parents('form').find(".dt_from").datepicker( "option", "maxDate", selectedDate );
         }
