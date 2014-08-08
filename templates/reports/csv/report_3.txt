@@ -1,3 +1,3 @@
-Order ID;Company name;Type;Suburb;Telephone
-{% for item in object_list %}{{ item.pk }};{{ item.customer }};;{{ item.shipping_suburb }};;
+Order ID,Company name,Type,Suburb,Telephone
+{% for item in object_list %}{{ item.pk }},{{ item.customer }},,{{ item.shipping_suburb }},,
 {% endfor %}

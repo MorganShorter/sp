@@ -1,3 +1,3 @@
-{% load frontend_tag %}ID;Company name;Type;Contacts;Total
-{% for ob in object_list %}{% get_customer_contacts ob.customer__pk as contacts %}{{ ob.customer__pk }};{{ ob.customer__name|safe }};{{ ob.customer__customer_type|safe }};{% for c in contacts %}{{ c.info }},{% endfor %};{{ ob.total|floatformat:"2" }}
+{% load frontend_tag %}ID,Company name,Type,Contacts,Total
+{% for ob in object_list %}{% get_customer_contacts ob.customer__pk as contacts %}{{ ob.customer__pk }},{{ ob.customer__name|safe }},{{ ob.customer__customer_type|safe }},{% for c in contacts %}{{ c.info }},{% endfor %},{{ ob.total|floatformat:"2" }}
 {% endfor %}

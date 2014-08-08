@@ -1,3 +1,3 @@
-Order date;Type;Order ID;Inv No;Despatch Da;Company name;Invoice Total
-{% for ob in object_list %}{{ ob.order_date_str }};{{ ob.customer.customer_type }};{{ ob.pk }};{{ ob.last_invoice.pk }};{% if ob.last_status.status == 'SD' %}{{ ob.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %};{{ ob.customer|safe }};{{ ob.total_cost|floatformat:"2" }};
+Order date,Type,Order ID,Inv No,Despatch Da,Company name,Invoice Total
+{% for ob in object_list %}{{ ob.order_date_str }},{{ ob.customer.customer_type }},{{ ob.pk }},{{ ob.last_invoice.pk }},{% if ob.last_status.status == 'SD' %}{{ ob.last_status.timestamp|date:"d.m.Y" }}{% else %}-{% endif %},{{ ob.customer|safe }},{{ ob.total_cost|floatformat:"2" }},
 {% endfor %}
