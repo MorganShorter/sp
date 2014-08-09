@@ -11,7 +11,7 @@
             </tr>
         {% empty %}
             <tr class="form_list_row">
-                <td colspan="4">not found</td>
+                <td colspan="5">not found</td>
             </tr>
         {% endfor %}
     </append>

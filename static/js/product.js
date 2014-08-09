@@ -82,6 +82,10 @@ $(function () {
         });
     });
 
+    $("#find_product_erase").live('click', function(){
+        $.get(__url_product_list + '?last=1');
+    });
+
     // Open product detail
     $('.open_product_detail').live('click', function(){
         var cid = $(this).attr('cid');

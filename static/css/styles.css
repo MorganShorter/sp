@@ -865,3 +865,7 @@ h1.report_accordion span:last-child {
 #report7_title h1 {
     font-size: 18px;
 }
+
+#find_product_erase {
+    margin-left: 5px;
+}
