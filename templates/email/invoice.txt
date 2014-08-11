@@ -1,0 +1,12 @@
+Hi {{ CUSTOMER_NAME }},
+
+Here's invoice {{ INV_NUM }} for {{ TOTAL_PRICE }}
+
+The amount outstanding of {{ TOTAL_PRICE }} is due on {{ DUE_DATE }}
+
+From your online bill you can print a PDF.
+
+If you have any questions, please let us know.
+
+Thanks,
+{{ COMPANY_NAME }}
