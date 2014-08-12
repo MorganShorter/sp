@@ -709,3 +709,16 @@ class StockAdjust(models.Model):
 
     class Meta:
         ordering = ('-timestamp', )
+
+
+class Document(models.Model):
+    title = models.CharField(max_length=64)
+    description = models.TextField(blank=True, null=True)
+    dt = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(blank=True, null=True, upload_to='documents')
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('-dt',)
