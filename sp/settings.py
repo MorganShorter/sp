@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'raven.contrib.django.raven_compat',
     'registration',
+    'webodt',
     'compressor',
     'south',
     'mathfilters',
@@ -120,6 +121,12 @@ CACHES = {
 LANGUAGE_CODE = 'en-au'
 
 TIME_ZONE = 'Australia/Melbourne'
+
+# Webodt magic, use Abiword backend
+WEBODT_CONVERTER = 'webodt.converters.abiword.AbiwordODFConverter'
+#  Where you want to store your .odt templates. Webodt does not know how to use standard Django template loaders, 
+#  Directory to store your odt templates (sure enough, its possible to use the same directory where all other templates are stored):
+WEBODT_TEMPLATE_PATH = '.../webodt/templates/'
 
 USE_I18N = False
 USE_L10N = False
