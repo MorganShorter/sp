@@ -13,3 +13,4 @@ pisa
 html5lib
 reportlab==2.4
 raven
+django-webodt
