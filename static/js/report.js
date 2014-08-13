@@ -38,7 +38,7 @@ $(function () {
 
 
 
-    /* Report 1
+    /* Report 1 Sales Order Listing
     * */
      $("#model_report_1").dialog({
         title: "Sales Order Listing",
@@ -82,12 +82,7 @@ $(function () {
 
     });
 
-
-
-
-
-
-    /* Report 2
+    /* Report 2 Top Sellers
     * */
      $("#model_report_2").dialog({
         title: "Top Sellers",
@@ -129,7 +124,7 @@ $(function () {
 
 
 
-    /* Report 3
+    /* Report 3 Sent items
     * */
     $("#model_report_3").dialog({
         title: "Sent items",
@@ -176,7 +171,7 @@ $(function () {
 
 
 
-    /* Report 4
+    /* Report 4 Minimum Stock Report
     * */
     $("#model_report_4_table").dialog({
         title: "Minimum Stock Report",
@@ -185,7 +180,16 @@ $(function () {
         width: 800,
         height: 500,
         open: function( event, ui ) {
-            $.get($('#model_report_4_table').attr('report_get_url'));
+            var $loader = loader_on('#model_report_4_table');
+            $.get($('#model_report_4_table').attr('report_get_url'))
+                .done(function() {
+                    $loader.remove();
+                })
+                  .fail(function() {
+                    $("#model_report_4_table").dialog('close');
+                    $loader.remove();
+                    alert('Error! Please try again.');
+                });
         }
     });
     $("#menu_report_4").click(function(){
@@ -196,7 +200,7 @@ $(function () {
 
 
 
-    /* Report 5
+    /* Report 5 Volume by Product
     * */
     $("#model_report_5").dialog({
         title: "Volume by Product",
@@ -304,7 +308,7 @@ $(function () {
 
 
 
-    /* Report 6
+    /* Report 6 Product Stock Costings (stocktake)
     * */
      $("#model_report_6").dialog({
         title: "Product Stock Costings (stocktake)",
@@ -359,7 +363,7 @@ $(function () {
 
 
 
-    /* Report 7
+    /* Report 7 Royalty Summary by Type
     * */
      $("#model_report_7").dialog({
         title: "Royalty Summary by Type",
