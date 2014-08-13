@@ -1,3 +1,3 @@
 Supplier, Month, Date Inv, Inv No., Company ID, Company Name, Code, Qty, Sell Price, Royalty
-{% regroup object_list by order_month_str as order_by_day_list %}{% for o in order_by_day_list %}{% for item in o.list %}{{ supplier.name }}, {{ o.grouper }}, {{ item.order.last_invoice.timestamp|date:"m/d/Y" }}, {{ item.order.last_invoice.pk }}, {{ item.order.customer.pk }}, {{ item.order.customer }}, {{ item.product.code }}, {{ item.quantity }}, ${{ item.net_price|floatformat:"2" }}, ${{ item.net_royalty|floatformat:"2"|default:0 }}
-{% endfor %}{% endfor %}
+{% autoescape off %}{% regroup object_list by order_month_str as order_by_day_list %}{% for o in order_by_day_list %}{% for item in o.list %}{{ supplier.name|cut:"," }}, {{ o.grouper|cut:"," }}, {{ item.order.last_invoice.timestamp|date:"m/d/Y"|cut:"," }}, {{ item.order.last_invoice.pk }}, {{ item.order.customer.pk }}, {{ item.order.customer|cut:"," }}, {{ item.product.code|cut:"," }}, {{ item.quantity|cut:"," }}, ${{ item.net_price|floatformat:"2" }}, ${{ item.net_royalty|floatformat:"2"|default:0 }}
+{% endfor %}{% endfor %}{% endautoescape %}

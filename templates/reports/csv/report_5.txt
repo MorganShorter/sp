@@ -1,3 +1,3 @@
 Product Code,Company name,Date,Qty Out,Unit Price,Total
-{% for o in report_data %}{% if o.complete_ordered_list|length %}{% for item in o.complete_ordered_list %}{{ o.code }},{{ item.order.customer }},{{ item.order.order_date_str }},{{ item.quantity }},${{ item.unit_price }},${{ item.price }}
-{% endfor %}{% endif %}{% endfor %}
+{% autoescape off %}{% for o in report_data %}{% if o.complete_ordered_list|length %}{% for item in o.complete_ordered_list %}{{ o.code|cut:"," }},{{ item.order.customer|cut:"," }},{{ item.order.order_date_str }},{{ item.quantity }},${{ item.unit_price }},${{ item.price }}
+{% endfor %}{% endif %}{% endfor %}{% endautoescape %}
