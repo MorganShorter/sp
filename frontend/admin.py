@@ -3,7 +3,7 @@ from django import forms
 from frontend.models import ImportNote, Customer, CustomerContact, Size, Medium, \
     Supplier, Product, Catalog, CatalogIssue, CatalogIssueProduct, \
     RoyaltyGroup, PriceLevel, Order, OrderStatus, OrderProduct, \
-    Company, Invoice, Note, BackOrder, StockAdjust, SPUser
+    Company, Invoice, Note, BackOrder, StockAdjust, SPUser, Document
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -171,3 +171,5 @@ class SPUserAdmin(UserAdmin):
 
 admin.site.register(SPUser, SPUserAdmin)
 admin.site.unregister(Group)
+
+admin.site.register(Document)
