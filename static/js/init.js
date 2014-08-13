@@ -355,3 +355,14 @@ function refresh_catalog(){
         }
     });
 }
+
+function loader_on(selector) {
+    var $el = $(selector);
+    $el.css('position', 'relative');
+
+    var $loader = $('<div>').addClass('loader');
+    $el.append($loader);
+
+
+    return $loader;
+}

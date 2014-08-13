@@ -64,6 +64,7 @@ $(function () {
 
     $("#report_1_get").live("click", function(){
         $("#model_report_1_table").dialog("close");
+        var $loader = loader_on('#model_report_1');
         $('#frm_report_1').ajaxSubmit({
             success: function(){
                 $("#report1_accordion").accordion({
@@ -71,6 +72,11 @@ $(function () {
                     heightStyle: 'content'
                 }).accordion( "refresh" );
                 $("#model_report_1_table").dialog("open");
+                $loader.remove();
+            },
+            error: function(){
+                $loader.remove();
+                alert('Error! Please try again.');
             }
         });
 
@@ -106,9 +112,14 @@ $(function () {
     });
     $("#report_2_get").live("click", function(){
         $("#model_report_2_table").dialog("close");
+        var $loader = loader_on('#model_report_2');
         $('#frm_report_2').ajaxSubmit({
             success: function(){
-
+                $loader.remove();
+            },
+            error: function(){
+                $loader.remove();
+                alert('Error! Please try again.');
             }
         });
 
@@ -144,12 +155,18 @@ $(function () {
 
     $("#report_3_get").live("click", function(){
         $("#model_report_3_table").dialog("close");
+        var $loader = loader_on('#model_report_3');
         $('#frm_report_3').ajaxSubmit({
             success: function(){
                 $("#report3_accordion").accordion({
                     collapsible: true,
                     heightStyle: 'content'
                 }).accordion( "refresh" );
+                $loader.remove();
+            },
+            error: function(){
+                $loader.remove();
+                alert('Error! Please try again.');
             }
         });
 
@@ -264,6 +281,7 @@ $(function () {
 
         $('.product_ids', $table).val(prod_ids);
         $("#model_report_5_table").dialog("close");
+        var $loader = loader_on('#model_report_5');
         $table.ajaxSubmit({
             success: function(){
                 $("#report5_accordion").accordion({
@@ -271,6 +289,11 @@ $(function () {
                     heightStyle: 'content'
                 }).accordion( "refresh" );
                 $("#model_report_5_table").dialog("open");
+                $loader.remove();
+            },
+            error: function(){
+                $loader.remove();
+                alert('Error! Please try again.');
             }
         });
 
@@ -307,6 +330,7 @@ $(function () {
 
     $("#report_6_get").live("click", function(){
         $("#model_report_6_table").dialog("close");
+        var $loader = loader_on('#model_report_6');
         $('#frm_report_6').ajaxSubmit({
             success: function(){
                 $("#report6_accordion").accordion({
@@ -320,6 +344,11 @@ $(function () {
                 });
 
                 $("#model_report_6_table").dialog("open");
+                $loader.remove();
+            },
+            error: function(){
+                $loader.remove();
+                alert('Error! Please try again.');
             }
         });
 
@@ -356,6 +385,7 @@ $(function () {
 
     $("#report_7_get").live("click", function(){
         $("#model_report_7_table").dialog("close");
+        var $loader = loader_on('#model_report_7');
         $('#frm_report_7').ajaxSubmit({
             success: function(){
                 $("#report7_accordion").accordion({
@@ -363,6 +393,11 @@ $(function () {
                     heightStyle: 'content'
                 }).accordion( "refresh" );
                 $("#model_report_7_table").dialog("open");
+                $loader.remove();
+            },
+            error: function(){
+                $loader.remove();
+                alert('Error! Please try again.');
             }
         });
 

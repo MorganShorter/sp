@@ -872,3 +872,12 @@ h1.report_accordion span:last-child {
 #find_product_erase {
     margin-left: 5px;
 }
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff url("../img/loader.gif") center no-repeat;
+}
