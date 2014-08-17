@@ -1,4 +1,9 @@
 import json
+import datetime
+
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.http import HttpResponse
 from django.views.generic import ListView
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
@@ -6,6 +11,14 @@ from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
 from ..models import Order, Invoice, Company, Customer, OrderStatus, Product, OrderProduct
 from ..mixins import TacoMixin
+
+import cStringIO as StringIO
+from cgi import escape
+try:
+    import ho.pisa as pisa
+except ImportError:
+    print 'pisa import error'
+
 
 
 class OrderList(TacoMixin, ListView):
@@ -41,7 +54,7 @@ order_list = OrderList.as_view()
 
 
 @login_required
-def order_get(request, pk):
+def order_get(request, pk, pdf=False):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
     invoice = None
 
@@ -64,13 +77,34 @@ def order_get(request, pk):
 
         order.save()  # update last_read date
 
-    fields = formfields.OrderForm(order, invoice)
-    return __taco_render(request, 'taconite/order/item.xml', {
-        'error': error,
-        'fields': fields,
+    if not pdf:
+        fields = formfields.OrderForm(order, invoice)
+        return __taco_render(request, 'taconite/order/item.xml', {
+            'error': error,
+            'fields': fields,
+            'order': order,
+            'only_products': request.GET.get('only_products', None)
+        })
+
+    # get pdf
+    ret = render_to_response('invoice_template.html', {
         'order': order,
-        'only_products': request.GET.get('only_products', None)
-    })
+        'customer': order.customer,
+        'company': invoice.company,
+        'invoice': invoice,
+        'items': order.ordered_products.all(),
+        'date_now': datetime.datetime.now()
+
+    }, context_instance=RequestContext(request))
+
+    html = ret.content
+    result = StringIO.StringIO()
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
+        resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % order.pk
+        return resp
+    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
 
 
 @login_required
