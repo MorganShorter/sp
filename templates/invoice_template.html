@@ -1,0 +1,286 @@
+<html>
+    <head>
+        <style>
+            .black_border {
+                border: 2px solid #000;
+            }
+
+            .black_box {
+                display: block;
+                padding: 3px 5px;
+                background-color: #000;
+                color: #fff;
+            }
+
+            .head_table {
+                border-bottom: 5px solid #000;
+                margin-bottom: 20px;
+            }
+
+            .black_head_border {
+                border-top: 2px solid #000;
+            }
+
+            .customer_info {
+                border-spacing: 0;
+                margin-bottom: 40px;
+            }
+
+            .order_info, .products_list {
+                border: 2px solid #000;
+                border-spacing: 0;
+            }
+
+            .order_info td {
+                text-align: center;
+            }
+
+            .table_header {
+                background-color: #000;
+                color: #fff;
+
+            }
+
+            .products_list {
+                margin-top: 40px;
+            }
+
+            .total_table {
+                border-spacing: 0;
+            }
+
+            .notes_td {
+                position: relative;
+            }
+
+            .notes_td span {
+                display: block;
+                position: absolute;
+                top: 5px;
+                left: -50px;
+            }
+
+            .notes_td div {
+                width: 100%;
+                height: 100px;
+                border: 1px solid #000;
+            }
+
+            .total_td {
+                padding: 4px 20px 0 0;
+                vertical-align: top;
+                text-align: right;
+            }
+
+            .divider {
+                width: 100%;
+                height: 5px;
+                border-top: 3px dashed #000;
+                margin-top: 60px;
+            }
+        </style>
+    </head>
+    <body>
+        <table width="100%" border="0" class="head_table">
+            <tr>
+                <td width="25%">{{ company.logo_img.url }}</td>
+                <td width="25%" align="center">
+                    <h1>{{ company.name }}</h1>
+                    <h3>{{ company.legal_name }}</h3>
+                </td>
+                <td width="25%" align="center">
+                    <h1>TAX INVOCE</h1>
+                    <h3>ABN {{ company.anb }}</h3>
+                </td>
+                <td width="25%">
+                    <h2>STATEMENT / INVOICE</h2>
+                    <table width="100%">
+                        <tr>
+                            <td width="50%">INVOICE No</td>
+                            <td width="50%" class="black_border">{{ invoice.number }}</td>
+                        </tr>
+                        <tr>
+                            <td width="50%">INVOICE Date</td>
+                            <td width="50%" class="black_border">{{ invoice.timestamp|date:"j/m/o" }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{ company.address}}<br>
+                    Phone: {{ company.phone }} Fax: {{ company.fax }} PO Box: {{ company.pobox }}
+                </td>
+                <td colspan="2" align="right">
+                    All correspondence and remittances to PO Box 6027 Hawthorn West 3122<br>
+                    Please call us on (03) 9818 0533 if we can be of any help with this account,<br>
+                    or general information about our goods and services
+                </td>
+            </tr>
+        </table> <!-- end head_table -->
+
+        <table width="100%" class="customer_info">
+            <tr>
+                <td align="right" valign="top" width="150" class="black_head_border">
+                    <div class="black_box">
+                        Invoice To:
+                    </div>
+                </td>
+                <td width="30%" class="black_head_border">
+                    <strong>{{ custom.name }}</strong><br>
+                    {{ customer.address_line_1|safe }}<br>
+                    {{ customer.address_line_2|safe }}
+                </td>
+                <td></td>
+                <td align="right" valign="top" width="150" class="black_head_border">
+                    <div class="black_box">
+                        Delivered To:
+                    </div>
+                </td>
+                <td width="30%" class="black_head_border">
+                    {{ customer.delivery_attn}}<br> 
+                    {{ customer.delivery_address_line_1|safe }}<br>
+                    {{ customer.delivery_address_line_2|safe }}
+                </td>
+            </tr>
+        </table><!-- end customer_info -->
+
+        <table class="order_info" width="60%" align="center" border="1">
+            <tr class="table_header">
+                <td>Order No.</td>
+                <td>Client ID</td>
+                <td>Order Date</td>
+                <td>Required Date</td>
+                <td>Shipped Date</td>
+                <td>Shipped via</td>
+            </tr>
+            <tr>
+                <td>{{ order.pk }}</td>
+                <td>{{ order.customer.pk }}</td>
+                <td>{{ order.order_date|date }}</td>
+                <td>{{ order.wanted_by|date }}</td>
+                <td>-</td>
+                <td>SmartPractice</td>
+            </tr>
+        </table><!-- end order_info -->
+
+        <table class="products_list" width="90%" align="center" border="1">
+            <tr class="table_header">
+                <td>Item Code</td>
+                <td>Description</td>
+                <td>Size</td>
+                <td>Message</td>
+                <td>Qty Out</td>
+                <td>$ea</td>
+                <td>Total</td>
+                <td>Disc %</td>
+                <td>Disc $</td>
+                <td>Net Value</td>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.product.code }}</td>
+                <td>{{ item.product.description }}</td>
+                <td>{{ item.product.size }}</td>
+                <td>{{ item.product.message }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.unit_price }}</td>
+                <td>${{ item.price }}</td>
+                <td>{{ item.discount_percentage }}%</td>
+                <td>${{ item.discount_sum }}</td>
+                <td>${{ item.net_price }}</td>
+            </tr>
+            {% endfor %}
+        </table><!-- end products_list -->
+
+        <table width="90%" align="center" class="total_table" valign="top">
+            <tr>
+                <td width="50%" class="notes_td" align="top">
+                    <div></div>
+                    <span>Notes:</span>
+                </td>
+                <td class="total_td">
+                    <strong>Total Qty: {{ order.total_qty }}</strong>
+                </td>
+                <td width="20%">
+                    <table class="total_table" border="1" width="100%">
+                        <tr>
+                            <td width="50%">Sub total</td>
+                            <td>${{ order.summary.gross_price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Del/Hand/Ins</td>
+                            <td>${{ order.shipping_cost }}</td>
+                        </tr>
+                        <tr>
+                            <td>Sub total</td>
+                            <td>${{ order.summary.gross_price|add:order.shipping_cost }}</td>
+                        </tr>
+                        <tr>
+                            <td>GTS</td>
+                            <td>${{ order.summary.tax }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>${{ order.total_cost }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table><!-- end total_table -->
+
+        <div class="divider"></div>
+
+        <table class="footer_info" width="90%" align="center">
+            <tr>
+                <td width="30%">
+                    REMITTANCE ADVICE<br>
+                    FROM: {{ customer.address_line_1|safe }}<br>
+                    {{ customer.address_line_2|safe }}
+                </td>
+                <td>
+                    <p align="center">Returns & Exchange</p>
+                    <p align="justify">
+                        {{ company.name }} guarantee that you will be satisfied with every product you receive.
+                        If you are dissatisfied with your selection for any reason, please return the product,
+                        postage prepaid within 7 days of invoice date. Shipping and handling fees are not refundable.
+                        No disposable items, printed material, videos, or compact discs may be returned.
+                        Please allow 2 weeks processing time for returned goods.
+                    </p>
+                </td>
+                <td width="10%"></td>
+                <td width="25%">
+                    <table width="100%">
+                        <tr>
+                            <td width="50%">INVOICE No</td>
+                            <td width="50%" class="black_border">{{ invoice.number }}</td>
+                        </tr>
+                        <tr>
+                            <td width="50%">INVOICE Date</td>
+                            <td width="50%" class="black_border">{{ invoice.timestamp|date:"j/m/o" }}</td>
+                        </tr>
+                        <tr>
+                            <td width="50%">PAYMENT Due</td>
+                            <td width="50%" class="black_border">${{ order.total_cost }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table class="footer2_info" width="90%" align="center">
+            <tr>
+                <td width="10%">Printed: {{ date_now|date:"j/m/o" }}</td>
+                <td>
+                    <p align="center">
+                        Thank you for your order. Please check the package contents upon receipt to ensure complete
+                        satisfaction.  Please send your payment to {{COMPANY_POBOX}} within 7 days.
+                        EFT Payments: {{COMPANY_PAY_DETAILS}}; please fax confirmation.
+                    </p>
+                </td>
+                <td width="10%"></td>
+            </tr>
+        </table><!-- end footer_info -->
+
+
+    </body>
+</html>
