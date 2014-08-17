@@ -1,6 +1,11 @@
 <html>
     <head>
         <style>
+            @page {
+              size: a4 portrait;
+              margin: 1cm;
+            }
+
             .logo {
                 max-width: 200px;
             }
@@ -16,7 +21,7 @@
             }
 
             .head_table {
-                border-bottom: 5px solid #000;
+                border-bottom: 2px solid #000;
                 margin-bottom: 20px;
             }
 
@@ -50,6 +55,7 @@
 
             .total_table {
                 border-spacing: 0;
+                margin-top: 30px;
             }
 
             .total_sub_table {
@@ -75,7 +81,7 @@
             .notes_td div {
                 width: 100%;
                 height: 100px;
-                border: 1px solid #000;
+                border: 2px solid #000;
             }
 
             .total_td {
@@ -99,7 +105,7 @@
             }
 
             td {
-                padding-left: 2px;
+                padding: 4px 2px 0 0;
             }
         </style>
     </head>
@@ -187,7 +193,7 @@
             </tr>
         </table><!-- end order_info -->
 
-        <table class="products_list" width="90%" align="center" border="1">
+        <table class="products_list" width="95%" align="center" border="1">
             <tr class="table_header" align="center">
                 <td>Item Code</td>
                 <td>Description</td>
@@ -256,7 +262,7 @@
 
         <table class="footer_info" width="90%" align="center">
             <tr>
-                <td width="30%">
+                <td width="20%">
                     REMITTANCE ADVICE<br>
                     FROM: {{ customer.address_line_1|safe }}<br>
                     {{ customer.address_line_2|safe }}
@@ -271,8 +277,8 @@
                         Please allow 2 weeks processing time for returned goods.
                     </p>
                 </td>
-                <td width="10%"></td>
-                <td width="25%">
+                <td width="5%"></td>
+                <td width="20%">
                     <table width="100%">
                         <tr>
                             <td width="50%">INVOICE No</td>
