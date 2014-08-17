@@ -99,7 +99,7 @@ def order_get(request, pk, pdf=False):
 
     html = ret.content
     result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode('utf-8')), result)
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode('utf-8')), result, show_error_as_pdf=True, encoding='UTF-8')
     if not pdf.err:
         resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
         resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % order.pk
