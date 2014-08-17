@@ -1,5 +1,7 @@
+import os
 import json
 import datetime
+from django.conf import settings
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -97,9 +99,15 @@ def order_get(request, pk, pdf=False):
 
     }, context_instance=RequestContext(request))
 
+    #return ret
+
+    def fetch_resources(uri, rel):
+        path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+        return path
+
     html = ret.content
     result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode('utf-8')), result, show_error_as_pdf=True, encoding='UTF-8')
+    pdf = pisa.pisaDocument(StringIO.StringIO(html), result, show_error_as_pdf=True, encoding='UTF-8', link_callback=fetch_resources)
     if not pdf.err:
         resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
         resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % order.pk

@@ -1,6 +1,9 @@
 <html>
     <head>
         <style>
+            .logo {
+                max-width: 200px;
+            }
             .black_border {
                 border: 2px solid #000;
             }
@@ -87,6 +90,17 @@
                 border-top: 3px dashed #000;
                 margin-top: 60px;
             }
+
+            .return_ex, .thank_text {
+                font-size: 9px;
+            }
+            .address_div {
+                font-size: 10px;
+            }
+
+            td {
+                padding-left: 2px;
+            }
         </style>
     </head>
     <body>
@@ -115,7 +129,7 @@
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr class="address_div">
                 <td colspan="2">
                     {{ company.address}}<br>
                     Phone: {{ company.phone }} Fax: {{ company.fax }} PO Box: {{ company.pobox }}
@@ -174,7 +188,7 @@
         </table><!-- end order_info -->
 
         <table class="products_list" width="90%" align="center" border="1">
-            <tr class="table_header">
+            <tr class="table_header" align="center">
                 <td>Item Code</td>
                 <td>Description</td>
                 <td>Size</td>
@@ -247,9 +261,9 @@
                     FROM: {{ customer.address_line_1|safe }}<br>
                     {{ customer.address_line_2|safe }}
                 </td>
-                <td>
+                <td class="return_ex">
                     <p align="center">Returns & Exchange</p>
-                    <p align="justify">
+                    <p align="center">
                         {{ company.name }} guarantee that you will be satisfied with every product you receive.
                         If you are dissatisfied with your selection for any reason, please return the product,
                         postage prepaid within 7 days of invoice date. Shipping and handling fees are not refundable.
@@ -279,7 +293,7 @@
         <table class="footer2_info" width="90%" align="center">
             <tr>
                 <td width="10%">Printed: {{ date_now|date:"j/m/o" }}</td>
-                <td>
+                <td class="thank_text">
                     <p align="center">
                         Thank you for your order. Please check the package contents upon receipt to ensure complete
                         satisfaction.  Please send your payment to {{ company.pobox }} within 7 days.
