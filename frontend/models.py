@@ -233,6 +233,8 @@ class Product(models.Model):
     def default_price(self):
         if self.price_levels.exists():
             return self.price_levels.order_by('-cost_per_item')[0].cost_per_item
+        if not self.sp_cost:
+            return 0
         return self.sp_cost * (1 + Decimal(self.royalty)/100)
 
     @property
