@@ -411,6 +411,7 @@ class Order(models.Model):
             'net_cost': Decimal(0),
             'net_price': Decimal(0),
             'net_profit': Decimal(0),
+            'qty': 0
         }
 
         for order_product in self.ordered_products.all():
@@ -425,6 +426,7 @@ class Order(models.Model):
             data['net_cost'] += order_product.net_cost
             data['net_price'] += order_product.net_price
             data['net_profit'] += order_product.net_profit
+            data['qty'] += order_product.quantity
 
         return data
 
@@ -648,6 +650,8 @@ class Company(models.Model):
     logo_width = models.PositiveSmallIntegerField(null=True)
     pobox = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
+    payments = models.CharField(max_length=255, null=True, blank=True)
+    abn = models.CharField(max_length=255, null=True, blank=True)
     default_invoice = models.ForeignKey('Document', null=True, blank=True, related_name='default_invoices')
     default_packing_slip = models.ForeignKey('Document', null=True, blank=True, related_name='default_packing_slip')
 

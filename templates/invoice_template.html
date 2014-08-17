@@ -49,6 +49,15 @@
                 border-spacing: 0;
             }
 
+            .total_sub_table {
+                border-spacing: 0;
+                border: 1px solid #000;
+            }
+
+            .total_sub_table td {
+                border: 1px solid #000;
+            }
+
             .notes_td {
                 position: relative;
             }
@@ -83,14 +92,14 @@
     <body>
         <table width="100%" border="0" class="head_table">
             <tr>
-                <td width="25%">{{ company.logo_img.url }}</td>
+                <td width="25%"><img class='logo' src='{{ company.logo_img.url }}'></td>
                 <td width="25%" align="center">
                     <h1>{{ company.name }}</h1>
                     <h3>{{ company.legal_name }}</h3>
                 </td>
                 <td width="25%" align="center">
                     <h1>TAX INVOCE</h1>
-                    <h3>ABN {{ company.anb }}</h3>
+                    <h3>ABN {{ company.abn }}</h3>
                 </td>
                 <td width="25%">
                     <h2>STATEMENT / INVOICE</h2>
@@ -127,7 +136,7 @@
                     </div>
                 </td>
                 <td width="30%" class="black_head_border">
-                    <strong>{{ custom.name }}</strong><br>
+                    <strong>{{ customer.name }}</strong><br>
                     {{ customer.address_line_1|safe }}<br>
                     {{ customer.address_line_2|safe }}
                 </td>
@@ -157,8 +166,8 @@
             <tr>
                 <td>{{ order.pk }}</td>
                 <td>{{ order.customer.pk }}</td>
-                <td>{{ order.order_date|date }}</td>
-                <td>{{ order.wanted_by|date }}</td>
+                <td>{{ order.order_date|date:"j/m/o" }}</td>
+                <td>{{ order.wanted_by|date:"j/m/o" }}</td>
                 <td>-</td>
                 <td>SmartPractice</td>
             </tr>
@@ -184,11 +193,11 @@
                 <td>{{ item.product.size }}</td>
                 <td>{{ item.product.message }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>${{ item.unit_price }}</td>
-                <td>${{ item.price }}</td>
-                <td>{{ item.discount_percentage }}%</td>
-                <td>${{ item.discount_sum }}</td>
-                <td>${{ item.net_price }}</td>
+                <td>${{ item.unit_price|floatformat:2 }}</td>
+                <td>${{ item.price|floatformat:2 }}</td>
+                <td>{{ item.discount_percentage|floatformat }}%</td>
+                <td>${{ item.discount_sum|floatformat:2 }}</td>
+                <td>${{ item.gross_price|floatformat:2 }}</td>
             </tr>
             {% endfor %}
         </table><!-- end products_list -->
@@ -200,17 +209,17 @@
                     <span>Notes:</span>
                 </td>
                 <td class="total_td">
-                    <strong>Total Qty: {{ order.total_qty }}</strong>
+                    <strong>Total Qty: {{ order.summary.qty }}</strong>
                 </td>
                 <td width="20%">
-                    <table class="total_table" border="1" width="100%">
+                    <table class="total_sub_table" width="100%">
                         <tr>
                             <td width="50%">Sub total</td>
-                            <td>${{ order.summary.gross_price }}</td>
+                            <td>${{ order.summary.gross_price|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>Del/Hand/Ins</td>
-                            <td>${{ order.shipping_cost }}</td>
+                            <td>${{ order.shipping_cost|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>Sub total</td>
@@ -218,11 +227,11 @@
                         </tr>
                         <tr>
                             <td>GTS</td>
-                            <td>${{ order.summary.tax }}</td>
+                            <td>${{ order.summary.tax|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td>${{ order.total_cost }}</td>
+                            <td>${{ order.total_price|floatformat:2 }}</td>
                         </tr>
                     </table>
                 </td>
@@ -261,7 +270,7 @@
                         </tr>
                         <tr>
                             <td width="50%">PAYMENT Due</td>
-                            <td width="50%" class="black_border">${{ order.total_cost }}</td>
+                            <td width="50%" class="black_border">${{ order.total_cost|floatformat:2 }}</td>
                         </tr>
                     </table>
                 </td>
@@ -273,8 +282,8 @@
                 <td>
                     <p align="center">
                         Thank you for your order. Please check the package contents upon receipt to ensure complete
-                        satisfaction.  Please send your payment to {{COMPANY_POBOX}} within 7 days.
-                        EFT Payments: {{COMPANY_PAY_DETAILS}}; please fax confirmation.
+                        satisfaction.  Please send your payment to {{ company.pobox }} within 7 days.
+                        EFT Payments: {{ company.payments }}; please fax confirmation.
                     </p>
                 </td>
                 <td width="10%"></td>
