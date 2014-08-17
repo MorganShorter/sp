@@ -75,14 +75,7 @@
                 position: relative;
             }
 
-            .notes_td span {
-                display: block;
-                position: absolute;
-                top: 5px;
-                left: -50px;
-            }
-
-            .notes_td div {
+            div.notes {
                 width: 100%;
                 height: 100px;
                 border: 2px solid #000;
@@ -202,14 +195,14 @@
             <tr class="table_header">
                 <td align="center">Item Code</td>
                 <td align="center">Description</td>
-                <td align="center" width="20">Size</td>
+                <td align="center">Size</td>
                 <td align="center">Message</td>
-                <td align="center" width="20">Qty Out</td>
-                <td align="center" width="20">$ea</td>
-                <td align="center" width="20">Total</td>
-                <td align="center" width="20">Disc %</td>
-                <td align="center" width="20">Disc $</td>
-                <td align="center" width="20">Net Value</td>
+                <td align="center" width="30">Qty Out</td>
+                <td align="center" width="30">$ea</td>
+                <td align="center" width="30">Total</td>
+                <td align="center" width="30">Disc %</td>
+                <td align="center" width="30">Disc $</td>
+                <td align="center" width="30">Net Value</td>
             </tr>
             {% for item in items %}
             <tr>
@@ -230,8 +223,8 @@
         <table width="90%" align="center" class="total_table" valign="top">
             <tr>
                 <td width="40%" class="notes_td" align="top">
-                    <div></div>
                     <span>Notes:</span>
+                    <div class="notes">&nbsp;</div>
                 </td>
                 <td class="total_td">
                     <strong>Total Qty: {{ order.summary.qty }}</strong>
