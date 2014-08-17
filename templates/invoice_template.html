@@ -34,6 +34,10 @@
                 margin-bottom: 40px;
             }
 
+            .customer_info td {
+                padding: 0;
+            }
+
             .order_info, .products_list {
                 border: 2px solid #000;
                 border-spacing: 0;
@@ -105,7 +109,7 @@
             }
 
             td {
-                padding: 4px 2px 0 0;
+                padding: 4px 0 0 4px;
             }
         </style>
     </head>
@@ -133,6 +137,7 @@
                             <td width="50%" class="black_border">{{ invoice.timestamp|date:"j/m/o" }}</td>
                         </tr>
                     </table>
+                    <br><br>
                 </td>
             </tr>
             <tr class="address_div">
@@ -194,17 +199,17 @@
         </table><!-- end order_info -->
 
         <table class="products_list" width="95%" align="center" border="1">
-            <tr class="table_header" align="center">
-                <td>Item Code</td>
-                <td>Description</td>
-                <td>Size</td>
-                <td>Message</td>
-                <td>Qty Out</td>
-                <td>$ea</td>
-                <td>Total</td>
-                <td>Disc %</td>
-                <td>Disc $</td>
-                <td>Net Value</td>
+            <tr class="table_header">
+                <td align="center">Item Code</td>
+                <td align="center">Description</td>
+                <td align="center" width="20">Size</td>
+                <td align="center">Message</td>
+                <td align="center" width="20">Qty Out</td>
+                <td align="center" width="20">$ea</td>
+                <td align="center" width="20">Total</td>
+                <td align="center" width="20">Disc %</td>
+                <td align="center" width="20">Disc $</td>
+                <td align="center" width="20">Net Value</td>
             </tr>
             {% for item in items %}
             <tr>
@@ -224,14 +229,14 @@
 
         <table width="90%" align="center" class="total_table" valign="top">
             <tr>
-                <td width="50%" class="notes_td" align="top">
+                <td width="40%" class="notes_td" align="top">
                     <div></div>
                     <span>Notes:</span>
                 </td>
                 <td class="total_td">
                     <strong>Total Qty: {{ order.summary.qty }}</strong>
                 </td>
-                <td width="20%">
+                <td width="40%">
                     <table class="total_sub_table" width="100%">
                         <tr>
                             <td width="50%">Sub total</td>
@@ -278,7 +283,7 @@
                     </p>
                 </td>
                 <td width="5%"></td>
-                <td width="20%">
+                <td width="35%">
                     <table width="100%">
                         <tr>
                             <td width="50%">INVOICE No</td>
