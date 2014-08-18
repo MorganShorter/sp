@@ -8,6 +8,7 @@ from django.template import RequestContext, Template
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.core import serializers
+from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
 from ..utils import __preprocess_get_request, __taco_render, json_response
 from .. import formfields
@@ -55,7 +56,7 @@ order_list = OrderList.as_view()
 
 
 @login_required
-def order_get(request, pk, pdf=False):
+def order_get(request, pk, pdf=False, send_mail=False):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
     invoice = None
 
@@ -115,11 +116,40 @@ def order_get(request, pk, pdf=False):
                             link_callback=fetch_resources)
 
     if not pdf.err:
-        resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
-        resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % order.pk
-        resp['Cache-Control'] = "no-cache, no-store, must-revalidate"
-        return resp
-    return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
+        if not send_mail:
+            resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
+            resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % invoice.number
+            resp['Cache-Control'] = "no-cache, no-store, must-revalidate"
+            return resp
+
+        # send invoice to client!
+        if not invoice.company.from_mail:
+            return json_response({
+                'status': 'error',
+                'msg': 'Company`s back-mail is not specified.'
+            })
+        if not order.customer.email:
+            return json_response({
+                'status': 'error',
+                'msg': 'Client`s email is not specified.'
+            })
+
+        email = EmailMessage(
+            'Order Invoice #%s' % invoice.number,
+            'Body goes here',
+            invoice.company.from_mail,
+            [order.customer.email]
+        )
+        email.attach('invoice_%s.pdf' % invoice.number, result.getvalue(), 'application/pdf')
+        email.send()
+        return json_response({
+            'status': 'ok',
+        })
+
+    return json_response({
+        'status': 'error',
+        'msg': 'Broken PDF'
+    })
 
 
 @login_required

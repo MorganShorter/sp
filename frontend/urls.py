@@ -21,6 +21,7 @@ urlpatterns += patterns('frontend.views.order',
     url(ur'^order/list/', 'order_list', name='order_list'),
     url(ur'^order/get/(?P<pk>\d*)/', 'order_get'),
     url(ur'^order/get_pdf/(?P<pk>\d*)/', 'order_get', {'pdf': True}),
+    url(ur'^order/send_pdf/(?P<pk>\d*)/', 'order_get', {'pdf': True, 'send_mail': True}),
     url(ur'^order/create/(?P<customer_pk>\d*)/', 'order_create'),
     url(ur'^order/delete/(?P<pk>\d*)/', 'order_delete'),
 

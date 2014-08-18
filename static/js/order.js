@@ -270,7 +270,19 @@ $(function () {
         var order_id = $('#frm_order .order_id').val();
         document.location = '/order/get_pdf/' + order_id + '/';
         return false;
-    })
+    });
+
+    $('.send_invoice').live('click', function(){
+        var order_id = $('#frm_order .order_id').val();
+        $.get('/order/get_pdf/' + order_id + '/', function(data){
+            if (data['status'] == 'error'){
+                alert(data['msg']);
+            } else {
+                alert('An invoice sent')
+            }
+        });
+        return false;
+    });
 
 });
 

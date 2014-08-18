@@ -643,17 +643,18 @@ class Company(models.Model):
     """ The various companies SmartPractice trade as; 'CAA' 'SP' etc
     """
     name = models.CharField(max_length=255)
-    legal_name = models.CharField(max_length=255, null=True, blank=True)
+    legal_name = models.CharField(max_length=255, null=True)
     phone = models.CharField(max_length=25)
     fax = models.CharField(max_length=25)
     registration = models.CharField(max_length=100)
     logo_img = models.ImageField(upload_to='company_logos', max_length=255, height_field='logo_height', width_field='logo_width', null=True)
     logo_height = models.PositiveSmallIntegerField(null=True)
     logo_width = models.PositiveSmallIntegerField(null=True)
-    pobox = models.CharField(max_length=255, null=True, blank=True)
-    address = models.CharField(max_length=255, null=True, blank=True)
-    payments = models.CharField(max_length=255, null=True, blank=True)
-    abn = models.CharField(max_length=255, null=True, blank=True)
+    pobox = models.CharField(max_length=255, null=True)
+    address = models.CharField(max_length=255, null=True)
+    payments = models.CharField(max_length=255, null=True)
+    abn = models.CharField(max_length=255, null=True)
+    from_mail = models.EmailField(null=True)
     default_invoice = models.ForeignKey('Document', null=True, blank=True, related_name='default_invoices')
     default_packing_slip = models.ForeignKey('Document', null=True, blank=True, related_name='default_packing_slip')
 
@@ -716,7 +717,6 @@ class StockAdjust(models.Model):
         if created:
             self.product.current_stock += self.added_amount
             self.product.save()
-
 
     class Meta:
         ordering = ('-timestamp', )
