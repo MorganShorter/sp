@@ -158,11 +158,11 @@
                     <table width="100%">
                         <tr>
                             <td width="50%">INVOICE No</td>
-                            <td width="50%" class="black_border">{{ invoice.number }}</td>
+                            <td width="50%" class="black_border" align="right">{{ invoice.number }}</td>
                         </tr>
                         <tr>
                             <td width="50%">INVOICE Date</td>
-                            <td width="50%" class="black_border">{{ invoice.timestamp|date:"j/m/o" }}</td>
+                            <td width="50%" class="black_border" align="right">{{ invoice.timestamp|date:"j/m/o" }}</td>
                         </tr>
                     </table>
                     <br>
@@ -267,23 +267,23 @@
                     <table class="total_sub_table" width="100%">
                         <tr>
                             <td width="50%">Sub total</td>
-                            <td>${{ order.summary.gross_price|floatformat:2 }}</td>
+                            <td align="right">${{ order.summary.gross_price|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>Del/Hand/Ins</td>
-                            <td>${{ order.shipping_cost|floatformat:2 }}</td>
+                            <td align="right">${{ order.shipping_cost|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>Sub total</td>
-                            <td>${{ order.summary.gross_price_with_shipping|floatformat:2 }}</td>
+                            <td align="right">${{ order.summary.gross_price_with_shipping|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>GTS</td>
-                            <td>${{ order.summary.tax|floatformat:2 }}</td>
+                            <td align="right">${{ order.summary.tax|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td>${{ order.total_price|floatformat:2 }}</td>
+                            <td align="right">${{ order.total_price|floatformat:2 }}</td>
                         </tr>
                     </table>
                 </td>
@@ -313,15 +313,15 @@
                     <table width="100%">
                         <tr>
                             <td width="50%">INVOICE No</td>
-                            <td width="50%" class="black_border">{{ invoice.number }}</td>
+                            <td width="50%" class="black_border" align="right">{{ invoice.number }}</td>
                         </tr>
                         <tr>
                             <td width="50%">INVOICE Date</td>
-                            <td width="50%" class="black_border">{{ invoice.timestamp|date:"j/m/o" }}</td>
+                            <td width="50%" class="black_border" align="right">{{ invoice.timestamp|date:"j/m/o" }}</td>
                         </tr>
                         <tr>
                             <td width="50%">PAYMENT Due</td>
-                            <td width="50%" class="black_border">${{ order.total_cost|floatformat:2 }}</td>
+                            <td width="50%" class="black_border" align="right">${{ order.total_cost|floatformat:2 }}</td>
                         </tr>
                     </table>
                 </td>
