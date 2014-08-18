@@ -141,6 +141,7 @@ def order_get(request, pk, pdf=False, send_mail=False):
             invoice.company.from_mail,
             [order.customer.email]
         )
+        email.content_subtype = "html"
         email.attach('invoice_%s.pdf' % invoice.number, result.getvalue(), 'application/pdf')
         email.send()
         return json_response({
