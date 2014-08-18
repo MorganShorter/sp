@@ -1,9 +1,27 @@
 <html>
     <head>
         <style>
-            @page {
-              size: a4 portrait;
-              margin: 1cm;
+
+            *, html {
+                font-size: 7pt;
+            }
+            h1, h2, h3, h4 {
+                margin: 0 0 4px 0;
+                -pdf-outline: true;
+                -pdf-level: 0;
+                -pdf-open: false;
+            }
+            h1 {
+                font-size: 18pt;
+            }
+            h2 {
+                font-size: 15pt;
+            }
+            h3 {
+                font-size: 12pt;
+            }
+            h4 {
+                font-size: 9pt;
             }
 
             .logo {
@@ -15,14 +33,15 @@
 
             .black_box {
                 display: block;
-                padding: 3px 5px;
+                padding: 2px 3px;
                 background-color: #000;
                 color: #fff;
+                width: 100%;
             }
 
             .head_table {
                 border-bottom: 2px solid #000;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
             }
 
             .black_head_border {
@@ -31,11 +50,16 @@
 
             .customer_info {
                 border-spacing: 0;
-                margin-bottom: 40px;
+                margin-bottom: 20px;
             }
 
             .customer_info td {
                 padding: 0;
+            }
+
+            .customer_info td.padding_top_left {
+                display: block;
+                padding: 2px 0 0 5px;
             }
 
             .order_info, .products_list {
@@ -50,16 +74,24 @@
             .table_header {
                 background-color: #000;
                 color: #fff;
+                border-right-color: #fff;
+                border-left-color: #fff;
+            }
 
+            .table_header td:last-child {
+                border-right-color: #000;
+            }
+            .table_header td:first-child {
+                border-left-color: #000;
             }
 
             .products_list {
-                margin-top: 40px;
+                margin-top: 20px;
             }
 
             .total_table {
                 border-spacing: 0;
-                margin-top: 30px;
+                margin-top: 10px;
             }
 
             .total_sub_table {
@@ -71,11 +103,8 @@
                 border: 1px solid #000;
             }
 
-            .notes_td {
-                position: relative;
-            }
-
-            div.notes {
+            .notes {
+                display: block;
                 width: 100%;
                 height: 100px;
                 border: 2px solid #000;
@@ -89,37 +118,43 @@
 
             .divider {
                 width: 100%;
-                height: 5px;
-                border-top: 3px dashed #000;
-                margin-top: 60px;
+                height: 10px;
+                border-top: 2px dashed #000;
+                margin-top: 30px;
             }
 
             .return_ex, .thank_text {
-                font-size: 9px;
+                font-size: xx-small;
             }
             .address_div {
                 font-size: 10px;
             }
 
             td {
-                padding: 4px 0 0 4px;
+                padding: 2px 0 0 2px;
+            }
+
+            small {
+                margin: 0;
+                padding: 0;
+                line-height: 0.5;
             }
         </style>
     </head>
     <body>
         <table width="100%" border="0" class="head_table">
             <tr>
-                <td width="25%"><img class='logo' src='{{ company.logo_img.url }}'></td>
-                <td width="25%" align="center">
-                    <h1>{{ company.name }}</h1>
+                <td width="25%" valign="top"><img class='logo' src='{{ company.logo_img.url }}'></td>
+                <td width="25%" align="center" valign="top">
+                    <h2>{{ company.name }}</h2>
                     <h3>{{ company.legal_name }}</h3>
                 </td>
-                <td width="25%" align="center">
-                    <h1>TAX INVOCE</h1>
+                <td width="25%" align="center" valign="top">
+                    <h1>TAX INVOICE</h1>
                     <h3>ABN {{ company.abn }}</h3>
                 </td>
-                <td width="25%">
-                    <h2>STATEMENT / INVOICE</h2>
+                <td width="25%" valign="top">
+                    <h4>STATEMENT / INVOICE</h4>
                     <table width="100%">
                         <tr>
                             <td width="50%">INVOICE No</td>
@@ -130,41 +165,41 @@
                             <td width="50%" class="black_border">{{ invoice.timestamp|date:"j/m/o" }}</td>
                         </tr>
                     </table>
-                    <br><br>
+                    <br>
                 </td>
             </tr>
             <tr class="address_div">
                 <td colspan="2">
-                    {{ company.address}}<br>
-                    Phone: {{ company.phone }} Fax: {{ company.fax }} PO Box: {{ company.pobox }}
+                    <small>{{ company.address}}<br>
+                    Phone: {{ company.phone }} Fax: {{ company.fax }} PO Box: {{ company.pobox }}</small>
                 </td>
                 <td colspan="2" align="right">
-                    All correspondence and remittances to PO Box 6027 Hawthorn West 3122<br>
+                    <i><small>All correspondence and remittances to PO Box 6027 Hawthorn West 3122<br>
                     Please call us on (03) 9818 0533 if we can be of any help with this account,<br>
-                    or general information about our goods and services
+                    or general information about our goods and services</small></i>
                 </td>
             </tr>
         </table> <!-- end head_table -->
 
         <table width="100%" class="customer_info">
             <tr>
-                <td align="right" valign="top" width="150" class="black_head_border">
+                <td align="right" valign="top" width="13%" class="black_head_border">
                     <div class="black_box">
                         Invoice To:
                     </div>
                 </td>
-                <td width="30%" class="black_head_border">
+                <td width="30%" class="black_head_border padding_top_left">
                     <strong>{{ customer.name }}</strong><br>
                     {{ customer.address_line_1|safe }}<br>
                     {{ customer.address_line_2|safe }}
                 </td>
                 <td></td>
-                <td align="right" valign="top" width="150" class="black_head_border">
+                <td align="right" valign="top" width="13%" class="black_head_border">
                     <div class="black_box">
                         Delivered To:
                     </div>
                 </td>
-                <td width="30%" class="black_head_border">
+                <td width="30%" class="black_head_border padding_top_left">
                     {{ customer.delivery_attn}}<br> 
                     {{ customer.delivery_address_line_1|safe }}<br>
                     {{ customer.delivery_address_line_2|safe }}
@@ -172,7 +207,7 @@
             </tr>
         </table><!-- end customer_info -->
 
-        <table class="order_info" width="60%" align="center" border="1">
+        <table class="order_info" width="60%" align="center">
             <tr class="table_header">
                 <td>Order No.</td>
                 <td>Client ID</td>
@@ -191,7 +226,7 @@
             </tr>
         </table><!-- end order_info -->
 
-        <table class="products_list" width="95%" align="center" border="1">
+        <table class="products_list" width="100%" align="center" border="1">
             <tr class="table_header">
                 <td align="center">Item Code</td>
                 <td align="center">Description</td>
@@ -220,16 +255,15 @@
             {% endfor %}
         </table><!-- end products_list -->
 
-        <table width="90%" align="center" class="total_table" valign="top">
+        <table width="100%" align="center" class="total_table" valign="top">
             <tr>
-                <td width="40%" class="notes_td" align="top">
-                    <span>Notes:</span>
-                    <div class="notes">&nbsp;</div>
+                <td width="40%" class="notes_td" valign="top">
+                    <div class="notes">Notes:<br><br><br><br></div>
                 </td>
-                <td class="total_td">
+                <td class="total_td" valign="top">
                     <strong>Total Qty: {{ order.summary.qty }}</strong>
                 </td>
-                <td width="40%">
+                <td width="30%" valign="top">
                     <table class="total_sub_table" width="100%">
                         <tr>
                             <td width="50%">Sub total</td>
@@ -256,27 +290,26 @@
             </tr>
         </table><!-- end total_table -->
 
-        <div class="divider"></div>
+        <div class="divider">&nbsp;</div>
 
-        <table class="footer_info" width="90%" align="center">
+        <table class="footer_info" width="100%" align="center">
             <tr>
-                <td width="20%">
+                <td width="20%" valign="top">
                     REMITTANCE ADVICE<br>
                     FROM: {{ customer.address_line_1|safe }}<br>
                     {{ customer.address_line_2|safe }}
                 </td>
-                <td class="return_ex">
-                    <p align="center">Returns & Exchange</p>
+                <td class="return_ex" valign="top">
+                    <p align="center"><strong>Returns & Exchange</strong></p>
                     <p align="center">
-                        {{ company.name }} guarantee that you will be satisfied with every product you receive.
+                        <small>{{ company.name }} guarantee that you will be satisfied with every product you receive.
                         If you are dissatisfied with your selection for any reason, please return the product,
                         postage prepaid within 7 days of invoice date. Shipping and handling fees are not refundable.
                         No disposable items, printed material, videos, or compact discs may be returned.
-                        Please allow 2 weeks processing time for returned goods.
+                        Please allow 2 weeks processing time for returned goods.</small>
                     </p>
                 </td>
-                <td width="5%"></td>
-                <td width="35%">
+                <td width="25%" valign="top">
                     <table width="100%">
                         <tr>
                             <td width="50%">INVOICE No</td>
@@ -294,20 +327,19 @@
                 </td>
             </tr>
         </table>
-        <table class="footer2_info" width="90%" align="center">
+        <table class="footer2_info" width="100%" align="center">
             <tr>
                 <td width="10%">Printed: {{ date_now|date:"j/m/o" }}</td>
                 <td class="thank_text">
                     <p align="center">
-                        Thank you for your order. Please check the package contents upon receipt to ensure complete
+                        <small>Thank you for your order. Please check the package contents upon receipt to ensure complete
                         satisfaction.  Please send your payment to {{ company.pobox }} within 7 days.
-                        EFT Payments: {{ company.payments }}; please fax confirmation.
+                        EFT Payments: {{ company.payments }}; please fax confirmation.</small>
                     </p>
                 </td>
                 <td width="10%"></td>
             </tr>
         </table><!-- end footer_info -->
-
 
     </body>
 </html>
