@@ -117,6 +117,7 @@ def order_get(request, pk, pdf=False):
     if not pdf.err:
         resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
         resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % order.pk
+        resp['Cache-Control'] = "no-cache, no-store, must-revalidate"
         return resp
     return HttpResponse('We had some errors<pre>%s</pre>' % escape(html))
 
