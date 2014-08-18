@@ -1,6 +1,6 @@
-<p>Hi {{ CUSTOMER_NAME }},</p>
-<p>Here's invoice {{ INV_NUM }} for {{ TOTAL_PRICE }}</p>
-<p>The amount outstanding of {{ TOTAL_PRICE }} is due on {{ DUE_DATE }}</p>
+<p>Hi {{ customer.name }},</p>
+<p>Here's invoice {{ invoice.number }} for ${{ order.total_price|floatformat:2 }}</p>
+<p>The amount outstanding of ${{ order.total_price|floatformat:2 }} is due on {{ order.order_date|date:"j/m/o" }}</p>
 <p>From your online bill you can print a PDF.</p>
 <p>If you have any questions, please let us know.</p>
-<p>Thanks,<br />{{ COMPANY_NAME }}</p>
+<p>Thanks,<br />{{ company.name }}</p>

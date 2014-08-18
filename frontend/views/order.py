@@ -5,6 +5,7 @@ from django.conf import settings
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext, Template
+from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.core import serializers
@@ -16,7 +17,6 @@ from ..models import Order, Invoice, Company, Customer, OrderStatus, Product, Or
 from ..mixins import TacoMixin
 
 import cStringIO as StringIO
-from cgi import escape
 try:
     import ho.pisa as pisa
 except ImportError:
@@ -89,7 +89,7 @@ def order_get(request, pk, pdf=False, send_mail=False):
         })
 
     # get pdf
-    c = RequestContext(request, {
+    content_dict = {
         'order': order,
         'customer': order.customer,
         'company': invoice.company,
@@ -97,7 +97,8 @@ def order_get(request, pk, pdf=False, send_mail=False):
         'items': order.ordered_products.all(),
         'date_now': datetime.datetime.now()
 
-    })
+    }
+    c = RequestContext(request, content_dict)
 
     if invoice.company.default_invoice:
         with open(invoice.company.default_invoice.file.path, 'r') as f:
@@ -136,7 +137,7 @@ def order_get(request, pk, pdf=False, send_mail=False):
 
         email = EmailMessage(
             'Order Invoice #%s' % invoice.number,
-            'Body goes here',
+            render_to_string('email/invoice.html', content_dict),
             invoice.company.from_mail,
             [order.customer.email]
         )
