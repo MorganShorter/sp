@@ -4,7 +4,7 @@ import datetime
 from django.conf import settings
 
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, Template
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.core import serializers
@@ -20,7 +20,6 @@ try:
     import ho.pisa as pisa
 except ImportError:
     print 'pisa import error'
-
 
 
 class OrderList(TacoMixin, ListView):
@@ -89,7 +88,7 @@ def order_get(request, pk, pdf=False):
         })
 
     # get pdf
-    ret = render_to_response('invoice_template.html', {
+    c = RequestContext(request, {
         'order': order,
         'customer': order.customer,
         'company': invoice.company,
@@ -97,9 +96,16 @@ def order_get(request, pk, pdf=False):
         'items': order.ordered_products.all(),
         'date_now': datetime.datetime.now()
 
-    }, context_instance=RequestContext(request))
+    })
 
-    #return ret
+    if invoice.company.default_invoice:
+        with open(invoice.company.default_invoice.file.path, 'r') as f:
+            t = Template(f.read())
+        ret = HttpResponse(t.render(c))
+    else:
+        ret = render_to_response('invoice_template.html', {}, context_instance=c)
+
+    return ret
 
     def fetch_resources(uri, rel):
         path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
@@ -107,7 +113,9 @@ def order_get(request, pk, pdf=False):
 
     html = ret.content
     result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html), result, show_error_as_pdf=True, encoding='UTF-8', link_callback=fetch_resources)
+    pdf = pisa.pisaDocument(StringIO.StringIO(html), result, show_error_as_pdf=True, encoding='UTF-8',
+                            link_callback=fetch_resources)
+
     if not pdf.err:
         resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
         resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % order.pk
