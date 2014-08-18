@@ -274,7 +274,7 @@ $(function () {
 
     $('.send_invoice').live('click', function(){
         var order_id = $('#frm_order .order_id').val();
-        $.get('/order/get_pdf/' + order_id + '/', function(data){
+        $.get('/order/send_pdf/' + order_id + '/', function(data){
             if (data['status'] == 'error'){
                 alert(data['msg']);
             } else {

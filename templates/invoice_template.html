@@ -119,7 +119,7 @@
             .divider {
                 width: 100%;
                 height: 10px;
-                border-top: 2px dashed #000;
+                border-top: 3px dashed #000;
                 margin-top: 30px;
             }
 
@@ -275,7 +275,7 @@
                         </tr>
                         <tr>
                             <td>Sub total</td>
-                            <td>${{ order.summary.gross_price|add:order.shipping_cost }}</td>
+                            <td>${{ order.summary.gross_price_with_shipping|floatformat:2 }}</td>
                         </tr>
                         <tr>
                             <td>GTS</td>

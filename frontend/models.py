@@ -430,6 +430,8 @@ class Order(models.Model):
             data['net_profit'] += order_product.net_profit
             data['qty'] += order_product.quantity
 
+        data['gross_price_with_shipping'] = data['gross_price'] + self.shipping_cost
+
         return data
 
     def total_recount(self, save=False):
