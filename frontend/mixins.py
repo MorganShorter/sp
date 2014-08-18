@@ -11,6 +11,14 @@ except ImportError:
     print 'pisa import error'
 
 
+class MyobMixin(object):
+    content_type = 'text/csv'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(MyobMixin, self).dispatch(request, *args, **kwargs)
+
+
 class TacoMixin(object):
     content_type = 'application/xml'
 

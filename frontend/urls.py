@@ -121,3 +121,9 @@ urlpatterns += patterns('frontend.views.bo',
     url(ur'^bo/update/', 'obj_update'),
     url(ur'^bo/list/', 'obj_list', name='bo_list'),
 )
+
+# MYOB Export
+urlpatterns += patterns('frontend.views.myob',
+    url(ur'^myob_export/service_sale/', 'service_sale_list'),
+    url(ur'^myob_export/customer/', 'customer_list'),
+)
