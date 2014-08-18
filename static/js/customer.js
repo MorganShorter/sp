@@ -143,7 +143,15 @@ $(function () {
 
     $("#find_customer_search").live('click', function(){
         var queryString = $('#frm_find_customer').formSerialize();
-        $.get(__url_customer_list + '?' + queryString);
+        var $loader = loader_on('#customer_find');
+        $.get(__url_customer_list + '?' + queryString)
+            .done(function(){
+                $loader.remove();
+            })
+            .fail(function(){
+                $loader.remove();
+                alert('Error! Please try again.');
+            });
     });
 
     // Add customer

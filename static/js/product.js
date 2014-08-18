@@ -75,11 +75,19 @@ $(function () {
 
     $("#find_product_search").live('click', function(){
         var queryString = $('#frm_find_product').formSerialize();
+        var $loader = loader_on('#product_find');
         $.get(__url_product_list + '?' + queryString, function(data){
             if ($("#order_content").dialog('isOpen')){
                 $('.add_product_to_order').css('display', 'block');
             }
-        });
+        })
+            .done(function(){
+                $loader.remove();
+            })
+            .fail(function(){
+                $loader.remove();
+                alert('Error! Please try again.');
+            });
     });
 
     $("#find_product_erase").live('click', function(){

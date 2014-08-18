@@ -73,7 +73,15 @@ $(function () {
     // Search/Find Order
     $("#find_order_search").live('click', function(){
         var queryString = $('#frm_find_order').formSerialize();
-        $.get(__url_order_list + '?' + queryString);
+        var $loader = loader_on('#order_find');
+        $.get(__url_order_list + '?' + queryString)
+            .done(function(){
+                $loader.remove();
+            })
+            .fail(function(){
+                $loader.remove();
+                alert('Error! Please try again.');
+            });
     });
 
     // Open order detail
@@ -278,7 +286,7 @@ $(function () {
             if (data['status'] == 'error'){
                 alert(data['msg']);
             } else {
-                alert('An invoice sent')
+                alert('An invoice has been just sent')
             }
         });
         return false;
