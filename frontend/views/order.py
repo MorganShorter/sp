@@ -105,8 +105,6 @@ def order_get(request, pk, pdf=False):
     else:
         ret = render_to_response('invoice_template.html', {}, context_instance=c)
 
-    return ret
-
     def fetch_resources(uri, rel):
         path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
         return path
