@@ -57,7 +57,6 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'raven.contrib.django.raven_compat',
     'registration',
-    'webodt',
     'compressor',
     'south',
     'mathfilters',
