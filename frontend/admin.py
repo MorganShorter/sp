@@ -22,6 +22,7 @@ admin.site.register(ImportNote)
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name', 'customer_type', 'telephone', 'email')
+    search_fields = ('name', 'from_src_company_id')
 
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(CustomerContact)
@@ -60,6 +61,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('order_date', 'pk', 'customer', 'total_cost', 'last_read')
     raw_id_fields = ('customer',)
     filter_horizontal = ('notes', 'products')
+    search_fields = ('from_src_order_id', 'id', 'customer__name')
     inlines = [
         OrderProductInline, InvoiceInline
     ]

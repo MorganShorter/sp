@@ -1,0 +1,3 @@
+Co./Last Name	First Name	Card ID	Addr 1 - Line 1	 - Line 2	 - Line 3	 - Line 4	 - City	 - State	 - Postcode	 - Country	 - Phone # 1	 - Email	 - Contact Name
+{% autoescape off %}{% for ob in object_list %}{{ ob.name }}		{{ ob.from_src_company_id|default:"*None" }}	{{ ob.address_line_1 }}	{{ ob.address_line_2 }}			{{ ob.suburb }}	{{ ob.state }}	{{ ob.postcode }}	{{ ob.country }}	{{ ob.telephone }}	{{ ob.email }}
+{% endfor %}{% endautoescape %}

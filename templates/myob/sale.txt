@@ -1,0 +1,39 @@
+Co./Last Name
+First Name
+Addr 1 - Line 1
+- Line 2
+- Line 3
+- Line 4
+Invoice #
+Date
+Customer PO
+Account #
+Amount
+Inc-Tax Amount
+Tax Code
+Non-GST Amount
+GST Amount
+Freight Amount
+Card ID
+Record ID
+
+{% autoescape off %}{% for ob in object_list %}
+{{ ob.customer.name }}
+-
+{{ ob.customer.address_line_1 }}
+{{ ob.customer.address_line_2 }}
+-
+-
+{{ ob.last_invoice.number }}
+{{ ob.order_date|date:"d.m.Y" }}
+-
+{{ ob.customer.pk }}
+
+
+GST
+
+
+
+{{ ob.customer.from_src_company_id|default:"*None" }}
+{{ ob.from_src_order_id|default:"*None" }}
+{% endfor %}{% endautoescape %}

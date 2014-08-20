@@ -12,7 +12,7 @@ except ImportError:
 
 
 class MyobMixin(object):
-    content_type = 'text/csv'
+    content_type = 'text/plain'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -390,7 +390,7 @@ class Order(models.Model):
 
     @property
     def last_invoice(self):
-        return self.invoices.order_by('-timestamp')[0] if self.invoices.count() else None
+        return self.invoices.order_by('-timestamp')[0] if self.invoices.exists() else None
 
     @property
     def last_status(self):
