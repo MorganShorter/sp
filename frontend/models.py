@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import AbstractBaseUser
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from datetime import datetime
@@ -395,6 +396,13 @@ class Order(models.Model):
     @property
     def last_status(self):
         return self.statuses.order_by('-timestamp')[0] if self.statuses.count() else None
+
+    @property
+    def invoice_url(self):
+        return reverse('order_print_invoice', kwargs={
+            'pk': self.pk,
+            'filename': 'invoice_%s_%s' % (self.last_invoice.number, slugify(self.customer.name))
+        })
 
     def __unicode__(self):
         return 'Order %s' % self.pk

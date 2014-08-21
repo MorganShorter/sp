@@ -37,6 +37,8 @@
             <eval>$("#frm_order .order_status").val("{{ order.last_status.status }}");</eval>
             <eval>$("#frm_order .order_order_notes").val($.br2nl($("#frm_order .order_order_notes").val()));</eval>
 
+            <eval>$("#frm_order .print_invoice").attr('href', '{{ order.invoice_url }}');</eval>
+
             <replaceContent select=".order_product_summary">
                 <ul>
                     <li><strong>Sub Profit:</strong> <span>${{ order.summary.sub_profit|floatformat:2 }}</span></li>

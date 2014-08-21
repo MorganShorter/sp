@@ -273,13 +273,6 @@ $(function () {
         });
     });
 
-
-    $('.print_invoice').live('click', function(){
-        var order_id = $('#frm_order .order_id').val();
-        document.location = '/order/get_pdf/' + order_id + '/';
-        return false;
-    });
-
     $('.send_invoice').live('click', function(){
         var order_id = $('#frm_order .order_id').val();
         $.get('/order/send_pdf/' + order_id + '/', function(data){

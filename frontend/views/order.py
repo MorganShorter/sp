@@ -56,7 +56,7 @@ order_list = OrderList.as_view()
 
 
 @login_required
-def order_get(request, pk, pdf=False, send_mail=False):
+def order_get(request, pk, pdf=False, send_mail=False, filename=None):
     pk, params, order, error = __preprocess_get_request(request, pk, Order)
     invoice = None
 
