@@ -1,0 +1,32 @@
+.icon16 {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 1px;
+}
+.icon16.icon_pdf {
+    background: url("../img/icons/16_pdf.png") no-repeat;
+}
+
+
+.icon32 {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+
+.icon64 {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+}
+
+
+.icon128 {
+    display: inline-block;
+    width: 128px;
+    height: 128px;
+}
+
+

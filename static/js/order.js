@@ -12,6 +12,7 @@ $(function () {
         width: 800,
         close: function(){
             $('.add_product_to_order').css('display', 'none');
+            $("#order_send_invoice").dialog('close');
         },
         open: function(){
             $('.add_product_to_order').css('display', 'block');
@@ -35,6 +36,32 @@ $(function () {
     }).dialogExtend({
         "closable" : true,
         "maximizable" : true,
+        "minimizable" : true,
+        "collapsable" : true,
+        "dblclick" : "collapse",
+        "minimizeLocation" : "right"
+    });
+
+    $("#order_send_invoice").dialog({
+        title: "Send Invoice",
+        resizable: false,
+        autoOpen: false,
+        width: 420,
+        open: function (event, ui) {
+        },
+        buttons: [{
+            text: "Send",
+            click: function() {
+
+            }
+        }, {
+            text: "Close",
+            click: function() {
+                $("#order_send_invoice").dialog('close');
+            }
+        }]
+    }).dialogExtend({
+        "closable" : true,
         "minimizable" : true,
         "collapsable" : true,
         "dblclick" : "collapse",
@@ -274,6 +301,19 @@ $(function () {
     });
 
     $('.send_invoice').live('click', function(){
+        var order_id = $('#frm_order .order_id').val();
+        $.get('/order/send_pdf/' + order_id + '/', function(data){
+            $("#order_send_invoice").dialog('open');
+        });
+        return false;
+    });
+    $('#frm_send_invoice table .saved_contacts select').live('change', function(){
+        if ($(this).val() != '--'){
+            $('#frm_send_invoice .invoice_to').val($(this).val());
+        }
+    });
+
+    $('.send_invoice2').live('click', function(){
         var order_id = $('#frm_order .order_id').val();
         $.get('/order/send_pdf/' + order_id + '/', function(data){
             if (data['status'] == 'error'){

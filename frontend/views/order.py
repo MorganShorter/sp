@@ -95,9 +95,15 @@ def order_get(request, pk, pdf=False, send_mail=False, filename=None):
         'company': invoice.company,
         'invoice': invoice,
         'items': order.ordered_products.all(),
-        'date_now': datetime.datetime.now()
-
+        'date_now': datetime.datetime.now(),
+        'subject': 'Order Invoice #%s' % invoice.number,
     }
+    content_dict['body'] = render_to_string('email/invoice.html', content_dict)
+
+    if request.method == 'GET' and send_mail:
+        # render send_mail form
+        return __taco_render(request, 'taconite/order/send_invoice.xml', content_dict)
+
     c = RequestContext(request, content_dict)
 
     if invoice.company.default_invoice:
@@ -119,7 +125,7 @@ def order_get(request, pk, pdf=False, send_mail=False, filename=None):
     if not pdf.err:
         if not send_mail:
             resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
-            resp['Content-Disposition'] = 'attachment; filename="invoice_%s.pdf"' % invoice.number
+            resp['Content-Disposition'] = 'attachment; filename="%s"' % invoice.filename
             resp['Cache-Control'] = "no-cache, no-store, must-revalidate"
             return resp
 
@@ -136,13 +142,13 @@ def order_get(request, pk, pdf=False, send_mail=False, filename=None):
             })
 
         email = EmailMessage(
-            'Order Invoice #%s' % invoice.number,
-            render_to_string('email/invoice.html', content_dict),
+            content_dict['subject'],
+            content_dict['body'],
             invoice.company.from_mail,
             [order.customer.email]
         )
         email.content_subtype = "html"
-        email.attach('invoice_%s.pdf' % invoice.number, result.getvalue(), 'application/pdf')
+        email.attach(invoice.filename, result.getvalue(), 'application/pdf')
         email.send()
         return json_response({
             'status': 'ok',

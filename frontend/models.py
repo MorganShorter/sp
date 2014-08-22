@@ -121,6 +121,9 @@ class Customer(models.Model):
         if not self.slug:
             self.slug = "%i-%s" % (Customer.objects.last().pk + 1, slugify(self.name))
 
+    def contacts_with_email(self):
+        return self.contacts.exclude(email__isnull=True).exclude(email='')
+
     @property
     def same_delivery_address(self):
         if self.address_line_1 == self.delivery_address_line_1 and \
@@ -147,6 +150,17 @@ class CustomerContact(models.Model):
 
     def __unicode__(self):
         return '%s %s' % (self.first_name, self.surname)
+
+    @property
+    def display_email(self):
+        if not self.email:
+            return ''
+
+        return '%s %s <%s>'.strip() % (
+            self.first_name,
+            self.surname,
+            self.email
+        )
 
     def info(self):
         ret = '%s %s' % (self.first_name, self.surname)
@@ -401,7 +415,7 @@ class Order(models.Model):
     def invoice_url(self):
         return reverse('order_print_invoice', kwargs={
             'pk': self.pk,
-            'filename': 'invoice_%s_%s' % (self.last_invoice.number, slugify(self.customer.name))
+            'filename': self.last_invoice.filename
         })
 
     def __unicode__(self):
@@ -679,6 +693,10 @@ class Invoice(models.Model):
     company = models.ForeignKey(Company, related_name='+')
     number = models.PositiveIntegerField()
     timestamp = models.DateTimeField(default=datetime.now, auto_now_add=True)
+
+    @property
+    def filename(self):
+        return 'invoice_%s_%s.pdf' % (self.number, slugify(self.order.customer.name))
 
     def __unicode__(self):
         return 'Order %s; Number: %s' % (self.order, self.number)

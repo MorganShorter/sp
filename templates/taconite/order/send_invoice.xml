@@ -1,0 +1,25 @@
+<taconite>
+    <eval>$('#frm_send_invoice .invoice_to').val('{{ order.customer.email }}');</eval>
+
+    {% if customer.contacts_with_email.count %}
+        <replaceContent select="#frm_send_invoice table .saved_contacts select">
+            <option>--</option>
+            {% for contact in customer.contacts_with_email %}
+                <option>{{ contact.display_email }}</option>
+            {% endfor %}
+        </replaceContent>
+        <eval>$('#frm_send_invoice .saved_contacts').show();</eval>
+
+    {% else %}
+        <replaceContent select="#frm_send_invoice table .saved_contacts select"></replaceContent>
+        <eval>$('#frm_send_invoice .saved_contacts').hide();</eval>
+    {% endif %}
+    <eval>$('#frm_send_invoice .invoice_from').val('{{ invoice.company.from_mail|default_if_none:'' }}');</eval>
+
+    <eval>$('#frm_send_invoice .invoice_subject').val('{{ subject }}');</eval>
+
+    <html select='#frm_send_invoice .invoice_message'>{{ body }}</html>
+
+    <replaceContent select="#frm_send_invoice .invoice_file_link span">{{ invoice.filename }}</replaceContent>
+    <eval>$('#frm_send_invoice .invoice_file_link').attr('href', '{{ order.invoice_url }}');</eval>
+</taconite>
