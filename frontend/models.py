@@ -9,6 +9,7 @@ from decimal import Decimal
 from colorfield.fields import ColorField
 from frontend.utils import phone_for_search
 from .managers import SPUserManager
+from db_settings.models import Settings
 
 
 class SPUser(AbstractBaseUser):
@@ -134,7 +135,34 @@ class Customer(models.Model):
                 self.name == self.delivery_attn:
             return True
         return False
- 
+
+    @property
+    def parsed_name(self):
+        try:
+            force_company = bool(Settings.objects.get(key='myob_force_company').value)
+        except Settings.DoesNotExist:
+            pass
+        else:
+            if force_company:
+                return {
+                    'l': self.name,
+                    'f': ''
+                }
+
+        data = self.name.split()
+        if data[0].upper() in ('DR', 'MR', 'MASTER', 'MRS', 'MISS', 'MS', 'SIR', 'MADAM', 'PROF'):
+            data = data[1:]
+
+        if len(data) != 2:
+            return {
+                'l': self.name,
+                'f': ''
+            }
+        return {
+            'f': data[0],
+            'l': data[1]
+        }
+
     def __unicode__(self):
         return self.name
 

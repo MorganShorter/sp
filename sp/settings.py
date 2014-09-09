@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'mathfilters',
     'frontend',
     'colorfield',
+    'db_settings',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -86,6 +87,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
+    'db_settings.context_processors.settings',
 )
 
 ROOT_URLCONF = 'sp.urls'
