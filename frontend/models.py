@@ -150,6 +150,12 @@ class Customer(models.Model):
                 }
 
         data = self.name.split()
+        if not len(data):
+            return {
+                'l': 'cutomer-no-name-id-%s' % self.pk,
+                'f': ''
+            }
+
         if data[0].upper() in ('DR', 'MR', 'MASTER', 'MRS', 'MISS', 'MS', 'SIR', 'MADAM', 'PROF'):
             data = data[1:]
 
@@ -389,8 +395,8 @@ class PriceLevel(models.Model):
 class Order(models.Model):
     """ Order placed by a Customer for Product(s) sold by SmartPractice
     """
-    customer = models.ForeignKey(Customer, related_name='orders')
-    products = models.ManyToManyField(Product, related_name='+', through='OrderProduct')
+    customer = models.ForeignKey('Customer', related_name='orders')
+    products = models.ManyToManyField('Product', related_name='+', through='OrderProduct')
     shipping_cost = models.DecimalField(max_digits=9, decimal_places=2, default=0)
 
     total_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # total net_cost + shipping_cost
