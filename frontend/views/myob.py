@@ -70,19 +70,19 @@ class ServiceSaleList(MyobMixin, ListView):
             else:
                 if bool(myob_use_name_in_addr):
                     data[2] = ob.customer.name
-                    data[3] = '%s, %s' % (ob.customer.address_line_1, ob.customer.address_line_2)
-                    data[4] = '%s, %s' % (ob.customer.country, ob.customer.state)
-                    data[5] = ob.customer.postcode
+                    data[3] = ob.customer.address_line_1
+                    data[4] = '%s %s %s' % (ob.customer.suburb, ob.customer.state, ob.customer.postcode)
+                    data[5] = ob.customer.address_line_2
                 else:
                     data[2] = '%s, %s' % (ob.customer.address_line_1, ob.customer.address_line_2)
-                    data[3] = ob.customer.country
+                    data[3] = ob.customer.suburb
                     data[4] = ob.customer.state
                     data[5] = ob.customer.postcode
 
             data = map(lambda x: str(x) if isinstance(x, (int, Decimal)) else x, data)
             ret.append('\t'.join(data))
 
-        return HttpResponse('\n'.join(ret), mimetype='text/plain')
+        return HttpResponse('\n\n'.join(ret), mimetype='text/plain')
 
 service_sale_list = ServiceSaleList.as_view()
 
@@ -116,15 +116,18 @@ class CustomerList(MyobMixin, ListView):
                 ob.from_src_company_id or "*None",
                 ob.address_line_1,
                 ob.address_line_2,
+                '',
+                '',
                 ob.suburb,
                 ob.state,
                 ob.postcode,
                 ob.country,
                 ob.telephone,
-                ob.email
+                ob.email,
+                ''
             ]
             data = map(lambda x: str(x) if isinstance(x, (int, Decimal)) else x, data)
             ret.append('\t'.join(data))
 
-        return HttpResponse('\n'.join(ret), mimetype='text/plain')
+        return HttpResponse('\n\n'.join(ret), mimetype='text/plain')
 customer_list = CustomerList.as_view()

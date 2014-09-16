@@ -126,6 +126,11 @@ class Customer(models.Model):
         return self.contacts.exclude(email__isnull=True).exclude(email='')
 
     @property
+    def contact_name(self):
+        return ' '.join([x.info for x in self.contacts.all()])
+
+
+    @property
     def same_delivery_address(self):
         if self.address_line_1 == self.delivery_address_line_1 and \
                 self.address_line_2 == self.delivery_address_line_2 and \
@@ -152,11 +157,13 @@ class Customer(models.Model):
         data = self.name.split()
         if not len(data):
             return {
-                'l': 'cutomer-no-name-id-%s' % self.pk,
+                'l': 'without-name-id-%s' % self.pk,
                 'f': ''
             }
 
+        pref = ''
         if data[0].upper() in ('DR', 'MR', 'MASTER', 'MRS', 'MISS', 'MS', 'SIR', 'MADAM', 'PROF'):
+            pref = data[0]
             data = data[1:]
 
         if len(data) != 2:
@@ -166,7 +173,7 @@ class Customer(models.Model):
             }
         return {
             'f': data[0],
-            'l': data[1]
+            'l': ('%s %s' % (pref, data[1])).strip()
         }
 
     def __unicode__(self):
@@ -183,7 +190,17 @@ class CustomerContact(models.Model):
     email = models.EmailField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
-        return '%s %s' % (self.first_name, self.surname)
+        return ('%s %s' % (self.first_name, self.surname)).strip()
+
+    @property
+    def info(self):
+        if not self.phone and not self.email:
+            return self.__unicode__()
+
+        return '%s (%s)' % (
+            self.__unicode__(),
+            ('%s %s' % (self.email, self.phone)).strip()
+        )
 
     @property
     def display_email(self):
