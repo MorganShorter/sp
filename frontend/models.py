@@ -127,8 +127,7 @@ class Customer(models.Model):
 
     @property
     def contacts_data(self):
-        return ' '.join([x.info for x in self.contacts.all()])
-
+        return u' '.join([x.show_info() for x in self.contacts.all() if x])
 
     @property
     def same_delivery_address(self):
@@ -190,14 +189,13 @@ class CustomerContact(models.Model):
     email = models.EmailField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
-        return ('%s %s' % (self.first_name, self.surname)).strip()
+        return (u'%s %s' % (self.first_name, self.surname)).strip()
 
-    @property
-    def info(self):
+    def show_info(self):
         if not self.phone and not self.email:
             return self.__unicode__()
 
-        return '%s (%s)' % (
+        return u'%s (%s)' % (
             self.__unicode__(),
             ('%s %s' % (self.email, self.phone)).strip()
         )
