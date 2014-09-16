@@ -55,8 +55,8 @@ class ServiceSaleList(MyobMixin, ListView):
                 ob.summary['gross_price'],
                 ob.summary['tax'],
                 ob.shipping_cost,
-                ob.customer.from_src_company_id or "*None",
-                ob.from_src_order_id or "*None",
+                "*None",
+                "*None",
             ]
 
             if bool(myob_use_addr_only):
@@ -124,7 +124,7 @@ class CustomerList(MyobMixin, ListView):
                 ob.country,
                 ob.telephone,
                 ob.email,
-                ''
+                ob.contacts_data
             ]
             data = map(lambda x: str(x) if isinstance(x, (int, Decimal)) else x, data)
             ret.append('\t'.join(data))

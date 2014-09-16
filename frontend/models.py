@@ -126,7 +126,7 @@ class Customer(models.Model):
         return self.contacts.exclude(email__isnull=True).exclude(email='')
 
     @property
-    def contact_name(self):
+    def contacts_data(self):
         return ' '.join([x.info for x in self.contacts.all()])
 
 
