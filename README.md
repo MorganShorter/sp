@@ -1,5 +1,5 @@
 # sp
-This project is under GPL3 (please see the COPYING.txt file for license details)
+This project is under GPL3 (please see the COPYING file for license details)
 
 It uses django/python/postgres/taconite/jQuery.
 
